@@ -3,7 +3,7 @@
 
 #include "Module.h"
 #include "List.h"
-#include "p2Point.h"
+#include "Point.h"
 
 #include "PugiXml\src\pugixml.hpp"
 

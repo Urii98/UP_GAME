@@ -58,16 +58,6 @@ public:
 		return mouseButtons[id - 1];
 	}
 
-	int GetMouseX() const
-	{
-		return mouseX;
-	}
-
-	int GetMouseY() const
-	{
-		return mouseY;
-	}
-
 	// Check if a certain window event happened
 	bool GetWindowEvent(EventWindow ev);
 

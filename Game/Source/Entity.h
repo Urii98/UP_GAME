@@ -1,7 +1,7 @@
 #ifndef __ENTITY_H__
 #define __ENTITY_H__
 
-#include "p2Point.h"
+#include "Point.h"
 #include "SString.h"
 #include "Input.h"
 #include "Render.h"
