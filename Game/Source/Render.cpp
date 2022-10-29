@@ -1,9 +1,11 @@
 #include "App.h"
 #include "Window.h"
 #include "Render.h"
+#include "Player.h"
 
 #include "Defs.h"
 #include "Log.h"
+#include <iostream>
 
 #define VSYNC true
 
@@ -49,6 +51,9 @@ bool Render::Awake(pugi::xml_node& config)
 		camera.y = 0;
 	}
 
+	playerPosition.x = 0;
+	playerPosition.y = 0;
+
 	return ret;
 }
 
@@ -70,6 +75,11 @@ bool Render::PreUpdate()
 
 bool Render::Update(float dt)
 {
+	
+
+	camera.x = -(playerPosition.x -512);
+	//camera.y = -playerPosition.y;
+	
 	return true;
 }
 
@@ -136,7 +146,12 @@ bool Render::DrawTexture(SDL_Texture* texture, int x, int y, const SDL_Rect* sec
 		p = &pivot;
 	}
 
-	if(SDL_RenderCopyEx(renderer, texture, section, &rect, angle, p, SDL_FLIP_NONE) != 0)
+	/*if(SDL_RenderCopyEx(renderer, texture, section, &rect, angle, p, SDL_FLIP_NONE) != 0)
+	{
+		LOG("Cannot blit to screen. SDL_RenderCopy error: %s", SDL_GetError());
+		ret = false;
+	}*/
+	if (SDL_RenderCopy(renderer, texture, section, &rect) != 0)
 	{
 		LOG("Cannot blit to screen. SDL_RenderCopy error: %s", SDL_GetError());
 		ret = false;

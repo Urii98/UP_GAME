@@ -4,6 +4,9 @@
 #include "Entity.h"
 #include "Point.h"
 #include "SDL/include/SDL.h"
+#include "SDL_Timer.h"
+#include "Animation.h"
+#include <iostream>
 
 struct SDL_Texture;
 
@@ -21,9 +24,37 @@ public:
 
 	bool Update();
 
+	void PostUpdate();
+
 	bool CleanUp();
 
 public:
+
+	enum estadoPlayer
+	{
+		STOP = 0,
+		MOVIMIENTO,
+	};
+	int estadoP;
+	int speedX;
+	int speedY;
+
+	Animation* currentAnimation = nullptr; 
+
+	Animation idleRAnim;
+	Animation idleLAnim;
+	Animation walkRAnim;
+	Animation walkLAnim;
+	Animation runRAnim;
+	Animation runLAnim;
+	Animation jumpRAnim;
+	Animation jumpLAnim;
+	Animation descentRAnim;
+	Animation descentLAnim;
+	Animation flyRAnim;
+	Animation flyLAnim;
+	Animation death;
+
 
 private:
 
@@ -33,6 +64,15 @@ private:
 
 	// L07 DONE 5: Add physics to the player - declare a Physics body
 	PhysBody* pbody;
+
+	int opciones;
+	SDL_Timer jumpTimer;
+	SDL_Timer flyTimer;
+	SDL_Timer toDescent;
+	bool flying;
+
+	void Movimiento();
+	
 
 };
 

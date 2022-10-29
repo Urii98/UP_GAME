@@ -9,6 +9,8 @@
 #include "Map.h"
 #include "Physics.h"
 
+#include <memory>
+
 #include "Defs.h"
 #include "Log.h"
 
@@ -19,6 +21,8 @@
 App::App(int argc, char* args[]) : argc(argc), args(args)
 {
 	frames = 0;
+	
+	
 
 	input = new Input();
 	win = new Window();
@@ -27,6 +31,7 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	audio = new Audio();
 	//L07 DONE 2: Add Physics module
 	physics = new Physics();
+	
 	scene = new Scene();
 	entityManager = new EntityManager();
 	map = new Map();
@@ -39,6 +44,7 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(audio);
 	//L07 DONE 2: Add Physics module
 	AddModule(physics);
+	
 	AddModule(scene);
 	AddModule(entityManager);
 	AddModule(map);

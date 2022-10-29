@@ -52,6 +52,8 @@ public:
 	SDL_Rect camera;
 	SDL_Rect viewport;
 	SDL_Color background;
+
+	iPoint playerPosition;
 };
 
 #endif // __RENDER_H__
