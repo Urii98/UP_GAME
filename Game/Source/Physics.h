@@ -5,7 +5,7 @@
 #include "Box2D/Box2D/Box2D.h"
 
 #define GRAVITY_X 0.0f
-#define GRAVITY_Y -2.0f
+#define GRAVITY_Y -3.0f
 //#define GRAVITY_Y -70.0f
 
 #define PIXELS_PER_METER 32.0f // if touched change METER_PER_PIXEL too

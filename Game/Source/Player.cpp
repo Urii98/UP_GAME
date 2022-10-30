@@ -76,20 +76,96 @@ bool Player::Start() {
 	walkLAnim.loop = true;
 	walkLAnim.speed = 0.125f;
 
-	downLAnim.PushBack({ 187,123,30,22 });
-	downRAnim.PushBack({ 869,124,30,22 });
+	//downLAnim
+	downLAnim.PushBack({ 181, 303 , 28 ,28 });
+	downLAnim.PushBack({ 212, 303 , 28 ,28 });
+	downLAnim.loop = true;
+	downLAnim.speed = 0.125f;
 
-	runRAnim;
-	runLAnim;
+	//downRAnim
+	downRAnim.PushBack({ 845,304,28,28 });
+	downRAnim.PushBack({ 876,304,28,28 });
+	downRAnim.loop = true;
+	downRAnim.speed = 0.125f;
 
-	jumpRAnim;
-	jumpLAnim;
+	runRAnim.PushBack({ 704,231,30,24 });
+	runRAnim.PushBack({ 736,231,30,24 });
+	runRAnim.PushBack({ 763,231,30,24 });
+	runRAnim.PushBack({ 789,231,30,24 });
+	runRAnim.PushBack({ 816,231,30,24 });
+	runRAnim.PushBack({ 844,231,30,24 });
+	runRAnim.PushBack({ 870,231,30,24 });
+	runRAnim.PushBack({ 897,231,30,24 });
+	runRAnim.loop = true;
+	runRAnim.speed = 0.2f;
 
-	descentRAnim;
-	descentLAnim;
 
-	flyRAnim;
-	flyLAnim;
+	runLAnim.PushBack({ 352,231,30,24 });
+	runLAnim.PushBack({ 320,231,30,24 });
+	runLAnim.PushBack({ 293,231,30,24 });
+	runLAnim.PushBack({ 267,231,30,24 });
+	runLAnim.PushBack({ 240,231,30,24 });
+	runLAnim.PushBack({ 212,231,30,24 });
+	runLAnim.PushBack({ 186,231,30,24 });
+	runLAnim.PushBack({ 159,231,30,24 });
+	runLAnim.loop = true;
+	runLAnim.speed = 0.2;
+
+
+	//jumpRAnim
+	jumpRAnim.PushBack({ 635,303,28,28 });
+	jumpRAnim.PushBack({ 666,303,28,28 });
+	jumpRAnim.PushBack({ 698,303,28,28 });
+	jumpRAnim.PushBack({ 729,303,28,28 });
+	jumpRAnim.PushBack({ 757,303,28,28 });
+	jumpRAnim.PushBack({ 785,303,28,28 });
+	jumpRAnim.PushBack({ 815,303,28,28 });
+	jumpRAnim.PushBack({ 845,304,28,28 });
+	jumpRAnim.PushBack({ 876,304,28,28 });
+	jumpRAnim.loop = false;
+	jumpRAnim.speed = 0.18f;
+
+	//jumpLAnim
+	jumpLAnim.PushBack({ 423, 303 , 28 ,28 });
+	jumpLAnim.PushBack({ 392, 303 , 28 ,28 });
+	jumpLAnim.PushBack({ 360, 303 , 28 ,28 });
+	jumpLAnim.PushBack({ 329, 303 , 28 ,28 });
+	jumpLAnim.PushBack({ 301, 303 , 28 ,28 });
+	jumpLAnim.PushBack({ 273, 303 , 28 ,28 });
+	jumpLAnim.PushBack({ 243, 303 , 28 ,28 });
+	jumpLAnim.PushBack({ 212, 303 , 28 ,28 });
+	jumpLAnim.PushBack({ 181, 303 , 28 ,28 });
+	jumpLAnim.loop = false;
+	jumpLAnim.speed = 0.18f;
+
+	//preflyRAnim
+	preflyRAnim.PushBack({ 785, 388 , 30 ,30 });
+	preflyRAnim.PushBack({ 814, 388 , 30 ,30 });
+	preflyRAnim.PushBack({ 844, 388 , 30 ,30 });
+	preflyRAnim.loop = false;
+	preflyRAnim.speed = 0.125f;
+
+	//flyRAnim
+	flyRAnim.PushBack({ 709,426 ,33 ,32 });
+	flyRAnim.PushBack({ 743,426 ,33 ,32 });
+	flyRAnim.PushBack({ 778,426 ,33 ,32 });
+	flyRAnim.PushBack({ 813,426 ,33 ,32 });
+	flyRAnim.PushBack({ 847,426 ,33 ,32 });
+	flyRAnim.PushBack({ 885,426 ,33 ,32 });
+	flyRAnim.loop = true;
+	flyRAnim.speed = 0.125f;
+
+
+	//flyLAnim
+	flyLAnim.PushBack({ 343,426 ,33 ,32 });
+	flyLAnim.PushBack({ 309,426 ,33 ,32 });
+	flyLAnim.PushBack({ 274,426 ,33 ,32 });
+	flyLAnim.PushBack({ 239,426 ,33 ,32 });
+	flyLAnim.PushBack({ 205,426 ,33 ,32 });
+	flyLAnim.PushBack({ 167,426 ,33 ,32 });
+	flyLAnim.loop = true;
+	flyLAnim.speed = 0.125f;
+
 
 	death.PushBack({ 850, 3775, 28, 23 });
 	death.PushBack({ 850, 3775, 28, 23 });
@@ -108,7 +184,11 @@ bool Player::Start() {
 	speedX = 6;
 	speedY = 9; 
 	speedYDown = 6;
-	estadoP =STOP;
+	estadoP = STOP;
+	currentAnimation = &idleRAnim;
+	direccionP = DERECHA;
+	oneJump = false; //se pasa a true cuando ya se haya hecho un salto, se pasa a false cuando se collisiona
+	flying = false;
 
 	//initilize textures
 	texture = app->tex->Load(texturePath);
@@ -124,9 +204,7 @@ bool Player::Start() {
 
 	//initialize audio effect - !! Path is hardcoded, should be loaded from config.xml
 	pickCoinFxId = app->audio->LoadFx("Assets/Audio/Fx/retro-video-game-coin-pickup-38299.ogg");
-
-
-
+	kirbyDeathFx = app->audio->LoadFx("Assets/Audio/Fx/KirbyDeathFx.ogg");
 
 	std::cout << "MASSA PLAYER - " << pbody->body->GetMass() << std::endl;
 
@@ -145,90 +223,182 @@ bool Player::Start() {
 
 void Player::Movimiento()
 {
+	b2Vec2 vel = b2Vec2(0, 0);
 
-
-	if (flying) {
-		toDescent.Start(0.10);
-		if (toDescent.Test())// -- ANIMACIÓN -- de caida
-		{
-			flying = false;
-
-		}
-	}
-	if (jumpTimer.Test() == EJECUTANDO && app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN)
+	if (oneJump && app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN)
 	{
-		flyTimer.Start(0.10); // -- ANIMACIÓN -- volar
+		flyTimer.Start(0.15); // -- ANIMACIÓN -- volar
 		std::cout << "flying" << std::endl;
+
+		//Animacion de prefly, que no se reseteara hasta que haya collision o flying sea false
+		if (direccionP == IZQUIERDA) {
+			currentAnimation = &flyLAnim; //cambiar a izquierda cuando saque los sprites
+		}
+		else if (direccionP == DERECHA)
+		{
+			currentAnimation = &flyRAnim;
+		}
+
 		flying = true;
 	}
-	else if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN) { //durante 0.05s moveremos al player verticalmente hasta llegar a los 30 pixeles que es la distancia max de un jump
-		jumpTimer.Start(0.20);
-
-	}
-	
-
-	b2Vec2 vel = b2Vec2(0, 0);
-	
-	if (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) { // -- ANIMACIÓN -- de caminar a la izquierda
+	else if (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) { // -- ANIMACIÓN -- de caminar a la izquierda
 		
 		vel = b2Vec2(-speedX, -GRAVITY_Y);
 
-		if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN) // -- ANIMACIÓN -- saltar derecha
+		if (!oneJump)
 		{
-			jumpTimer.Start(0.20);
+			if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN)
+			{
+				jumpTimer.Start(0.20);
+				collisionP = NOCOLLISION;
+				oneJump = true;
+				if (currentAnimation != &jumpLAnim)
+				{
+					currentAnimation = &jumpLAnim;
+				}
+				flying = true;
+			}
+			
+		}
+		else if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN && oneJump)
+		{
+			flyTimer.Start(0.20);
+			collisionP = NOCOLLISION;
+			currentAnimation = &flyLAnim;
 		}
 
 		if (jumpTimer.Test() == EJECUTANDO || flyTimer.Test() == EJECUTANDO) // -- ANIMACIÓN -- saltar derecha
 		{
 			vel = b2Vec2(-speedX, -speedY);
+		
 		}
 
-		app->render->camera.x += 2;
-		if (direccionP /*NO SE COLISIONADA CON NADA y se esta en el aire*/) {
+		if (collisionP == COLLISION) {
 
-		currentAnimation = &walkLAnim;
+			if (app->input->GetKey(SDL_SCANCODE_LSHIFT) == KEY_REPEAT)
+			{
+				currentAnimation = &runLAnim;
+				vel = b2Vec2(-speedX - 2, -GRAVITY_Y);
+
+			}
+			else
+			{
+				currentAnimation = &walkLAnim;
+			}
+		}
+		else
+		{
+			if (oneJump && !flying)
+			{
+				currentAnimation = &flyLAnim;
+			}
 		}
 		direccionP = IZQUIERDA;
+		app->render->camera.x += 2;
+
 	} 
 	else if (app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) { // -- ANIMACIÓN -- de caminar a la derecha
 		vel = b2Vec2(speedX, -GRAVITY_Y);
 
-		if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN) // -- ANIMACIÓN -- saltar izquierda
+		if (!oneJump)
 		{
-			jumpTimer.Start(0.20);
+			if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN) // -- ANIMACIÓN -- saltar izquierda
+			{
+				jumpTimer.Start(0.20);
+				collisionP = NOCOLLISION;
+				oneJump = true;
+				if (currentAnimation != &jumpRAnim)
+				{
+					currentAnimation = &jumpRAnim;
+				}
+				flying = true;
+			}
 		}
-
+		else if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN && oneJump)
+		{
+			flyTimer.Start(0.20);
+			collisionP = NOCOLLISION;
+			currentAnimation = &flyRAnim;
+		}
+	
+		
 		if (jumpTimer.Test() == EJECUTANDO || flyTimer.Test() == EJECUTANDO)  // -- ANIMACIÓN -- saltar izquierda
 		{
 			vel = b2Vec2(speedX, -speedY);
+
 		}
 
-		app->render->camera.x -= 2;
-		if (direccionP /*NO SE COLISIONADA CON NADA y se esta en el aire*/) {
-			currentAnimation = &walkRAnim;
+		
+
+		if (collisionP == COLLISION) {
+
+			if (app->input->GetKey(SDL_SCANCODE_LSHIFT) == KEY_REPEAT)
+			{
+				currentAnimation = &runRAnim;
+				vel = b2Vec2(speedX+2, -GRAVITY_Y);
+
+			}
+			else
+			{
+				currentAnimation = &walkRAnim;
+			}
+			
+
 		}
+		else
+		{
+			if (oneJump && !flying)
+			{
+				currentAnimation = &flyRAnim;
+			}
+		}
+
 		direccionP = DERECHA;
-	
+		app->render->camera.x -= 2;
+	}
+	else if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN && !flying && !oneJump) { //durante 0.05s moveremos al player verticalmente hasta llegar a los 30 pixeles que es la distancia max de un jump
+	jumpTimer.Start(0.30);
+
+	if (direccionP == IZQUIERDA) {
+		currentAnimation = &jumpLAnim;
+
+	}
+	else if (direccionP == DERECHA)
+	{
+		currentAnimation = &jumpRAnim;
+
+	}
+
+	collisionP = NOCOLLISION;
+	oneJump = true;
+
+
 	}
 	else if (jumpTimer.Test() == EJECUTANDO || flyTimer.Test() == EJECUTANDO)
 	{
 		vel = b2Vec2(0, -speedY);
 	}
 	else {  // -- ANIMACIÓN -- IDLE
+
 		estadoP = STOP;
-		if (direccionP == IZQUIERDA) {
-			currentAnimation = &idleLAnim;
-		} 
-		else if (direccionP == DERECHA)
+
+		if (collisionP == COLLISION)
 		{
-			currentAnimation = &idleRAnim;
+			if (direccionP == IZQUIERDA) {
+				currentAnimation = &idleLAnim;
+			}
+			else if (direccionP == DERECHA)
+			{
+				currentAnimation = &idleRAnim;
+			}
 		}
+
 		
 		vel = b2Vec2(0, -GRAVITY_Y);
 		
 	}
 
-	if (app->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT) // -- ANIMACIÓN -- caer hacia abajo
+	if (app->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT && collisionP == NOCOLLISION) // -- ANIMACIÓN -- caer hacia abajo (cuando NO hay collision con nada)
 	{
 		vel = b2Vec2(0, -GRAVITY_Y + speedYDown);
 
@@ -246,19 +416,17 @@ void Player::Movimiento()
 		{
 			currentAnimation = &downRAnim;
 		}
-
 	}
 	
-	/*if (está en contacto con algún collider)
-	{
-		current animacion si estaba en down, tiene que pasar a idle
-	}*/
-
 	if (app->input->GetKey(SDL_SCANCODE_0) == KEY_DOWN) // -- ANIMACIÓN MORIR
 	{
 		currentAnimation = &death;
 		estadoP = DEATH;
 	}
+
+
+
+
 		
 
 	pbody->body->SetLinearVelocity(vel);
@@ -270,6 +438,7 @@ bool Player::Update()
 	app->render->playerPosition.x = position.x; //Le pasamos la posicion del player al render para que la cámara siga al player
 	app->render->playerPosition.y = position.y;
 	
+	
 
 	switch (estadoP)
 	{
@@ -280,15 +449,37 @@ bool Player::Update()
 		Movimiento();
 		break;
 	case(DEATH):
+		app->audio->PlayFx(kirbyDeathFx,0);
+		estadoP = NONE;
+		break;
+	case(NONE):
+		break;
+	deault:
 		break;
 
 	}
-		
+
+	
+
+
+	
+
+
+
+	//if (collisionP == 0) {
+
+	//	std::cout << "NO COLLISION" << std::endl;
+	//}
+	//else if (collisionP == 1) {
+	//	std::cout << "COLLISION" << std::endl;
+	//}
 
 	//Update player position in pixels: Posición del COLLIDER:
 	position.x = METERS_TO_PIXELS(pbody->body->GetTransform().p.x) - 14;
 	position.y = METERS_TO_PIXELS(pbody->body->GetTransform().p.y) - 10;
 
+	//cojo la posicion del player que me servira en el siguiente frame para chequear si se ha movido
+	prevPosition = position.x;
 
 	currentAnimation->Update();
 	PostUpdate();
@@ -324,6 +515,11 @@ void Player::OnCollision(PhysBody* physA, PhysBody* physB) {
 		break;
 	case ColliderType::PLATFORM:
 		LOG("Collision PLATFORM");
+		collisionP = COLLISION;
+		jumpRAnim.Reset();
+		jumpLAnim.Reset();
+		oneJump = false;
+		flying = false;
 		std::cout << "PLATFORM COLLISION" << std::endl;
 		break;
 	case ColliderType::UNKNOWN:
@@ -333,3 +529,4 @@ void Player::OnCollision(PhysBody* physA, PhysBody* physB) {
 
 
 }
+

@@ -38,17 +38,29 @@ public:
 		STOP = 0,
 		MOVIMIENTO,
 		DEATH,
+		NONE,
 	};
+	int estadoP;
+
+	enum collisionPlayer {
+		NOCOLLISION,
+		COLLISION
+	};
+	int collisionP;
 
 	enum direccionPlayer {
 		IZQUIERDA,
 		DERECHA,
 	};
 	int direccionP;
-	int estadoP;
+	
 	int speedX;
 	int speedY;
 	int speedYDown;
+	bool oneJump;
+
+
+	int prevPosition;
 
 	Animation* currentAnimation = nullptr; 
 
@@ -62,9 +74,9 @@ public:
 	Animation runLAnim;
 	Animation jumpRAnim;
 	Animation jumpLAnim;
-	Animation descentRAnim;
-	Animation descentLAnim;
+	Animation preflyRAnim;
 	Animation flyRAnim;
+	Animation preflyLAnim;
 	Animation flyLAnim;
 	Animation death;
 
@@ -79,6 +91,7 @@ private:
 	PhysBody* pbody;
 
 	int pickCoinFxId;
+	int kirbyDeathFx;
 
 	int opciones;
 	SDL_Timer jumpTimer;
@@ -87,6 +100,7 @@ private:
 	bool flying;
 
 	void Movimiento();
+	//ColliderType CheckCollision();
 	
 
 };
