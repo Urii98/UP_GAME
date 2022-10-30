@@ -36,6 +36,7 @@ bool Player::Awake() {
 
 bool Player::Start() {
 
+	//idleRAnim
 	idleRAnim.PushBack({ 774, 91, 26, 22 });
 	idleRAnim.PushBack({ 774, 91, 26, 22 });
 	idleRAnim.PushBack({ 803, 91, 26, 22 });
@@ -46,33 +47,67 @@ bool Player::Start() {
 	idleRAnim.loop = true;
 	idleRAnim.speed = 0.075f;
 
-	idleLAnim;
+	//idleLAnim
+	idleLAnim.PushBack({ 286,91,26,22 });
+	idleLAnim.PushBack({ 286,91,26,22 });
+	idleLAnim.PushBack({ 257,91,26,22 });
+	idleLAnim.PushBack({ 228,91,26,22 });
+	idleLAnim.PushBack({ 257,91,26,22 });
+	idleLAnim.PushBack({ 286,91,26,22 });
+	idleLAnim.PushBack({ 286,91,26,22 });
+	idleLAnim.loop = true;
+	idleLAnim.speed = 0.075f;
 
-	//5 pixeles de separacion 598 198 26 23
+	//walkRAnim
 	for (int i = 0; i < 9; i++)
 	{
-		walkRAnim.PushBack({ 658 + (29)*i,198,28,23}); 
+		walkRAnim.PushBack({ 658 + (29) * i,198,28,23 });
 
 	}
 	walkRAnim.loop = true;
 	walkRAnim.speed = 0.125f;
 
-	walkRAnim;
-	walkLAnim;
+	//walkLAnim
+	for (int i = 0; i < 9; i++)
+	{
+		//walkLAnim.PushBack({ 143 + (29) * i, 28, 23 });
+		walkLAnim.PushBack({ 400 - (29) * i,198, 28, 23 });
+	}
+	walkLAnim.loop = true;
+	walkLAnim.speed = 0.125f;
+
+	downLAnim.PushBack({ 187,123,30,22 });
+	downRAnim.PushBack({ 869,124,30,22 });
+
 	runRAnim;
 	runLAnim;
+
 	jumpRAnim;
 	jumpLAnim;
+
 	descentRAnim;
 	descentLAnim;
+
 	flyRAnim;
 	flyLAnim;
-	death;
+
+	death.PushBack({ 850, 3775, 28, 23 });
+	death.PushBack({ 850, 3775, 28, 23 });
+	death.PushBack({ 850, 3775, 28, 23 });
+	death.PushBack({ 882, 2896, 28, 23 });
+	death.PushBack({ 882, 2896, 28, 23 });
+	death.PushBack({ 913, 2896, 28, 23 });
+	death.PushBack({ 913, 2896, 28, 23 });
+	death.PushBack({ 944, 2896, 28, 23 });
+	death.PushBack({ 944, 2896, 28, 23 });
+	death.loop = false;
+	death.speed = 0.085f;
 
 
 	opciones = 0;
 	speedX = 6;
-	speedY = 9; // 30/30; //pixeles entre 30 frames (medio segundo)
+	speedY = 9; 
+	speedYDown = 6;
 	estadoP =STOP;
 
 	//initilize textures
@@ -99,55 +134,120 @@ bool Player::Start() {
 void Player::Movimiento()
 {
 
+
+	if (flying) {
+		toDescent.Start(0.10);
+		if (toDescent.Test())// -- ANIMACIÓN -- de caida
+		{
+			flying = false;
+
+		}
+	}
+	if (jumpTimer.Test() == EJECUTANDO && app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN)
+	{
+		flyTimer.Start(0.10); // -- ANIMACIÓN -- volar
+		std::cout << "flying" << std::endl;
+		flying = true;
+	}
+	else if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN) { //durante 0.05s moveremos al player verticalmente hasta llegar a los 30 pixeles que es la distancia max de un jump
+		jumpTimer.Start(0.20);
+
+	}
+	
+
 	b2Vec2 vel = b2Vec2(0, 0);
-		//L02: DONE 4: modify the position of the player using arrow keys and render the texture
+	
 	if (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) { // -- ANIMACIÓN -- de caminar a la izquierda
 		
 		vel = b2Vec2(-speedX, -GRAVITY_Y);
 
-		if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN)
+		if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN) // -- ANIMACIÓN -- saltar derecha
 		{
 			jumpTimer.Start(0.20);
 		}
 
-		if (jumpTimer.Test() == EJECUTANDO || flyTimer.Test() == EJECUTANDO)
+		if (jumpTimer.Test() == EJECUTANDO || flyTimer.Test() == EJECUTANDO) // -- ANIMACIÓN -- saltar derecha
 		{
 			vel = b2Vec2(-speedX, -speedY);
 		}
 
-		
 		app->render->camera.x += 2;
-		
-		
+		if (direccionP /*NO SE COLISIONADA CON NADA y se esta en el aire*/) {
+
+		currentAnimation = &walkLAnim;
+		}
+		direccionP = IZQUIERDA;
 	} 
 	else if (app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) { // -- ANIMACIÓN -- de caminar a la derecha
 		vel = b2Vec2(speedX, -GRAVITY_Y);
 
-		if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN)
+		if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN) // -- ANIMACIÓN -- saltar izquierda
 		{
 			jumpTimer.Start(0.20);
 		}
 
-		if (jumpTimer.Test() == EJECUTANDO || flyTimer.Test() == EJECUTANDO)
+		if (jumpTimer.Test() == EJECUTANDO || flyTimer.Test() == EJECUTANDO)  // -- ANIMACIÓN -- saltar izquierda
 		{
 			vel = b2Vec2(speedX, -speedY);
 		}
 
-		currentAnimation = &walkRAnim;
 		app->render->camera.x -= 2;
+		if (direccionP /*NO SE COLISIONADA CON NADA y se esta en el aire*/) {
+			currentAnimation = &walkRAnim;
+		}
+		direccionP = DERECHA;
 	
 	}
 	else if (jumpTimer.Test() == EJECUTANDO || flyTimer.Test() == EJECUTANDO)
 	{
 		vel = b2Vec2(0, -speedY);
 	}
-	else {
+	else {  // -- ANIMACIÓN -- IDLE
 		estadoP = STOP;
-		currentAnimation = &idleRAnim;
+		if (direccionP == IZQUIERDA) {
+			currentAnimation = &idleLAnim;
+		} 
+		else if (direccionP == DERECHA)
+		{
+			currentAnimation = &idleRAnim;
+		}
+		
 		vel = b2Vec2(0, -GRAVITY_Y);
 		
 	}
+
+	if (app->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT) // -- ANIMACIÓN -- caer hacia abajo
+	{
+		vel = b2Vec2(0, -GRAVITY_Y + speedYDown);
+
+		if (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) {
+			vel = b2Vec2(-speedX, -GRAVITY_Y + speedYDown);
+		}
+		if (app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) {
+			vel = b2Vec2(speedX, -GRAVITY_Y + speedYDown);
+		}
+
+		if (direccionP == IZQUIERDA) {
+			currentAnimation = &downLAnim;
+		}
+		else if (direccionP == DERECHA)
+		{
+			currentAnimation = &downRAnim;
+		}
+
+	}
 	
+	/*if (está en contacto con algún collider)
+	{
+		current animacion si estaba en down, tiene que pasar a idle
+	}*/
+
+	if (app->input->GetKey(SDL_SCANCODE_0) == KEY_DOWN) // -- ANIMACIÓN MORIR
+	{
+		currentAnimation = &death;
+		estadoP = DEATH;
+	}
+		
 
 	pbody->body->SetLinearVelocity(vel);
 }
@@ -158,36 +258,18 @@ bool Player::Update()
 	app->render->playerPosition.x = position.x; //Le pasamos la posicion del player al render para que la cámara siga al player
 	app->render->playerPosition.y = position.y;
 	
-	
-
-	if (flying) {
-		toDescent.Start(0.10);
-		if (toDescent.Test())// -- ANIMACIÓN -- de caida
-		{
-			flying = false;
-
-		}
-	}
-	if (jumpTimer.Test() == EJECUTANDO && app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN) 
-	{
-		flyTimer.Start(0.10); // -- ANIMACIÓN -- volar
-		std::cout << "flying" << std::endl;
-		flying = true;
-	}
-	else if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN) { //durante 0.05s moveremos al player verticalmente hasta llegar a los 30 pixeles que es la distancia max de un jump
-		jumpTimer.Start(0.20);
-
-	}
-
 
 	switch (estadoP)
 	{
-	case(STOP): // -- ANIMACIÓN -- IDLE
+	case(STOP):
 		Movimiento();
 		break;
 	case(MOVIMIENTO):
 		Movimiento();
 		break;
+	case(DEATH):
+		break;
+
 	}
 
 
@@ -225,7 +307,7 @@ bool Player::Update()
 	
 
 	//Update player position in pixels: Posición del COLLIDER:
-	position.x = METERS_TO_PIXELS(pbody->body->GetTransform().p.x) - 13;
+	position.x = METERS_TO_PIXELS(pbody->body->GetTransform().p.x) - 14;
 	position.y = METERS_TO_PIXELS(pbody->body->GetTransform().p.y) - 10;
 
 	//SDL_Rect* a{ 774,91,26,22 };
@@ -247,6 +329,7 @@ void Player::PostUpdate()
 
 	
 }
+
 
 bool Player::CleanUp()
 {

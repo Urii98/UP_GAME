@@ -8,6 +8,10 @@
 #include "EntityManager.h"
 #include "Map.h"
 #include "Physics.h"
+#include "SceneEnding.h"
+#include "SceneLogo.h"
+#include "SceneTitle.h"
+#include "FadeToBlack.h"
 
 #include <memory>
 
@@ -32,9 +36,15 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	//L07 DONE 2: Add Physics module
 	physics = new Physics();
 	
+	sceneLogo = new SceneLogo();
+	sceneTitle = new SceneTitle();
+	sceneEnding = new SceneEnding();
+
 	scene = new Scene();
 	entityManager = new EntityManager();
 	map = new Map();
+
+	fade = new FadeToBlack();
 
 	// Ordered for awake / Start / Update
 	// Reverse order of CleanUp
@@ -45,12 +55,17 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	//L07 DONE 2: Add Physics module
 	AddModule(physics);
 	
+	AddModule(sceneLogo);
+	AddModule(sceneTitle);
+	AddModule(sceneEnding);
+
 	AddModule(scene);
 	AddModule(entityManager);
 	AddModule(map);
-
 	// Render last to swap buffer
+	AddModule(fade);
 	AddModule(render);
+	
 }
 
 // Destructor

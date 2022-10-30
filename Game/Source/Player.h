@@ -34,10 +34,18 @@ public:
 	{
 		STOP = 0,
 		MOVIMIENTO,
+		DEATH,
 	};
+
+	enum direccionPlayer {
+		IZQUIERDA,
+		DERECHA,
+	};
+	int direccionP;
 	int estadoP;
 	int speedX;
 	int speedY;
+	int speedYDown;
 
 	Animation* currentAnimation = nullptr; 
 
@@ -45,6 +53,8 @@ public:
 	Animation idleLAnim;
 	Animation walkRAnim;
 	Animation walkLAnim;
+	Animation downRAnim;
+	Animation downLAnim;
 	Animation runRAnim;
 	Animation runLAnim;
 	Animation jumpRAnim;

@@ -1,4 +1,5 @@
-#pragma once
+#ifndef __SDL_TIMER_H__
+#define __SDL_TIMER_H__	
 
 #include "SDL/include/SDL.h"
 
@@ -21,3 +22,5 @@ private:
 	estadoTimerP estadoTimer = APAGADO;
 	uint32_t duration; //segundos de cronómetro
 };
+
+#endif // !__SDL_TIMER_H__

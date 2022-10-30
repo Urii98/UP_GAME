@@ -20,6 +20,10 @@ class EntityManager;
 class Map;
 //L07 DONE 2: Add Physics module
 class Physics;
+class FadeToBlack;
+class SceneLogo;
+class SceneTitle;
+class SceneEnding;
 
 
 class App
@@ -87,11 +91,20 @@ public:
 	Render* render;
 	Textures* tex;
 	Audio* audio;
+
+	
+	SceneLogo* sceneLogo;
+	SceneTitle* sceneTitle;
+	SceneEnding* sceneEnding;
 	Scene* scene;
+
+
 	EntityManager* entityManager;
 	Map* map;
 	//L07 DONE 2: Add Physics module
 	Physics* physics;
+
+	FadeToBlack* fade;
 	
 
 

@@ -36,6 +36,11 @@ public:
 		return true;
 	}
 
+	//virtual bool PostUpdate()
+	//{
+	//	return true;
+	//}
+
 	virtual bool CleanUp()
 	{
 		return true;
