@@ -116,6 +116,18 @@ bool Player::Start() {
 	// L07 DONE 5: Add physics to the player - initialize physics body
 	pbody = app->physics->CreateCircle(position.x+16, position.y+16, 12, bodyType::DYNAMIC);
 
+	// L07 DONE 6: Assign player class (using "this") to the listener of the pbody. This makes the Physics module to call the OnCollision method
+	pbody->listener = this;
+
+	// L07 DONE 7: Assign collider type
+	pbody->ctype = ColliderType::PLAYER;
+
+	//initialize audio effect - !! Path is hardcoded, should be loaded from config.xml
+	pickCoinFxId = app->audio->LoadFx("Assets/Audio/Fx/retro-video-game-coin-pickup-38299.ogg");
+
+
+
+
 	std::cout << "MASSA PLAYER - " << pbody->body->GetMass() << std::endl;
 
 	std::cout << pbody->body->GetFixtureList()->GetDensity() << std::endl;
@@ -271,49 +283,11 @@ bool Player::Update()
 		break;
 
 	}
-
-
-	//if (jumpTimer.Test() == FIN)
-//{
-//	std::cout << "FIN" << std::endl;
-
-//} 
-//else if(jumpTimer.Test() == APAGADO)
-//{
-//	std::cout << "APAGADO" << std::endl;
-//}
-//else if(jumpTimer.Test() == EJECUTANDO)
-//{
-//	std::cout << "EJECUTANDO" << std::endl;
-//}
-
-	//if (opciones == 2) { //MOVIMIENTOS VERTICALES
-
-	//	b2Vec2 vel = pbody->body->GetLinearVelocity();
-	//	float desiredVel = 0;
-
-	//	if (app->input->GetKey(SDL_SCANCODE_W) == KEY_DOWN) {
-
-	//		desiredVel = -80;
-	//		
-	//	}
-
-	//	float velChange = desiredVel - vel.y;
-	//	float impulse = pbody->body->GetMass() * velChange; //disregard time factor
-	//	pbody->body->ApplyLinearImpulse(b2Vec2(0, impulse), pbody->body->GetWorldCenter(), true);
-
-	//}
-
-	
+		
 
 	//Update player position in pixels: Posición del COLLIDER:
 	position.x = METERS_TO_PIXELS(pbody->body->GetTransform().p.x) - 14;
 	position.y = METERS_TO_PIXELS(pbody->body->GetTransform().p.y) - 10;
-
-	//SDL_Rect* a{ 774,91,26,22 };
-
-	
-	
 
 
 	currentAnimation->Update();
@@ -335,4 +309,27 @@ bool Player::CleanUp()
 {
 
 	return true;
+}
+
+// L07 DONE 6: Define OnCollision function for the player. Check the virtual function on Entity class
+void Player::OnCollision(PhysBody* physA, PhysBody* physB) {
+
+	// L07 DONE 7: Detect the type of collision
+
+	switch (physB->ctype)
+	{
+	case ColliderType::ITEM:
+		LOG("Collision ITEM");
+		app->audio->PlayFx(pickCoinFxId);
+		break;
+	case ColliderType::PLATFORM:
+		LOG("Collision PLATFORM");
+		std::cout << "PLATFORM COLLISION" << std::endl;
+		break;
+	case ColliderType::UNKNOWN:
+		LOG("Collision UNKNOWN");
+		break;
+	}
+
+
 }
