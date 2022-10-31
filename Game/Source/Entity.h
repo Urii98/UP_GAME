@@ -12,6 +12,7 @@ enum class EntityType
 {
 	PLAYER,
 	ITEM,
+	SMALLENEMY1,
 	UNKNOWN
 };
 

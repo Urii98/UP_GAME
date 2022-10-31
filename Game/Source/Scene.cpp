@@ -34,6 +34,12 @@ bool Scene::Awake(pugi::xml_node& config)
 		item->parameters = itemNode;
 	}
 
+	for (pugi::xml_node itemNode = config.child("SmallEnemy1"); itemNode; itemNode = itemNode.next_sibling("SmallEnemy1"))
+	{
+		SmallEnemy1* item = (SmallEnemy1*)app->entityManager->CreateEntity(EntityType::SMALLENEMY1);
+		item->parameters = itemNode;
+	}
+
 	//L02: DONE 3: Instantiate the player using the entity manager
 	player = (Player*)app->entityManager->CreateEntity(EntityType::PLAYER);
 	player->parameters = config.child("player");

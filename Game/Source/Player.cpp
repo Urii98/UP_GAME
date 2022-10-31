@@ -522,6 +522,8 @@ void Player::OnCollision(PhysBody* physA, PhysBody* physB) {
 		flying = false;
 		std::cout << "PLATFORM COLLISION" << std::endl;
 		break;
+	case ColliderType::ENEMY:
+		physB->listener->Disable();
 	case ColliderType::UNKNOWN:
 		LOG("Collision UNKNOWN");
 		break;

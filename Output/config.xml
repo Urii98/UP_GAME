@@ -23,12 +23,15 @@
 
   <!-- L02: DONE: Add an element for the entity manager and add the player parameters -->
   <scene>
-    <player x="150" y="572" texturepath="Assets/Textures/KirbySS.png"/>
+    <player x="150" y="672" texturepath="Assets/Textures/KirbySS.png"/>
     <item x="256" y="515" texturepath="Assets/Textures/goldCoin.png"/>
     <item x="416" y="512" texturepath="Assets/Textures/goldCoin.png"/>
-    <item x="384" y="352" texturepath="Assets/Textures/goldCoin.png"/>
+    <item x="354" y="352" texturepath="Assets/Textures/goldCoin.png"/>
     <item x="200" y="672" texturepath="Assets/Textures/goldCoin.png"/>
     <item x="500" y="672" texturepath="Assets/Textures/goldCoin.png"/>
+    <SmallEnemy1 x="350" y="672" texturepath="Assets/Textures/Enemies.png"/>
+    <SmallEnemy1 x="440" y="332" texturepath="Assets/Textures/Enemies.png"/>
+    <SmallEnemy1 x="330" y="497" texturepath="Assets/Textures/Enemies.png"/>
   </scene>
 
   <map>
