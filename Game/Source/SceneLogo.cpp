@@ -8,6 +8,7 @@
 #include "FadeToBlack.h"
 #include "Log.h"
 #include <iostream>
+#include <stdio.h>
 
 
 SceneLogo::SceneLogo(bool isActive) : Module(isActive) {
@@ -25,13 +26,21 @@ bool SceneLogo::Awake() {
 }
 
 bool SceneLogo::Start() {
-	onOffSwitch = false;
-	LOG("Loading background assets");
+	
+	LOG("Loading background assets - SceneLogo");
 
 	bool ret = true;
 
-	bgTexture = app->tex->Load("Assets/Textures/Negro.png");
+	//char x[120];
 
+	//for (int i = 1; i <= 149 ; i++)
+	//{
+	//	sprintf_s(x, "Assets/Textures/Title/ezgif-frame-%d.jpg", i + 1);
+	//	bgTexture[i] = app->tex->Load(x);
+	//}
+	//frame = 0;
+
+	textureLogo = app->tex->Load("Assets/Textures/Logo.png");
 
 	app->render->camera.x = 0;
 	app->render->camera.y = 0;
@@ -45,15 +54,23 @@ bool SceneLogo::Update(float dt)
 
 	if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN)
 	{
-		app->fade->Fade(this, (Module*)app->scene, 30);
+		app->fade->Fade(this, (Module*)app->sceneTitle, 30);
 		
 		app->sceneLogo->active = false; //esto fuerza que se desactive esta clase
 		//lo que se supone que haría la funcion de fade de arriba, pero que no va
+
+		app->sceneTitle->active = true;
 		
 
 		//#chapuza1
 
 	}
+
+	/*chrono.Start(0.04);
+
+	if(frame <147 && chrono.Test() == FIN)
+		frame++;*/
+
 
 	return true;
 }
@@ -65,15 +82,18 @@ bool SceneLogo::Update(float dt)
 
 bool SceneLogo::PostUpdate()
 {
-	app->render->DrawTexture(bgTexture, 0-360, 0, NULL);
 
+	//app->render->DrawTexture(bgTexture[frame], -360, 0, NULL);
 
+	app->render->DrawTexture(textureLogo, 0-360, 0, NULL);
+
+	
 
 	return true;
 }
 
 bool SceneLogo::CleanUp()
 {
-	app->tex->UnLoad(bgTexture);
+	app->tex->UnLoad(textureLogo);
 	return true;
 }

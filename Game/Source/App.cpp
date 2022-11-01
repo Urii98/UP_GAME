@@ -55,7 +55,7 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	physics = new Physics(true);
 
 	sceneLogo = new SceneLogo(true);
-	//sceneTitle = new SceneTitle(false);
+	sceneTitle = new SceneTitle(false);
 	//sceneEnding = new SceneEnding(false);
 
 	scene = new Scene(true);
@@ -83,7 +83,7 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(physics);
 	
 	AddModule(sceneLogo);
-	//AddModule(sceneTitle);
+	AddModule(sceneTitle);
 	//AddModule(sceneEnding);
 
 	AddModule(scene);
