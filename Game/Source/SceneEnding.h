@@ -10,7 +10,7 @@ class SceneEnding : public Module
 {
 public:
 
-	SceneEnding();
+	SceneEnding(bool isActive);
 
 	// Destructor
 	virtual ~SceneEnding();

@@ -28,23 +28,50 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	
 	
 
-	input = new Input();
-	win = new Window();
-	render = new Render();
-	tex = new Textures();
-	audio = new Audio();
+	//input = new Input();
+	//win = new Window();
+	//render = new Render();
+	//tex = new Textures();
+	//audio = new Audio();
+	////L07 DONE 2: Add Physics module
+	//physics = new Physics();
+	//
+	//sceneLogo = new SceneLogo();
+	//sceneTitle = new SceneTitle();
+	//sceneEnding = new SceneEnding();
+
+	//scene = new Scene();
+	//entityManager = new EntityManager();
+	//map = new Map();
+
+	//fade = new FadeToBlack();
+
+	input = new Input(true);
+	win = new Window(true);
+	render = new Render(true);
+	tex = new Textures(true);
+	audio = new Audio(true);
 	//L07 DONE 2: Add Physics module
-	physics = new Physics();
-	
-	sceneLogo = new SceneLogo();
-	sceneTitle = new SceneTitle();
-	sceneEnding = new SceneEnding();
+	physics = new Physics(true);
 
-	scene = new Scene();
-	entityManager = new EntityManager();
-	map = new Map();
+	sceneLogo = new SceneLogo(true);
+	//sceneTitle = new SceneTitle(false);
+	//sceneEnding = new SceneEnding(false);
 
-	fade = new FadeToBlack();
+	scene = new Scene(true);
+	entityManager = new EntityManager(true);
+	map = new Map(true);
+	fade = new FadeToBlack(true);
+
+
+
+
+
+
+
+
+
+
 
 	// Ordered for awake / Start / Update
 	// Reverse order of CleanUp
@@ -56,8 +83,8 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(physics);
 	
 	AddModule(sceneLogo);
-	AddModule(sceneTitle);
-	AddModule(sceneEnding);
+	//AddModule(sceneTitle);
+	//AddModule(sceneEnding);
 
 	AddModule(scene);
 	AddModule(entityManager);
@@ -85,7 +112,10 @@ App::~App()
 
 void App::AddModule(Module* module)
 {
+	//aqui pone todos los modulos a active, creo que esto tendria q comentarlo y que el active
+	//vaya en funcion de lo que le pase yo al constructor aqui
 	module->Init();
+				
 	modules.Add(module);
 }
 

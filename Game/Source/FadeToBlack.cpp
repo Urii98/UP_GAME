@@ -3,10 +3,11 @@
 #include "App.h"
 #include"Render.h"
 #include "Log.h"
+#include <iostream>
 
 #include "SDL/include/SDL_render.h"
 
-FadeToBlack::FadeToBlack() : Module()
+FadeToBlack::FadeToBlack(bool isActive) : Module(isActive)
 {
 	screenRect = { 0, 0, 1024, 768 };
 	name.Create("fade");
@@ -26,8 +27,9 @@ bool FadeToBlack::Start()
 	return true;
 }
 
-bool FadeToBlack::Update(/*float dt*/)
+bool FadeToBlack::Update(float dt)
 {
+	std::cout << currentStep << std::endl;
 	// Exit this function if we are not performing a fade
 	if (currentStep == Fade_Step::NONE) return true;
 
@@ -56,7 +58,8 @@ bool FadeToBlack::Update(/*float dt*/)
 bool FadeToBlack::PostUpdate()
 {
 	// Exit this function if we are not performing a fade
-	if (currentStep == Fade_Step::NONE) return true;
+
+  	if (currentStep == Fade_Step::NONE) return true;
 
 	float fadeRatio = (float)frameCount / (float)maxFadeFrames;
 
@@ -67,7 +70,7 @@ bool FadeToBlack::PostUpdate()
 	return true;
 }
 
-bool FadeToBlack::Fade(Module* moduleToDisable, Module* moduleToEnable, float frames)
+bool FadeToBlack::Fade(Module* moduleToDisablee, Module* moduleToEnablee, float frames)
 {
 	bool ret = false;
 
@@ -78,8 +81,8 @@ bool FadeToBlack::Fade(Module* moduleToDisable, Module* moduleToEnable, float fr
 		frameCount = 0;
 		maxFadeFrames = frames;
 
-		this->moduleToDisable = moduleToDisable;
-		this->moduleToEnable = moduleToEnable;
+		this->moduleToDisable = moduleToDisablee;
+		this->moduleToEnable = moduleToEnablee;
 
 		ret = true;
 	}

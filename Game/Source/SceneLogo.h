@@ -11,7 +11,7 @@ class SceneLogo : public Module
 {
 public:
 
-	SceneLogo();
+	SceneLogo(bool isActive);
 
 	// Destructor
 	virtual ~SceneLogo();

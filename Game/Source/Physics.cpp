@@ -17,7 +17,7 @@
 #pragma comment( lib, "../Game/Source/External/Box2D/libx86/ReleaseLib/Box2D.lib" )
 #endif
 
-Physics::Physics() : Module()
+Physics::Physics(bool isActive) : Module(isActive)
 {
 	world = NULL;
 	mouse_joint = NULL;

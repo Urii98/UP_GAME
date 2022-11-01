@@ -10,7 +10,7 @@ class SceneTitle : public Module
 {
 public:
 
-	SceneTitle();
+	SceneTitle(bool isActive);
 
 	// Destructor
 	virtual ~SceneTitle();

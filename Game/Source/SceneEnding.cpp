@@ -7,7 +7,7 @@
 #include "Input.h"
 #include "FadeToBlack.h"
 
-SceneEnding::SceneEnding() : Module() {
+SceneEnding::SceneEnding(bool isActive) : Module(isActive) {
 	name.Create("sceneEnding");
 }
 

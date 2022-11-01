@@ -11,7 +11,7 @@
 #include "Defs.h"
 #include "Log.h"
 
-Scene::Scene() : Module()
+Scene::Scene(bool isActive) : Module(isActive)
 {
 	name.Create("scene");
 }

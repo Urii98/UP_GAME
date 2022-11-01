@@ -8,14 +8,14 @@ class FadeToBlack : public Module
 {
 public:
 
-	FadeToBlack();
+	FadeToBlack(bool isActive);
 
 	// Destructor
 	virtual ~FadeToBlack();
 
 	bool Start();
 
-	bool Update(/*float dt*/);
+	bool Update(float dt);
 
 	bool PostUpdate();
 

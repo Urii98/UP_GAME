@@ -7,7 +7,7 @@
 #include "Input.h"
 #include "FadeToBlack.h"
 
-SceneTitle::SceneTitle() : Module() {
+SceneTitle::SceneTitle(bool isActive) : Module(isActive) {
 	name.Create("sceneTitle");
 }
 

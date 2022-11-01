@@ -7,9 +7,10 @@
 #include "Input.h"
 #include "FadeToBlack.h"
 #include "Log.h"
+#include <iostream>
 
 
-SceneLogo::SceneLogo() : Module() {
+SceneLogo::SceneLogo(bool isActive) : Module(isActive) {
 	name.Create("sceneLogo");
 }
 
@@ -40,31 +41,34 @@ bool SceneLogo::Start() {
 
 bool SceneLogo::Update(float dt)
 {
-	chrono.Start(10);
-
-	if (chrono.Test())
-	{
-		onOffSwitch = true;
-	}
-
-	app->fade->Fade(this, (Module*)app->scene, 30);
-
-	if (onOffSwitch)
-	{
-		app->fade->Fade(this, (Module*)app->scene, 30);
-	}
+	std::cout << "SCENELOGO" << std::endl;
 
 	if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN)
 	{
 		app->fade->Fade(this, (Module*)app->scene, 30);
+		
+		app->sceneLogo->active = false; //esto fuerza que se desactive esta clase
+		//lo que se supone que haría la funcion de fade de arriba, pero que no va
+		
+
+		//#chapuza1
+
 	}
 
 	return true;
 }
 
+
+
+
+
+
 bool SceneLogo::PostUpdate()
 {
-	//app->render->DrawTexture(bgTexture, 0/*-360*/, 0, NULL);
+	app->render->DrawTexture(bgTexture, 0-360, 0, NULL);
+
+
+
 	return true;
 }
 
