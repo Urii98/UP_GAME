@@ -8,6 +8,7 @@
 #include "Log.h"
 #include "Point.h"
 #include "Physics.h"
+#include "Window.h"
 
 
 Player::Player() : Entity(EntityType::PLAYER)
@@ -26,8 +27,8 @@ bool Player::Awake() {
 	//texturePath = "Assets/Textures/player/idle1.png";
 
 	//L02: DONE 5: Get Player parameters from XML
-	position.x = parameters.attribute("x").as_int();
-	position.y = parameters.attribute("y").as_int();
+	position.x = parameters.attribute("x").as_int() * app->win->GetScale();
+	position.y = parameters.attribute("y").as_int() * app->win->GetScale();
 	texturePath = parameters.attribute("texturepath").as_string();
 	
 
@@ -195,6 +196,7 @@ bool Player::Start() {
 
 	// L07 DONE 5: Add physics to the player - initialize physics body
 	pbody = app->physics->CreateCircle(position.x+16, position.y+16, 12, bodyType::DYNAMIC);
+
 
 	// L07 DONE 6: Assign player class (using "this") to the listener of the pbody. This makes the Physics module to call the OnCollision method
 	pbody->listener = this;
@@ -435,8 +437,8 @@ void Player::Movimiento()
 
 bool Player::Update()
 {
-	app->render->playerPosition.x = position.x; //Le pasamos la posicion del player al render para que la cámara siga al player
-	app->render->playerPosition.y = position.y;
+	app->render->playerPosition.x = position.x * app->win->GetScale(); //Le pasamos la posicion del player al render para que la cámara siga al player
+	app->render->playerPosition.y = position.y * app->win->GetScale();
 	
 	
 
@@ -480,6 +482,13 @@ bool Player::Update()
 
 	//cojo la posicion del player que me servira en el siguiente frame para chequear si se ha movido
 	prevPosition = position.x;
+
+	std::cout << "position iPoint.x = " << position.x << std::endl;
+	std::cout << "position iPoint.y = " << position.y << std::endl;
+	std::cout << "position pbody get Transform = " << METERS_TO_PIXELS(pbody->body->GetTransform().p.x)  << std::endl;
+	std::cout << "position pbody get Transform = " << METERS_TO_PIXELS(pbody->body->GetTransform().p.y) << std::endl;
+
+	std::cout << "CAMERA POSITION.y" << app->render->camera.y << std::endl;
 
 	currentAnimation->Update();
 	PostUpdate();

@@ -75,10 +75,17 @@ bool Render::PreUpdate()
 
 bool Render::Update(float dt)
 {
-	
 
-	camera.x = -(playerPosition.x -512);
-	//camera.y = -playerPosition.y;
+	if (app->win->GetScale() == 1) //Esto es para que la camará tenga a todo momento el personaje en el centro
+	{
+		camera.x = -(playerPosition.x - 512); 
+	//	camera.y = -playerPosition.y + 384;
+	}
+	else if (app->win->GetScale() == 2)
+	{
+
+	}
+
 	
 	return true;
 }

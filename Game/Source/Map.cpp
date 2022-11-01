@@ -11,6 +11,9 @@
 #include <math.h>
 #include "SDL_image/include/SDL_image.h"
 
+#include <iostream>
+#include "Window.h"
+
 Map::Map() : Module(), mapLoaded(false)
 {
     name.Create("map");
@@ -62,6 +65,7 @@ void Map::Draw()
 
             for (int x = 0; x < mapLayerItem->data->width; x++)
             {
+                
                 for (int y = 0; y < mapLayerItem->data->height; y++)
                 {
                     // L05: DONE 9: Complete the draw function
@@ -83,6 +87,8 @@ void Map::Draw()
         mapLayerItem = mapLayerItem->next;
 
     }
+
+    
 }
 
 // L05: DONE 8: Create a method that translates x,y coordinates from map positions to world positions
@@ -191,6 +197,8 @@ bool Map::Load()
         ret = LoadAllLayers(mapFileXML.child("map"));
     }
     
+    
+
     // L07 DONE 3: Create colliders
     // Later you can create a function here to load and create the colliders from the map
     PhysBody* c1 = app->physics->CreateRectangle(224 + 128, 543 + 32, 256, 64, STATIC);

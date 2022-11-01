@@ -9,7 +9,7 @@
   </renderer>
 
   <window>
-    <resolution width="1024" height="768" scale="1"/>
+    <resolution width="1024" height="768" scale="1"/> <!--para que se vea guay scale es en 2, pero tenemos que modificar otros aspectos del motor para que todo se adapte bien en funcion del scale-->
     <fullscreen value="false"/>
     <borderless value="false"/>
     <resizable value="false"/>

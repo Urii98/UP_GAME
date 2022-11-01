@@ -4,9 +4,15 @@
 	<window />
 	<textures />
 	<audio />
+	<:anonymous />
+	<sceneLogo />
+	<sceneTitle />
+	<sceneEnding />
 	<scene />
 	<entitymanager />
+	<map />
+	<fade />
 	<renderer>
-		<camera x="1095" y="36" />
+		<camera x="412" y="0" />
 	</renderer>
 </save_state>
