@@ -14,6 +14,8 @@
 #include <iostream>
 #include "Window.h"
 
+#include "Player.h"
+
 Map::Map(bool isActive) : Module(isActive), mapLoaded(false)
 {
     name.Create("map");
@@ -35,10 +37,33 @@ bool Map::Awake(pugi::xml_node& config)
     return ret;
 }
 
+bool Map::Start()
+{
+    bool ret = true;
+
+    middleBackground = app->tex->Load("Assets/Textures/middle.png");
+    farBackground = app->tex->Load("Assets/Textures/back.png");
+
+    return ret;
+}
+
 void Map::Draw()
 {
     if(mapLoaded == false)
         return;
+
+    //PARALLAX EFFECT:
+
+    app->render->DrawTexture(farBackground, app->render->playerPosition.x-190, 480, NULL,1.0f);
+    app->render->DrawTexture(middleBackground, -450, 600, NULL,0.5f);
+    app->render->DrawTexture(middleBackground, -626, 600, NULL,0.5f);
+    app->render->DrawTexture(middleBackground, -802, 600, NULL, 0.5f);
+    app->render->DrawTexture(middleBackground, -978, 600, NULL, 0.5f);
+    app->render->DrawTexture(middleBackground, -1154, 600, NULL, 0.5f);
+    app->render->DrawTexture(middleBackground, -274, 600, NULL, 0.5f);
+    app->render->DrawTexture(middleBackground, -98, 600, NULL, 0.5f);
+
+
 
     /*
     // L04: DONE 6: Iterate all tilesets and draw all their 
@@ -212,6 +237,11 @@ bool Map::Load()
     PhysBody* c3 = app->physics->CreateRectangle(256, 704 + 32, 576, 64, STATIC);
     // L07 DONE 7: Assign collider type
     c3->ctype = ColliderType::PLATFORM;
+
+    PhysBody* c4 = app->physics->CreateRectangle(-300, 704 + 32, 900, 64, STATIC);
+    // L07 DONE 7: Assign collider type
+    c4->ctype = ColliderType::PLATFORM;
+
 
     if(ret == true)
     {

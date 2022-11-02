@@ -36,5 +36,6 @@ bool SceneEnding::PostUpdate()
 
 bool SceneEnding::CleanUp()
 {
+	//memoryleak
 	return true;
 }

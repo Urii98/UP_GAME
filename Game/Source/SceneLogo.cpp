@@ -94,6 +94,7 @@ bool SceneLogo::PostUpdate()
 
 bool SceneLogo::CleanUp()
 {
+	//memoryleak
 	app->tex->UnLoad(textureLogo);
 	return true;
 }

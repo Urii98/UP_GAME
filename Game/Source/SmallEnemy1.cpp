@@ -10,6 +10,9 @@
 #include "Physics.h"
 
 
+#include "Window.h"
+
+
 SmallEnemy1::SmallEnemy1() : Entity(EntityType::SMALLENEMY1)
 {
 	name.Create("SmallEnemy1");
@@ -180,8 +183,8 @@ bool SmallEnemy1::Update()
 	}
 
 	// L07 DONE 4: Add a physics  - update the position of the object from the physics.  
-	position.x = METERS_TO_PIXELS(pbody->body->GetTransform().p.x) - 10;
-	position.y = METERS_TO_PIXELS(pbody->body->GetTransform().p.y) - 7;
+	position.x = METERS_TO_PIXELS(pbody->body->GetTransform().p.x / app->win->GetScale()) - 10;
+	position.y = METERS_TO_PIXELS(pbody->body->GetTransform().p.y / app->win->GetScale()) - 7;
 
 
 	currentAnimationEnemy->Update();
@@ -194,5 +197,6 @@ bool SmallEnemy1::Update()
 
 bool SmallEnemy1::CleanUp()
 {
+	//memoryleak
 	return true;
 }

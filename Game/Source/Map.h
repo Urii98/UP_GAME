@@ -119,6 +119,8 @@ public:
     // Called before render is available
     bool Awake(pugi::xml_node& conf);
 
+	bool Start();
+
     // Called each loop iteration
     void Draw();
 
@@ -153,11 +155,16 @@ public:
 	// L04: DONE 1: Declare a variable data of the struct MapData
 	MapData mapData;
 
+	SDL_Texture* middleBackground;
+	SDL_Texture* farBackground;
+
 private:
 
     SString mapFileName;
 	SString mapFolder;
     bool mapLoaded;
+
+	
 };
 
 #endif // __MAP_H__

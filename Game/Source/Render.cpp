@@ -83,7 +83,7 @@ bool Render::Update(float dt)
 	}
 	else if (app->win->GetScale() == 2)
 	{
-
+		camera.x = -(playerPosition.x - (512 / 2)) * app->win->GetScale();
 	}
 
 	

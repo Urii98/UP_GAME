@@ -27,8 +27,10 @@ bool Player::Awake() {
 	//texturePath = "Assets/Textures/player/idle1.png";
 
 	//L02: DONE 5: Get Player parameters from XML
-	position.x = parameters.attribute("x").as_int() * app->win->GetScale();
-	position.y = parameters.attribute("y").as_int() * app->win->GetScale();
+	position.x = parameters.attribute("x").as_int();
+	position.y = parameters.attribute("y").as_int();
+
+
 	texturePath = parameters.attribute("texturepath").as_string();
 	
 
@@ -181,10 +183,10 @@ bool Player::Start() {
 	death.speed = 0.085f;
 
 
-	opciones = 0;
-	speedX = 6;
-	speedY = 9; 
-	speedYDown = 6;
+	
+	speedX = 6 * app->win->GetScale();
+	speedY = 9 * app->win->GetScale();
+	speedYDown = 6 * app->win->GetScale();
 	estadoP = STOP;
 	currentAnimation = &idleRAnim;
 	direccionP = DERECHA;
@@ -437,8 +439,8 @@ void Player::Movimiento()
 
 bool Player::Update()
 {
-	app->render->playerPosition.x = position.x * app->win->GetScale(); //Le pasamos la posicion del player al render para que la cámara siga al player
-	app->render->playerPosition.y = position.y * app->win->GetScale();
+	app->render->playerPosition.x = position.x /** app->win->GetScale()*/; //Le pasamos la posicion del player al render para que la cámara siga al player
+	app->render->playerPosition.y = position.y /** app->win->GetScale()*/;
 	
 	
 
@@ -477,8 +479,8 @@ bool Player::Update()
 	//}
 
 	//Update player position in pixels: Posición del COLLIDER:
-	position.x = METERS_TO_PIXELS(pbody->body->GetTransform().p.x) - 14;
-	position.y = METERS_TO_PIXELS(pbody->body->GetTransform().p.y) - 10;
+	position.x = METERS_TO_PIXELS(pbody->body->GetTransform().p.x / app->win->GetScale()) - 14;
+	position.y = METERS_TO_PIXELS(pbody->body->GetTransform().p.y / app->win->GetScale()) - 10;
 
 	//cojo la posicion del player que me servira en el siguiente frame para chequear si se ha movido
 	prevPosition = position.x;
@@ -507,7 +509,7 @@ void Player::PostUpdate()
 
 bool Player::CleanUp()
 {
-
+	//memoryleaks
 	return true;
 }
 

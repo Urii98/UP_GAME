@@ -100,7 +100,6 @@ private:
 	int pickCoinFxId;
 	int kirbyDeathFx;
 
-	int opciones;
 	SDL_Timer jumpTimer;
 	SDL_Timer flyTimer;
 	SDL_Timer toDescent;

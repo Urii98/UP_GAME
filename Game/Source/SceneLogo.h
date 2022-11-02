@@ -36,7 +36,7 @@ public:
 	SDL_Texture* textureLogo;
 	int frame;
 
-	Animation* currentAnimationSceneLogo = nullptr;
+	//Animation* currentAnimationSceneLogo = nullptr;
 	
 	Animation sceneLogoKirby;
 

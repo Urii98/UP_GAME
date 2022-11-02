@@ -9,7 +9,7 @@
   </renderer>
 
   <window>
-    <resolution width="1024" height="768" scale="1"/> <!--para que se vea guay scale es en 2, pero tenemos que modificar otros aspectos del motor para que todo se adapte bien en funcion del scale-->
+    <resolution width="1024" height="768" scale="1"/> <!--para que el scale funcione, tenemos que tener en cuenta que no solo lo que se renderiza tiene que verse modificado, sino también todo lo relacionado con las fisicas (posición del collider), velocidad de personajes, etc.-->
     <fullscreen value="false"/>
     <borderless value="false"/>
     <resizable value="false"/>
