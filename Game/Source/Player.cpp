@@ -534,7 +534,13 @@ void Player::OnCollision(PhysBody* physA, PhysBody* physB) {
 		std::cout << "PLATFORM COLLISION" << std::endl;
 		break;
 	case ColliderType::ENEMY:
-		physB->listener->Disable();
+		//physB->listener->Disable();
+
+		physB->listener->position.x = 220;
+
+
+
+		
 	case ColliderType::UNKNOWN:
 		LOG("Collision UNKNOWN");
 		break;

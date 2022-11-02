@@ -7,12 +7,11 @@
 	<:anonymous />
 	<sceneLogo />
 	<sceneTitle />
-	<sceneEnding />
 	<scene />
 	<entitymanager />
 	<map />
 	<fade />
 	<renderer>
-		<camera x="412" y="0" />
+		<camera x="371" y="0" />
 	</renderer>
 </save_state>
