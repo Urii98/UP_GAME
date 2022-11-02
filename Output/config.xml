@@ -9,7 +9,7 @@
   </renderer>
 
   <window>
-    <resolution width="1024" height="768" scale="2"/> <!--para que el scale funcione, tenemos que tener en cuenta que no solo lo que se renderiza tiene que verse modificado, sino también todo lo relacionado con las fisicas (posición del collider), velocidad de personajes, etc.-->
+    <resolution width="1024" height="768" scale="4"/> <!--para que el scale funcione, tenemos que tener en cuenta que no solo lo que se renderiza tiene que verse modificado, sino también todo lo relacionado con las fisicas (posición del collider), velocidad de personajes, etc.-->
     <fullscreen value="false"/>
     <borderless value="false"/>
     <resizable value="false"/>
@@ -36,7 +36,7 @@
 
   <map>
     <mapfolder path="Assets/Maps/"/>
-    <mapfile path="Assets/Maps/MapTemplate.tmx"/>
+    <mapfile path="Assets/Maps/UP_GAME.tmx"/>
   </map>
   
 </config>
