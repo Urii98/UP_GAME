@@ -54,7 +54,7 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	//L07 DONE 2: Add Physics module
 	physics = new Physics(true);
 
-	sceneLogo = new SceneLogo(true);
+	sceneLogo = new SceneLogo(false);
 	sceneTitle = new SceneTitle(false);
 	//sceneEnding = new SceneEnding(false);
 
