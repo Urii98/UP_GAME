@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.8" tiledversion="1.8.5" orientation="orthogonal" renderorder="right-down" width="250" height="30" tilewidth="16" tileheight="16" infinite="0" nextlayerid="3" nextobjectid="1">
- <tileset firstgid="1" name="tileset_terrain" tilewidth="16" tileheight="16" tilecount="575" columns="25">
+<map version="1.8" tiledversion="1.8.5" orientation="orthogonal" renderorder="right-down" width="250" height="30" tilewidth="32" tileheight="32" infinite="0" nextlayerid="3" nextobjectid="1">
+ <tileset firstgid="1" name="tileset_terrain" tilewidth="32" tileheight="32" tilecount="575" columns="25">
   <image source="tileset.png" width="400" height="368"/>
  </tileset>
- <tileset firstgid="576" name="tileset_props" tilewidth="16" tileheight="16" tilecount="364" columns="26">
+ <tileset firstgid="576" name="tileset_props" tilewidth="32" tileheight="32" tilecount="364" columns="26">
   <image source="props.png" trans="898989" width="416" height="224"/>
  </tileset>
  <tileset firstgid="940" name="MapMetadata" tilewidth="32" tileheight="32" spacing="1" tilecount="2" columns="2">
