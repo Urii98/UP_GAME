@@ -41,7 +41,7 @@ private:
 	SDL_Rect screenRect;
 
 	// The modules that should be switched after the first step
-	//memoryleak
+	
 	Module* moduleToEnable = nullptr;
 	Module* moduleToDisable = nullptr;
 

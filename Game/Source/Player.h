@@ -7,7 +7,6 @@
 #include "SDL_Timer.h"
 #include "Animation.h"
 #include <iostream>
-#include <memory>
 
 
 struct SDL_Texture;

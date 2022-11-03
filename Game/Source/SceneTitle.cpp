@@ -60,6 +60,7 @@ bool SceneTitle::Update(float dt)
 		//Aqui tendría que ir esto: Pero si cuando se cargan los modulos scene no esta en active=true, despues cuando la activo no se ve el mapa
 		app->scene->active = true;
 
+		CleanUp();
 		//#chapuza1
 
 	}

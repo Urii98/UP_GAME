@@ -8,6 +8,7 @@
 #include "Log.h"
 #include "Point.h"
 #include "Physics.h"
+#include "EntityManager.h"
 
 #include "Window.h"
 
@@ -38,6 +39,10 @@ bool Item::Start() {
 	// L07 DONE 7: Assign collider type
 	pbody->ctype = ColliderType::ITEM;
 
+	pbody->listener = this;
+
+	destroy = false;
+
 	return true;
 }
 
@@ -49,11 +54,36 @@ bool Item::Update()
 
 	app->render->DrawTexture(texture, position.x, position.y);
 
+	if (destroy)
+	{
+		pbody->body->GetWorld()->DestroyBody(pbody->body);
+		CleanUp();
+
+		destroy = false;
+	}
+
 	return true;
 }
 
 bool Item::CleanUp()
 {
 	//memoryleak
+
+	app->tex->UnLoad(texture);
+
+	//la memoria del item se destruye en scene
+
 	return true;
+}
+
+void Item::OnCollision(PhysBody* physA, PhysBody* physB) {
+
+	switch (physB->ctype)
+	{
+	case ColliderType::PLAYER:
+
+		destroy = true;
+		break;
+	}
+
 }

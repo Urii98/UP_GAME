@@ -8,6 +8,7 @@
 #include "Log.h"
 #include "Point.h"
 #include "Physics.h"
+#include "EntityManager.h" 
 
 
 #include "Window.h"
@@ -39,6 +40,7 @@ bool SmallEnemy1::Start() {
 	walkDir = false;
 	attackE = false;
 	animAtk = false;
+	destroy = false;
 	speedX = 2;
 
 
@@ -84,6 +86,8 @@ bool SmallEnemy1::Start() {
 
 	// L07 DONE 7: Assign collider type
 	pbody->ctype = ColliderType::ENEMY;
+
+	pbody->listener = this;
 
 	return true;
 }
@@ -192,12 +196,25 @@ bool SmallEnemy1::Update()
 	app->render->DrawTexture(texture, position.x, position.y, &rect);
 	
 
+	if (destroy)
+	{
+		pbody->body->GetWorld()->DestroyBody(pbody->body);
+		CleanUp();
+		destroy = false;
+	}
+
 	return true;
 }
 
 bool SmallEnemy1::CleanUp()
 {
 	//memoryleak
+
+	app->tex->UnLoad(texture);
+
+	//la memoria de small enemy la libero directamente en scene
+	//app->entityManager->DestroyEntity(this);
+
 	return true;
 }
 
@@ -207,7 +224,9 @@ void SmallEnemy1::OnCollision(PhysBody* physA, PhysBody* physB)
 	switch (physB->ctype)
 	{
 	case ColliderType::PLAYER:
-		pbody->body->GetWorld()->DestroyBody(pbody->body);
+
+		destroy = true;
+	
 		break;
 	}
 }

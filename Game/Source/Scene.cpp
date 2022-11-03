@@ -11,6 +11,7 @@
 #include "Defs.h"
 #include "Log.h"
 
+
 Scene::Scene(bool isActive) : Module(isActive)
 {
 	name.Create("scene");
@@ -32,17 +33,21 @@ bool Scene::Awake(pugi::xml_node& config)
 	{
 		Item* item = (Item*)app->entityManager->CreateEntity(EntityType::ITEM);
 		item->parameters = itemNode;
+		vect->push_back(item);
+		
 	}
 
 	for (pugi::xml_node itemNode = config.child("SmallEnemy1"); itemNode; itemNode = itemNode.next_sibling("SmallEnemy1"))
 	{
 		SmallEnemy1* item = (SmallEnemy1*)app->entityManager->CreateEntity(EntityType::SMALLENEMY1);
 		item->parameters = itemNode;
+		vect->push_back(item);
 	}
 
 	//L02: DONE 3: Instantiate the player using the entity manager
 	player = (Player*)app->entityManager->CreateEntity(EntityType::PLAYER);
 	player->parameters = config.child("player");
+	vect->push_back(player);
 
 	return ret;
 }
@@ -53,6 +58,7 @@ bool Scene::Start()
 	//img = app->tex->Load("Assets/Textures/test.png");
 	//app->audio->PlayMusic("Assets/Audio/Music/music_spy.ogg");
 	
+
 	// L03: DONE: Load map
 	app->map->Load();
 
@@ -120,6 +126,13 @@ bool Scene::PostUpdate()
 bool Scene::CleanUp()
 {
 	LOG("Freeing scene");
+
+	vect->clear();
+
+	delete vect;
+
+	app->tex->UnLoad(img);
+
 	//memoryleak
 	return true;
 }

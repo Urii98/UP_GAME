@@ -12,6 +12,7 @@
 
 #include "SceneEnding.h"
 #include "SmallEnemy1.h"
+#include "EntityManager.h" 
 
 
 Player::Player() : Entity(EntityType::PLAYER)
@@ -455,12 +456,13 @@ bool Player::Update()
 	case(DEATH):
 		app->audio->PlayFx(kirbyDeathFx,0);
 		currentAnimation = &death;
+		
 		break;
 	case(NONE):
 		break;
 	default: 
 		break;
-
+		
 	}
 
 	if (estadoP == DEATH)
@@ -470,8 +472,8 @@ bool Player::Update()
 	}
 	if (deathTimer.Test() == FIN)
 	{
-		//app->sceneEnding->active = true;
 		app->sceneEnding->ending = true;
+		CleanUp();
 	}
 
 
@@ -522,7 +524,11 @@ void Player::PostUpdate()
 
 bool Player::CleanUp()
 {
-	//memoryleaks
+	app->tex->UnLoad(texture);
+
+	//la memoria de player la libero directamente en scene
+	//app->entityManager->DestroyEntity(this);
+
 	return true;
 }
 
@@ -547,7 +553,9 @@ void Player::OnCollision(PhysBody* physA, PhysBody* physB) {
 		std::cout << "PLATFORM COLLISION" << std::endl;
 		break;
 	case ColliderType::ENEMY:
-		estadoP = DEATH;
+
+		//estadoP = DEATH;
+
 		break;
 		
 	case ColliderType::UNKNOWN:

@@ -54,12 +54,12 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	//L07 DONE 2: Add Physics module
 	physics = new Physics(true);
 
-	sceneLogo = new SceneLogo(false);
+	sceneLogo = new SceneLogo(true);
 	sceneTitle = new SceneTitle(false);
 	
 
-	scene = new Scene(true);
-	sceneEnding = new SceneEnding(true);
+	scene = new Scene(false);
+	sceneEnding = new SceneEnding(false);
 	entityManager = new EntityManager(true);
 	map = new Map(true);
 	fade = new FadeToBlack(true);
@@ -71,17 +71,19 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(win);
 	AddModule(tex);
 	AddModule(audio);
-	//L07 DONE 2: Add Physics module
-	AddModule(physics);
-	
-	AddModule(sceneLogo);
-	AddModule(sceneTitle);
-	
 
-	AddModule(scene);
-	AddModule(sceneEnding);
+	//L07 DONE 2: Add Physics module
+	AddModule(physics);  //20 de memoria (hasta aqui)
+	
+	AddModule(sceneLogo); //7 de memoria x si solo
+	AddModule(sceneTitle); //450 de memoria x si solo
+	
+	
+	AddModule(scene); //junto a entitiy manager: 124
+	AddModule(sceneEnding);//3 de memoria x si solo
 	AddModule(entityManager);
-	AddModule(map);
+	AddModule(map); //5 con scene active
+
 	// Render last to swap buffer
 	AddModule(fade);
 	AddModule(render);

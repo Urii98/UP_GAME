@@ -51,6 +51,8 @@ public:
 	Animation attackRAnimEnemy;
 	Animation attackLAnimEnemy;
 
+	bool destroy;
+
 	enum estadoSEnemy1 {
 		STOP = 0,
 		MOVIMIENTO,

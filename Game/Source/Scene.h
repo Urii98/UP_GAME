@@ -5,6 +5,8 @@
 #include "Player.h"
 #include "Item.h"
 #include "SmallEnemy1.h"
+#include <vector>
+
 
 struct SDL_Texture;
 
@@ -39,6 +41,8 @@ public:
 
 	//L02: DONE 3: Declare a Player attribute 
 	Player* player;
+	std::vector<Entity*>* vect = new std::vector<Entity*>;
+
 
 private:
 	SDL_Texture* img;
