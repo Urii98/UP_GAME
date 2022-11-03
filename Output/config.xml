@@ -23,7 +23,7 @@
 
   <!-- L02: DONE: Add an element for the entity manager and add the player parameters -->
   <scene>
-    <player x="150" y="672" texturepath="Assets/Textures/KirbySS.png"/>
+    <player x="150" y="672" texturepath="Assets/Textures/KirbySS.png" coinFxPath="Assets/Audio/Fx/coin.ogg" kirbyDeathFxPath="Assets/Audio/Fx/KirbyDeathFx.ogg"/>
     <item x="256" y="515" texturepath="Assets/Textures/goldCoin.png"/>
     <item x="416" y="512" texturepath="Assets/Textures/goldCoin.png"/>
     <item x="354" y="352" texturepath="Assets/Textures/goldCoin.png"/>
@@ -33,10 +33,26 @@
     <SmallEnemy1 x="440" y="332" texturepath="Assets/Textures/Enemies.png"/>
     <SmallEnemy1 x="330" y="497" texturepath="Assets/Textures/Enemies.png"/>
   </scene>
+  
+  <sceneLogo>
+    <textureLogoPath path="Assets/Textures/Logo.png"/>
+  </sceneLogo>
+
+  <sceneTitle>
+    <textureTitlePath path="Assets/Textures/Title/ezgif-frame-"/>
+    <musicTitlePath path="Assets/Audio/Music/MusicSceneTitle.ogg"/>
+    <musicStopPath path="Assets/Audio/Music/noSound.ogg"/>
+  </sceneTitle>
+
+  <sceneEnding>
+    <textureSceneEndingPath path="Assets/Textures/kirbyDeath.png"/>
+  </sceneEnding>
 
   <map>
     <mapfolder path="Assets/Maps/"/>
     <mapfile path="Assets/Maps/UP_GAME.tmx"/>
+    <middleBackgroundTexture path="Assets/Textures/back.png"/>
+    <farBackgroundTexture path="Assets/Textures/middle.png"/>
   </map>
   
 </config>

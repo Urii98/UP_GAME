@@ -56,21 +56,13 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 
 	sceneLogo = new SceneLogo(false);
 	sceneTitle = new SceneTitle(false);
-	//sceneEnding = new SceneEnding(false);
+	
 
 	scene = new Scene(true);
+	sceneEnding = new SceneEnding(true);
 	entityManager = new EntityManager(true);
 	map = new Map(true);
 	fade = new FadeToBlack(true);
-
-
-
-
-
-
-
-
-
 
 
 	// Ordered for awake / Start / Update
@@ -84,9 +76,10 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	
 	AddModule(sceneLogo);
 	AddModule(sceneTitle);
-	//AddModule(sceneEnding);
+	
 
 	AddModule(scene);
+	AddModule(sceneEnding);
 	AddModule(entityManager);
 	AddModule(map);
 	// Render last to swap buffer

@@ -18,7 +18,7 @@ public:
 	// Destructor
 	virtual ~SceneTitle();
 
-	bool Awake();
+	bool Awake(pugi::xml_node& conf);
 
 	bool Start();
 
@@ -32,10 +32,11 @@ public:
 	SDL_Texture* bgTexture[NUM_IMAGES];
 	int frame;
 
-	int musicSceneTitle;
-	int stopMusic;
-
 	SDL_Timer chrono;
+
+	SString textureTitlePath;
+	const char* musicTitlePath;
+	const char* musicStopPath;
 
 };
 

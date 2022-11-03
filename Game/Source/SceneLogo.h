@@ -20,7 +20,7 @@ public:
 	// Destructor
 	virtual ~SceneLogo();
 
-	bool Awake();
+	bool Awake(pugi::xml_node& conf);
 
 	bool Start();
 
@@ -45,6 +45,7 @@ public:
 	//std::shared_ptr<Animation> cASL = std::make_shared<Animation>();
 
 	SDL_Timer chrono;
+	SString textureLogoPath;
 	
 
 };

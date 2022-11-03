@@ -162,6 +162,8 @@ private:
 
     SString mapFileName;
 	SString mapFolder;
+	const char* middleBackgroundPath;
+	const char* farBackgroundPath;
     bool mapLoaded;
 
 	

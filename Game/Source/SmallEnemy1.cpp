@@ -200,3 +200,14 @@ bool SmallEnemy1::CleanUp()
 	//memoryleak
 	return true;
 }
+
+void SmallEnemy1::OnCollision(PhysBody* physA, PhysBody* physB)
+{
+	
+	switch (physB->ctype)
+	{
+	case ColliderType::PLAYER:
+		pbody->body->GetWorld()->DestroyBody(pbody->body);
+		break;
+	}
+}

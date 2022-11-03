@@ -24,6 +24,8 @@ public:
 
 	bool CleanUp();
 
+	void OnCollision(PhysBody* physA, PhysBody* physB) override;
+
 private:
 
 	void Movimiento();

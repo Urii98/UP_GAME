@@ -10,6 +10,9 @@
 #include "Physics.h"
 #include "Window.h"
 
+#include "SceneEnding.h"
+#include "SmallEnemy1.h"
+
 
 Player::Player() : Entity(EntityType::PLAYER)
 {
@@ -22,14 +25,16 @@ Player::~Player() {
 
 bool Player::Awake() {
 
-	//L02: DONE 1: Initialize Player parameters
-	//pos = position;
-	//texturePath = "Assets/Textures/player/idle1.png";
-
 	//L02: DONE 5: Get Player parameters from XML
 	position.x = parameters.attribute("x").as_int();
 	position.y = parameters.attribute("y").as_int();
 
+	//initialize audio effect - !! Path is hardcoded, should be loaded from config.xml
+	coinSFx = parameters.attribute("coinFxPath").as_string();
+	deathSFx = parameters.attribute("kirbyDeathFxPath").as_string();
+
+	pickCoinFxId = app->audio->LoadFx(coinSFx);
+	kirbyDeathFx = app->audio->LoadFx(deathSFx);
 
 	texturePath = parameters.attribute("texturepath").as_string();
 	
@@ -206,10 +211,6 @@ bool Player::Start() {
 	// L07 DONE 7: Assign collider type
 	pbody->ctype = ColliderType::PLAYER;
 
-	//initialize audio effect - !! Path is hardcoded, should be loaded from config.xml
-	pickCoinFxId = app->audio->LoadFx("Assets/Audio/Fx/retro-video-game-coin-pickup-38299.ogg");
-	kirbyDeathFx = app->audio->LoadFx("Assets/Audio/Fx/KirbyDeathFx.ogg");
-
 	std::cout << "MASSA PLAYER - " << pbody->body->GetMass() << std::endl;
 
 	std::cout << pbody->body->GetFixtureList()->GetDensity() << std::endl;
@@ -227,6 +228,7 @@ bool Player::Start() {
 
 void Player::Movimiento()
 {
+	
 	b2Vec2 vel = b2Vec2(0, 0);
 
 	if (oneJump && app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN)
@@ -383,7 +385,7 @@ void Player::Movimiento()
 		vel = b2Vec2(0, -speedY);
 	}
 	else {  // -- ANIMACIÓN -- IDLE
-
+		
 		estadoP = STOP;
 
 		if (collisionP == COLLISION)
@@ -425,9 +427,9 @@ void Player::Movimiento()
 	if (app->input->GetKey(SDL_SCANCODE_0) == KEY_DOWN) // -- ANIMACIÓN MORIR
 	{
 		currentAnimation = &death;
+		app->audio->PlayFx(kirbyDeathFx, 0);
 		estadoP = DEATH;
 	}
-
 
 
 
@@ -441,8 +443,6 @@ bool Player::Update()
 {
 	app->render->playerPosition.x = position.x /** app->win->GetScale()*/; //Le pasamos la posicion del player al render para que la cámara siga al player
 	app->render->playerPosition.y = position.y /** app->win->GetScale()*/;
-	
-	
 
 	switch (estadoP)
 	{
@@ -454,16 +454,25 @@ bool Player::Update()
 		break;
 	case(DEATH):
 		app->audio->PlayFx(kirbyDeathFx,0);
-		estadoP = NONE;
+		currentAnimation = &death;
 		break;
 	case(NONE):
 		break;
-	deault:
+	default: 
 		break;
 
 	}
 
-	
+	if (estadoP == DEATH)
+	{
+		deathTimer.Start(4);
+		estadoP = NONE;
+	}
+	if (deathTimer.Test() == FIN)
+	{
+		//app->sceneEnding->active = true;
+		app->sceneEnding->ending = true;
+	}
 
 
 	
@@ -485,12 +494,16 @@ bool Player::Update()
 	//cojo la posicion del player que me servira en el siguiente frame para chequear si se ha movido
 	prevPosition = position.x;
 
-	std::cout << "position iPoint.x = " << position.x << std::endl;
-	std::cout << "position iPoint.y = " << position.y << std::endl;
-	std::cout << "position pbody get Transform = " << METERS_TO_PIXELS(pbody->body->GetTransform().p.x)  << std::endl;
-	std::cout << "position pbody get Transform = " << METERS_TO_PIXELS(pbody->body->GetTransform().p.y) << std::endl;
+	if (app->input->GetKey(SDL_SCANCODE_5) == KEY_DOWN)
+	{
+		std::cout << "position iPoint.x = " << position.x << std::endl;
+		std::cout << "position iPoint.y = " << position.y << std::endl;
+		std::cout << "position pbody get Transform = " << METERS_TO_PIXELS(pbody->body->GetTransform().p.x) << std::endl;
+		std::cout << "position pbody get Transform = " << METERS_TO_PIXELS(pbody->body->GetTransform().p.y) << std::endl;
 
-	std::cout << "CAMERA POSITION.y" << app->render->camera.y << std::endl;
+		std::cout << "CAMERA POSITION.y" << app->render->camera.y << std::endl;
+	}
+
 
 	currentAnimation->Update();
 	PostUpdate();
@@ -534,12 +547,8 @@ void Player::OnCollision(PhysBody* physA, PhysBody* physB) {
 		std::cout << "PLATFORM COLLISION" << std::endl;
 		break;
 	case ColliderType::ENEMY:
-		//physB->listener->Disable();
-
-		physB->listener->position.x = 220;
-
-
-
+		estadoP = DEATH;
+		break;
 		
 	case ColliderType::UNKNOWN:
 		LOG("Collision UNKNOWN");

@@ -15,11 +15,11 @@ public:
 	// Destructor
 	virtual ~SceneEnding();
 
-	bool Awake();
+	bool Awake(pugi::xml_node& conf);
 
 	bool Start();
 
-	bool Update();
+	bool Update(float dt);
 
 	bool PostUpdate();
 
@@ -31,8 +31,10 @@ public:
 public:
 	SDL_Texture* bgTexture = nullptr;
 
-	int timer;
-	bool scape;
+	bool ending;
+
+	SDL_Texture* textureSceneEnding;
+	SString textureSceneEndingPath;
 
 };
 

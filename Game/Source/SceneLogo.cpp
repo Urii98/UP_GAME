@@ -10,6 +10,8 @@
 #include <iostream>
 #include <stdio.h>
 
+#include "SceneEnding.h"
+
 
 SceneLogo::SceneLogo(bool isActive) : Module(isActive) {
 	name.Create("sceneLogo");
@@ -20,9 +22,14 @@ SceneLogo::~SceneLogo() {
 
 }
 
-bool SceneLogo::Awake() {
+bool SceneLogo::Awake(pugi::xml_node& config) {
 
-	return true;
+	bool ret = true;
+
+	textureLogoPath = config.child("textureLogoPath").attribute("path").as_string();
+
+
+	return ret;
 }
 
 bool SceneLogo::Start() {
@@ -40,7 +47,7 @@ bool SceneLogo::Start() {
 	//}
 	//frame = 0;
 
-	textureLogo = app->tex->Load("Assets/Textures/Logo.png");
+	textureLogo = app->tex->Load(textureLogoPath.GetString());
 
 	app->render->camera.x = 0;
 	app->render->camera.y = 0;
@@ -83,11 +90,7 @@ bool SceneLogo::Update(float dt)
 bool SceneLogo::PostUpdate()
 {
 
-	//app->render->DrawTexture(bgTexture[frame], -360, 0, NULL);
-
 	app->render->DrawTexture(textureLogo, 0-360, 0, NULL);
-
-	
 
 	return true;
 }

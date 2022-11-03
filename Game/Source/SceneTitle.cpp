@@ -18,7 +18,12 @@ SceneTitle::~SceneTitle() {
 
 }
 
-bool SceneTitle::Awake() {
+bool SceneTitle::Awake(pugi::xml_node& config) {
+
+	textureTitlePath = config.child("textureTitlePath").attribute("path").as_string();
+	musicTitlePath = config.child("musicTitlePath").attribute("path").as_string();
+	musicStopPath = config.child("musicStopPath").attribute("path").as_string();
+
 	return true;
 }
 
@@ -37,12 +42,6 @@ bool SceneTitle::Start() {
 	}
 	frame = 0;
 
-	musicSceneTitle  = app->audio->LoadFx("Assets/Audio/Music/MusicSceneTitle.ogg");
-	stopMusic = app->audio->LoadFx("Assets/Audio/Music/noSound.ogg");
-	
-	
-
-
 	return true;
 }
 
@@ -54,20 +53,18 @@ bool SceneTitle::Update(float dt)
 		app->fade->Fade(this, (Module*)app->scene, 30);
 
 		
-		app->audio->PlayMusic("Assets/Audio/Music/noSound.ogg", 2.0);
+		app->audio->PlayMusic(musicStopPath, 2.0);
 		app->sceneTitle->active = false; //esto fuerza que se desactive esta clase
 		//lo que se supone que haría la funcion de fade de arriba, pero que no va
 
 		//Aqui tendría que ir esto: Pero si cuando se cargan los modulos scene no esta en active=true, despues cuando la activo no se ve el mapa
-		//app->scene->active = true;
+		app->scene->active = true;
 
 		//#chapuza1
 
 	}
 
 	
-
-	//chrono.Start(0.04);
 	chrono.Start(0.18);
 
 	if (frame < 147 && chrono.Test() == FIN)
@@ -75,11 +72,12 @@ bool SceneTitle::Update(float dt)
 
 	if (frame == 5)
 	{
-		//app->audio->PlayFx(musicSceneTitle, 0);
-		app->audio->PlayMusic("Assets/Audio/Music/MusicSceneTitle.ogg", 2.0);
+		app->audio->PlayMusic(musicTitlePath, 2.0);
 	}
-
-	
+	else if (frame == 147)
+	{
+		app->audio->PlayMusic(musicStopPath, 2.0);
+	}
 	
 	return true;
 }

@@ -33,6 +33,10 @@ bool Map::Awake(pugi::xml_node& config)
 
     mapFileName = config.child("mapfile").attribute("path").as_string();
     mapFolder = config.child("mapfolder").attribute("path").as_string();
+    farBackgroundPath = config.child("middleBackgroundTexture").attribute("path").as_string();
+    middleBackgroundPath = config.child("farBackgroundTexture").attribute("path").as_string();
+
+
 
     return ret;
 }
@@ -41,8 +45,9 @@ bool Map::Start()
 {
     bool ret = true;
 
-    middleBackground = app->tex->Load("Assets/Textures/middle.png");
-    farBackground = app->tex->Load("Assets/Textures/back.png");
+    farBackground = app->tex->Load(farBackgroundPath);
+    middleBackground = app->tex->Load(middleBackgroundPath);
+
 
     return ret;
 }

@@ -16,21 +16,31 @@ SceneEnding::~SceneEnding() {
 
 }
 
-bool SceneEnding::Awake() {
+bool SceneEnding::Awake(pugi::xml_node& config) {
+
+
+	textureSceneEndingPath = config.child("textureSceneEndingPath").attribute("path").as_string();
+
 	return true;
 }
 
 bool SceneEnding::Start() {
+
+	textureSceneEnding = app->tex->Load(textureSceneEndingPath.GetString());
+	ending = false;
 	return true;
 }
 
-bool SceneEnding::Update()
+bool SceneEnding::Update(float dt)
 {
 	return true;
 }
 
 bool SceneEnding::PostUpdate()
 {
+	if(ending)
+	app->render->DrawTexture(textureSceneEnding, app->render->playerPosition.x -512, 0, NULL);
+
 	return true;
 }
 

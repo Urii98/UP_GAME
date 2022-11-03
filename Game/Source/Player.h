@@ -103,11 +103,14 @@ private:
 	SDL_Timer jumpTimer;
 	SDL_Timer flyTimer;
 	SDL_Timer toDescent;
+	SDL_Timer deathTimer;
 	bool flying;
 
 	void Movimiento();
 	//ColliderType CheckCollision();
 	
+	const char* coinSFx;
+	const char* deathSFx;
 
 };
 
