@@ -198,6 +198,7 @@ bool Player::Start() {
 	direccionP = DERECHA;
 	oneJump = false; //se pasa a true cuando ya se haya hecho un salto, se pasa a false cuando se collisiona
 	flying = false;
+	destroy = false;
 
 	//initilize textures
 	texture = app->tex->Load(texturePath);
@@ -506,6 +507,11 @@ bool Player::Update()
 		std::cout << "CAMERA POSITION.y" << app->render->camera.y << std::endl;
 	}
 
+	if (app->input->GetKey(SDL_SCANCODE_F9) == KEY_DOWN)
+	{
+		pbody->body->GetWorld()->DestroyBody(pbody->body);
+		CleanUp();
+	}
 
 	currentAnimation->Update();
 	PostUpdate();

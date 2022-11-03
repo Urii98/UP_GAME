@@ -35,7 +35,7 @@ bool SceneTitle::Start() {
 
 	char x[120];
 
-	for (int i = 1; i <= 149; i++)
+	for (int i = 0; i <= 149; i++)
 	{
 		sprintf_s(x, "Assets/Textures/Title/ezgif-frame-%d.jpg", i + 1);
 		bgTexture[i] = app->tex->Load(x);
@@ -58,9 +58,9 @@ bool SceneTitle::Update(float dt)
 		//lo que se supone que haría la funcion de fade de arriba, pero que no va
 
 		//Aqui tendría que ir esto: Pero si cuando se cargan los modulos scene no esta en active=true, despues cuando la activo no se ve el mapa
+		
 		app->scene->active = true;
 
-		CleanUp();
 		//#chapuza1
 
 	}
@@ -94,8 +94,11 @@ bool SceneTitle::PostUpdate()
 
 bool SceneTitle::CleanUp()
 {
-	for (int i = 0; i < NUM_IMAGES; i++) {
+	for (int i = 0; i <= NUM_IMAGES; i++) {
 		app->tex->UnLoad(bgTexture[i]);
 	}
+
+	
+	
 	return true;
 }

@@ -105,8 +105,17 @@ bool Scene::Update(float dt)
 
 	//app->render->DrawTexture(img, 380, 100); // Placeholder not needed any more
 
+	
+
 	// Draw map
 	app->map->Draw();
+
+	if (app->input->GetKey(SDL_SCANCODE_F7) == KEY_DOWN)
+	{
+		this->active = false;
+		CleanUp();
+	}
+		
 
 	return true;
 }

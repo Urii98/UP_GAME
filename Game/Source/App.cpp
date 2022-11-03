@@ -58,7 +58,7 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	sceneTitle = new SceneTitle(false);
 	
 
-	scene = new Scene(false);
+	scene = new Scene(true);
 	sceneEnding = new SceneEnding(false);
 	entityManager = new EntityManager(true);
 	map = new Map(true);
@@ -73,13 +73,13 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(audio);
 
 	//L07 DONE 2: Add Physics module
-	AddModule(physics);  //20 de memoria (hasta aqui)
+	AddModule(physics);  //20 de memoria (hasta aqui) + modulos fade y render
 	
-	AddModule(sceneLogo); //7 de memoria x si solo
-	AddModule(sceneTitle); //450 de memoria x si solo
+	AddModule(sceneLogo); //7 de memoria x si solo  --> nse pq no se eliminan aunq he probado con breakpoint y se llama a delete texture y funciona normal
+	AddModule(sceneTitle); //450 de memoria x si solo --> podría estar dejando 11mb de memory leaks
 	
 	
-	AddModule(scene); //junto a entitiy manager: 124
+	AddModule(scene); //junto a entitiy manager: 112
 	AddModule(sceneEnding);//3 de memoria x si solo
 	AddModule(entityManager);
 	AddModule(map); //5 con scene active

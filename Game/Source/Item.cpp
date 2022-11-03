@@ -70,7 +70,6 @@ bool Item::CleanUp()
 	//memoryleak
 
 	app->tex->UnLoad(texture);
-
 	//la memoria del item se destruye en scene
 
 	return true;

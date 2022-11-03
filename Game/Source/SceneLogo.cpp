@@ -67,7 +67,8 @@ bool SceneLogo::Update(float dt)
 		//lo que se supone que haría la funcion de fade de arriba, pero que no va
 
 		app->sceneTitle->active = true;
-		
+
+		//CleanUp();
 
 		//#chapuza1
 

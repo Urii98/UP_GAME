@@ -60,6 +60,7 @@ public:
 	int speedYDown;
 	bool oneJump;
 
+	bool destroy;
 
 	int prevPosition;
 

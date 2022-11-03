@@ -45,8 +45,8 @@ bool Map::Start()
 {
     bool ret = true;
 
-    farBackground = app->tex->Load(farBackgroundPath);
-    middleBackground = app->tex->Load(middleBackgroundPath);
+    //farBackground = app->tex->Load(farBackgroundPath);
+    //middleBackground = app->tex->Load(middleBackgroundPath);
 
 
     return ret;
@@ -57,16 +57,17 @@ void Map::Draw()
     if(mapLoaded == false)
         return;
 
+ 
     //PARALLAX EFFECT:
 
-    app->render->DrawTexture(farBackground, app->render->playerPosition.x-190, 480, NULL,1.0f);
-    app->render->DrawTexture(middleBackground, -450, 600, NULL,0.5f);
-    app->render->DrawTexture(middleBackground, -626, 600, NULL,0.5f);
-    app->render->DrawTexture(middleBackground, -802, 600, NULL, 0.5f);
-    app->render->DrawTexture(middleBackground, -978, 600, NULL, 0.5f);
-    app->render->DrawTexture(middleBackground, -1154, 600, NULL, 0.5f);
-    app->render->DrawTexture(middleBackground, -274, 600, NULL, 0.5f);
-    app->render->DrawTexture(middleBackground, -98, 600, NULL, 0.5f);
+    //app->render->DrawTexture(farBackground, app->render->playerPosition.x-190, 480, NULL,1.0f);
+    //app->render->DrawTexture(middleBackground, -450, 600, NULL,0.5f);
+    //app->render->DrawTexture(middleBackground, -626, 600, NULL,0.5f);
+    //app->render->DrawTexture(middleBackground, -802, 600, NULL, 0.5f);
+    //app->render->DrawTexture(middleBackground, -978, 600, NULL, 0.5f);
+    //app->render->DrawTexture(middleBackground, -1154, 600, NULL, 0.5f);
+    //app->render->DrawTexture(middleBackground, -274, 600, NULL, 0.5f);
+    //app->render->DrawTexture(middleBackground, -98, 600, NULL, 0.5f);
 
 
 
@@ -116,9 +117,7 @@ void Map::Draw()
         }
         mapLayerItem = mapLayerItem->next;
 
-    }
-
-    
+    }    
 }
 
 // L05: DONE 8: Create a method that translates x,y coordinates from map positions to world positions
@@ -193,6 +192,9 @@ bool Map::CleanUp()
         RELEASE(layerItem->data);
         layerItem = layerItem->next;
     }
+     
+    //app->tex->UnLoad(middleBackground);
+    //app->tex->UnLoad(farBackground);
 
     return true;
 }

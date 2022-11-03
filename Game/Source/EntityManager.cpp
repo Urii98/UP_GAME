@@ -135,5 +135,11 @@ bool EntityManager::Update(float dt)
 		ret = item->data->Update();
 	}
 
+
+	if (app->input->GetKey(SDL_SCANCODE_F8) == KEY_DOWN)
+	{
+		this->active = false;
+	}
+
 	return ret;
 }
