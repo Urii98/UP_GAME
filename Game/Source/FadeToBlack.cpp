@@ -29,7 +29,6 @@ bool FadeToBlack::Start()
 
 bool FadeToBlack::Update(float dt)
 {
-	std::cout << currentStep << std::endl;
 	// Exit this function if we are not performing a fade
 	if (currentStep == Fade_Step::NONE) return true;
 

@@ -11,6 +11,13 @@
 
 struct SDL_Texture;
 
+struct transformPosition {
+	float posX;
+	float posY;
+	bool turn;
+
+};
+
 class Player : public Entity
 {
 public:
@@ -32,6 +39,7 @@ public:
 	// L07 DONE 6: Define OnCollision function for the player. Check the virtual function on Entity class
 	void OnCollision(PhysBody* physA, PhysBody* physB);
 
+	void Player::ChangePosition(int x, int y);
 public:
 
 	enum estadoPlayer
@@ -86,6 +94,9 @@ public:
 	Animation preflyLAnim;
 	Animation flyLAnim;
 	Animation death;
+
+	transformPosition teleport;
+	
 
 
 private:

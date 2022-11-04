@@ -95,8 +95,6 @@ bool SceneTitle::Update(float dt)
 			//#chapuza1
 		}
 
-		std::cout << "alphatoFade  - " << alphatoFade << std::endl;
-		std::cout << "FRAME  - " << frame << std::endl;
 
 	}
 	else if(fromFade == true)

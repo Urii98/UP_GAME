@@ -218,6 +218,8 @@ bool Player::Start() {
 	// L07 DONE 7: Assign collider type
 	pbody->ctype = ColliderType::PLAYER;
 
+	teleport.turn = false;
+
 	std::cout << "MASSA PLAYER - " << pbody->body->GetMass() << std::endl;
 
 	std::cout << pbody->body->GetFixtureList()->GetDensity() << std::endl;
@@ -460,6 +462,15 @@ void Player::Movimiento()
 	pbody->body->SetLinearVelocity(vel);
 }
 
+void Player::ChangePosition(int x, int y)
+{
+
+	teleport.posX = x;
+	teleport.posY = y;
+	teleport.turn = true;
+
+}
+
 
 bool Player::Update()
 {
@@ -540,8 +551,25 @@ bool Player::Update()
 		CleanUp();
 	}
 
+	if (app->input->GetKey(SDL_SCANCODE_8) == KEY_DOWN)
+	{
+		b2Vec2 resetPos = b2Vec2(PIXEL_TO_METERS(30), PIXEL_TO_METERS(30));
+		pbody->body->SetTransform(resetPos, 0);
+	}
+
+	if (teleport.turn == true)
+	{
+		b2Vec2 resetPos = b2Vec2(PIXEL_TO_METERS(teleport.posX), PIXEL_TO_METERS(teleport.posY));
+		pbody->body->SetTransform(resetPos, 0);
+
+		teleport.turn = false;
+	}
+
+
 	currentAnimation->Update();
 	PostUpdate();
+
+	std::cout << "final update" << position.x << std::endl;
 	return true;
 }
 
@@ -575,6 +603,8 @@ void Player::OnCollision(PhysBody* physA, PhysBody* physB) {
 	case ColliderType::ITEM:
 		LOG("Collision ITEM");
 		app->audio->PlayFx(pickCoinFxId);
+		
+		ChangePosition(30, 30);
 		break;
 	case ColliderType::PLATFORM:
 		LOG("Collision PLATFORM");

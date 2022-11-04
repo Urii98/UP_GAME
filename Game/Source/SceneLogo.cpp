@@ -50,7 +50,6 @@ bool SceneLogo::Start() {
 
 bool SceneLogo::Update(float dt)
 {
-	std::cout << "SCENELOGO" << std::endl;
 
 	if (app->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN)
 	{
