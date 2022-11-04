@@ -62,6 +62,8 @@ public:
 
 	int prevPosition;
 
+	bool godMode;
+
 	Animation* currentAnimation = nullptr; 
 
 	Animation idleRAnim;

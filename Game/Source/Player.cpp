@@ -198,6 +198,7 @@ bool Player::Start() {
 	direccionP = DERECHA;
 	oneJump = false; //se pasa a true cuando ya se haya hecho un salto, se pasa a false cuando se collisiona
 	flying = false;
+	godMode = false;
 	flapLimit = 0;
 
 	//initilize textures
@@ -441,7 +442,7 @@ void Player::Movimiento()
 		}
 	}
 	
-	if (app->input->GetKey(SDL_SCANCODE_0) == KEY_DOWN) // -- ANIMACIÓN MORIR
+	if (app->input->GetKey(SDL_SCANCODE_0) == KEY_DOWN && !godMode) // -- ANIMACIÓN MORIR
 	{
 		currentAnimation = &death;
 		app->audio->PlayFx(kirbyDeathFx, 0);
@@ -502,13 +503,32 @@ bool Player::Update()
 	prevPosition = position.x;
 
 	
-		std::cout << "position iPoint.x = " << position.x << std::endl;
-		std::cout << "position iPoint.y = " << position.y << std::endl;
-		std::cout << "position pbody get Transform = " << METERS_TO_PIXELS(pbody->body->GetTransform().p.x) << std::endl;
-		std::cout << "position pbody get Transform = " << METERS_TO_PIXELS(pbody->body->GetTransform().p.y) << std::endl;
-
-		std::cout << "CAMERA POSITION.y" << app->render->camera.y << std::endl;
+	std::cout << "position iPoint.x = " << position.x << std::endl;
+	std::cout << "position iPoint.y = " << position.y << std::endl;
+	std::cout << "position pbody get Transform = " << METERS_TO_PIXELS(pbody->body->GetTransform().p.x) << std::endl;
+	std::cout << "position pbody get Transform = " << METERS_TO_PIXELS(pbody->body->GetTransform().p.y) << std::endl;
+	std::cout << "CAMERA POSITION.y" << app->render->camera.y << std::endl;
 	
+
+	if (app->input->GetKey(SDL_SCANCODE_F10) == KEY_DOWN)
+	{
+		if (!godMode)
+		{
+			godMode = true;
+		}
+		else
+		{
+			godMode = false;
+		}
+		
+	}
+	 
+	if (godMode)
+	{
+		std::cout << "GODMODE ACTIVADO" << std::endl;
+		flapLimit = 0;
+		estadoP = MOVIMIENTO;
+	}
 
 	if (app->input->GetKey(SDL_SCANCODE_1) == KEY_DOWN)
 	{
