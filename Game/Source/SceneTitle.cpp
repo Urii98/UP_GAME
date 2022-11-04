@@ -91,6 +91,7 @@ bool SceneTitle::Update(float dt)
 			//Aqui tendría que ir esto: Pero si cuando se cargan los modulos scene no esta en active=true, despues cuando la activo no se ve el mapa
 
 			app->scene->active = true;
+			app->entityManager->active = true;
 
 			//#chapuza1
 		}
@@ -119,18 +120,17 @@ bool SceneTitle::Update(float dt)
 bool SceneTitle::PostUpdate()
 {
 	SDL_Rect rect = { 0,0,1024,768 };
-	SDL_Rect rect2 = { -247,0,1024,768 };
 	
 	if (!fromFade)
 	{
-		app->render->DrawTexture(bgTexture[frame], -247, 0, &rect, 1.0f, 0.0, 2147483647, 2147483647, false);
+		app->render->DrawTexture(bgTexture[frame], 0, 0, &rect, 1.0f, 0.0, 2147483647, 2147483647, false);
 
-		app->render->DrawRectangle(rect2, 0, 0, 0, (unsigned char)(255.0f * alphatoFade));
+		app->render->DrawRectangle(rect, 0, 0, 0, (unsigned char)(255.0f * alphatoFade));
 	}
 	else
 	{
-		app->render->DrawTexture(bgTexture[1], -247, 0, &rect, 1.0f, 0.0, 2147483647, 2147483647, false);
-		app->render->DrawRectangle(rect2, 0, 0, 0, (unsigned char)(255.0f * alphaFromFade));
+		app->render->DrawTexture(bgTexture[1], 0, 0, &rect, 1.0f, 0.0, 2147483647, 2147483647, false);
+		app->render->DrawRectangle(rect, 0, 0, 0, (unsigned char)(255.0f * alphaFromFade));
 	}
 
 	

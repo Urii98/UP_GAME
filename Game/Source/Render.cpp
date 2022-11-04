@@ -5,7 +5,9 @@
 
 #include "Defs.h"
 #include "Log.h"
+
 #include <iostream>
+#include "Scene.h"
 
 #define VSYNC true
 
@@ -75,8 +77,12 @@ bool Render::PreUpdate()
 
 bool Render::Update(float dt)
 {
+	if (app->scene->active)
+	{
+		camera.x = -(playerPosition.x - 512);
+		camera.y = -(playerPosition.y - 384);
+	}
 
-	camera.x = -(playerPosition.x - 512);
 	
 	return true;
 }

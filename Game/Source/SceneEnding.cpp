@@ -38,8 +38,9 @@ bool SceneEnding::Update(float dt)
 
 bool SceneEnding::PostUpdate()
 {
+	SDL_Rect rect = { 0,0,1024,768 };
 	if(ending)
-	app->render->DrawTexture(textureSceneEnding, app->render->playerPosition.x -512, 0, NULL);
+	app->render->DrawTexture(textureSceneEnding, -247, -50, &rect, 1.0f, 0.0, 2147483647, 2147483647, false);
 
 	return true;
 }

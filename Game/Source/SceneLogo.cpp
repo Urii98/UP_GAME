@@ -91,11 +91,10 @@ bool SceneLogo::Update(float dt)
 bool SceneLogo::PostUpdate()
 {
 	SDL_Rect rect = { 0,0,1024,768 };
-	SDL_Rect rect2 = { -247,0,1024,768 };
 
-	app->render->DrawTexture(textureLogo, -247, 0, &rect, 1.0f, 0.0, 2147483647, 2147483647, false);
+	app->render->DrawTexture(textureLogo, 0, 0, &rect, 1.0f, 0.0, 2147483647, 2147483647, false);
 
-	app->render->DrawRectangle(rect2, 0, 0, 0, (unsigned char)(255.0f * alpha));
+	app->render->DrawRectangle(rect, 0, 0, 0, (unsigned char)(255.0f * alpha));
 
 	return true;
 }

@@ -6,6 +6,7 @@
 #include "Animation.h"
 #include "SDL_Timer.h"
 #include "Scene.h"
+#include "EntityManager.h"
 
 struct SDL_Texture;
 
