@@ -40,6 +40,7 @@ public:
 	void OnCollision(PhysBody* physA, PhysBody* physB);
 
 	void Player::ChangePosition(int x, int y);
+
 public:
 
 	enum estadoPlayer
@@ -96,8 +97,7 @@ public:
 	Animation death;
 
 	transformPosition teleport;
-	
-
+		
 
 private:
 
@@ -105,13 +105,12 @@ private:
 	SDL_Texture* texture;
 
 	
-
+	// L07 DONE 5: Add physics to the player - declare a Physics body
+	PhysBody* pbody;
 
 
 	const char* texturePath;
 
-	// L07 DONE 5: Add physics to the player - declare a Physics body
-	PhysBody* pbody;
 
 	int pickCoinFxId;
 	int kirbyDeathFx;

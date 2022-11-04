@@ -77,7 +77,6 @@ bool Render::Update(float dt)
 {
 
 	camera.x = -(playerPosition.x - 512);
-
 	
 	return true;
 }
@@ -249,8 +248,8 @@ bool Render::DrawCircle(int x, int y, int radius, Uint8 r, Uint8 g, Uint8 b, Uin
 // for now load camera's x and y
 bool Render::LoadState(pugi::xml_node& data)
 {
-	camera.x = data.child("camera").attribute("x").as_int();
-	camera.y = data.child("camera").attribute("y").as_int();
+	//camera.x = data.child("camera").attribute("x").as_int();
+	//camera.y = data.child("camera").attribute("y").as_int();
 
 	return true;
 }
@@ -259,10 +258,10 @@ bool Render::LoadState(pugi::xml_node& data)
 // using append_child and append_attribute
 bool Render::SaveState(pugi::xml_node& data)
 {
-	pugi::xml_node cam = data.append_child("camera");
+	//pugi::xml_node cam = data.append_child("camera");
 
-	cam.append_attribute("x") = camera.x;
-	cam.append_attribute("y") = camera.y;
+	//cam.append_attribute("x") = camera.x;
+	//cam.append_attribute("y") = camera.y;
 
 	return true;
 }

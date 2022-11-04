@@ -474,6 +474,10 @@ void Player::ChangePosition(int x, int y)
 
 bool Player::Update()
 {
+	//Update player position in pixels: Posición del COLLIDER:
+	position.x = METERS_TO_PIXELS(pbody->body->GetTransform().p.x / app->win->GetScale()) - 14;
+	position.y = METERS_TO_PIXELS(pbody->body->GetTransform().p.y / app->win->GetScale()) - 10;
+
 	app->render->playerPosition.x = position.x * app->win->GetScale(); //Le pasamos la posicion del player al render para que la cámara siga al player
 	app->render->playerPosition.y = position.y * app->win->GetScale();
 
@@ -510,14 +514,7 @@ bool Player::Update()
 		CleanUp();
 	}
 
-	//Update player position in pixels: Posición del COLLIDER:
-	position.x = METERS_TO_PIXELS(pbody->body->GetTransform().p.x / app->win->GetScale()) - 14;
-	position.y = METERS_TO_PIXELS(pbody->body->GetTransform().p.y / app->win->GetScale()) - 10;
 
-	//cojo la posicion del player que me servira en el siguiente frame para chequear si se ha movido
-	prevPosition = position.x;
-
-	
 	/*std::cout << "position iPoint.x = " << position.x << std::endl;
 	std::cout << "position iPoint.y = " << position.y << std::endl;
 	std::cout << "position pbody get Transform = " << METERS_TO_PIXELS(pbody->body->GetTransform().p.x) << std::endl;
@@ -569,17 +566,13 @@ bool Player::Update()
 	currentAnimation->Update();
 	PostUpdate();
 
-	std::cout << "final update" << position.x << std::endl;
 	return true;
 }
 
 void Player::PostUpdate()
 {
-
 	SDL_Rect rect = currentAnimation->GetCurrentFrame();
 	app->render->DrawTexture(texture, position.x, position.y, &rect);
-
-	
 }
 
 
@@ -603,7 +596,6 @@ void Player::OnCollision(PhysBody* physA, PhysBody* physB) {
 	case ColliderType::ITEM:
 		LOG("Collision ITEM");
 		app->audio->PlayFx(pickCoinFxId);
-		
 		ChangePosition(30, 30);
 		break;
 	case ColliderType::PLATFORM:
@@ -629,4 +621,3 @@ void Player::OnCollision(PhysBody* physA, PhysBody* physB) {
 
 
 }
-
