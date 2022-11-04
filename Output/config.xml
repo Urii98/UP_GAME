@@ -9,7 +9,7 @@
   </renderer>
 
   <window>
-    <resolution width="1024" height="768" scale="1"/> <!--para que el scale funcione, tenemos que tener en cuenta que no solo lo que se renderiza tiene que verse modificado, sino también todo lo relacionado con las fisicas (posición del collider), velocidad de personajes, etc.-->
+    <resolution width="1024" height="768" scale="2"/> <!--para que el scale funcione, tenemos que tener en cuenta que no solo lo que se renderiza tiene que verse modificado, sino también todo lo relacionado con las fisicas (posición del collider), velocidad de personajes, etc.-->
     <fullscreen value="false"/>
     <borderless value="false"/>
     <resizable value="false"/>
@@ -23,7 +23,7 @@
 
   <!-- L02: DONE: Add an element for the entity manager and add the player parameters -->
   <scene>
-    <player x="150" y="672" texturepath="Assets/Textures/KirbySS.png" coinFxPath="Assets/Audio/Fx/coin.ogg" kirbyDeathFxPath="Assets/Audio/Fx/KirbyDeathFx.ogg"/>
+    <player x="30" y="20" texturepath="Assets/Textures/KirbySS.png" coinFxPath="Assets/Audio/Fx/coin.ogg" kirbyDeathFxPath="Assets/Audio/Fx/KirbyDeathFx.ogg"/>
     <item x="256" y="515" texturepath="Assets/Textures/goldCoin.png"/>
     <item x="416" y="512" texturepath="Assets/Textures/goldCoin.png"/>
     <item x="354" y="352" texturepath="Assets/Textures/goldCoin.png"/>

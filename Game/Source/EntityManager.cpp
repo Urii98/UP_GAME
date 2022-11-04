@@ -136,7 +136,7 @@ bool EntityManager::Update(float dt)
 	}
 
 
-	if (app->input->GetKey(SDL_SCANCODE_F8) == KEY_DOWN)
+	if (app->input->GetKey(SDL_SCANCODE_3) == KEY_DOWN)
 	{
 		this->active = false;
 	}

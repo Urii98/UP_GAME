@@ -76,15 +76,7 @@ bool Render::PreUpdate()
 bool Render::Update(float dt)
 {
 
-	if (app->win->GetScale() == 1) //Esto es para que la camará tenga a todo momento el personaje en el centro
-	{
-		camera.x = -(playerPosition.x - 512); 
-	//	camera.y = -playerPosition.y + 384;
-	}
-	else if (app->win->GetScale() == 2)
-	{
-		camera.x = -(playerPosition.x - (512 / 2)) * app->win->GetScale();
-	}
+	camera.x = -(playerPosition.x - 512);
 
 	
 	return true;
@@ -121,7 +113,7 @@ void Render::ResetViewPort()
 }
 
 // Blit to screen
-bool Render::DrawTexture(SDL_Texture* texture, int x, int y, const SDL_Rect* section, float speed, double angle, int pivotX, int pivotY) const
+bool Render::DrawTexture(SDL_Texture* texture, int x, int y, const SDL_Rect* section, float speed, double angle, int pivotX, int pivotY, bool escalar) const
 {
 	bool ret = true;
 	uint scale = app->win->GetScale();
@@ -140,8 +132,12 @@ bool Render::DrawTexture(SDL_Texture* texture, int x, int y, const SDL_Rect* sec
 		SDL_QueryTexture(texture, NULL, NULL, &rect.w, &rect.h);
 	}
 
-	rect.w *= scale;
-	rect.h *= scale;
+	if (escalar)
+	{
+		rect.w *= scale;
+		rect.h *= scale;
+	}
+
 
 	SDL_Point* p = NULL;
 	SDL_Point pivot;

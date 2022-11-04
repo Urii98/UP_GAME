@@ -38,6 +38,8 @@ bool Physics::Start()
 	// Set this module as a listener for contacts
 	world->SetContactListener(this);
 
+	debug = false;
+
 	return true;
 }
 
@@ -67,6 +69,18 @@ bool Physics::PreUpdate()
 				//pb2->listener->OnCollision(pb2, pb1);
 			}
 
+		}
+	}
+
+	if (app->input->GetKey(SDL_SCANCODE_F9) == KEY_DOWN)
+	{
+		if (!debug)
+		{
+			debug = true;
+		}
+		else
+		{
+			debug = false;
 		}
 	}
 

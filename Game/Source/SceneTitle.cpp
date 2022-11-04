@@ -48,7 +48,7 @@ bool SceneTitle::Start() {
 bool SceneTitle::Update(float dt)
 {
 
-	if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN && (chrono.Test() == EJECUTANDO || chrono.Test() == FIN))
+	if (app->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN && (chrono.Test() == EJECUTANDO || chrono.Test() == FIN))
 	{
 		app->fade->Fade(this, (Module*)app->scene, 30);
 
@@ -85,8 +85,8 @@ bool SceneTitle::Update(float dt)
 
 bool SceneTitle::PostUpdate()
 {
-
-	app->render->DrawTexture(bgTexture[frame], -360, 0, NULL);
+	SDL_Rect rect = { 0,0,1024,768 };
+	app->render->DrawTexture(bgTexture[frame], -247, 0, &rect, 1.0f, 0.0, 2147483647, 2147483647, false);
 
 	
 	return true;

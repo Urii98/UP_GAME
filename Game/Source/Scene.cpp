@@ -24,6 +24,7 @@ Scene::~Scene()
 // Called before render is available
 bool Scene::Awake(pugi::xml_node& config)
 {
+	
 	LOG("Loading Scene");
 	bool ret = true;
 

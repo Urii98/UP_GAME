@@ -198,7 +198,7 @@ bool Player::Start() {
 	direccionP = DERECHA;
 	oneJump = false; //se pasa a true cuando ya se haya hecho un salto, se pasa a false cuando se collisiona
 	flying = false;
-	destroy = false;
+	flapLimit = 0;
 
 	//initilize textures
 	texture = app->tex->Load(texturePath);
@@ -233,7 +233,7 @@ void Player::Movimiento()
 	
 	b2Vec2 vel = b2Vec2(0, 0);
 
-	if (oneJump && app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN)
+	if (oneJump && app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN && flapLimit <3)
 	{
 		flyTimer.Start(0.15); // -- ANIMACIÓN -- volar
 		std::cout << "flying" << std::endl;
@@ -248,6 +248,7 @@ void Player::Movimiento()
 		}
 
 		flying = true;
+		flapLimit++;
 	}
 	else if (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) { // -- ANIMACIÓN -- de caminar a la izquierda
 		
@@ -268,11 +269,12 @@ void Player::Movimiento()
 			}
 			
 		}
-		else if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN && oneJump)
+		else if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN && oneJump && flapLimit < 3)
 		{
 			flyTimer.Start(0.20);
 			collisionP = NOCOLLISION;
 			currentAnimation = &flyLAnim;
+			flapLimit++;
 		}
 
 		if (jumpTimer.Test() == EJECUTANDO || flyTimer.Test() == EJECUTANDO) // -- ANIMACIÓN -- saltar derecha
@@ -322,11 +324,12 @@ void Player::Movimiento()
 				flying = true;
 			}
 		}
-		else if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN && oneJump)
+		else if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN && oneJump && flapLimit < 3)
 		{
 			flyTimer.Start(0.20);
 			collisionP = NOCOLLISION;
 			currentAnimation = &flyRAnim;
+			flapLimit++;
 		}
 	
 		
@@ -335,8 +338,6 @@ void Player::Movimiento()
 			vel = b2Vec2(speedX, -speedY);
 
 		}
-
-		
 
 		if (collisionP == COLLISION) {
 
@@ -401,6 +402,20 @@ void Player::Movimiento()
 			}
 		}
 
+
+		if (flapLimit ==3)
+		{
+			flapLimitTimer.Start(6);
+		}
+		else
+		{
+			if (flapLimitTimer.Test() == FIN)
+			{
+				flapLimit = 0;
+			}
+		}
+
+
 		
 		vel = b2Vec2(0, -GRAVITY_Y);
 		
@@ -443,8 +458,10 @@ void Player::Movimiento()
 
 bool Player::Update()
 {
-	app->render->playerPosition.x = position.x /** app->win->GetScale()*/; //Le pasamos la posicion del player al render para que la cámara siga al player
-	app->render->playerPosition.y = position.y /** app->win->GetScale()*/;
+	app->render->playerPosition.x = position.x * app->win->GetScale(); //Le pasamos la posicion del player al render para que la cámara siga al player
+	app->render->playerPosition.y = position.y * app->win->GetScale();
+
+	this->active;
 
 	switch (estadoP)
 	{
@@ -477,19 +494,6 @@ bool Player::Update()
 		CleanUp();
 	}
 
-
-	
-
-
-
-	//if (collisionP == 0) {
-
-	//	std::cout << "NO COLLISION" << std::endl;
-	//}
-	//else if (collisionP == 1) {
-	//	std::cout << "COLLISION" << std::endl;
-	//}
-
 	//Update player position in pixels: Posición del COLLIDER:
 	position.x = METERS_TO_PIXELS(pbody->body->GetTransform().p.x / app->win->GetScale()) - 14;
 	position.y = METERS_TO_PIXELS(pbody->body->GetTransform().p.y / app->win->GetScale()) - 10;
@@ -497,17 +501,16 @@ bool Player::Update()
 	//cojo la posicion del player que me servira en el siguiente frame para chequear si se ha movido
 	prevPosition = position.x;
 
-	if (app->input->GetKey(SDL_SCANCODE_5) == KEY_DOWN)
-	{
+	
 		std::cout << "position iPoint.x = " << position.x << std::endl;
 		std::cout << "position iPoint.y = " << position.y << std::endl;
 		std::cout << "position pbody get Transform = " << METERS_TO_PIXELS(pbody->body->GetTransform().p.x) << std::endl;
 		std::cout << "position pbody get Transform = " << METERS_TO_PIXELS(pbody->body->GetTransform().p.y) << std::endl;
 
 		std::cout << "CAMERA POSITION.y" << app->render->camera.y << std::endl;
-	}
+	
 
-	if (app->input->GetKey(SDL_SCANCODE_F9) == KEY_DOWN)
+	if (app->input->GetKey(SDL_SCANCODE_1) == KEY_DOWN)
 	{
 		pbody->body->GetWorld()->DestroyBody(pbody->body);
 		CleanUp();
@@ -556,6 +559,7 @@ void Player::OnCollision(PhysBody* physA, PhysBody* physB) {
 		jumpLAnim.Reset();
 		oneJump = false;
 		flying = false;
+		flapLimit = 0;
 		std::cout << "PLATFORM COLLISION" << std::endl;
 		break;
 	case ColliderType::ENEMY:

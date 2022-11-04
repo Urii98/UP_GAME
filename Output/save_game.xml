@@ -8,10 +8,11 @@
 	<sceneLogo />
 	<sceneTitle />
 	<scene />
+	<sceneEnding />
 	<entitymanager />
 	<map />
 	<fade />
 	<renderer>
-		<camera x="371" y="0" />
+		<camera x="306" y="0" />
 	</renderer>
 </save_state>

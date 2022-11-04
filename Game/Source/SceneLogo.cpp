@@ -38,15 +38,6 @@ bool SceneLogo::Start() {
 
 	bool ret = true;
 
-	//char x[120];
-
-	//for (int i = 1; i <= 149 ; i++)
-	//{
-	//	sprintf_s(x, "Assets/Textures/Title/ezgif-frame-%d.jpg", i + 1);
-	//	bgTexture[i] = app->tex->Load(x);
-	//}
-	//frame = 0;
-
 	textureLogo = app->tex->Load(textureLogoPath.GetString());
 
 	app->render->camera.x = 0;
@@ -59,7 +50,7 @@ bool SceneLogo::Update(float dt)
 {
 	std::cout << "SCENELOGO" << std::endl;
 
-	if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN)
+	if (app->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN)
 	{
 		app->fade->Fade(this, (Module*)app->sceneTitle, 30);
 		
@@ -74,10 +65,7 @@ bool SceneLogo::Update(float dt)
 
 	}
 
-	/*chrono.Start(0.04);
 
-	if(frame <147 && chrono.Test() == FIN)
-		frame++;*/
 
 
 	return true;
@@ -90,8 +78,9 @@ bool SceneLogo::Update(float dt)
 
 bool SceneLogo::PostUpdate()
 {
+	SDL_Rect rect = { 0,0,1024,768 };
 
-	app->render->DrawTexture(textureLogo, 0-360, 0, NULL);
+	app->render->DrawTexture(textureLogo, -247, 0, &rect, 1.0f, 0.0, 2147483647, 2147483647, false);
 
 	return true;
 }

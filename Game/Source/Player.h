@@ -60,8 +60,6 @@ public:
 	int speedYDown;
 	bool oneJump;
 
-	bool destroy;
-
 	int prevPosition;
 
 	Animation* currentAnimation = nullptr; 
@@ -104,7 +102,9 @@ private:
 	SDL_Timer flyTimer;
 	SDL_Timer toDescent;
 	SDL_Timer deathTimer;
+	SDL_Timer flapLimitTimer;
 	bool flying;
+	int flapLimit;
 
 	void Movimiento();
 	//ColliderType CheckCollision();

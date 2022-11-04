@@ -20,15 +20,13 @@ public:
 		active = true;
 	}*/
 
-	Module(bool isActive) : active(isActive)
+	Module(bool isActive) : active{ isActive }
 	{}
 
 	void Init()
 	{
 	
 	}
-
-	
 
 	// Called before render is available
 	virtual bool Awake(pugi::xml_node&)

@@ -58,7 +58,7 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	sceneTitle = new SceneTitle(false);
 	
 
-	scene = new Scene(true);
+	scene = new Scene(false);
 	sceneEnding = new SceneEnding(false);
 	entityManager = new EntityManager(true);
 	map = new Map(true);
