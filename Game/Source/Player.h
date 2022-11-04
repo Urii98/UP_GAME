@@ -58,6 +58,11 @@ public:
 	int speedX;
 	int speedY;
 	int speedYDown;
+
+	int scalarSpeedX;
+	int scalarSpeedY;
+	int scalarSpeedYDown;
+
 	bool oneJump;
 
 	int prevPosition;

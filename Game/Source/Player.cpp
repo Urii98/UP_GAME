@@ -29,10 +29,19 @@ bool Player::Awake() {
 	//L02: DONE 5: Get Player parameters from XML
 	position.x = parameters.attribute("x").as_int();
 	position.y = parameters.attribute("y").as_int();
+	flapLimit = parameters.attribute("flapLimite").as_int();
+	scalarSpeedX = parameters.attribute("scalarSpeedX").as_int();
+	scalarSpeedY = parameters.attribute("scalarSpeedY").as_int();
+	scalarSpeedYDown = parameters.attribute("scalarSpeedYDown").as_int();
+
 
 	//initialize audio effect - !! Path is hardcoded, should be loaded from config.xml
 	coinSFx = parameters.attribute("coinFxPath").as_string();
 	deathSFx = parameters.attribute("kirbyDeathFxPath").as_string();
+
+	oneJump = parameters.attribute("oneJump").as_bool();
+	flying = parameters.attribute("flying").as_bool();
+	godMode = parameters.attribute("godMode").as_bool();
 
 	pickCoinFxId = app->audio->LoadFx(coinSFx);
 	kirbyDeathFx = app->audio->LoadFx(deathSFx);
@@ -188,18 +197,13 @@ bool Player::Start() {
 	death.loop = false;
 	death.speed = 0.085f;
 
+	speedX = scalarSpeedX * app->win->GetScale();
+	speedY = scalarSpeedY * app->win->GetScale();
+	speedYDown = scalarSpeedYDown * app->win->GetScale(); //para cuando estamos en el aire y apretamos "S" para bajar más rápido
 
-	
-	speedX = 6 * app->win->GetScale();
-	speedY = 9 * app->win->GetScale();
-	speedYDown = 6 * app->win->GetScale();
 	estadoP = STOP;
 	currentAnimation = &idleRAnim;
 	direccionP = DERECHA;
-	oneJump = false; //se pasa a true cuando ya se haya hecho un salto, se pasa a false cuando se collisiona
-	flying = false;
-	godMode = false;
-	flapLimit = 0;
 
 	//initilize textures
 	texture = app->tex->Load(texturePath);

@@ -25,10 +25,15 @@ bool SmallEnemy1::Awake() {
 
 	position.x = parameters.attribute("x").as_int();
 	position.y = parameters.attribute("y").as_int();
-	texturePath = parameters.attribute("texturepath").as_string();
+	scalarLimites = parameters.attribute("scalarLimites").as_int();
+	speedX = parameters.attribute("speedX").as_int();
 
-	limiteIzqX = position.x - 30;
-	limiteDerX = position.x + 30;
+	texturePath = parameters.attribute("texturepath").as_string();
+	
+	walkDir = parameters.attribute("walkDir").as_bool();
+	attackE = parameters.attribute("attackE").as_bool();
+	animAtk = parameters.attribute("animAtk").as_bool();
+	destroy = parameters.attribute("destroy").as_bool();
 
 	return true;
 }
@@ -37,12 +42,9 @@ bool SmallEnemy1::Start() {
 
 	estadoSE1 = MOVIMIENTO;
 	direccionE = DERECHA;
-	walkDir = false;
-	attackE = false;
-	animAtk = false;
-	destroy = false;
-	speedX = 2;
 
+	limiteIzqX = position.x - scalarLimites;
+	limiteDerX = position.x + scalarLimites;
 
 	walkRAnimEnemy.PushBack({ 718,1297,24,21 });
 	walkRAnimEnemy.PushBack({ 676,1297,24,21 });
