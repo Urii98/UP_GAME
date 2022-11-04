@@ -27,6 +27,8 @@ bool SceneLogo::Awake(pugi::xml_node& config) {
 	bool ret = true;
 
 	textureLogoPath = config.child("textureLogoPath").attribute("path").as_string();
+	alpha = 0.0f;
+	toFade = false;
 
 
 	return ret;
@@ -52,14 +54,25 @@ bool SceneLogo::Update(float dt)
 
 	if (app->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN)
 	{
+		toFade = true;
+
+	}
+
+	if (toFade)
+	{
+		alpha += 0.01f;
+	}
+
+	if (alpha > 1.00f)
+	{
+		toFade = false;
+
 		app->fade->Fade(this, (Module*)app->sceneTitle, 30);
-		
+
 		app->sceneLogo->active = false; //esto fuerza que se desactive esta clase
 		//lo que se supone que haría la funcion de fade de arriba, pero que no va
 
 		app->sceneTitle->active = true;
-
-		//CleanUp();
 
 		//#chapuza1
 
@@ -79,8 +92,11 @@ bool SceneLogo::Update(float dt)
 bool SceneLogo::PostUpdate()
 {
 	SDL_Rect rect = { 0,0,1024,768 };
+	SDL_Rect rect2 = { -247,0,1024,768 };
 
 	app->render->DrawTexture(textureLogo, -247, 0, &rect, 1.0f, 0.0, 2147483647, 2147483647, false);
+
+	app->render->DrawRectangle(rect2, 0, 0, 0, (unsigned char)(255.0f * alpha));
 
 	return true;
 }

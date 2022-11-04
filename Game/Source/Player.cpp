@@ -503,11 +503,11 @@ bool Player::Update()
 	prevPosition = position.x;
 
 	
-	std::cout << "position iPoint.x = " << position.x << std::endl;
+	/*std::cout << "position iPoint.x = " << position.x << std::endl;
 	std::cout << "position iPoint.y = " << position.y << std::endl;
 	std::cout << "position pbody get Transform = " << METERS_TO_PIXELS(pbody->body->GetTransform().p.x) << std::endl;
 	std::cout << "position pbody get Transform = " << METERS_TO_PIXELS(pbody->body->GetTransform().p.y) << std::endl;
-	std::cout << "CAMERA POSITION.y" << app->render->camera.y << std::endl;
+	std::cout << "CAMERA POSITION.y" << app->render->camera.y << std::endl;*/
 	
 
 	if (app->input->GetKey(SDL_SCANCODE_F10) == KEY_DOWN)

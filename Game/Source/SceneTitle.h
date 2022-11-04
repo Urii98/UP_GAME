@@ -33,10 +33,15 @@ public:
 	int frame;
 
 	SDL_Timer chrono;
+	SDL_Timer chronoFade;
 
 	SString textureTitlePath;
 	const char* musicTitlePath;
 	const char* musicStopPath;
+	float alphatoFade;
+	float alphaFromFade;
+	bool toFade;
+	bool fromFade;
 
 };
 

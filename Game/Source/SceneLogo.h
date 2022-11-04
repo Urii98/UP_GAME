@@ -35,6 +35,8 @@ public:
 	//SDL_Texture* bgTexture[NUM_IMAGES];
 	SDL_Texture* textureLogo;
 	int frame;
+	float alpha;
+	bool toFade;
 
 	//Animation* currentAnimationSceneLogo = nullptr;
 	
