@@ -149,22 +149,12 @@ bool Scene::CleanUp()
 bool Scene::LoadState(pugi::xml_node& data)
 {
 	
-	
-	auto posX = data.child("player").attribute("x").as_int();
-	auto posY = data.child("player").attribute("y").as_int();
-
-	player->ChangePosition(posX, posY);
-
 	return true;
 }
 
 
 bool Scene::SaveState(pugi::xml_node& data)
 {
-	pugi::xml_node cam = data.append_child("player");
-
-	cam.append_attribute("x") = player->position.x;
-	cam.append_attribute("y") = player->position.y;
-
+	
 	return true;
 }

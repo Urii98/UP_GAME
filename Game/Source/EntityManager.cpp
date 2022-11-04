@@ -9,6 +9,9 @@
 #include "Defs.h"
 #include "Log.h"
 
+#include "Scene.h"
+#include "Window.h"
+
 EntityManager::EntityManager(bool isActive) : Module(isActive)
 {
 	name.Create("entitymanager");
@@ -142,4 +145,36 @@ bool EntityManager::Update(float dt)
 	}
 
 	return ret;
+}
+
+
+bool EntityManager::LoadState(pugi::xml_node& data)
+{
+	auto posX = data.child("playerScene1").attribute("x").as_int();
+	auto posY = data.child("playerScene1").attribute("y").as_int();
+
+	app->scene->player->ChangePosition(posX, posY);
+
+	return true;
+}
+
+
+bool EntityManager::SaveState(pugi::xml_node& data)
+{
+	pugi::xml_node playerScene1 = data.append_child("playerScene1");
+
+	if (app->win->GetScale() == 1)
+	{
+		playerScene1.append_attribute("x") = app->scene->player->position.x+15;
+		playerScene1.append_attribute("y") = app->scene->player->position.y+5;
+	}
+	else if(app->win->GetScale() == 2) //compensar el escalado para que la posición de guardar sea precisa
+	{
+		playerScene1.append_attribute("x") = app->scene->player->position.x * 2 + 28;
+		playerScene1.append_attribute("y") = app->scene->player->position.y * 2 + 5;
+	}
+
+
+
+	return true;
 }

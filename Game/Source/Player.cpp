@@ -478,8 +478,8 @@ bool Player::Update()
 	position.x = METERS_TO_PIXELS(pbody->body->GetTransform().p.x / app->win->GetScale()) - 14;
 	position.y = METERS_TO_PIXELS(pbody->body->GetTransform().p.y / app->win->GetScale()) - 10;
 
-	app->render->playerPosition.x = position.x * app->win->GetScale(); //Le pasamos la posicion del player al render para que la cámara siga al player
-	app->render->playerPosition.y = position.y * app->win->GetScale();
+	app->render->playerPosition.x = position.x;// * app->win->GetScale(); //Le pasamos la posicion del player al render para que la cámara siga al player
+	app->render->playerPosition.y = position.y;// * app->win->GetScale();
 
 	this->active;
 

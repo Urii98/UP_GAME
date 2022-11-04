@@ -7,11 +7,11 @@
 	<:anonymous />
 	<sceneLogo />
 	<sceneTitle />
-	<scene>
-		<player x="108" y="489" />
-	</scene>
+	<scene />
 	<sceneEnding />
-	<entitymanager />
+	<entitymanager>
+		<playerScene1 x="46" y="289" />
+	</entitymanager>
 	<map />
 	<fade />
 	<renderer />
