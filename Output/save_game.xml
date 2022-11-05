@@ -13,6 +13,6 @@
 	<map />
 	<fade />
 	<renderer>
-		<camera x="412" y="0" />
+		<camera x="360" y="0" />
 	</renderer>
 </save_state>
