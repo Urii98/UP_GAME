@@ -51,68 +51,21 @@ bool SceneTitle::Start() {
 
 bool SceneTitle::Update(float dt)
 {
+	chrono.Start(0.18); //el tiempo que pasa entre cada frame de la animación
 
-	if (!fromFade)
+	if (frame < 147 && chrono.Test() == FIN)
+		frame++;
+
+	if (frame == 5)
 	{
-	/*	if (app->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN && (chrono.Test() == EJECUTANDO || chrono.Test() == FIN))
-		{
-			toFade = true;
-		}*/
-		
-		chrono.Start(0.18);
-
-		if (frame < 147 && chrono.Test() == FIN)
-			frame++;
-
-		if (frame == 5)
-		{
-			app->audio->PlayMusic(musicTitlePath, 2.0);
-		}
-		else if (frame >= 147)
-		{
-			app->audio->PlayMusic(musicStopPath, 2.0);
-		}
-
-		if (toFade && alphatoFade < 1.0f && frame == 147)
-		{
-			alphatoFade += 0.05f;
-		}
-
-		if ((alphatoFade > 1.00f && frame == 147) || app->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN)
-		{
-			toFade = false;
-
-			app->fade->Fade(this, (Module*)app->scene, 30);
-
-			app->audio->PlayMusic(musicStopPath, 2.0);
-			app->sceneTitle->active = false; //esto fuerza que se desactive esta clase
-			//lo que se supone que haría la funcion de fade de arriba, pero que no va por ahora
-
-			//Aqui tendría que ir esto: Pero si cuando se cargan los modulos scene no esta en active=true, despues cuando la activo no se ve el mapa
-
-			app->scene->active = true;
-			app->entityManager->active = true;
-
-			//#chapuza1
-		}
-
-
+		app->audio->PlayMusic(musicTitlePath, 2.0);
 	}
-	else if(fromFade == true)
+
+	if (app->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN)
 	{
-		alphaFromFade -= 0.008f;
-
-		if (alphaFromFade < 0.03f)
-		{
-			fromFade = false;
-			toFade = true;
-		}
-
+		app->audio->PlayMusic(musicStopPath, 2.0);
+		app->fade->Fade(this, app->scene, 60);
 	}
-	
-
-
-
 	
 	return true;
 }
@@ -121,17 +74,8 @@ bool SceneTitle::PostUpdate()
 {
 	SDL_Rect rect = { 0,0,1024,768 };
 	
-	if (!fromFade)
-	{
-		app->render->DrawTexture(bgTexture[frame], 0, 0, &rect, 1.0f, 0.0, 2147483647, 2147483647, false);
 
-		app->render->DrawRectangle(rect, 0, 0, 0, (unsigned char)(255.0f * alphatoFade));
-	}
-	else
-	{
-		app->render->DrawTexture(bgTexture[1], 0, 0, &rect, 1.0f, 0.0, 2147483647, 2147483647, false);
-		app->render->DrawRectangle(rect, 0, 0, 0, (unsigned char)(255.0f * alphaFromFade));
-	}
+	app->render->DrawTexture(bgTexture[frame], 0, 0, &rect, 1.0f, 0.0, 2147483647, 2147483647, false);
 
 	
 	return true;

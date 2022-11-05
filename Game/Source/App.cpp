@@ -59,9 +59,9 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	
 
 	scene = new Scene(false);
-	sceneEnding = new SceneEnding(true);
+	sceneEnding = new SceneEnding(false);
 	entityManager = new EntityManager(false);
-	map = new Map(true);
+	map = new Map(false);
 	fade = new FadeToBlack(true);
 
 
@@ -87,6 +87,7 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	// Render last to swap buffer
 	AddModule(fade);
 	AddModule(render);
+	
 	
 }
 
@@ -151,7 +152,7 @@ bool App::Start()
 	ListItem<Module*>* item;
 	item = modules.start;
 
-	while (item != NULL && ret == true)
+	while (item != NULL && ret == true && item->data->active == true)
 	{
 		ret = item->data->Start();
 		item = item->next;
@@ -213,6 +214,7 @@ void App::FinishUpdate()
 	// L03: DONE 1: This is a good place to call Load / Save methods
 	if (loadGameRequested == true) LoadFromFile();
 	if (saveGameRequested == true) SaveToFile();
+
 }
 
 // Call modules before each loop iteration

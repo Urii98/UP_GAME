@@ -59,7 +59,17 @@ bool Scene::Start()
 	//img = app->tex->Load("Assets/Textures/test.png");
 	//app->audio->PlayMusic("Assets/Audio/Music/music_spy.ogg");
 	
+	if (app->map->active == false)
+	{
+		app->map->active = true;
+		app->map->Start();
+	}
 
+	if (app->entityManager->active == false)
+	{
+		app->entityManager->active = true;
+		app->entityManager->Start();
+	}
 	// L03: DONE: Load map
 	app->map->Load();
 

@@ -23,7 +23,7 @@ bool FadeToBlack::Start()
 	LOG("Preparing Fade Screen");
 
 	// Enable blending mode for transparency
-	SDL_SetRenderDrawBlendMode(app->render->renderer, SDL_BLENDMODE_BLEND);
+//	SDL_SetRenderDrawBlendMode(app->render->renderer, SDL_BLENDMODE_BLEND);
 	return true;
 }
 
@@ -34,8 +34,8 @@ bool FadeToBlack::Update(float dt)
 
 	if (currentStep == Fade_Step::TO_BLACK)
 	{
-		++frameCount;
-		if (frameCount >= maxFadeFrames)
+		alpha += 0.01f;
+		if (alpha > 1.00f)
 		{
 			moduleToDisable->Disable();
 			moduleToEnable->Enable();
@@ -45,26 +45,33 @@ bool FadeToBlack::Update(float dt)
 	}
 	else
 	{
-		--frameCount;
-		if (frameCount <= 0)
+		alpha -= 0.01f;
+		if (alpha <= 0)
 		{
 			currentStep = Fade_Step::NONE;
 		}
 	}
 
+	return true;
+
+
+
 }
 
 bool FadeToBlack::PostUpdate()
 {
-	// Exit this function if we are not performing a fade
+	
 
   	if (currentStep == Fade_Step::NONE) return true;
 
-	float fadeRatio = (float)frameCount / (float)maxFadeFrames;
 
-	// Render the black square with alpha on the screen
-	SDL_SetRenderDrawColor(app->render->renderer, 0, 0, 0, (Uint8)(fadeRatio * 255.0f));
-	SDL_RenderFillRect(app->render->renderer, &screenRect);
+	if (currentStep == Fade_Step::TO_BLACK)
+	{
+		// Render the black square with alpha on the screen
+		SDL_Rect rect = { 0,0,1024,768 };
+		app->render->DrawRectangle(rect, 0, 0, 0, (unsigned char)(255.0f * alpha));
+	}
+
 
 	return true;
 }

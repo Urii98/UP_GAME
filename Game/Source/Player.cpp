@@ -54,6 +54,7 @@ bool Player::Awake() {
 
 bool Player::Start() {
 
+	position.x = 30;
 	//idleRAnim
 	idleRAnim.PushBack({ 774, 91, 26, 22 });
 	idleRAnim.PushBack({ 774, 91, 26, 22 });
@@ -478,8 +479,8 @@ bool Player::Update()
 	position.x = METERS_TO_PIXELS(pbody->body->GetTransform().p.x / app->win->GetScale()) - 14;
 	position.y = METERS_TO_PIXELS(pbody->body->GetTransform().p.y / app->win->GetScale()) - 10;
 
-	app->render->playerPosition.x = position.x;// * app->win->GetScale(); //Le pasamos la posicion del player al render para que la cámara siga al player
-	app->render->playerPosition.y = position.y;// * app->win->GetScale();
+	app->render->playerPosition.x = position.x* app->win->GetScale(); //Le pasamos la posicion del player al render para que la cámara siga al player
+	app->render->playerPosition.y = position.y * app->win->GetScale();
 
 	this->active;
 
@@ -579,7 +580,7 @@ void Player::PostUpdate()
 bool Player::CleanUp()
 {
 	app->tex->UnLoad(texture);
-
+	std::cout << "entrando en Cleanup - Player" << std::endl;
 	//la memoria de player la libero directamente en scene
 	//app->entityManager->DestroyEntity(this);
 

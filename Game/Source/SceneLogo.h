@@ -38,6 +38,8 @@ public:
 	float alpha;
 	bool toFade;
 
+	bool prueba;
+
 	//Animation* currentAnimationSceneLogo = nullptr;
 	
 	Animation sceneLogoKirby;

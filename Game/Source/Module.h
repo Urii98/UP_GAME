@@ -82,18 +82,30 @@ public:
 
 	// Switches isEnabled and calls Start() method
 	void Enable() {
-		if (!isEnabled)
+		//if (!isEnabled)
+		//{
+		//	isEnabled = true;
+		//	Start();
+		//}
+
+		if (!active)
 		{
-			isEnabled = true;
+			active = true;
 			Start();
 		}
 	}
 
 	// Switches isEnabled and calls CleanUp() method
 	void Disable() {
-		if (isEnabled)
+	/*	if (isEnabled)
 		{
 			isEnabled = false;
+			CleanUp();
+		}*/
+
+		if (active)
+		{
+			active = false;
 			CleanUp();
 		}
 	}
