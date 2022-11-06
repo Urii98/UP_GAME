@@ -197,7 +197,40 @@ bool Map::Load()
         ret = LoadAllLayers(mapFileXML.child("map"));
     }
     
-    
+    ListItem<MapLayer*>* mapLayerItem;
+    mapLayerItem = mapData.maplayers.start;
+
+    while (mapLayerItem != NULL) {
+
+        //L06: DONE 7: use GetProperty method to ask each layer if your “Draw” property is true.
+        if (mapLayerItem->data->properties.GetProperty("Collider") != NULL && mapLayerItem->data->properties.GetProperty("Collider")->value) {
+
+            for (int x = 0; x < mapLayerItem->data->width; x++)
+            {
+                for (int y = 0; y < mapLayerItem->data->height; y++)
+                {
+                    // L05: DONE 9: Complete the draw function
+                    int gid = mapLayerItem->data->Get(x, y);
+
+                    //If GID 301 == Red Square (collider)
+                    if (gid == 941)
+                    {
+                        iPoint pos = MapToWorld(x, y);
+                        PhysBody* mapCollider = app->physics->CreateRectangle(pos.x + 8, pos.y + 8, 16, 16, STATIC);
+                        mapCollider->ctype = ColliderType::PLATFORM;
+                    }
+                    //302 == Green Square (die)
+                    else if (gid == 940)
+                    {
+                        iPoint pos = MapToWorld(x, y);
+                        PhysBody* mapDeathCollider = app->physics->CreateRectangleSensor(pos.x + 8, pos.y + 8, 16, 16, STATIC);
+                        mapDeathCollider->ctype = ColliderType::DEATH;
+                    }
+                }
+            }
+        }
+        mapLayerItem = mapLayerItem->next;
+    }
 
     // L07 DONE 3: Create colliders
     // Later you can create a function here to load and create the colliders from the map
