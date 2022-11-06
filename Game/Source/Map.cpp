@@ -245,17 +245,17 @@ bool Map::Load()
                     int gid = mapLayerItem->data->Get(x, y);
 
                     //If GID 301 == Red Square (collider)
-                    if (gid == 940)
+                    if (gid == 941)
                     {
-                        iPoint pos = MapToWorld(x, y);
-                        PhysBody* mapCollider = app->physics->CreateRectangle(pos.x + 16, pos.y + 16, 32, 32, STATIC);
+                        iPoint pos = MapToWorld(x * app->win->GetScale(), y * app->win->GetScale());
+                        PhysBody* mapCollider = app->physics->CreateRectangle(pos.x+(16 * app->win->GetScale()), pos.y+(16 * app->win->GetScale()), 32 * app->win->GetScale(), 32 * app->win->GetScale(), STATIC);
                         mapCollider->ctype = ColliderType::PLATFORM;
                     }
                     //302 == Green Square (die)
-                    else if (gid == 941)
+                    else if (gid == 940)
                     {
-                        iPoint pos = MapToWorld(x, y);
-                        PhysBody* mapDeathCollider = app->physics->CreateRectangleSensor(pos.x + 16, pos.y + 16, 32, 32, STATIC);
+                        iPoint pos = MapToWorld(x * app->win->GetScale(), y * app->win->GetScale());
+                        PhysBody* mapDeathCollider = app->physics->CreateRectangleSensor(pos.x + (16 * app->win->GetScale()), pos.y + (16 * app->win->GetScale()), 32 * app->win->GetScale(), 32 * app->win->GetScale(), STATIC);
                         mapDeathCollider->ctype = ColliderType::DEATH;
                     }
                 }
@@ -264,7 +264,7 @@ bool Map::Load()
         mapLayerItem = mapLayerItem->next;
     }
 
-    //// L07 DONE 3: Create colliders
+    // L07 DONE 3: Create colliders
     // //Later you can create a function here to load and create the colliders from the map
     //PhysBody* c1 = app->physics->CreateRectangle(224 + 128, 543 + 32, 256, 64, STATIC);
     //// L07 DONE 7: Assign collider type

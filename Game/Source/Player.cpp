@@ -42,7 +42,7 @@ bool Player::Awake() {
 	oneJump = parameters.attribute("oneJump").as_bool();
 	flying = parameters.attribute("flying").as_bool();
 	godMode = parameters.attribute("godMode").as_bool();
-
+	
 	pickCoinFxId = app->audio->LoadFx(coinSFx);
 	kirbyDeathFx = app->audio->LoadFx(deathSFx);
 
@@ -479,8 +479,51 @@ bool Player::Update()
 	position.x = METERS_TO_PIXELS(pbody->body->GetTransform().p.x / app->win->GetScale()) - 14;
 	position.y = METERS_TO_PIXELS(pbody->body->GetTransform().p.y / app->win->GetScale()) - 10;
 
-	app->render->playerPosition.x = position.x* app->win->GetScale(); //Le pasamos la posicion del player al render para que la cámara siga al player
-	app->render->playerPosition.y = position.y * app->win->GetScale();
+
+
+	//CAMARAAAAAAAAAAAA TENDRA Q SER UNA FUNCION XD
+	if (position.x<130 * app->win->GetScale() && position.y<200 * app->win->GetScale()) {//Kirby esquina superior izquierda
+		app->render->playerPosition.x = 260 * app->win->GetScale();
+		app->render->playerPosition.y = 370 * app->win->GetScale();
+	}
+	else if (position.x < 130 * app->win->GetScale() && position.y > 200 * app->win->GetScale()) {//Kirby esquina inferior izquierda
+		app->render->playerPosition.x = 260 * app->win->GetScale();
+		app->render->playerPosition.y = 370 * app->win->GetScale();
+	}
+	else if (position.x > 130 * app->win->GetScale() && position.y < 200 * app->win->GetScale()) {//Kirby esquina superior derecha
+		app->render->playerPosition.x = 260 * app->win->GetScale();
+		app->render->playerPosition.y = 370 * app->win->GetScale();
+	}
+	else if (position.x > 130 * app->win->GetScale() && position.y > 200 * app->win->GetScale()) {//Kirby esquina inferior derecha
+		app->render->playerPosition.x = 260 * app->win->GetScale();
+		app->render->playerPosition.y = 370 * app->win->GetScale();
+	}
+	else if (position.x < 200 * app->win->GetScale()) {//Kirby se va para izquierda
+		app->render->playerPosition.x = 370 * app->win->GetScale();
+		app->render->playerPosition.y = position.y * app->win->GetScale();
+	}
+	else if (position.x > 200 * app->win->GetScale()) {//Kirby se va para derecha
+		app->render->playerPosition.x = 370 * app->win->GetScale();
+		app->render->playerPosition.y = position.y * app->win->GetScale();
+	}
+	else if (position.y > 200 * app->win->GetScale()) {//Kirby se va para abajo
+		app->render->playerPosition.x = position.x * app->win->GetScale();
+		app->render->playerPosition.y = 370 * app->win->GetScale();
+	}
+	else if (position.y < 200 * app->win->GetScale()) { //Kirby se va para arriba
+		app->render->playerPosition.x = position.x * app->win->GetScale();
+		app->render->playerPosition.y = 370 * app->win->GetScale();
+	}
+	else {//Kirby normal
+		app->render->playerPosition.x = position.x * app->win->GetScale(); //Le pasamos la posicion del player al render para que la cámara siga al player
+		app->render->playerPosition.y = position.y * app->win->GetScale();
+	}
+
+	std::cout << position.x << "    " << position.y <<std::endl;
+
+
+
+
 
 	this->active;
 
@@ -534,6 +577,11 @@ bool Player::Update()
 			godMode = false;
 		}
 		
+	}
+
+	if (app->input->GetKey(SDL_SCANCODE_F3) == KEY_DOWN) //comenzar desde el inicio del level
+	{
+		ChangePosition(125, 600);
 	}
 	 
 	if (godMode)
@@ -597,7 +645,12 @@ void Player::OnCollision(PhysBody* physA, PhysBody* physB) {
 	case ColliderType::ITEM:
 		LOG("Collision ITEM");
 		app->audio->PlayFx(pickCoinFxId);
-		ChangePosition(30, 30);
+		//ChangePosition(30, 30);
+		break;
+	case ColliderType::DEATH:
+		LOG("Collision DEATH");
+		app->audio->PlayFx(pickCoinFxId);
+		ChangePosition(125, 600);
 		break;
 	case ColliderType::PLATFORM:
 		LOG("Collision PLATFORM");

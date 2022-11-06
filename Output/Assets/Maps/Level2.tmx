@@ -15025,7 +15025,8 @@
  </layer>
  <layer id="4" name="Collider" width="250" height="30">
   <properties>
-   <property name="Draw" type="bool" value="true"/>
+   <property name="Collider" type="bool" value="true"/>
+   <property name="Draw" type="bool" value="false"/>
   </properties>
   <data>
    <tile/>

@@ -225,8 +225,8 @@ bool Physics::PostUpdate()
 	
 	// Bonus code: this will iterate all objects in the world and draw the circles
 	// You need to provide your own macro to translate meters to pixels
-	/*if (debug)
-	{*/
+	if (debug)
+	{
 		for (b2Body* b = world->GetBodyList(); b; b = b->GetNext())
 		{
 			for (b2Fixture* f = b->GetFixtureList(); f; f = f->GetNext())
@@ -255,13 +255,13 @@ bool Physics::PostUpdate()
 					{
 						v = b->GetWorldPoint(polygonShape->GetVertex(i));
 						if (i > 0)
-							app->render->DrawLine(METERS_TO_PIXELS(prev.x), METERS_TO_PIXELS(prev.y), METERS_TO_PIXELS(v.x), METERS_TO_PIXELS(v.y), 255, 255, 100);
+							app->render->DrawLine(METERS_TO_PIXELS(prev.x) / app->win->GetScale(), METERS_TO_PIXELS(prev.y) / app->win->GetScale(), METERS_TO_PIXELS(v.x) / app->win->GetScale(), METERS_TO_PIXELS(v.y)/ app->win->GetScale(), 255, 255, 100);
 
 						prev = v;
 					}
 
 					v = b->GetWorldPoint(polygonShape->GetVertex(0));
-					app->render->DrawLine(METERS_TO_PIXELS(prev.x), METERS_TO_PIXELS(prev.y), METERS_TO_PIXELS(v.x), METERS_TO_PIXELS(v.y), 255, 100, 100);
+					app->render->DrawLine(METERS_TO_PIXELS(prev.x)/ app->win->GetScale(), METERS_TO_PIXELS(prev.y) / app->win->GetScale(), METERS_TO_PIXELS(v.x) / app->win->GetScale(), METERS_TO_PIXELS(v.y) / app->win->GetScale(), 255, 100, 255);
 				}
 				break;
 
@@ -302,7 +302,7 @@ bool Physics::PostUpdate()
 				// test if the current body contains mouse position
 			}
 		}
-	//}
+	}
 
 
 	return ret;
