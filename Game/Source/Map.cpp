@@ -64,13 +64,13 @@ void Map::Draw()
     {
         app->render->DrawTexture(farBackground, 320*i, 150, NULL, 1.0f);
     }*/
-    
-    app->render->DrawTexture(farBackground, app->render->playerPosition.x-180, 110, NULL, 1.0f);
-    
-    for (int i = 0; i < 20; i++)
-    {
-        app->render->DrawTexture(middleBackground, 176*i, 268, NULL, 0.5f);
-    }
+    //
+    //app->render->DrawTexture(farBackground, app->render->playerPosition.x-180, 110, NULL, 1.0f);
+    //
+    //for (int i = 0; i < 20; i++)
+    //{
+    //    app->render->DrawTexture(middleBackground, 176*i, 268, NULL, 0.5f);
+    //}
     
     //app->render->DrawTexture(middleBackground, -802, 100, NULL, 0.5f);
     //app->render->DrawTexture(middleBackground, -978, 90, NULL, 0.5f);

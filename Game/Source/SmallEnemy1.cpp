@@ -59,11 +59,13 @@ bool SmallEnemy1::Start() {
 	walkRAnimEnemy.loop = true;
 	walkLAnimEnemy.speed = 0.125f;
 
+	angryRAnimEnemy.PushBack({ 940,1331,24,21 });
 	angryRAnimEnemy.PushBack({ 777,1332,24,21 });
 	angryRAnimEnemy.PushBack({ 817,1332,24,21 });
 	angryRAnimEnemy.loop = false;
 	angryRAnimEnemy.speed = 0.05f;
 
+	angryLAnimEnemy.PushBack({ 940,1331,24,21 });
 	angryLAnimEnemy.PushBack({ 717,1332,24,21 });
 	angryLAnimEnemy.PushBack({ 676,1332,24,21 });
 	angryLAnimEnemy.loop = false;

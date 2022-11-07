@@ -1,7 +1,6 @@
 #include "EntityManager.h"
 #include "Player.h"
 #include "Item.h"
-#include "SmallEnemy1.h"
 #include "App.h"
 #include "Textures.h"
 #include "Scene.h"
@@ -11,6 +10,8 @@
 
 #include "Scene.h"
 #include "Window.h"
+#include "SmallEnemy1.h"
+#include "SmallEnemyFly.h"
 
 EntityManager::EntityManager(bool isActive) : Module(isActive)
 {
@@ -99,6 +100,11 @@ Entity* EntityManager::CreateEntity(EntityType type)
 
 	case EntityType::SMALLENEMY1:
 		entity = new SmallEnemy1();
+		break;
+
+	case EntityType::SMALLENEMYFLY:
+		entity = new SmallEnemyFly();
+		break;
 
 	default: break;
 	}

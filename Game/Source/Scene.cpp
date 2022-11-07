@@ -34,7 +34,7 @@ bool Scene::Awake(pugi::xml_node& config)
 	{
 		Item* item = (Item*)app->entityManager->CreateEntity(EntityType::ITEM);
 		item->parameters = itemNode;
-		vect->push_back(item);
+//		vect->push_back(item);
 		
 	}
 
@@ -42,8 +42,16 @@ bool Scene::Awake(pugi::xml_node& config)
 	{
 		SmallEnemy1* item = (SmallEnemy1*)app->entityManager->CreateEntity(EntityType::SMALLENEMY1);
 		item->parameters = itemNode;
-		vect->push_back(item);
+		//vect->push_back(item);
 	}
+
+	for (pugi::xml_node itemNode = config.child("SmallEnemyFly"); itemNode; itemNode = itemNode.next_sibling("SmallEnemyFly"))
+	{
+		SmallEnemyFly* item = (SmallEnemyFly*)app->entityManager->CreateEntity(EntityType::SMALLENEMYFLY);
+		item->parameters = itemNode;
+		//vect->push_back(item);
+	}
+
 
 	//L02: DONE 3: Instantiate the player using the entity manager
 	player = (Player*)app->entityManager->CreateEntity(EntityType::PLAYER);

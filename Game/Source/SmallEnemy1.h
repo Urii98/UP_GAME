@@ -33,7 +33,6 @@ private:
 
 public:
 
-	bool isPicked = false;
 	Animation* currentAnimationEnemy = nullptr;
 
 	int limiteIzqX;

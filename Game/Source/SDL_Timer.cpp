@@ -23,6 +23,7 @@ int SDL_Timer::Test()
 		{
 			startTime = 0;
 			duration = 0;
+			estadoTimer = APAGADO;
 			return FIN;
 		}
 
