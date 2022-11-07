@@ -112,6 +112,7 @@
     <ClCompile Include="Source\SceneTitle.cpp" />
     <ClCompile Include="Source\SDL_Timer.cpp" />
     <ClCompile Include="Source\SmallEnemy1.cpp" />
+    <ClCompile Include="Source\SmallEnemy2.cpp" />
     <ClCompile Include="Source\SmallEnemyFly.cpp" />
     <ClCompile Include="Source\Textures.cpp" />
     <ClCompile Include="Source\Window.cpp" />
@@ -135,6 +136,7 @@
     <ClInclude Include="Source\SceneTitle.h" />
     <ClInclude Include="Source\SDL_Timer.h" />
     <ClInclude Include="Source\SmallEnemy1.h" />
+    <ClInclude Include="Source\SmallEnemy2.h" />
     <ClInclude Include="Source\SmallEnemyFly.h" />
     <ClInclude Include="Source\Textures.h" />
     <ClInclude Include="Source\Window.h" />

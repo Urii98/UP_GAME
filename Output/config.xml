@@ -9,7 +9,7 @@
   </renderer>
 
   <window>
-    <resolution width="1024" height="768" scale="1"/> <!--para que el scale funcione, tenemos que tener en cuenta que no solo lo que se renderiza tiene que verse modificado, sino también todo lo relacionado con las fisicas (posición del collider), velocidad de personajes, etc.-->
+    <resolution width="1024" height="768" scale="2"/> <!--para que el scale funcione, tenemos que tener en cuenta que no solo lo que se renderiza tiene que verse modificado, sino también todo lo relacionado con las fisicas (posición del collider), velocidad de personajes, etc.-->
     <fullscreen value="false"/>
     <borderless value="false"/>
     <resizable value="false"/>
@@ -48,6 +48,15 @@
                  texturepath="Assets/Textures/Enemies.png"/>
     <SmallEnemyFly x="350" y="330" scalarLimites="30" speedY="3"
                  destroy="false"
+                 texturepath="Assets/Textures/Enemies.png"/>
+    <SmallEnemy2 x="380" y="250" scalarLimites="30" speedX="2"
+                 walkDir="false" destroy="false"
+                 texturepath="Assets/Textures/Enemies.png"/>
+    <SmallEnemy2 x="470" y="200" scalarLimites="30" speedX="2"
+                 walkDir="false" destroy="false"
+                 texturepath="Assets/Textures/Enemies.png"/>
+    <SmallEnemy2 x="360" y="300" scalarLimites="30" speedX="2"
+                 walkDir="false" destroy="false"
                  texturepath="Assets/Textures/Enemies.png"/>
     
   </scene>

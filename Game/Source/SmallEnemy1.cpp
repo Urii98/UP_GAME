@@ -176,8 +176,10 @@ bool SmallEnemy1::Update()
 		break;
 	case MOVIMIENTO:
 		Movimiento();
-		if (app->scene->player->position.x <limiteDerX && app->scene->player->position.x > limiteIzqX-50 &&
-			app->scene->player->position.y > position.y -20 && app->scene->player->position.y < position.y+20)
+		if (app->scene->player->position.x <limiteDerX && 
+			app->scene->player->position.x > limiteIzqX-50 &&
+			app->scene->player->position.y > position.y -20 && 
+			app->scene->player->position.y < position.y+20)
 		{
 			estadoSE1 = ATAQUE;
 		}

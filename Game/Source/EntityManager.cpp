@@ -11,6 +11,7 @@
 #include "Scene.h"
 #include "Window.h"
 #include "SmallEnemy1.h"
+#include "SmallEnemy2.h"
 #include "SmallEnemyFly.h"
 
 EntityManager::EntityManager(bool isActive) : Module(isActive)
@@ -106,6 +107,9 @@ Entity* EntityManager::CreateEntity(EntityType type)
 		entity = new SmallEnemyFly();
 		break;
 
+	case EntityType::SMALLENEMY2:
+		entity = new SmallEnemy2();
+		break;
 	default: break;
 	}
 

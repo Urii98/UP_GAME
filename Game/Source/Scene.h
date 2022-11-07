@@ -5,6 +5,7 @@
 #include "Player.h"
 #include "Item.h"
 #include "SmallEnemy1.h"
+#include "SmallEnemy2.h"
 #include "SmallEnemyFly.h"
 #include <vector>
 
