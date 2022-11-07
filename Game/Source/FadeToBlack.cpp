@@ -55,6 +55,12 @@ bool FadeToBlack::Update(float dt)
 	return true;
 
 
+	auto x = app->input->GetMouseX();
+	auto y = app->input->GetMouseY();
+
+	std::cout << "GetmouseX - " << x << std::endl;
+	std::cout << "GetmouseY - " << y << std::endl;
+
 
 }
 

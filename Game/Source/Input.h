@@ -63,6 +63,17 @@ public:
 
 	// Get mouse / axis position
 	void GetMousePosition(int &x, int &y);
+
+	int GetMouseX() const
+	{
+		return mouseX;
+	}
+
+	int GetMouseY() const
+	{
+		return mouseY;
+	}
+
 	void GetMouseMotion(int& x, int& y);
 
 private:
