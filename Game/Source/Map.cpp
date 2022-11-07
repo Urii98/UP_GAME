@@ -60,14 +60,14 @@ void Map::Draw()
  
     //PARALLAX EFFECT:
 
-    app->render->DrawTexture(farBackground, app->render->playerPosition.x-190, 480, NULL,1.0f);
-    //app->render->DrawTexture(middleBackground, -450, 600, NULL,0.5f);
-    //app->render->DrawTexture(middleBackground, -626, 600, NULL,0.5f);
-    //app->render->DrawTexture(middleBackground, -802, 600, NULL, 0.5f);
-    //app->render->DrawTexture(middleBackground, -978, 600, NULL, 0.5f);
-    //app->render->DrawTexture(middleBackground, -1154, 600, NULL, 0.5f);
-    //app->render->DrawTexture(middleBackground, -274, 600, NULL, 0.5f);
-    //app->render->DrawTexture(middleBackground, -98, 600, NULL, 0.5f);
+    app->render->DrawTexture(farBackground, 0, 180, NULL,1.0f);
+    app->render->DrawTexture(middleBackground, -450, 0, NULL,0.5f);
+    app->render->DrawTexture(middleBackground, -626, 0, NULL,0.5f);
+    app->render->DrawTexture(middleBackground, -802, 0, NULL, 0.5f);
+    app->render->DrawTexture(middleBackground, -978, 0, NULL, 0.5f);
+    app->render->DrawTexture(middleBackground, -1154, 0, NULL, 0.5f);
+    app->render->DrawTexture(middleBackground, -274, 0, NULL, 0.5f);
+    app->render->DrawTexture(middleBackground, -98, 0, NULL, 0.5f);
 
 
 

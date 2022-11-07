@@ -6,9 +6,6 @@
 #include <iostream>
 
 #include "SDL/include/SDL_render.h"
-
-#include "Input.h"
-
 FadeToBlack::FadeToBlack(bool isActive) : Module(isActive)
 {
 	screenRect = { 0, 0, 1024, 768 };
@@ -55,13 +52,6 @@ bool FadeToBlack::Update(float dt)
 	}
 
 	return true;
-
-
-	auto x = app->input->GetMouseX();
-	auto y = app->input->GetMouseY();
-
-	std::cout << "GetmouseX - " << x << std::endl;
-	std::cout << "GetmouseY - " << y << std::endl;
 
 
 }
