@@ -45,8 +45,8 @@ bool Map::Start()
 {
     bool ret = true;
 
-    //farBackground = app->tex->Load(farBackgroundPath);
-    //middleBackground = app->tex->Load(middleBackgroundPath);
+    farBackground = app->tex->Load(farBackgroundPath);
+    /*middleBackground = app->tex->Load(middleBackgroundPath);*/
 
 
     return ret;
@@ -60,7 +60,7 @@ void Map::Draw()
  
     //PARALLAX EFFECT:
 
-    //app->render->DrawTexture(farBackground, app->render->playerPosition.x-190, 480, NULL,1.0f);
+    app->render->DrawTexture(farBackground, app->render->playerPosition.x-190, 480, NULL,1.0f);
     //app->render->DrawTexture(middleBackground, -450, 600, NULL,0.5f);
     //app->render->DrawTexture(middleBackground, -626, 600, NULL,0.5f);
     //app->render->DrawTexture(middleBackground, -802, 600, NULL, 0.5f);

@@ -238,226 +238,273 @@ bool Player::Start() {
 
 void Player::Movimiento()
 {
+
 	
 	b2Vec2 vel = b2Vec2(0, 0);
 
-	if (oneJump && app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN && flapLimit <3)
+	if (!godMode)
 	{
-		flyTimer.Start(0.15); // -- ANIMACIÓN -- volar
-		std::cout << "flying" << std::endl;
 
-		//Animacion de prefly, que no se reseteara hasta que haya collision o flying sea false
-		if (direccionP == IZQUIERDA) {
-			currentAnimation = &flyLAnim; //cambiar a izquierda cuando saque los sprites
-		}
-		else if (direccionP == DERECHA)
+
+		if (oneJump && app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN && flapLimit < 3)
 		{
-			currentAnimation = &flyRAnim;
-		}
+			flyTimer.Start(0.15); // -- ANIMACIÓN -- volar
+			std::cout << "flying" << std::endl;
 
-		flying = true;
-		flapLimit++;
-	}
-	else if (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) { // -- ANIMACIÓN -- de caminar a la izquierda
-		
-		vel = b2Vec2(-speedX, -GRAVITY_Y);
-
-		if (!oneJump)
-		{
-			if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN)
-			{
-				jumpTimer.Start(0.20);
-				collisionP = NOCOLLISION;
-				oneJump = true;
-				if (currentAnimation != &jumpLAnim)
-				{
-					currentAnimation = &jumpLAnim;
-				}
-				flying = true;
-			}
-			
-		}
-		else if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN && oneJump && flapLimit < 3)
-		{
-			flyTimer.Start(0.20);
-			collisionP = NOCOLLISION;
-			currentAnimation = &flyLAnim;
-			flapLimit++;
-		}
-
-		if (jumpTimer.Test() == EJECUTANDO || flyTimer.Test() == EJECUTANDO) // -- ANIMACIÓN -- saltar derecha
-		{
-			vel = b2Vec2(-speedX, -speedY);
-		
-		}
-
-		if (collisionP == COLLISION) {
-
-			if (app->input->GetKey(SDL_SCANCODE_LSHIFT) == KEY_REPEAT)
-			{
-				currentAnimation = &runLAnim;
-				vel = b2Vec2(-speedX - 2, -GRAVITY_Y);
-
-			}
-			else
-			{
-				currentAnimation = &walkLAnim;
-			}
-		}
-		else
-		{
-			if (oneJump && !flying)
-			{
-				currentAnimation = &flyLAnim;
-			}
-		}
-		direccionP = IZQUIERDA;
-		app->render->camera.x += 2;
-
-	} 
-	else if (app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) { // -- ANIMACIÓN -- de caminar a la derecha
-		vel = b2Vec2(speedX, -GRAVITY_Y);
-
-		if (!oneJump)
-		{
-			if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN) // -- ANIMACIÓN -- saltar izquierda
-			{
-				jumpTimer.Start(0.20);
-				collisionP = NOCOLLISION;
-				oneJump = true;
-				if (currentAnimation != &jumpRAnim)
-				{
-					currentAnimation = &jumpRAnim;
-				}
-				flying = true;
-			}
-		}
-		else if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN && oneJump && flapLimit < 3)
-		{
-			flyTimer.Start(0.20);
-			collisionP = NOCOLLISION;
-			currentAnimation = &flyRAnim;
-			flapLimit++;
-		}
-	
-		
-		if (jumpTimer.Test() == EJECUTANDO || flyTimer.Test() == EJECUTANDO)  // -- ANIMACIÓN -- saltar izquierda
-		{
-			vel = b2Vec2(speedX, -speedY);
-
-		}
-
-		if (collisionP == COLLISION) {
-
-			if (app->input->GetKey(SDL_SCANCODE_LSHIFT) == KEY_REPEAT)
-			{
-				currentAnimation = &runRAnim;
-				vel = b2Vec2(speedX+2, -GRAVITY_Y);
-
-			}
-			else
-			{
-				currentAnimation = &walkRAnim;
-			}
-			
-
-		}
-		else
-		{
-			if (oneJump && !flying)
-			{
-				currentAnimation = &flyRAnim;
-			}
-		}
-
-		direccionP = DERECHA;
-		app->render->camera.x -= 2;
-	}
-	else if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN && !flying && !oneJump) { //durante 0.05s moveremos al player verticalmente hasta llegar a los 30 pixeles que es la distancia max de un jump
-	jumpTimer.Start(0.30);
-
-	if (direccionP == IZQUIERDA) {
-		currentAnimation = &jumpLAnim;
-
-	}
-	else if (direccionP == DERECHA)
-	{
-		currentAnimation = &jumpRAnim;
-
-	}
-
-	collisionP = NOCOLLISION;
-	oneJump = true;
-
-
-	}
-	else if (jumpTimer.Test() == EJECUTANDO || flyTimer.Test() == EJECUTANDO)
-	{
-		vel = b2Vec2(0, -speedY);
-	}
-	else {  // -- ANIMACIÓN -- IDLE
-		
-		estadoP = STOP;
-
-		if (collisionP == COLLISION)
-		{
+			//Animacion de prefly, que no se reseteara hasta que haya collision o flying sea false
 			if (direccionP == IZQUIERDA) {
-				currentAnimation = &idleLAnim;
+				currentAnimation = &flyLAnim; //cambiar a izquierda cuando saque los sprites
 			}
 			else if (direccionP == DERECHA)
 			{
-				currentAnimation = &idleRAnim;
+				currentAnimation = &flyRAnim;
 			}
-		}
 
-
-		if (flapLimit ==3)
-		{
-			flapLimitTimer.Start(6);
+			flying = true;
+			flapLimit++;
 		}
-		else
-		{
-			if (flapLimitTimer.Test() == FIN)
+		else if (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) { // -- ANIMACIÓN -- de caminar a la izquierda
+
+			vel = b2Vec2(-speedX, -GRAVITY_Y);
+
+			if (!oneJump)
 			{
-				flapLimit = 0;
+				if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN)
+				{
+					jumpTimer.Start(0.20);
+					collisionP = NOCOLLISION;
+					oneJump = true;
+					if (currentAnimation != &jumpLAnim)
+					{
+						currentAnimation = &jumpLAnim;
+					}
+					flying = true;
+				}
+
+			}
+			else if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN && oneJump && flapLimit < 3)
+			{
+				flyTimer.Start(0.20);
+				collisionP = NOCOLLISION;
+				currentAnimation = &flyLAnim;
+				flapLimit++;
+			}
+
+			if (jumpTimer.Test() == EJECUTANDO || flyTimer.Test() == EJECUTANDO) // -- ANIMACIÓN -- saltar derecha
+			{
+				vel = b2Vec2(-speedX, -speedY);
+
+			}
+
+			if (collisionP == COLLISION) {
+
+				if (app->input->GetKey(SDL_SCANCODE_LSHIFT) == KEY_REPEAT)
+				{
+					currentAnimation = &runLAnim;
+					vel = b2Vec2(-speedX - 2, -GRAVITY_Y);
+
+				}
+				else
+				{
+					currentAnimation = &walkLAnim;
+				}
+			}
+			else
+			{
+				if (oneJump && !flying)
+				{
+					currentAnimation = &flyLAnim;
+				}
+			}
+
+			if (godMode)
+			{
+				if (app->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT)
+				{
+					vel = b2Vec2(-speedX, -speedYDown);
+				}
+			}
+
+
+			direccionP = IZQUIERDA;
+			app->render->camera.x += 2;
+
+
+
+		}
+		else if (app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) { // -- ANIMACIÓN -- de caminar a la derecha
+			vel = b2Vec2(speedX, -GRAVITY_Y);
+
+			if (!oneJump)
+			{
+				if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN) // -- ANIMACIÓN -- saltar izquierda
+				{
+					jumpTimer.Start(0.20);
+					collisionP = NOCOLLISION;
+					oneJump = true;
+					if (currentAnimation != &jumpRAnim)
+					{
+						currentAnimation = &jumpRAnim;
+					}
+					flying = true;
+				}
+			}
+			else if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN && oneJump && flapLimit < 3)
+			{
+				flyTimer.Start(0.20);
+				collisionP = NOCOLLISION;
+				currentAnimation = &flyRAnim;
+				flapLimit++;
+			}
+
+
+			if (jumpTimer.Test() == EJECUTANDO || flyTimer.Test() == EJECUTANDO)  // -- ANIMACIÓN -- saltar izquierda
+			{
+				vel = b2Vec2(speedX, -speedY);
+
+			}
+
+			if (collisionP == COLLISION) {
+
+				if (app->input->GetKey(SDL_SCANCODE_LSHIFT) == KEY_REPEAT)
+				{
+					currentAnimation = &runRAnim;
+					vel = b2Vec2(speedX + 2, -GRAVITY_Y);
+
+				}
+				else
+				{
+					currentAnimation = &walkRAnim;
+				}
+
+
+			}
+			else
+			{
+				if (oneJump && !flying)
+				{
+					currentAnimation = &flyRAnim;
+				}
+			}
+
+
+			if (godMode)
+			{
+				if (app->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT)
+				{
+					vel = b2Vec2(speedX, -speedYDown);
+				}
+			}
+
+			direccionP = DERECHA;
+			app->render->camera.x -= 2;
+		}
+		else if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN && !flying && !oneJump) { //durante 0.05s moveremos al player verticalmente hasta llegar a los 30 pixeles que es la distancia max de un jump
+			jumpTimer.Start(0.30);
+
+			if (direccionP == IZQUIERDA) {
+				currentAnimation = &jumpLAnim;
+
+			}
+			else if (direccionP == DERECHA)
+			{
+				currentAnimation = &jumpRAnim;
+
+			}
+
+			collisionP = NOCOLLISION;
+			oneJump = true;
+
+
+		}
+		else if (jumpTimer.Test() == EJECUTANDO || flyTimer.Test() == EJECUTANDO)
+		{
+			vel = b2Vec2(0, -speedY);
+		}
+		else {  // -- ANIMACIÓN -- IDLE
+
+			estadoP = STOP;
+
+			if (collisionP == COLLISION)
+			{
+				if (direccionP == IZQUIERDA) {
+					currentAnimation = &idleLAnim;
+				}
+				else if (direccionP == DERECHA)
+				{
+					currentAnimation = &idleRAnim;
+				}
+			}
+
+
+			if (flapLimit == 3)
+			{
+				flapLimitTimer.Start(6);
+			}
+			else
+			{
+				if (flapLimitTimer.Test() == FIN)
+				{
+					flapLimit = 0;
+				}
+			}
+
+
+
+			vel = b2Vec2(0, -GRAVITY_Y);
+
+		}
+
+		if (app->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT && collisionP == NOCOLLISION) // -- ANIMACIÓN -- caer hacia abajo (cuando NO hay collision con nada)
+		{
+			vel = b2Vec2(0, -GRAVITY_Y + speedYDown);
+
+			if (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) {
+				vel = b2Vec2(-speedX, -GRAVITY_Y + speedYDown);
+			}
+			if (app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) {
+				vel = b2Vec2(speedX, -GRAVITY_Y + speedYDown);
+			}
+
+			if (direccionP == IZQUIERDA) {
+				currentAnimation = &downLAnim;
+			}
+			else if (direccionP == DERECHA)
+			{
+				currentAnimation = &downRAnim;
 			}
 		}
 
 
-		
-		vel = b2Vec2(0, -GRAVITY_Y);
-		
-	}
-
-	if (app->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT && collisionP == NOCOLLISION) // -- ANIMACIÓN -- caer hacia abajo (cuando NO hay collision con nada)
-	{
-		vel = b2Vec2(0, -GRAVITY_Y + speedYDown);
-
-		if (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) {
-			vel = b2Vec2(-speedX, -GRAVITY_Y + speedYDown);
-		}
-		if (app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) {
-			vel = b2Vec2(speedX, -GRAVITY_Y + speedYDown);
-		}
-
-		if (direccionP == IZQUIERDA) {
-			currentAnimation = &downLAnim;
-		}
-		else if (direccionP == DERECHA)
+		if (app->input->GetKey(SDL_SCANCODE_0) == KEY_DOWN && !godMode) // -- ANIMACIÓN MORIR
 		{
-			currentAnimation = &downRAnim;
+			currentAnimation = &death;
+			app->audio->PlayFx(kirbyDeathFx, 0);
+			estadoP = DEATH;
 		}
+
 	}
-	
-	if (app->input->GetKey(SDL_SCANCODE_0) == KEY_DOWN && !godMode) // -- ANIMACIÓN MORIR
+	else
 	{
-		currentAnimation = &death;
-		app->audio->PlayFx(kirbyDeathFx, 0);
-		estadoP = DEATH;
+
+		if (app->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT)
+		{
+			vel = b2Vec2(0, -speedYDown);
+		}
+		else if (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT)
+		{
+			vel = b2Vec2(-speedX, 0);
+		}
+		else if (app->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT)
+		{
+			vel = b2Vec2(0, speedYDown);
+		}
+		else if (app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT)
+		{
+			vel = b2Vec2(speedX, 0);
+		}
+
 	}
-
-
-
 		
 
 	pbody->body->SetLinearVelocity(vel);
@@ -490,30 +537,30 @@ bool Player::Update()
 		app->render->playerPosition.x = 260 * app->win->GetScale();
 		app->render->playerPosition.y = 370 * app->win->GetScale();
 	}
-	else if (position.x > 130 * app->win->GetScale() && position.y < 200 * app->win->GetScale()) {//Kirby esquina superior derecha
-		app->render->playerPosition.x = 260 * app->win->GetScale();
-		app->render->playerPosition.y = 370 * app->win->GetScale();
-	}
-	else if (position.x > 130 * app->win->GetScale() && position.y > 200 * app->win->GetScale()) {//Kirby esquina inferior derecha
-		app->render->playerPosition.x = 260 * app->win->GetScale();
-		app->render->playerPosition.y = 370 * app->win->GetScale();
-	}
-	else if (position.x < 200 * app->win->GetScale()) {//Kirby se va para izquierda
-		app->render->playerPosition.x = 370 * app->win->GetScale();
-		app->render->playerPosition.y = position.y * app->win->GetScale();
-	}
-	else if (position.x > 200 * app->win->GetScale()) {//Kirby se va para derecha
-		app->render->playerPosition.x = 370 * app->win->GetScale();
-		app->render->playerPosition.y = position.y * app->win->GetScale();
-	}
-	else if (position.y > 200 * app->win->GetScale()) {//Kirby se va para abajo
-		app->render->playerPosition.x = position.x * app->win->GetScale();
-		app->render->playerPosition.y = 370 * app->win->GetScale();
-	}
-	else if (position.y < 200 * app->win->GetScale()) { //Kirby se va para arriba
-		app->render->playerPosition.x = position.x * app->win->GetScale();
-		app->render->playerPosition.y = 370 * app->win->GetScale();
-	}
+	//else if (position.x > 130 * app->win->GetScale() && position.y < 200 * app->win->GetScale()) {//Kirby esquina superior derecha
+	//	app->render->playerPosition.x = 260 * app->win->GetScale();
+	//	app->render->playerPosition.y = 370 * app->win->GetScale();
+	//}
+	//else if (position.x > 130 * app->win->GetScale() && position.y > 200 * app->win->GetScale()) {//Kirby esquina inferior derecha
+	//	app->render->playerPosition.x = 260 * app->win->GetScale();
+	//	app->render->playerPosition.y = 370 * app->win->GetScale();
+	//}
+	//else if (position.x < 200 * app->win->GetScale()) {//Kirby se va para izquierda
+	//	app->render->playerPosition.x = 370 * app->win->GetScale();
+	//	app->render->playerPosition.y = position.y * app->win->GetScale();
+	//}
+	//else if (position.x > 200 * app->win->GetScale()) {//Kirby se va para derecha
+	//	app->render->playerPosition.x = 370 * app->win->GetScale();
+	//	app->render->playerPosition.y = position.y * app->win->GetScale();
+	//}
+	//else if (position.y > 200 * app->win->GetScale()) {//Kirby se va para abajo
+	//	app->render->playerPosition.x = position.x * app->win->GetScale();
+	//	app->render->playerPosition.y = 370 * app->win->GetScale();
+	//}
+	//else if (position.y < 200 * app->win->GetScale()) { //Kirby se va para arriba
+	//	app->render->playerPosition.x = position.x * app->win->GetScale();
+	//	app->render->playerPosition.y = 370 * app->win->GetScale();
+	//}
 	else {//Kirby normal
 		app->render->playerPosition.x = position.x * app->win->GetScale(); //Le pasamos la posicion del player al render para que la cámara siga al player
 		app->render->playerPosition.y = position.y * app->win->GetScale();
