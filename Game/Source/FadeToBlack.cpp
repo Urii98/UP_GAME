@@ -7,6 +7,8 @@
 
 #include "SDL/include/SDL_render.h"
 
+#include "Input.h"
+
 FadeToBlack::FadeToBlack(bool isActive) : Module(isActive)
 {
 	screenRect = { 0, 0, 1024, 768 };
