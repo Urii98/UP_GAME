@@ -155,8 +155,8 @@ public:
 	// L04: DONE 1: Declare a variable data of the struct MapData
 	MapData mapData;
 
-	/*SDL_Texture* middleBackground;
-	SDL_Texture* farBackground;*/
+	SDL_Texture* middleBackground;
+	SDL_Texture* farBackground;
 
 private:
 
