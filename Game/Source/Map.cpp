@@ -33,8 +33,8 @@ bool Map::Awake(pugi::xml_node& config)
 
     mapFileName = config.child("mapfile").attribute("path").as_string();
     mapFolder = config.child("mapfolder").attribute("path").as_string();
-    farBackgroundPath = config.child("middleBackgroundTexture").attribute("path").as_string();
-    middleBackgroundPath = config.child("farBackgroundTexture").attribute("path").as_string();
+    farBackgroundPath = config.child("farBackgroundTexture").attribute("path").as_string();
+    middleBackgroundPath = config.child("middleBackgroundTexture").attribute("path").as_string();
 
 
 
@@ -46,7 +46,7 @@ bool Map::Start()
     bool ret = true;
 
     farBackground = app->tex->Load(farBackgroundPath);
-    /*middleBackground = app->tex->Load(middleBackgroundPath);*/
+    middleBackground = app->tex->Load(middleBackgroundPath);
 
 
     return ret;
@@ -60,14 +60,23 @@ void Map::Draw()
  
     //PARALLAX EFFECT:
 
-    app->render->DrawTexture(farBackground, 0, 180, NULL,1.0f);
-    app->render->DrawTexture(middleBackground, -450, 0, NULL,0.5f);
-    app->render->DrawTexture(middleBackground, -626, 0, NULL,0.5f);
-    app->render->DrawTexture(middleBackground, -802, 0, NULL, 0.5f);
-    app->render->DrawTexture(middleBackground, -978, 0, NULL, 0.5f);
-    app->render->DrawTexture(middleBackground, -1154, 0, NULL, 0.5f);
-    app->render->DrawTexture(middleBackground, -274, 0, NULL, 0.5f);
-    app->render->DrawTexture(middleBackground, -98, 0, NULL, 0.5f);
+   /* for (int i = 0; i < 5; i++)
+    {
+        app->render->DrawTexture(farBackground, 320*i, 150, NULL, 1.0f);
+    }*/
+    
+    app->render->DrawTexture(farBackground, app->render->playerPosition.x-180, 110, NULL, 1.0f);
+    
+    for (int i = 0; i < 20; i++)
+    {
+        app->render->DrawTexture(middleBackground, 176*i, 268, NULL, 0.5f);
+    }
+    
+    //app->render->DrawTexture(middleBackground, -802, 100, NULL, 0.5f);
+    //app->render->DrawTexture(middleBackground, -978, 90, NULL, 0.5f);
+    //app->render->DrawTexture(middleBackground, -1154, 80, NULL, 0.5f);
+    //app->render->DrawTexture(middleBackground, -274, 150, NULL, 0.5f);
+    //app->render->DrawTexture(middleBackground, -98, 150, NULL, 0.5f);
 
 
 

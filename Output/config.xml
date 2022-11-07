@@ -59,8 +59,8 @@
   <map>
     <mapfolder path="Assets/Maps/"/>
     <mapfile path="Assets/Maps/Level1.tmx"/>
-    <middleBackgroundTexture path="Assets/Textures/back.png"/>
-    <farBackgroundTexture path="Assets/Textures/middle.png"/>
+    <middleBackgroundTexture path="Assets/Textures/middle.png"/>
+    <farBackgroundTexture path="Assets/Textures/back.png"/>
   </map>
   
 </config>
