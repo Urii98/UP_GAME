@@ -23,7 +23,7 @@
 
   <!-- L02: DONE: Add an element for the entity manager and add the player parameters -->
   <scene>
-    <player x="125" y="600" scalarSpeedX="6" scalarSpeedY="9" scalarSpeedYDown="6" 
+    <player x="200" y="700" scalarSpeedX="6" scalarSpeedY="9" scalarSpeedYDown="6" 
             texturepath="Assets/Textures/KirbySS.png" coinFxPath="Assets/Audio/Fx/coin.ogg" kirbyDeathFxPath="Assets/Audio/Fx/KirbyDeathFx.ogg"
             flapLimit="0" oneJump="false" flying="false" godMode="false"/>
     <item x="256" y="515" texturepath="Assets/Textures/goldCoin.png"/>
@@ -58,7 +58,7 @@
 
   <map>
     <mapfolder path="Assets/Maps/"/>
-    <mapfile path="Assets/Maps/Level2.tmx"/>
+    <mapfile path="Assets/Maps/Level1.tmx"/>
     <middleBackgroundTexture path="Assets/Textures/back.png"/>
     <farBackgroundTexture path="Assets/Textures/middle.png"/>
   </map>

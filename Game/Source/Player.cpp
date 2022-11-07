@@ -54,7 +54,6 @@ bool Player::Awake() {
 
 bool Player::Start() {
 
-	position.x = 30;
 	//idleRAnim
 	idleRAnim.PushBack({ 774, 91, 26, 22 });
 	idleRAnim.PushBack({ 774, 91, 26, 22 });
@@ -533,9 +532,9 @@ bool Player::Update()
 		app->render->playerPosition.x = 260 * app->win->GetScale();
 		app->render->playerPosition.y = 370 * app->win->GetScale();
 	}
-	else if (position.x < 130 * app->win->GetScale() && position.y > 200 * app->win->GetScale()) {//Kirby esquina inferior izquierda
+	else if (position.x < 130 * app->win->GetScale() && position.y > 385 * app->win->GetScale()) {//Kirby esquina inferior izquierda
 		app->render->playerPosition.x = 260 * app->win->GetScale();
-		app->render->playerPosition.y = 370 * app->win->GetScale();
+		app->render->playerPosition.y = 400 * app->win->GetScale();
 	}
 	//else if (position.x > 130 * app->win->GetScale() && position.y < 200 * app->win->GetScale()) {//Kirby esquina superior derecha
 	//	app->render->playerPosition.x = 260 * app->win->GetScale();
@@ -553,9 +552,9 @@ bool Player::Update()
 	//	app->render->playerPosition.x = 370 * app->win->GetScale();
 	//	app->render->playerPosition.y = position.y * app->win->GetScale();
 	//}
-	//else if (position.y > 200 * app->win->GetScale()) {//Kirby se va para abajo
+	//else if (position.y > 767 * app->win->GetScale()) {//Kirby se va para abajo
 	//	app->render->playerPosition.x = position.x * app->win->GetScale();
-	//	app->render->playerPosition.y = 370 * app->win->GetScale();
+	//	app->render->playerPosition.y = 767 * app->win->GetScale();
 	//}
 	//else if (position.y < 200 * app->win->GetScale()) { //Kirby se va para arriba
 	//	app->render->playerPosition.x = position.x * app->win->GetScale();
@@ -566,7 +565,7 @@ bool Player::Update()
 		app->render->playerPosition.y = position.y * app->win->GetScale();
 	}
 
-	std::cout << position.x << "    " << position.y <<std::endl;
+	std::cout << (position.x / app->win->GetScale()) << "    " << (position.y / app->win->GetScale())  << std::endl;
 
 
 
