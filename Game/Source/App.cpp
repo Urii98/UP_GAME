@@ -12,6 +12,7 @@
 #include "SceneLogo.h"
 #include "SceneTitle.h"
 #include "FadeToBlack.h"
+#include "SceneManager.h"
 
 #include <memory>
 
@@ -53,6 +54,7 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	audio = new Audio(true);
 	//L07 DONE 2: Add Physics module
 	physics = new Physics(true);
+	sceneManager = new SceneManager(true);
 
 	sceneLogo = new SceneLogo(false);
 	sceneTitle = new SceneTitle(false);
@@ -74,6 +76,7 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 
 	//L07 DONE 2: Add Physics module
 	AddModule(physics);  //20 de memoria (hasta aqui) + modulos fade y render
+	AddModule(sceneManager);
 	
 	AddModule(sceneLogo); //7 de memoria x si solo  --> nse pq no se eliminan aunq he probado con breakpoint y se llama a delete texture y funciona normal
 	AddModule(sceneTitle); //450 de memoria x si solo --> podría estar dejando 11mb de memory leaks

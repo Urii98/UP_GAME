@@ -70,22 +70,7 @@ bool Scene::Awake(pugi::xml_node& config)
 
 // Called before the first frame
 bool Scene::Start()
-{
-	//img = app->tex->Load("Assets/Textures/test.png");
-	//app->audio->PlayMusic("Assets/Audio/Music/music_spy.ogg");
-	
-	//if (app->map->active == false)
-	//{
-	//	app->map->active = true;
-	//	app->map->Start();
-	//}
-
-	//if (app->entityManager->active == false)
-	//{
-	//	app->entityManager->active = true;
-	//	app->entityManager->Start();
-	//}
-
+{	
 
 	// L03: DONE: Load map
 	app->map->Load();
@@ -133,7 +118,14 @@ bool Scene::Update(float dt)
 
 	//app->render->DrawTexture(img, 380, 100); // Placeholder not needed any more
 
-	
+	/*if (app->input->GetKey(SDL_SCANCODE_F8) == KEY_DOWN)
+	{
+		app->scene->active = false;
+		app->entityManager->active = false;
+		app->map->active = false;
+	}*/
+		
+
 
 	// Draw map
 	app->map->Draw();

@@ -34,6 +34,7 @@ enum class ColliderType {
 	ENEMY,
 	ENEMYFLY,
 	DEATH,
+	SENSOR,
 	UNKNOWN
 	// ..
 };

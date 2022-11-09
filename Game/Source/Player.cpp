@@ -211,13 +211,15 @@ bool Player::Start() {
 
 	// L07 DONE 5: Add physics to the player - initialize physics body
 	pbody = app->physics->CreateCircle(position.x+16, position.y+16, 12, bodyType::DYNAMIC);
-
+	sensor = app->physics->CreateRectangle(position.x + 15, position.y + 15, 15, 15, bodyType::DYNAMIC);
 
 	// L07 DONE 6: Assign player class (using "this") to the listener of the pbody. This makes the Physics module to call the OnCollision method
 	pbody->listener = this;
+	sensor->listener = this;
 
 	// L07 DONE 7: Assign collider type
 	pbody->ctype = ColliderType::PLAYER;
+	sensor->ctype = ColliderType::SENSOR;
 
 	teleport.turn = false;
 
@@ -526,6 +528,9 @@ bool Player::Update()
 	position.x = METERS_TO_PIXELS(pbody->body->GetTransform().p.x / app->win->GetScale()) - 14;
 	position.y = METERS_TO_PIXELS(pbody->body->GetTransform().p.y / app->win->GetScale()) - 10;
 
+	/*b2Vec2 sensorPos = b2Vec2(PIXEL_TO_METERS(position.x), PIXEL_TO_METERS(position.y + 13));
+	sensor->body->SetTransform(sensorPos, 0);*/
+
 
 	auto x = app->input->GetMouseX();
 	auto y = app->input->GetMouseY();
@@ -692,7 +697,7 @@ bool Player::CleanUp()
 void Player::OnCollision(PhysBody* physA, PhysBody* physB) {
 
 	// L07 DONE 7: Detect the type of collision
-
+	
 	switch (physB->ctype)
 	{
 	case ColliderType::ITEM:

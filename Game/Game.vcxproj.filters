@@ -28,6 +28,7 @@
     <ClCompile Include="Source\SmallEnemy1.cpp" />
     <ClCompile Include="Source\SmallEnemyFly.cpp" />
     <ClCompile Include="Source\SmallEnemy2.cpp" />
+    <ClCompile Include="Source\SceneManager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Window.h" />
@@ -80,6 +81,7 @@
     <ClInclude Include="Source\SmallEnemy1.h" />
     <ClInclude Include="Source\SmallEnemyFly.h" />
     <ClInclude Include="Source\SmallEnemy2.h" />
+    <ClInclude Include="Source\SceneManager.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="External">
