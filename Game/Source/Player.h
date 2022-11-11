@@ -97,6 +97,8 @@ public:
 	Animation death;
 
 	transformPosition teleport;
+
+	
 		
 
 private:
@@ -124,6 +126,8 @@ private:
 	int flapLimit;
 
 	void Movimiento();
+	void Camera();
+	void PlayerDebug();
 	//ColliderType CheckCollision();
 	
 	const char* coinSFx;

@@ -526,59 +526,10 @@ bool Player::Update()
 	position.y = METERS_TO_PIXELS(pbody->body->GetTransform().p.y / app->win->GetScale()) - 10;
 
 
-	
-	//CAMARAAAAAAAAAAAA TENDRA Q SER UNA FUNCION XD
-	if (position.x<516 / app->win->GetScale() && position.y<385 / app->win->GetScale()) {//Kirby esquina superior izquierda
-		app->render->playerPosition.x = 516;
-		app->render->playerPosition.y = 385;
-		std::cout << "SUP IZ" << std::endl;
-	}
-	else if (position.x < 516 / app->win->GetScale() && position.y > 577) {//Kirby esquina inferior izquierda
-		app->render->playerPosition.x = 516 ;
-		app->render->playerPosition.y = 577;
-		std::cout << "INF IZ" << std::endl;
-	}
-	else if (position.x > 7484 / app->win->GetScale() && position.y < 385 / app->win->GetScale()) {//Kirby esquina superior derecha
-		app->render->playerPosition.x = 7484 ;
-		app->render->playerPosition.y = 385 ;
-		std::cout << "SUP DER" << std::endl;
-	}
-	else if (position.x > 7484 / app->win->GetScale() && position.y > 577 / app->win->GetScale()) {//Kirby esquina inferior derecha
-		app->render->playerPosition.x = 7484 ;
-		app->render->playerPosition.y = 577 ;
-		std::cout << "INF DER" << std::endl;
-	}
-	else if (position.x < 516 / app->win->GetScale()) {//Kirby se va para izquierda
-		app->render->playerPosition.x = 516 ;
-		app->render->playerPosition.y = position.y;
-		std::cout << "IZ" << std::endl;
-	}
-	else if (position.x > 7484 / app->win->GetScale()) {//Kirby se va para derecha
-		app->render->playerPosition.x = 7484 ;
-		app->render->playerPosition.y = position.y * app->win->GetScale();
-		std::cout << "DER" << std::endl;
-	}
-	else if (position.y > 577 ) {//Kirby se va para abajo
-		app->render->playerPosition.x = position.x * app->win->GetScale();
-		app->render->playerPosition.y = 577 / app->win->GetScale();
-		std::cout << "INF" << std::endl;
-	}
-	else if (position.y < 385 / app->win->GetScale()) { //Kirby se va para arriba
-		app->render->playerPosition.x = position.x * app->win->GetScale();
-		app->render->playerPosition.y = 385 ;
-		std::cout << "SUP" << std::endl;
-	}
-	else {//Kirby normal
-		app->render->playerPosition.x = position.x * app->win->GetScale(); //Le pasamos la posicion del player al render para que la cámara siga al player
-		app->render->playerPosition.y = position.y * app->win->GetScale();
-		std::cout << "NORMAL" << std::endl;
-	}
-
+	//Camara
+	Camera();
+	PlayerDebug();
 	std::cout << (app->render->playerPosition.x / app->win->GetScale()) << "    " << (app->render->playerPosition.y / app->win->GetScale())  << std::endl;
-
-
-
-
 
 
 	this->active;
@@ -588,16 +539,19 @@ bool Player::Update()
 	case(STOP):
 		Movimiento();
 		break;
+
 	case(MOVIMIENTO):
 		Movimiento();
 		break;
+
 	case(DEATH):
 		app->audio->PlayFx(kirbyDeathFx,0);
 		currentAnimation = &death;
-		
 		break;
+
 	case(NONE):
 		break;
+
 	default: 
 		break;
 		
@@ -620,44 +574,7 @@ bool Player::Update()
 	std::cout << "position pbody get Transform = " << METERS_TO_PIXELS(pbody->body->GetTransform().p.x) << std::endl;
 	std::cout << "position pbody get Transform = " << METERS_TO_PIXELS(pbody->body->GetTransform().p.y) << std::endl;
 	std::cout << "CAMERA POSITION.y" << app->render->camera.y << std::endl;*/
-	
 
-	if (app->input->GetKey(SDL_SCANCODE_F10) == KEY_DOWN)
-	{
-		if (!godMode)
-		{
-			godMode = true;
-		}
-		else
-		{
-			godMode = false;
-		}
-		
-	}
-
-	if (app->input->GetKey(SDL_SCANCODE_F3) == KEY_DOWN) //comenzar desde el inicio del level
-	{
-		ChangePosition(125, 600);
-	}
-	 
-	if (godMode)
-	{
-		std::cout << "GODMODE ACTIVADO" << std::endl;
-		flapLimit = 0;
-		estadoP = MOVIMIENTO;
-	}
-
-	if (app->input->GetKey(SDL_SCANCODE_1) == KEY_DOWN)
-	{
-		pbody->body->GetWorld()->DestroyBody(pbody->body);
-		CleanUp();
-	}
-
-	if (app->input->GetKey(SDL_SCANCODE_8) == KEY_DOWN)
-	{
-		b2Vec2 resetPos = b2Vec2(PIXEL_TO_METERS(30), PIXEL_TO_METERS(30));
-		pbody->body->SetTransform(resetPos, 0);
-	}
 
 	if (teleport.turn == true)
 	{
@@ -703,11 +620,13 @@ void Player::OnCollision(PhysBody* physA, PhysBody* physB) {
 		app->audio->PlayFx(pickCoinFxId);
 		//ChangePosition(30, 30);
 		break;
+
 	case ColliderType::DEATH:
 		LOG("Collision DEATH");
 		app->audio->PlayFx(pickCoinFxId);
 		ChangePosition(125, 600);
 		break;
+
 	case ColliderType::PLATFORM:
 		LOG("Collision PLATFORM");
 		collisionP = COLLISION;
@@ -718,6 +637,7 @@ void Player::OnCollision(PhysBody* physA, PhysBody* physB) {
 		flapLimit = 0;
 		std::cout << "PLATFORM COLLISION" << std::endl;
 		break;
+
 	case ColliderType::ENEMY:
 
 		//estadoP = DEATH;
@@ -728,6 +648,91 @@ void Player::OnCollision(PhysBody* physA, PhysBody* physB) {
 		LOG("Collision UNKNOWN");
 		break;
 	}
+}
 
+void Player::Camera(){
+	if (position.x < 516 / app->win->GetScale() && position.y < 385 / app->win->GetScale()) {//Kirby esquina superior izquierda
+		app->render->playerPosition.x = 516;
+		app->render->playerPosition.y = 385;
+		std::cout << "SUP IZ" << std::endl;
+	}
+	else if (position.x < 516 / app->win->GetScale() && position.y > 577) {//Kirby esquina inferior izquierda
+		app->render->playerPosition.x = 516;
+		app->render->playerPosition.y = 577;
+		std::cout << "INF IZ" << std::endl;
+	}
+	else if (position.x > 7484 && position.y < 385 / app->win->GetScale()) {//Kirby esquina superior derecha
+		app->render->playerPosition.x = 7484 * app->win->GetScale();
+		app->render->playerPosition.y = 385;
+		std::cout << "SUP DER" << std::endl;
+	}
+	else if (position.x > 7484 && position.y > 577 / app->win->GetScale()) {//Kirby esquina inferior derecha
+		app->render->playerPosition.x = 7484;
+		app->render->playerPosition.y = 577;
+		std::cout << "INF DER" << std::endl;
+	}
+	else if (position.x < 516) {//Kirby se va para izquierda
+		app->render->playerPosition.x = 516;
+		app->render->playerPosition.y = position.y * app->win->GetScale();
+		std::cout << "IZ" << std::endl;
+	}
+	else if (position.x > 7484) {//Kirby se va para derecha
+		app->render->playerPosition.x = 7484 * app->win->GetScale();
+		app->render->playerPosition.y = position.y * app->win->GetScale();
+		std::cout << "DER" << std::endl;
+	}
+	else if (position.y > 577) {//Kirby se va para abajo
+		app->render->playerPosition.x = position.x * app->win->GetScale();
+		app->render->playerPosition.y = 577 / app->win->GetScale();
+		std::cout << "INF" << std::endl;
+	}
+	else if (position.y < 385 / app->win->GetScale()) { //Kirby se va para arriba
+		app->render->playerPosition.x = position.x * app->win->GetScale();
+		app->render->playerPosition.y = 385;
+		std::cout << "SUP" << std::endl;
+	}
+	else {//Kirby normal
+		app->render->playerPosition.x = position.x * app->win->GetScale(); //Le pasamos la posicion del player al render para que la cámara siga al player
+		app->render->playerPosition.y = position.y * app->win->GetScale();
+		std::cout << "NORMAL" << std::endl;
+	}
+}
 
+void Player::PlayerDebug() {
+
+	if (app->input->GetKey(SDL_SCANCODE_F10) == KEY_DOWN)//GODMODE
+	{
+		if (!godMode)
+		{
+			godMode = true;
+		}
+		else
+		{
+			godMode = false;
+		}
+	}
+
+	if (godMode)
+	{
+		std::cout << "GODMODE ACTIVADO" << std::endl;
+		flapLimit = 0;
+		estadoP = MOVIMIENTO;
+	}
+
+	if (app->input->GetKey(SDL_SCANCODE_F3) == KEY_DOWN) //comenzar desde el inicio del level
+	{
+		ChangePosition(125, 600);
+	}
+
+	if (app->input->GetKey(SDL_SCANCODE_1) == KEY_DOWN)
+	{
+		pbody->body->GetWorld()->DestroyBody(pbody->body);
+		CleanUp();
+	}
+
+	if (app->input->GetKey(SDL_SCANCODE_8) == KEY_DOWN)
+	{
+		b2Vec2 resetPos = b2Vec2(PIXEL_TO_METERS(30), PIXEL_TO_METERS(30));
+		pbody->body->SetTransform(resetPos, 0);
+	}
 }
