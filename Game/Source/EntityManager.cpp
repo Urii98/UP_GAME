@@ -73,8 +73,10 @@ bool EntityManager::CleanUp()
 
 	while (item != NULL && ret == true)
 	{
+
 		ret = item->data->CleanUp();
 		item = item->prev;
+
 	}
 
 	entities.Clear();

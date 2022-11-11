@@ -4,10 +4,11 @@
 #include "Module.h"
 #include "Player.h"
 #include "Item.h"
+#include "List.h"
 #include "SmallEnemy1.h"
 #include "SmallEnemy2.h"
 #include "SmallEnemyFly.h"
-#include <vector>
+#include "Physics.h"
 
 
 struct SDL_Texture;
@@ -47,7 +48,10 @@ public:
 
 	//L02: DONE 3: Declare a Player attribute 
 	Player* player;
-	std::vector<Entity*>* vect = new std::vector<Entity*>;
+
+	List<Entity*> entities;
+
+	//std::vector<Entity*>* vect = new std::vector<Entity*>;
 
 
 private:

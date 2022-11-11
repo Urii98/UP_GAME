@@ -106,9 +106,9 @@ private:
 
 	
 	// L07 DONE 5: Add physics to the player - declare a Physics body
-	PhysBody* pbody;
+//	PhysBody* pbody;
 
-	PhysBody* sensor;
+	//PhysBody* sensor;
 
 
 	const char* texturePath;

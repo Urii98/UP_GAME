@@ -82,6 +82,7 @@
     <ClInclude Include="Source\SmallEnemyFly.h" />
     <ClInclude Include="Source\SmallEnemy2.h" />
     <ClInclude Include="Source\SceneManager.h" />
+    <ClInclude Include="Source\MemLeaks.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="External">

@@ -123,6 +123,7 @@
     <ClInclude Include="Source\FadeToBlack.h" />
     <ClInclude Include="Source\Item.h" />
     <ClInclude Include="Source\Map.h" />
+    <ClInclude Include="Source\MemLeaks.h" />
     <ClInclude Include="Source\Physics.h" />
     <ClInclude Include="Source\Player.h" />
     <ClInclude Include="Source\Queue.h" />

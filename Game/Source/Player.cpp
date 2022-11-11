@@ -211,28 +211,28 @@ bool Player::Start() {
 
 	// L07 DONE 5: Add physics to the player - initialize physics body
 	pbody = app->physics->CreateCircle(position.x+16, position.y+16, 12, bodyType::DYNAMIC);
-	sensor = app->physics->CreateRectangle(position.x + 15, position.y + 15, 15, 15, bodyType::DYNAMIC);
+	//sensor = app->physics->CreateRectangle(position.x + 15, position.y + 15, 15, 15, bodyType::DYNAMIC);
 
 	// L07 DONE 6: Assign player class (using "this") to the listener of the pbody. This makes the Physics module to call the OnCollision method
 	pbody->listener = this;
-	sensor->listener = this;
+	//sensor->listener = this;
 
 	// L07 DONE 7: Assign collider type
 	pbody->ctype = ColliderType::PLAYER;
-	sensor->ctype = ColliderType::SENSOR;
+	//sensor->ctype = ColliderType::SENSOR;
 
 	teleport.turn = false;
 
-	std::cout << "MASSA PLAYER - " << pbody->body->GetMass() << std::endl;
+	/*std::cout << "MASSA PLAYER - " << pbody->body->GetMass() << std::endl;
 
-	std::cout << pbody->body->GetFixtureList()->GetDensity() << std::endl;
+	std::cout << pbody->body->GetFixtureList()->GetDensity() << std::endl;*/
 
 	pbody->body->GetFixtureList()->SetDensity(50.0);
 
-	std::cout << "new density" << pbody->body->GetFixtureList()->GetDensity() << std::endl;
+	//std::cout << "new density" << pbody->body->GetFixtureList()->GetDensity() << std::endl;
 
 	pbody->body->ResetMassData();
-	std::cout << "NUEVA MASA PLAYER - " << pbody->body->GetMass() << std::endl;
+	//std::cout << "NUEVA MASA PLAYER - " << pbody->body->GetMass() << std::endl;
 
 	
 	return true;
@@ -686,6 +686,7 @@ void Player::PostUpdate()
 bool Player::CleanUp()
 {
 	app->tex->UnLoad(texture);
+	pbody->body->GetWorld()->DestroyBody(pbody->body);
 	std::cout << "entrando en Cleanup - Player" << std::endl;
 	//la memoria de player la libero directamente en scene
 	//app->entityManager->DestroyEntity(this);

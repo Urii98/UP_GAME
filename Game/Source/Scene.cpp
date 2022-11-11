@@ -34,36 +34,41 @@ bool Scene::Awake(pugi::xml_node& config)
 	{
 		Item* item = (Item*)app->entityManager->CreateEntity(EntityType::ITEM);
 		item->parameters = itemNode;
-//		vect->push_back(item);
+
+		entities.Add(item);
 		
 	}
 
-	//for (pugi::xml_node itemNode = config.child("SmallEnemy1"); itemNode; itemNode = itemNode.next_sibling("SmallEnemy1"))
-	//{
-	//	SmallEnemy1* item = (SmallEnemy1*)app->entityManager->CreateEntity(EntityType::SMALLENEMY1);
-	//	item->parameters = itemNode;
-	//	//vect->push_back(item);
-	//}
+	for (pugi::xml_node itemNode = config.child("SmallEnemy1"); itemNode; itemNode = itemNode.next_sibling("SmallEnemy1"))
+	{
+		SmallEnemy1* item = (SmallEnemy1*)app->entityManager->CreateEntity(EntityType::SMALLENEMY1);
+		item->parameters = itemNode;
+		
+		entities.Add(item);
+	}
 
-	//for (pugi::xml_node itemNode = config.child("SmallEnemyFly"); itemNode; itemNode = itemNode.next_sibling("SmallEnemyFly"))
-	//{
-	//	SmallEnemyFly* item = (SmallEnemyFly*)app->entityManager->CreateEntity(EntityType::SMALLENEMYFLY);
-	//	item->parameters = itemNode;
-	//	//vect->push_back(item);
-	//}
+	for (pugi::xml_node itemNode = config.child("SmallEnemyFly"); itemNode; itemNode = itemNode.next_sibling("SmallEnemyFly"))
+	{
+		SmallEnemyFly* item = (SmallEnemyFly*)app->entityManager->CreateEntity(EntityType::SMALLENEMYFLY);
+		item->parameters = itemNode;
+		
+		entities.Add(item);
+	}
 
 	for (pugi::xml_node itemNode = config.child("SmallEnemy2"); itemNode; itemNode = itemNode.next_sibling("SmallEnemy2"))
 	{
 		SmallEnemy2* item = (SmallEnemy2*)app->entityManager->CreateEntity(EntityType::SMALLENEMY2);
 		item->parameters = itemNode;
-		//vect->push_back(item);
+		entities.Add(item);
+		
 	}
 
 
 	//L02: DONE 3: Instantiate the player using the entity manager
 	player = (Player*)app->entityManager->CreateEntity(EntityType::PLAYER);
 	player->parameters = config.child("player");
-	vect->push_back(player);
+	//vect->push_back(player);
+	entities.Add(player);
 
 	return ret;
 }
@@ -84,6 +89,9 @@ bool Scene::Start()
 		app->map->mapData.tilesets.Count());
 
 	app->win->SetTitle(title.GetString());
+
+	/*app->entityManager->Start();
+	app->map->Start();*/
 
 	return true;
 }
@@ -155,11 +163,24 @@ bool Scene::CleanUp()
 {
 	LOG("Freeing scene");
 
-	vect->clear();
-
-	delete vect;
+	
+	//vect->clear();
+	//delete vect;
 
 	app->tex->UnLoad(img);
+
+	ListItem<Entity*>* destroyEntities;
+	destroyEntities = entities.start;
+
+	while (destroyEntities != NULL)
+	{
+			
+		app->entityManager->DestroyEntity(destroyEntities->data);
+		RELEASE(destroyEntities->data);
+		destroyEntities = destroyEntities->next;
+	}
+
+	
 
 	//memoryleak
 	return true;

@@ -146,8 +146,11 @@ bool SmallEnemy2::CleanUp()
 
 	app->tex->UnLoad(texture);
 
-	//la memoria de small enemy la libero directamente en scene
-	//app->entityManager->DestroyEntity(this);
+	//if (!destroy)
+	//{
+	//	app->physics->world->DestroyBody(pbody->body);
+	//	//pbody->body->GetWorld()->DestroyBody(pbody->body);
+	//}
 
 	return true;
 }

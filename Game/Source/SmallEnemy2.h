@@ -44,7 +44,7 @@ public:
 	Animation walkRAnimEnemy;
 	Animation walkLAnimEnemy;
 
-	bool destroy;
+	//bool destroy;
 
 	enum estadoSEnemy1 {
 		STOP = 0,
@@ -66,7 +66,7 @@ private:
 	const char* texturePath;
 	SDL_Timer deathAnimationTimer;
 	//DONE 4: Add a physics
-	PhysBody* pbody;
+//	PhysBody* pbody;
 };
 
 #endif // !__SMALL_ENEMY_2__

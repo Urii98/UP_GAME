@@ -7,6 +7,8 @@
 
 #include "PugiXml\src\pugixml.hpp"
 
+#include <vector>
+
 // L04: DONE 2: Create a struct to hold information for a TileSet
 // Ignore Terrain Types and Tile Types for now, but we want the image!
 struct TileSet
@@ -166,6 +168,10 @@ private:
 	const char* farBackgroundPath;
     bool mapLoaded;
 
+	List<PhysBody*> mapColliderContainer;
+	List<PhysBody*> mapDeathColliderContainer;
+	//std::vector<PhysBody*> mapColliderContainer;
+	//std::vector<PhysBody*> mapDeathColliderContainer;
 	
 };
 

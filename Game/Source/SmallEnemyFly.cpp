@@ -110,8 +110,9 @@ bool SmallEnemyFly::Update()
 	if (deathAnimationTimer.Test() == FIN)
 	{
 		pbody->body->GetWorld()->DestroyBody(pbody->body);
-		CleanUp();
-		destroy = false;
+		app->tex->UnLoad(texture);
+//		CleanUp();
+		destroy = true;
 	}
 
 	return true;
@@ -121,10 +122,19 @@ bool SmallEnemyFly::CleanUp()
 {
 	//memoryleak
 
-	app->tex->UnLoad(texture);
+//	app->tex->UnLoad(texture);
+	
+	
+	//pbody->body->GetWorld()->DestroyBody(pbody->body);
 
-	//la memoria de small enemy la libero directamente en scene
-	//app->entityManager->DestroyEntity(this);
+
+	//if (!destroy)
+	//{
+	//	app->physics->world->DestroyBody(pbody->body);
+	//	//pbody->body->GetWorld()->DestroyBody(pbody->body);
+	//}
+
+	
 
 	return true;
 }

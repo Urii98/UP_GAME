@@ -186,10 +186,13 @@ bool Map::CleanUp()
 
 	while (item != NULL)
 	{
-		RELEASE(item->data);
+        RELEASE(item->data);
 		item = item->next;
+        
 	}
 	mapData.tilesets.Clear();
+    
+    
 
     // L05: DONE 2: clean up all layer data
     // Remove all layers
@@ -201,9 +204,34 @@ bool Map::CleanUp()
         RELEASE(layerItem->data);
         layerItem = layerItem->next;
     }
+
+    mapData.maplayers.Clear();
      
-    //app->tex->UnLoad(middleBackground);
-    //app->tex->UnLoad(farBackground);
+    app->tex->UnLoad(middleBackground);
+    app->tex->UnLoad(farBackground);
+
+
+    ListItem<PhysBody*>* clearColliderContainer;
+    clearColliderContainer = mapColliderContainer.start;
+
+    while (clearColliderContainer != NULL)
+    {
+        RELEASE(clearColliderContainer->data);
+        clearColliderContainer = clearColliderContainer->next;
+
+    }
+    mapColliderContainer.Clear();
+    
+    ListItem<PhysBody*>* clearDeathColliderContainer;
+    clearDeathColliderContainer = mapDeathColliderContainer.start;
+
+    while (clearDeathColliderContainer != NULL)
+    {
+        RELEASE(clearDeathColliderContainer->data);
+        clearDeathColliderContainer = clearDeathColliderContainer->next;
+
+    }
+    mapDeathColliderContainer.Clear();
 
     return true;
 }
@@ -259,6 +287,9 @@ bool Map::Load()
                         iPoint pos = MapToWorld(x * app->win->GetScale(), y * app->win->GetScale());
                         PhysBody* mapCollider = app->physics->CreateRectangle(pos.x+(16 * app->win->GetScale()), pos.y+(16 * app->win->GetScale()), 32 * app->win->GetScale(), 32 * app->win->GetScale(), STATIC);
                         mapCollider->ctype = ColliderType::PLATFORM;
+
+                        mapColliderContainer.Add(mapCollider);
+
                     }
                     //302 == Green Square (die)
                     else if (gid == 940)
@@ -266,6 +297,9 @@ bool Map::Load()
                         iPoint pos = MapToWorld(x * app->win->GetScale(), y * app->win->GetScale());
                         PhysBody* mapDeathCollider = app->physics->CreateRectangleSensor(pos.x + (16 * app->win->GetScale()), pos.y + (16 * app->win->GetScale()), 32 * app->win->GetScale(), 32 * app->win->GetScale(), STATIC);
                         mapDeathCollider->ctype = ColliderType::DEATH;
+
+                        mapDeathColliderContainer.Add(mapDeathCollider);
+
                     }
                 }
             }

@@ -27,6 +27,7 @@ App* app = NULL;
 
 int main(int argc, char* args[])
 {
+
 	LOG("Engine starting ...");
 
 	MainState state = CREATE;
@@ -108,6 +109,13 @@ int main(int argc, char* args[])
 
 	LOG("... Bye! :)\n");
 
+	bool a = true;
+	while (a)
+	{
+
+	}
+
+	
 	// Dump memory leaks
 	return result;
 }

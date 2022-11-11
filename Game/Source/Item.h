@@ -27,7 +27,7 @@ public:
 public:
 
 	bool isPicked = false;
-	bool destroy;
+	//bool destroy;
 
 private:
 
@@ -35,7 +35,7 @@ private:
 	const char* texturePath;
 
 	//DONE 4: Add a physics to an item
-	PhysBody* pbody;
+//	PhysBody* pbody;
 };
 
 #endif // __ITEM_H__

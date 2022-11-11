@@ -137,6 +137,9 @@ bool Input::PreUpdate()
 bool Input::CleanUp()
 {
 	LOG("Quitting SDL event subsystem");
+
+	delete keyboard;
+
 	SDL_QuitSubSystem(SDL_INIT_EVENTS);
 	return true;
 }
