@@ -108,13 +108,6 @@ int main(int argc, char* args[])
 	}
 
 	LOG("... Bye! :)\n");
-
-	bool a = true;
-	while (a)
-	{
-
-	}
-
 	
 	// Dump memory leaks
 	return result;
