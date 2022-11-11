@@ -54,14 +54,14 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	//L07 DONE 2: Add Physics module
 	physics = new Physics(true);
 
-	sceneLogo = new SceneLogo(true);
+	sceneLogo = new SceneLogo(false);
 	sceneTitle = new SceneTitle(false);
-	
 
-	scene = new Scene(false);
+
+	scene = new Scene(true);
 	sceneEnding = new SceneEnding(false);
-	entityManager = new EntityManager(false);
-	map = new Map(false);
+	entityManager = new EntityManager(true);
+	map = new Map(true);
 	fade = new FadeToBlack(true);
 
 
@@ -152,9 +152,14 @@ bool App::Start()
 	ListItem<Module*>* item;
 	item = modules.start;
 
-	while (item != NULL && ret == true && item->data->active == true)
+	while (item != NULL && ret == true)
 	{
-		ret = item->data->Start();
+		if (item->data->active == true)
+		{
+
+			ret = item->data->Start();
+
+		}
 		item = item->next;
 	}
 

@@ -526,46 +526,56 @@ bool Player::Update()
 	position.y = METERS_TO_PIXELS(pbody->body->GetTransform().p.y / app->win->GetScale()) - 10;
 
 
-
+	
 	//CAMARAAAAAAAAAAAA TENDRA Q SER UNA FUNCION XD
-	if (position.x<130 * app->win->GetScale() && position.y<200 * app->win->GetScale()) {//Kirby esquina superior izquierda
-		app->render->playerPosition.x = 260 * app->win->GetScale();
-		app->render->playerPosition.y = 370 * app->win->GetScale();
+	if (position.x<516 / app->win->GetScale() && position.y<385 / app->win->GetScale()) {//Kirby esquina superior izquierda
+		app->render->playerPosition.x = 516;
+		app->render->playerPosition.y = 385;
+		std::cout << "SUP IZ" << std::endl;
 	}
-	else if (position.x < 130 * app->win->GetScale() && position.y > 385 * app->win->GetScale()) {//Kirby esquina inferior izquierda
-		app->render->playerPosition.x = 260 * app->win->GetScale();
-		app->render->playerPosition.y = 400 * app->win->GetScale();
+	else if (position.x < 516 / app->win->GetScale() && position.y > 577) {//Kirby esquina inferior izquierda
+		app->render->playerPosition.x = 516 ;
+		app->render->playerPosition.y = 577;
+		std::cout << "INF IZ" << std::endl;
 	}
-	//else if (position.x > 130 * app->win->GetScale() && position.y < 200 * app->win->GetScale()) {//Kirby esquina superior derecha
-	//	app->render->playerPosition.x = 260 * app->win->GetScale();
-	//	app->render->playerPosition.y = 370 * app->win->GetScale();
-	//}
-	//else if (position.x > 130 * app->win->GetScale() && position.y > 200 * app->win->GetScale()) {//Kirby esquina inferior derecha
-	//	app->render->playerPosition.x = 260 * app->win->GetScale();
-	//	app->render->playerPosition.y = 370 * app->win->GetScale();
-	//}
-	//else if (position.x < 200 * app->win->GetScale()) {//Kirby se va para izquierda
-	//	app->render->playerPosition.x = 370 * app->win->GetScale();
-	//	app->render->playerPosition.y = position.y * app->win->GetScale();
-	//}
-	//else if (position.x > 200 * app->win->GetScale()) {//Kirby se va para derecha
-	//	app->render->playerPosition.x = 370 * app->win->GetScale();
-	//	app->render->playerPosition.y = position.y * app->win->GetScale();
-	//}
-	//else if (position.y > 767 * app->win->GetScale()) {//Kirby se va para abajo
-	//	app->render->playerPosition.x = position.x * app->win->GetScale();
-	//	app->render->playerPosition.y = 767 * app->win->GetScale();
-	//}
-	//else if (position.y < 200 * app->win->GetScale()) { //Kirby se va para arriba
-	//	app->render->playerPosition.x = position.x * app->win->GetScale();
-	//	app->render->playerPosition.y = 370 * app->win->GetScale();
-	//}
+	else if (position.x > 7484 / app->win->GetScale() && position.y < 385 / app->win->GetScale()) {//Kirby esquina superior derecha
+		app->render->playerPosition.x = 7484 ;
+		app->render->playerPosition.y = 385 ;
+		std::cout << "SUP DER" << std::endl;
+	}
+	else if (position.x > 7484 / app->win->GetScale() && position.y > 577 / app->win->GetScale()) {//Kirby esquina inferior derecha
+		app->render->playerPosition.x = 7484 ;
+		app->render->playerPosition.y = 577 ;
+		std::cout << "INF DER" << std::endl;
+	}
+	else if (position.x < 516 / app->win->GetScale()) {//Kirby se va para izquierda
+		app->render->playerPosition.x = 516 ;
+		app->render->playerPosition.y = position.y;
+		std::cout << "IZ" << std::endl;
+	}
+	else if (position.x > 7484 / app->win->GetScale()) {//Kirby se va para derecha
+		app->render->playerPosition.x = 7484 ;
+		app->render->playerPosition.y = position.y * app->win->GetScale();
+		std::cout << "DER" << std::endl;
+	}
+	else if (position.y > 577 ) {//Kirby se va para abajo
+		app->render->playerPosition.x = position.x * app->win->GetScale();
+		app->render->playerPosition.y = 577 / app->win->GetScale();
+		std::cout << "INF" << std::endl;
+	}
+	else if (position.y < 385 / app->win->GetScale()) { //Kirby se va para arriba
+		app->render->playerPosition.x = position.x * app->win->GetScale();
+		app->render->playerPosition.y = 385 ;
+		std::cout << "SUP" << std::endl;
+	}
 	else {//Kirby normal
 		app->render->playerPosition.x = position.x * app->win->GetScale(); //Le pasamos la posicion del player al render para que la cámara siga al player
 		app->render->playerPosition.y = position.y * app->win->GetScale();
+		std::cout << "NORMAL" << std::endl;
 	}
 
-	std::cout << (position.x / app->win->GetScale()) << "    " << (position.y / app->win->GetScale())  << std::endl;
+	std::cout << (app->render->playerPosition.x / app->win->GetScale()) << "    " << (app->render->playerPosition.y / app->win->GetScale())  << std::endl;
+
 
 
 
