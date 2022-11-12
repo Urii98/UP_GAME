@@ -6,6 +6,9 @@
 #include <iostream>
 
 #include "SDL/include/SDL_render.h"
+
+#include"EntityManager.h"
+#include "Map.h"
 FadeToBlack::FadeToBlack(bool isActive) : Module(isActive)
 {
 	screenRect = { 0, 0, 1024, 768 };
@@ -37,6 +40,12 @@ bool FadeToBlack::Update(float dt)
 		if (alpha > 1.00f)
 		{
 			moduleToDisable->Disable();
+
+			if (moduleToEnable->name == "scene")
+			{
+				app->entityManager->Enable();
+				app->map->Enable();
+			}
 			moduleToEnable->Enable();
 
 			currentStep = Fade_Step::FROM_BLACK;
