@@ -58,7 +58,6 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 
 	sceneLogo = new SceneLogo(false);
 	sceneTitle = new SceneTitle(false);
-	
 
 	scene = new Scene(true);
 	sceneEnding = new SceneEnding(false);
@@ -79,7 +78,7 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(sceneManager);
 	
 	AddModule(sceneLogo); //7 de memoria x si solo  --> nse pq no se eliminan aunq he probado con breakpoint y se llama a delete texture y funciona normal
-	AddModule(sceneTitle); //450 de memoria x si solo --> podría estar dejando 11mb de memory leaks
+	AddModule(sceneTitle); //450 de memoria x si solo --> podrï¿½a estar dejando 11mb de memory leaks
 	
 	
 	AddModule(scene); //junto a entitiy manager: 112
@@ -162,6 +161,7 @@ bool App::Start()
 
 			ret = item->data->Start();
 			
+
 		}
 		item = item->next;
 	}

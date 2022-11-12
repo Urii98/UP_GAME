@@ -10,7 +10,7 @@
 	<scene />
 	<sceneEnding />
 	<entitymanager>
-		<playerScene1 x="6022" y="835" />
+		<playerScene1 x="216" y="739" />
 	</entitymanager>
 	<map />
 	<fade />

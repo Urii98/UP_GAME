@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.8" tiledversion="1.8.5" orientation="orthogonal" renderorder="right-down" width="250" height="30" tilewidth="32" tileheight="32" infinite="0" nextlayerid="6" nextobjectid="1">
+<map version="1.9" tiledversion="1.9.2" orientation="orthogonal" renderorder="right-down" width="250" height="30" tilewidth="32" tileheight="32" infinite="0" nextlayerid="6" nextobjectid="1">
  <tileset firstgid="1" name="tileset_terrain" tilewidth="32" tileheight="32" tilecount="575" columns="25">
-  <image source="tileset.jpeg" width="800" height="736"/>
+  <image source="tileset.png" width="800" height="736"/>
  </tileset>
  <tileset firstgid="576" name="tileset_props" tilewidth="32" tileheight="32" tilecount="364" columns="26">
   <image source="props.png" trans="898989" width="832" height="448"/>
@@ -22350,30 +22350,30 @@
    <tile/>
    <tile/>
    <tile gid="941"/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
+   <tile gid="940"/>
+   <tile gid="940"/>
+   <tile gid="940"/>
+   <tile gid="940"/>
+   <tile gid="940"/>
+   <tile gid="940"/>
+   <tile gid="940"/>
+   <tile gid="940"/>
+   <tile gid="940"/>
+   <tile gid="940"/>
+   <tile gid="940"/>
+   <tile gid="940"/>
+   <tile gid="940"/>
+   <tile gid="940"/>
+   <tile gid="940"/>
+   <tile gid="940"/>
+   <tile gid="940"/>
+   <tile gid="940"/>
+   <tile gid="940"/>
+   <tile gid="940"/>
+   <tile gid="940"/>
+   <tile gid="940"/>
+   <tile gid="940"/>
+   <tile gid="940"/>
    <tile gid="941"/>
    <tile/>
    <tile/>
@@ -22430,33 +22430,33 @@
    <tile/>
    <tile/>
    <tile gid="941"/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
+   <tile gid="940"/>
+   <tile gid="940"/>
+   <tile gid="940"/>
+   <tile gid="940"/>
+   <tile gid="940"/>
+   <tile gid="940"/>
+   <tile gid="940"/>
+   <tile gid="940"/>
+   <tile gid="940"/>
+   <tile gid="940"/>
+   <tile gid="940"/>
+   <tile gid="940"/>
+   <tile gid="940"/>
+   <tile gid="940"/>
+   <tile gid="940"/>
+   <tile gid="940"/>
+   <tile gid="940"/>
+   <tile gid="940"/>
+   <tile gid="940"/>
+   <tile gid="940"/>
+   <tile gid="940"/>
+   <tile gid="940"/>
+   <tile gid="940"/>
+   <tile gid="940"/>
+   <tile gid="940"/>
+   <tile gid="940"/>
+   <tile gid="940"/>
    <tile gid="941"/>
    <tile/>
    <tile/>
