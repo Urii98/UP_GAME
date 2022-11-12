@@ -6,6 +6,7 @@
 #include "SDL/include/SDL.h"
 #include "SDL_Timer.h"
 #include "Animation.h"
+#include "Map.h"
 #include <iostream>
 
 
@@ -78,6 +79,7 @@ public:
 	int prevPosition;
 
 	bool godMode;
+	bool mapSelect;
 
 	Animation* currentAnimation = nullptr; 
 

@@ -31,9 +31,15 @@ bool Map::Awake(pugi::xml_node& config)
     LOG("Loading Map Parser");
     bool ret = true;
 
-    mapFileName = config.child("mapfile").attribute("path").as_string();
+    
     mapFolder = config.child("mapfolder").attribute("path").as_string();
-    farBackgroundPath = config.child("farBackgroundTexture").attribute("path").as_string();
+    if (ret==true) {
+        mapFileName = config.child("mapfile").attribute("path").as_string();
+    }
+    else {
+        mapFileName = config.child("mapfile2").attribute("path").as_string();
+    }
+    farBackgroundPath = config.child("farBackgroundTexture2").attribute("path").as_string();
     middleBackgroundPath = config.child("middleBackgroundTexture").attribute("path").as_string();
 
 

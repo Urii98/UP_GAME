@@ -4,6 +4,7 @@
 #include "Module.h"
 #include "List.h"
 #include "Point.h"
+#include "Player.h"
 
 #include "PugiXml\src\pugixml.hpp"
 

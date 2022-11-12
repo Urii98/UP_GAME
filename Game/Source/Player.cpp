@@ -9,6 +9,7 @@
 #include "Point.h"
 #include "Physics.h"
 #include "Window.h"
+#include "Map.h"
 
 #include "SceneEnding.h"
 #include "SmallEnemy1.h"
@@ -33,6 +34,8 @@ bool Player::Awake() {
 	scalarSpeedX = parameters.attribute("scalarSpeedX").as_int();
 	scalarSpeedY = parameters.attribute("scalarSpeedY").as_int();
 	scalarSpeedYDown = parameters.attribute("scalarSpeedYDown").as_int();
+
+
 
 
 	//initialize audio effect - !! Path is hardcoded, should be loaded from config.xml
@@ -206,6 +209,8 @@ bool Player::Start() {
 	estadoP = STOP;
 	currentAnimation = &idleRAnim;
 	direccionP = DERECHA;
+
+	mapSelect = true;
 
 	//initilize textures
 	texture = app->tex->Load(texturePath);
@@ -565,6 +570,7 @@ bool Player::Update()
 		break;
 
 	case(VICTORY):
+		Movimiento();
 		app->audio->PlayFx(kirbyVictoryFx, 0);
 		break;
 
@@ -720,6 +726,18 @@ void Player::Camera(){
 
 void Player::PlayerDebug() {
 
+	if (app->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN)//GODMODE
+	{
+		mapSelect = true;
+		app->map->CleanUp();
+	}
+
+	if (app->input->GetKey(SDL_SCANCODE_F2) == KEY_DOWN)//GODMODE
+	{
+		mapSelect = false;
+		app->map->CleanUp();
+	}
+
 	if (app->input->GetKey(SDL_SCANCODE_F10) == KEY_DOWN)//GODMODE
 	{
 		if (!godMode)
@@ -759,7 +777,7 @@ void Player::PlayerDebug() {
 
 void Player::PlayerVictory() {
 	if (position.x > 7630 && position.y < 500) {
-		position.x = 7630;
+
 		estadoP = VICTORY;
 	}
 }
