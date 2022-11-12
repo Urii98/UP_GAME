@@ -164,6 +164,7 @@ public:
 private:
 
     SString mapFileName;
+	SString mapFileName2;
 	SString mapFolder;
 	const char* middleBackgroundPath;
 	const char* farBackgroundPath;

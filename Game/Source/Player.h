@@ -79,7 +79,6 @@ public:
 	int prevPosition;
 
 	bool godMode;
-	bool mapSelect;
 
 	Animation* currentAnimation = nullptr; 
 

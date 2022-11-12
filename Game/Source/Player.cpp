@@ -212,7 +212,7 @@ bool Player::Start() {
 	currentAnimation = &idleRAnim;
 	direccionP = DERECHA;
 
-	mapSelect = true;
+	app->scene->mapSelect = true;
 
 	//initilize textures
 	texture = app->tex->Load(texturePath);
@@ -729,17 +729,7 @@ void Player::Camera(){
 
 void Player::PlayerDebug() {
 
-	if (app->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN)//GODMODE
-	{
-		mapSelect = true;
-		app->map->CleanUp();
-	}
-
-	if (app->input->GetKey(SDL_SCANCODE_F2) == KEY_DOWN)//GODMODE
-	{
-		mapSelect = false;
-		app->map->CleanUp();
-	}
+	
 
 	if (app->input->GetKey(SDL_SCANCODE_F10) == KEY_DOWN)//GODMODE
 	{
