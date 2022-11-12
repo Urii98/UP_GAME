@@ -58,27 +58,23 @@ void Map::Draw()
         return;
 
  
-    //PARALLAX EFFECT:
+    //PARALLAX EFFECT:  
 
-   /* for (int i = 0; i < 5; i++)
-    {
-        app->render->DrawTexture(farBackground, 320*i, 150, NULL, 1.0f);
-    }*/
-    //
-    //app->render->DrawTexture(farBackground, app->render->playerPosition.x-180, 110, NULL, 1.0f);
-    //
-    //for (int i = 0; i < 20; i++)
-    //{
-    //    app->render->DrawTexture(middleBackground, 176*i, 268, NULL, 0.5f);
-    //}
+    //printando el fondo:
+    app->render->DrawTexture(farBackground, 0, 0, NULL, 0.0f);
+    app->render->DrawTexture(farBackground, 576, 0, NULL, 0.0f);
     
-    //app->render->DrawTexture(middleBackground, -802, 100, NULL, 0.5f);
-    //app->render->DrawTexture(middleBackground, -978, 90, NULL, 0.5f);
-    //app->render->DrawTexture(middleBackground, -1154, 80, NULL, 0.5f);
-    //app->render->DrawTexture(middleBackground, -274, 150, NULL, 0.5f);
-    //app->render->DrawTexture(middleBackground, -98, 150, NULL, 0.5f);
-
-
+    for (int i = 0; i < 26; i++) //middleBackGround para tapar los agujeros de la zona inferior del mapa
+    {
+       app->render->DrawTexture(middleBackground, 100 + i*100, 408, NULL, 0.5f);
+    }
+   
+    for (int i = 0; i < 30; i++) //middleBackground para la parte superior del mapa
+    {
+       app->render->DrawTexture(middleBackground, 176*i, 208, NULL, 0.5f);
+    }
+    
+    
 
     /*
     // L04: DONE 6: Iterate all tilesets and draw all their 

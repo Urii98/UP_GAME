@@ -585,7 +585,7 @@ bool Player::Update()
 	std::cout << "position iPoint.y = " << position.y << std::endl;
 	std::cout << "position pbody get Transform = " << METERS_TO_PIXELS(pbody->body->GetTransform().p.x) << std::endl;
 	std::cout << "position pbody get Transform = " << METERS_TO_PIXELS(pbody->body->GetTransform().p.y) << std::endl;
-	std::cout << "CAMERA POSITION.y" << app->render->camera.y << std::endl;*/
+	std::cout << "CAMERA POSITION.y" << app->render->camera.y << std::endl;
 
 
 	if (teleport.turn == true)
