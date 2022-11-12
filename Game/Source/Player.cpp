@@ -40,6 +40,7 @@ bool Player::Awake() {
 	//initialize audio effect - !! Path is hardcoded, should be loaded from config.xml
 	coinSFx = parameters.attribute("coinFxPath").as_string();
 	deathSFx = parameters.attribute("kirbyDeathFxPath").as_string();
+	victorySFx = parameters.attribute("kirbyVictoryFxPath").as_string();
 
 	oneJump = parameters.attribute("oneJump").as_bool();
 	flying = parameters.attribute("flying").as_bool();
@@ -47,6 +48,7 @@ bool Player::Awake() {
 	
 	pickCoinFxId = app->audio->LoadFx(coinSFx);
 	kirbyDeathFx = app->audio->LoadFx(deathSFx);
+	kirbyVictoryFx = app->audio->LoadFx(victorySFx);
 
 	texturePath = parameters.attribute("texturepath").as_string();
 	
@@ -249,7 +251,7 @@ void Player::Movimiento()
 	{
 
 
-		if (oneJump && app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN && flapLimit < 3)
+		if (oneJump && app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN && flapLimit < 3 && position.y>0)
 		{
 			flyTimer.Start(0.15); // -- ANIMACI�N -- volar
 			std::cout << "flying" << std::endl;
@@ -266,7 +268,7 @@ void Player::Movimiento()
 			flying = true;
 			flapLimit++;
 		}
-		else if (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) { // -- ANIMACI�N -- de caminar a la izquierda
+		else if (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT && position.x >0) { // -- ANIMACI�N -- de caminar a la izquierda
 
 			vel = b2Vec2(-speedX, -GRAVITY_Y);
 
@@ -335,7 +337,7 @@ void Player::Movimiento()
 
 
 		}
-		else if (app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) { // -- ANIMACI�N -- de caminar a la derecha
+		else if (app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT && position.x<7973) { // -- ANIMACI�N -- de caminar a la derecha
 			vel = b2Vec2(speedX, -GRAVITY_Y);
 
 			if (!oneJump)
@@ -543,6 +545,7 @@ bool Player::Update()
 	Camera();
 
 	PlayerDebug();
+	PlayerVictory();
 	std::cout << position.x << "    " << position.y << std::endl;
 	//std::cout << (app->render->playerPosition.x / app->win->GetScale()) << "    " << (app->render->playerPosition.y / app->win->GetScale())  << std::endl;
 
@@ -562,6 +565,10 @@ bool Player::Update()
 	case(DEATH):
 		app->audio->PlayFx(kirbyDeathFx,0);
 		currentAnimation = &death;
+		break;
+
+	case(VICTORY):
+		app->audio->PlayFx(kirbyVictoryFx, 0);
 		break;
 
 	case(NONE):
@@ -750,5 +757,12 @@ void Player::PlayerDebug() {
 	{
 		b2Vec2 resetPos = b2Vec2(PIXEL_TO_METERS(30), PIXEL_TO_METERS(30));
 		pbody->body->SetTransform(resetPos, 0);
+	}
+}
+
+void Player::PlayerVictory() {
+	if (position.x > 7630 && position.y < 500) {
+		position.x = 7630;
+		estadoP = VICTORY;
 	}
 }
