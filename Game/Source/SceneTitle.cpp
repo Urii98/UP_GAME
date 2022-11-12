@@ -58,7 +58,7 @@ bool SceneTitle::Update(float dt)
 
 	if (frame == 5)
 	{
-		app->audio->PlayMusic(musicTitlePath, 2.0);
+		app->audio->PlayMusic(musicTitlePath,0);
 	}
 
 	if (app->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN)

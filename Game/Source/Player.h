@@ -75,6 +75,7 @@ public:
 	int scalarSpeedYDown;
 
 	bool oneJump;
+	bool victory;
 
 	int prevPosition;
 
@@ -97,6 +98,7 @@ public:
 	Animation preflyLAnim;
 	Animation flyLAnim;
 	Animation death;
+	Animation win;
 
 	transformPosition teleport;
 
@@ -116,7 +118,6 @@ private:
 
 
 	const char* texturePath;
-
 
 	int pickCoinFxId;
 	int kirbyDeathFx;
@@ -139,6 +140,9 @@ private:
 	const char* coinSFx;
 	const char* deathSFx;
 	const char* victorySFx;
+
+	const char* musicScenePath;
+	const char* musicStopPath;
 
 };
 

@@ -38,16 +38,18 @@ bool Player::Awake() {
 	scalarSpeedYDown = parameters.attribute("scalarSpeedYDown").as_int();
 
 
-
-
 	//initialize audio effect - !! Path is hardcoded, should be loaded from config.xml
 	coinSFx = parameters.attribute("coinFxPath").as_string();
 	deathSFx = parameters.attribute("kirbyDeathFxPath").as_string();
 	victorySFx = parameters.attribute("kirbyVictoryFxPath").as_string();
 
+	musicScenePath = parameters.attribute("musicScenePath").as_string();
+	musicStopPath = parameters.attribute("musicStopPath").as_string();
+
 	oneJump = parameters.attribute("oneJump").as_bool();
 	flying = parameters.attribute("flying").as_bool();
 	godMode = parameters.attribute("godMode").as_bool();
+	victory = parameters.attribute("victory").as_bool();
 	
 	pickCoinFxId = app->audio->LoadFx(coinSFx);
 	kirbyDeathFx = app->audio->LoadFx(deathSFx);
@@ -204,6 +206,16 @@ bool Player::Start() {
 	death.loop = false;
 	death.speed = 0.085f;
 
+	win.PushBack({ 721, 58, 25, 25 });
+	win.PushBack({ 747, 58, 25, 25 });
+	win.PushBack({ 773, 58, 25, 25 });
+	win.PushBack({ 799, 58, 25, 25 });
+	win.PushBack({ 825, 58, 25, 25 });
+	win.PushBack({ 853, 58, 25, 25 });
+	win.PushBack({ 881, 58, 25, 25 });
+	win.loop = false;
+	win.speed = 0.085f;
+
 	speedX = scalarSpeedX * app->win->GetScale();
 	speedY = scalarSpeedY * app->win->GetScale();
 	speedYDown = scalarSpeedYDown * app->win->GetScale(); //para cuando estamos en el aire y apretamos "S" para bajar m�s r�pido
@@ -242,6 +254,7 @@ bool Player::Start() {
 	pbody->body->ResetMassData();
 	//std::cout << "NUEVA MASA PLAYER - " << pbody->body->GetMass() << std::endl;
 
+	app->audio->PlayMusic(musicScenePath, 0);
 	
 	return true;
 }
@@ -515,7 +528,11 @@ void Player::Movimiento()
 		}
 
 	}
-		
+	
+	if (estadoP == VICTORY)
+	{
+		vel = b2Vec2(0, -GRAVITY_Y);
+	}
 
 	pbody->body->SetLinearVelocity(vel);
 }
@@ -574,7 +591,10 @@ bool Player::Update()
 
 	case(VICTORY):
 		Movimiento();
+		
 		app->audio->PlayFx(kirbyVictoryFx, 0);
+		currentAnimation = &win;
+		estadoP = NONE;
 		break;
 
 	case(NONE):
@@ -769,8 +789,14 @@ void Player::PlayerDebug() {
 }
 
 void Player::PlayerVictory() {
-	if (position.x > 7630 && position.y < 500) {
+	//if (position.x > 7630 && position.y < 500) {
 
-		estadoP = VICTORY;
+	//	estadoP = VICTORY;
+	//}
+
+	if (position.x > 1100 && position.y < 500 && !victory) {
+		app->audio->PlayMusic(musicStopPath,0);
+  		estadoP = VICTORY;
+		victory = true;
 	}
 }
