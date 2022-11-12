@@ -35,12 +35,12 @@ bool Map::Awake(pugi::xml_node& config)
     
     mapFolder = config.child("mapfolder").attribute("path").as_string();
 
-        mapFileName = config.child("mapfile").attribute("path").as_string();
+    mapFileName = config.child("mapfile").attribute("path").as_string();
 
 
-        mapFileName2 = config.child("mapfile2").attribute("path").as_string();
+    mapFileName2 = config.child("mapfile2").attribute("path").as_string();
 
-    farBackgroundPath = config.child("farBackgroundTexture2").attribute("path").as_string();
+    farBackgroundPath = config.child("farBackgroundTexture").attribute("path").as_string();
     middleBackgroundPath = config.child("middleBackgroundTexture").attribute("path").as_string();
 
 

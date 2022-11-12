@@ -82,16 +82,9 @@
   <map>
     <mapfolder path="Assets/Maps/"/>
     <mapfile path="Assets/Maps/Level1.tmx"/>
-	<mapfile2 path="Assets/Maps/Level2.tmx"/>
+	  <mapfile2 path="Assets/Maps/Level2.tmx"/>
     <middleBackgroundTexture path="Assets/Textures/middle.png"/>
     <farBackgroundTexture path="Assets/Textures/back.png"/>
   </map>
-
-   <map2>
-    <mapfolder path="Assets/Maps/"/>
-    <mapfile path="Assets/Maps/Level2.tmx"/>
-	<middleBackgroundTexture path="Assets/Textures/back.png"/>
-	<farBackgroundTexture path="Assets/Textures/middle.png"/>
-   </map2>
   
 </config>
