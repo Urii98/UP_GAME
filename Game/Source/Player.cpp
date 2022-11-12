@@ -247,7 +247,7 @@ void Player::Movimiento()
 	{
 
 
-		if (oneJump && app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN && flapLimit < 3)
+		if (oneJump && app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN && flapLimit < 3 && position.y>0)
 		{
 			flyTimer.Start(0.15); // -- ANIMACI�N -- volar
 			std::cout << "flying" << std::endl;
@@ -264,7 +264,7 @@ void Player::Movimiento()
 			flying = true;
 			flapLimit++;
 		}
-		else if (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) { // -- ANIMACI�N -- de caminar a la izquierda
+		else if (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT && position.x >0) { // -- ANIMACI�N -- de caminar a la izquierda
 
 			vel = b2Vec2(-speedX, -GRAVITY_Y);
 
@@ -333,7 +333,7 @@ void Player::Movimiento()
 
 
 		}
-		else if (app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) { // -- ANIMACI�N -- de caminar a la derecha
+		else if (app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT && position.x<7973) { // -- ANIMACI�N -- de caminar a la derecha
 			vel = b2Vec2(speedX, -GRAVITY_Y);
 
 			if (!oneJump)
