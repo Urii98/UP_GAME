@@ -4,6 +4,7 @@
 #include "Textures.h"
 #include "Map.h"
 #include "Physics.h"
+#include "Scene.h"
 
 #include "Defs.h"
 #include "Log.h"
@@ -33,12 +34,12 @@ bool Map::Awake(pugi::xml_node& config)
 
     
     mapFolder = config.child("mapfolder").attribute("path").as_string();
-    if (ret==true) {
+
         mapFileName = config.child("mapfile").attribute("path").as_string();
-    }
-    else {
-        mapFileName = config.child("mapfile2").attribute("path").as_string();
-    }
+
+
+        mapFileName2 = config.child("mapfile2").attribute("path").as_string();
+
     farBackgroundPath = config.child("farBackgroundTexture2").attribute("path").as_string();
     middleBackgroundPath = config.child("middleBackgroundTexture").attribute("path").as_string();
 
@@ -244,13 +245,26 @@ bool Map::Load()
     bool ret = true;
 
     pugi::xml_document mapFileXML;
-    pugi::xml_parse_result result = mapFileXML.load_file(mapFileName.GetString());
+    if (app->scene->mapSelect == true) {
+        pugi::xml_parse_result result = mapFileXML.load_file(mapFileName.GetString());
+        if (result == NULL)
+        {
+            LOG("Could not load map xml file %s. pugi error: %s", mapFileName, result.description());
+            ret = false;
+        }
 
-    if(result == NULL)
-    {
-        LOG("Could not load map xml file %s. pugi error: %s", mapFileName, result.description());
-        ret = false;
     }
+    if (app->scene->mapSelect == false) {
+        pugi::xml_parse_result result = mapFileXML.load_file(mapFileName2.GetString());
+        if (result == NULL)
+        {
+            LOG("Could not load map xml file %s. pugi error: %s", mapFileName2, result.description());
+            ret = false;
+        }
+
+    }
+
+   
 
     if(ret == true)
     {
@@ -371,8 +385,7 @@ bool Map::Load()
 }
 
 // L04: DONE 3: Implement LoadMap to load the map properties
-bool Map::LoadMap(pugi::xml_node mapFile)
-{
+bool Map::LoadMap(pugi::xml_node mapFile){
     bool ret = true;
     pugi::xml_node map = mapFile.child("map");
 

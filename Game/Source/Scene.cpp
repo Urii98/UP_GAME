@@ -108,12 +108,14 @@ bool Scene::Update(float dt)
 	if (app->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN)//GODMODE
 	{
 		mapSelect = true;
+		app->map->CleanUp();
+		app->map->Load();
 	}
 
 	if (app->input->GetKey(SDL_SCANCODE_F2) == KEY_DOWN)//GODMODE
 	{
 		mapSelect = false;
-
+		app->map->Load();
 	}
 
 	// L03: DONE 3: Request App to Load / Save when pressing the keys F5 (save) / F6 (load)
