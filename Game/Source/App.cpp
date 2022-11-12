@@ -56,13 +56,13 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	physics = new Physics(true);
 	sceneManager = new SceneManager(true);
 
-	sceneLogo = new SceneLogo(false);
+	sceneLogo = new SceneLogo(true);
 	sceneTitle = new SceneTitle(false);
 
-	scene = new Scene(true);
+	scene = new Scene(false);
 	sceneEnding = new SceneEnding(false);
-	entityManager = new EntityManager(true);
-	map = new Map(true);
+	entityManager = new EntityManager(false);
+	map = new Map(false);
 	fade = new FadeToBlack(true);
 
 

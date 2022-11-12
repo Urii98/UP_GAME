@@ -13,6 +13,8 @@
 #include "SceneEnding.h"
 #include "SmallEnemy1.h"
 #include "EntityManager.h" 
+#include "SceneLogo.h"
+#include "SceneTitle.h"
 
 
 Player::Player() : Entity(EntityType::PLAYER)
@@ -539,6 +541,7 @@ bool Player::Update()
 
 	//Camara
 	Camera();
+
 	PlayerDebug();
 	std::cout << position.x << "    " << position.y << std::endl;
 	//std::cout << (app->render->playerPosition.x / app->win->GetScale()) << "    " << (app->render->playerPosition.y / app->win->GetScale())  << std::endl;
@@ -577,7 +580,7 @@ bool Player::Update()
 	if (deathTimer.Test() == FIN)
 	{
 		app->sceneEnding->ending = true;
-		CleanUp();
+		//CleanUp();
 	}
 
 
