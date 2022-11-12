@@ -48,6 +48,7 @@ public:
 		STOP = 0,
 		MOVIMIENTO,
 		DEATH,
+		VICTORY,
 		NONE,
 	};
 	int estadoP;
@@ -118,6 +119,7 @@ private:
 
 	int pickCoinFxId;
 	int kirbyDeathFx;
+	int kirbyVictoryFx;
 
 	SDL_Timer jumpTimer;
 	SDL_Timer flyTimer;
@@ -130,10 +132,12 @@ private:
 	void Movimiento();
 	void Camera();
 	void PlayerDebug();
+	void PlayerVictory();
 	//ColliderType CheckCollision();
 	
 	const char* coinSFx;
 	const char* deathSFx;
+	const char* victorySFx;
 
 };
 
