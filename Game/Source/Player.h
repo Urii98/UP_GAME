@@ -82,6 +82,7 @@ public:
 	bool godMode;
 
 	bool deathFxbool;
+	bool winFxbool;
 
 	Animation* currentAnimation = nullptr; 
 

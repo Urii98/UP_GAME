@@ -50,7 +50,8 @@ bool Player::Awake() {
 	flying = parameters.attribute("flying").as_bool();
 	godMode = parameters.attribute("godMode").as_bool();
 	victory = parameters.attribute("victory").as_bool();
-	deathFxbool = parameters.attribute("victory").as_bool();
+	deathFxbool = parameters.attribute("deathFxbool").as_bool();
+	winFxbool = parameters.attribute("win").as_bool();
 
 	
 	pickCoinFxId = app->audio->LoadFx(coinSFx);
@@ -600,11 +601,15 @@ bool Player::Update()
 		break;
 
 	case(VICTORY):
-		Movimiento();
-		Camera();
-		app->audio->PlayFx(kirbyVictoryFx, 0);
-		currentAnimation = &win;
-		estadoP = NONE;
+		if (!winFxbool)
+		{
+			Movimiento();
+			Camera();
+			app->audio->PlayFx(kirbyVictoryFx, 0);
+			currentAnimation = &win;
+			estadoP = NONE;
+			winFxbool = true;
+		}
 		break;
 
 	case(NONE):
@@ -805,9 +810,9 @@ void Player::PlayerVictory() {
 		victory = true;
 	}
 
-	//if (position.x > 1100 && position.y < 500 && !victory) {
-	//	app->audio->PlayMusic(musicStopPath,0);
- // 		estadoP = VICTORY;
-	//	victory = true;
-	//}
+	if (position.x > 1100 && position.y < 500 && !victory) {
+		app->audio->PlayMusic(musicStopPath,0);
+  		estadoP = VICTORY;
+		victory = true;
+	}
 }
