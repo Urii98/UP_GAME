@@ -60,7 +60,7 @@ bool SceneEnding::PostUpdate()
 	SDL_Rect rect = { 0,0,1024,768 };
 
 	if(ending)
-	app->render->DrawTexture(textureSceneEnding, -246, -50, &rect, 1.0f, 0.0, 2147483647, 2147483647, false);
+	app->render->DrawTexture(textureSceneEnding, 15, 175, &rect, 1.0f, 0.0, 2147483647, 2147483647, false);
 
 	return true;
 }
