@@ -33,6 +33,7 @@ UP Kirby is a 2D platformer where Kirby has to avoid falling into the cliffs in 
  - Enter to move from Title screen to the game itself.
  - 0 for the character to die inmediatly. 
  - Enter to move from Ending screen (on dying) to the game itself again.
+ - Enter to move from winning state to the beggining of the game again.
 
 ## Developers
 
