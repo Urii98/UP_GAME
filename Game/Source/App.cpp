@@ -60,7 +60,7 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	sceneTitle = new SceneTitle(false);
 
 	scene = new Scene(false);
-	sceneEnding = new SceneEnding(false);
+	sceneEnding = new SceneEnding(true);
 	entityManager = new EntityManager(false);
 	map = new Map(false);
 	fade = new FadeToBlack(true);

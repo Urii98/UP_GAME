@@ -145,6 +145,7 @@ bool SmallEnemy2::CleanUp()
 	//memoryleak
 
 	app->tex->UnLoad(texture);
+	active = false;
 
 	//if (!destroy)
 	//{

@@ -71,6 +71,9 @@
 
   <sceneTitle>
     <textureTitlePath path="Assets/Textures/Title/ezgif-frame-"/>
+    <lvlSelectorPath path="Assets/Textures/Title/LvlSelector.png"/>
+    <lvlOnePath path="Assets/Textures/Title/LvlOne.png"/>
+    <lvlTwoPath path="Assets/Textures/Title/LvlTwo.png"/>
     <musicTitlePath path="Assets/Audio/Music/MusicSceneTitle.ogg"/>
     <musicStopPath path="Assets/Audio/Music/noSound.ogg"/>
   </sceneTitle>

@@ -111,6 +111,7 @@ bool SmallEnemyFly::Update()
 	{
 		pbody->body->GetWorld()->DestroyBody(pbody->body);
 		app->tex->UnLoad(texture);
+		active = false;
 //		CleanUp();
 		destroy = true;
 	}

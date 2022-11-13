@@ -21,6 +21,11 @@ SceneTitle::~SceneTitle() {
 bool SceneTitle::Awake(pugi::xml_node& config) {
 
 	textureTitlePath = config.child("textureTitlePath").attribute("path").as_string();
+	lvlSelectorPath = config.child("lvlSelectorPath").attribute("path").as_string();
+	lvlOnePath = config.child("lvlOnePath").attribute("path").as_string();
+	lvlTwoPath = config.child("lvlTwoPath").attribute("path").as_string();
+
+
 	musicTitlePath = config.child("musicTitlePath").attribute("path").as_string();
 	musicStopPath = config.child("musicStopPath").attribute("path").as_string();
 
@@ -35,17 +40,23 @@ bool SceneTitle::Start() {
 
 	char x[120];
 
-	for (int i = 0; i <= 149; i++)
+	for (int i = 0; i <= 148; i++)
 	{
 		sprintf_s(x, "Assets/Textures/Title/ezgif-frame-%d.jpg", i + 1);
 		bgTexture[i] = app->tex->Load(x);
 	}
+
+	lvlSelectorTexture = app->tex->Load(lvlSelectorPath.GetString());
+	lvlOneTexture = app->tex->Load(lvlOnePath.GetString());
+	lvlTwoTexture = app->tex->Load(lvlTwoPath.GetString());
+
 	frame = 0;
 	alphatoFade = 0.0f;
 	alphaFromFade = 1.0f;
 	toFade = false;
 	fromFade = true;
 	mapSelect = true;
+	levelSelected;
 
 	return true;
 }
@@ -71,11 +82,13 @@ bool SceneTitle::Update(float dt)
 	if (app->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN)//GODMODE
 	{
 		mapSelect = true;
+		levelSelected = true;
 	}
 
 	if (app->input->GetKey(SDL_SCANCODE_F2) == KEY_DOWN)//GODMODE
 	{
 		mapSelect = false;
+		levelSelected = true;
 
 	}
 	
@@ -86,10 +99,24 @@ bool SceneTitle::PostUpdate()
 {
 	SDL_Rect rect = { 0,0,1024,768 };
 	
-
 	app->render->DrawTexture(bgTexture[frame], 0, 0, &rect, 1.0f, 0.0, 2147483647, 2147483647, false);
-
 	
+	if (!levelSelected)
+	{
+		app->render->DrawTexture(lvlSelectorTexture,0,0, &rect, 1.0f, 0.0, 2147483647, 2147483647, false);
+	}
+	else
+	{
+		if (mapSelect)
+		{
+			app->render->DrawTexture(lvlOneTexture, 0, 0, &rect, 1.0f, 0.0, 2147483647, 2147483647, false);
+		}
+		else
+		{
+			app->render->DrawTexture(lvlTwoTexture, 0, 0, &rect, 1.0f, 0.0, 2147483647, 2147483647, false);
+		}
+	}
+
 	return true;
 }
 
@@ -99,7 +126,9 @@ bool SceneTitle::CleanUp()
 		app->tex->UnLoad(bgTexture[i]);
 	}
 
-	
+	app->tex->UnLoad(lvlSelectorTexture);
+	app->tex->UnLoad(lvlOneTexture);
+	app->tex->UnLoad(lvlTwoTexture);	
 	
 	return true;
 }

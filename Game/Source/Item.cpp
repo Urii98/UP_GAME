@@ -52,7 +52,8 @@ bool Item::Update()
 	position.x = METERS_TO_PIXELS(pbody->body->GetTransform().p.x / app->win->GetScale()) - 16;
 	position.y = METERS_TO_PIXELS(pbody->body->GetTransform().p.y / app->win->GetScale()) - 16;
 
-	app->render->DrawTexture(texture, position.x, position.y);
+	
+	app->render->DrawTexture(texture, position.x, position.y, NULL);
 
 	if (destroy)
 	{
@@ -70,6 +71,7 @@ bool Item::CleanUp()
 	//memoryleak
 
 	app->tex->UnLoad(texture);
+	active = false;
 	//la memoria del item se destruye en scene
 
 	return true;

@@ -31,18 +31,26 @@ public:
 
 public:
 	SDL_Texture* bgTexture[NUM_IMAGES];
+	SDL_Texture* lvlSelectorTexture;
+	SDL_Texture* lvlOneTexture;
+	SDL_Texture* lvlTwoTexture;
 	int frame;
 
 	SDL_Timer chrono;
 	SDL_Timer chronoFade;
 
 	SString textureTitlePath;
+	SString lvlSelectorPath;
+	SString lvlOnePath;
+	SString lvlTwoPath;
+
 	const char* musicTitlePath;
 	const char* musicStopPath;
 	float alphatoFade;
 	float alphaFromFade;
 	bool toFade;
 	bool fromFade;
+	bool levelSelected;
 	bool mapSelect;
 
 };
