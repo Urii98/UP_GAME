@@ -29,7 +29,7 @@
             kirbyVictoryFxPath="Assets/Audio/Fx/KirbyVictoryFx.ogg"
             musicScenePath="Assets/Audio/Music/MusicLevel.ogg"
             musicStopPath="Assets/Audio/Music/noSound.ogg"
-            flapLimit="0" oneJump="false" flying="false" godMode="false" victory="false"/>
+            flapLimit="0" oneJump="false" flying="false" godMode="false" victory="false" deathFxbool="false"/>
     <item x="256" y="515" texturepath="Assets/Textures/goldCoin.png"/>
     <item x="416" y="512" texturepath="Assets/Textures/goldCoin.png"/>
     <item x="354" y="352" texturepath="Assets/Textures/goldCoin.png"/>

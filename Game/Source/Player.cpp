@@ -50,6 +50,8 @@ bool Player::Awake() {
 	flying = parameters.attribute("flying").as_bool();
 	godMode = parameters.attribute("godMode").as_bool();
 	victory = parameters.attribute("victory").as_bool();
+	deathFxbool = parameters.attribute("victory").as_bool();
+
 	
 	pickCoinFxId = app->audio->LoadFx(coinSFx);
 	kirbyDeathFx = app->audio->LoadFx(deathSFx);
@@ -499,8 +501,6 @@ void Player::Movimiento()
 
 		if (app->input->GetKey(SDL_SCANCODE_0) == KEY_DOWN && !godMode) // -- ANIMACI�N MORIR
 		{
-			currentAnimation = &death;
-			app->audio->PlayFx(kirbyDeathFx, 0);
 			estadoP = DEATH;
 		}
 
@@ -583,8 +583,14 @@ bool Player::Update()
 		break;
 
 	case(DEATH):
-		app->audio->PlayFx(kirbyDeathFx,0);
-		currentAnimation = &death;
+		if (!godMode && !deathFxbool)
+		{
+			currentAnimation = &death;
+			deathFxbool = true;
+			app->audio->PlayFx(kirbyDeathFx, 0);
+			b2Vec2 vel = b2Vec2(0, 0);
+			pbody->body->SetLinearVelocity(vel);
+		}
 		break;
 
 	case(VICTORY):
@@ -603,7 +609,7 @@ bool Player::Update()
 		
 	}
 
-	if (estadoP == DEATH)
+	if (estadoP == DEATH && !godMode)
 	{
 		deathTimer.Start(4);
 		estadoP = NONE;
@@ -686,11 +692,15 @@ void Player::OnCollision(PhysBody* physA, PhysBody* physB) {
 		break;
 
 	case ColliderType::ENEMY:
-
-		//estadoP = DEATH;
-
+		if (!godMode)
+		{
+			estadoP = DEATH;
+			
+		}
 		break;
-		
+	case ColliderType::ENEMYFLY:
+		flapLimit = 0;
+		break;
 	case ColliderType::UNKNOWN:
 		LOG("Collision UNKNOWN");
 		break;
@@ -768,15 +778,9 @@ void Player::PlayerDebug() {
 		estadoP = MOVIMIENTO;
 	}
 
-	if (app->input->GetKey(SDL_SCANCODE_F3) == KEY_DOWN) //comenzar desde el inicio del level
+	if (app->input->GetKey(SDL_SCANCODE_F3) == KEY_DOWN || app->input->GetKey(SDL_SCANCODE_F2) == KEY_DOWN || app->input->GetKey(SDL_SCANCODE_F2) == KEY_DOWN) //comenzar desde el inicio del level
 	{
 		ChangePosition(125, 600);
-	}
-
-	if (app->input->GetKey(SDL_SCANCODE_1) == KEY_DOWN)
-	{
-		pbody->body->GetWorld()->DestroyBody(pbody->body);
-		CleanUp();
 	}
 
 	if (app->input->GetKey(SDL_SCANCODE_8) == KEY_DOWN)
