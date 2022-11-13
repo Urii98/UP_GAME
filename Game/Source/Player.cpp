@@ -691,7 +691,6 @@ void Player::OnCollision(PhysBody* physA, PhysBody* physB) {
 
 	case ColliderType::DEATH:
 		LOG("Collision DEATH");
-		app->audio->PlayFx(pickCoinFxId);
 		ChangePosition(125, 600);
 		break;
 
@@ -793,7 +792,7 @@ void Player::PlayerDebug() {
 		estadoP = MOVIMIENTO;
 	}
 
-	if (app->input->GetKey(SDL_SCANCODE_F3) == KEY_DOWN || app->input->GetKey(SDL_SCANCODE_F2) == KEY_DOWN || app->input->GetKey(SDL_SCANCODE_F2) == KEY_DOWN) //comenzar desde el inicio del level
+	if (app->input->GetKey(SDL_SCANCODE_F3) == KEY_DOWN || app->input->GetKey(SDL_SCANCODE_F2) == KEY_DOWN || app->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN) //comenzar desde el inicio del level
 	{
 		ChangePosition(125, 600);
 	}
