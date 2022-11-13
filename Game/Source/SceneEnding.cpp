@@ -75,6 +75,6 @@ bool SceneEnding::PostUpdate()
 bool SceneEnding::CleanUp()
 {
 	//memoryleak
-	app->tex->UnLoad(textureSceneEnding);
+	//app->tex->UnLoad(textureSceneEnding);
 	return true;
 }

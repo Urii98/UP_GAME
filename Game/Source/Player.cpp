@@ -814,9 +814,9 @@ void Player::PlayerVictory() {
 		victory = true;
 	}
 
-	if (position.x > 1100 && position.y < 500 && !victory) {
+	/*if (position.x > 1100 && position.y < 500 && !victory) {
 		app->audio->PlayMusic(musicStopPath,0);
   		estadoP = VICTORY;
 		victory = true;
-	}
+	}*/
 }
