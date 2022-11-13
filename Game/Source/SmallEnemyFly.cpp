@@ -9,6 +9,8 @@
 #include "Point.h"
 #include "Physics.h"
 #include "EntityManager.h" 
+#include "SceneTitle.h"
+
 
 
 #include "Window.h"
@@ -38,6 +40,26 @@ bool SmallEnemyFly::Awake() {
 }
 
 bool SmallEnemyFly::Start() {
+
+	if (app->sceneTitle->mapSelect == false) {
+		if (map == 1) {
+			position.x = 5134;
+			position.y = 1174;
+		}
+		if (map == 2) {
+			position.x = 5794;
+			position.y = 1174;
+		}
+		if (map == 3) {
+			position.x = 13700;
+			position.y = 740;
+		}
+		if (map == 4) {
+			position.x = 13764;
+			position.y = 740;
+		}
+
+	}
 	estadoSEF1 = MOVIMIENTO;
 	
 	limiteSup = position.y - scalarLimites;

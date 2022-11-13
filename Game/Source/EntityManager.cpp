@@ -55,10 +55,10 @@ bool EntityManager::Start() {
 
 	for (item = entities.start; item != NULL && ret == true; item = item->next)
 	{
-		pEntity = item->data;
+			pEntity = item->data;
 
-		if (pEntity->active == false) continue;
-		ret = item->data->Start();
+			if (pEntity->active == false) continue;
+			ret = item->data->Start();
 	}
 
 	return ret;

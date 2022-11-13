@@ -9,6 +9,7 @@
 #include "Point.h"
 #include "Physics.h"
 #include "EntityManager.h"
+#include "SceneTitle.h"
 
 #include "Window.h"
 
@@ -31,6 +32,26 @@ bool Item::Awake() {
 }
 
 bool Item::Start() {
+
+	if (app->sceneTitle->mapSelect == false) {
+		if (map == 1) {
+			position.x = 4328;
+			position.y = 430;
+		}
+		if (map == 2) {
+			position.x = 6976;
+			position.y = 82;
+		}
+		if (map == 3) {
+			position.x = 12352;
+			position.y = 768;
+		}
+		if (map == 4) {
+			position.x = 14696;
+			position.y = 244;
+		}
+
+	}
 
 	//initilize textures
 	texture = app->tex->Load(texturePath);
