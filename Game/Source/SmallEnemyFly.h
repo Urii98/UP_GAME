@@ -37,6 +37,7 @@ public:
 	int limiteSup;
 	int limiteInf;
 	int scalarLimites;
+	int map;
 
 	int speedY;
 

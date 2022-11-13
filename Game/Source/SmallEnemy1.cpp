@@ -34,6 +34,7 @@ bool SmallEnemy1::Awake() {
 	attackE = parameters.attribute("attackE").as_bool();
 	animAtk = parameters.attribute("animAtk").as_bool();
 	destroy = parameters.attribute("destroy").as_bool();
+	map = parameters.attribute("map").as_int();
 
 	return true;
 }

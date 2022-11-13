@@ -25,12 +25,14 @@ bool SmallEnemyFly::Awake() {
 
 	position.x = parameters.attribute("x").as_int();
 	position.y = parameters.attribute("y").as_int();
+	
 	scalarLimites = parameters.attribute("scalarLimites").as_int();
 	speedY = parameters.attribute("speedY").as_int();
 
 	texturePath = parameters.attribute("texturepath").as_string();
 
 	destroy = parameters.attribute("destroy").as_bool();
+	map = parameters.attribute("map").as_int();
 
 	return true;
 }

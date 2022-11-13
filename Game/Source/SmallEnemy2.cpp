@@ -32,6 +32,7 @@ bool SmallEnemy2::Awake() {
 
 	walkDir = parameters.attribute("walkDir").as_bool();
 	destroy = parameters.attribute("destroy").as_bool();
+	map = parameters.attribute("map").as_int();
 
 	return true;
 }

@@ -25,7 +25,7 @@ public:
 	void OnCollision(PhysBody* physA, PhysBody* physB);
 
 public:
-
+	int map;
 	bool isPicked = false;
 	//bool destroy;
 
