@@ -48,10 +48,10 @@
                  texturepath="Assets/Textures/Enemies.png" map="3"/>
 	  
 	  
-	<SmallEnemyFly x="-10" y="330" scalarLimites="30" speedY="3"
+	<SmallEnemyFly x="-45" y="330" scalarLimites="30" speedY="3"
 				   destroy="false"
 				   texturepath="Assets/Textures/Enemies.png" map="1"/>
-	<SmallEnemyFly x="-20" y="330" scalarLimites="30" speedY="3"
+	<SmallEnemyFly x="-35" y="330" scalarLimites="30" speedY="3"
 				   destroy="false"
 				   texturepath="Assets/Textures/Enemies.png" map="2"/>
     <SmallEnemyFly x="-30" y="330" scalarLimites="30" speedY="3"
@@ -62,10 +62,10 @@
                  texturepath="Assets/Textures/Enemies.png" map="4"/>
 	  
 	  
-    <SmallEnemy2 x="380" y="250" scalarLimites="3" speedX="2"
+    <SmallEnemy2 x="6084" y="734" scalarLimites="3" speedX="2"
                  walkDir="false" destroy="false"
                  texturepath="Assets/Textures/Enemies.png" map="1"/>
-    <SmallEnemy2 x="470" y="200" scalarLimites="3" speedX="2"
+    <SmallEnemy2 x="14098" y="734" scalarLimites="3" speedX="2"
                  walkDir="false" destroy="false"
                  texturepath="Assets/Textures/Enemies.png" map="2"/>
    
