@@ -41,11 +41,15 @@ bool SceneEnding::Update(float dt)
 		if (app->sceneTitle->mapSelect == true){
 			//posicion inicial del level 1
 			app->scene->player->ChangePosition(125, 600);
+			app->scene->player->deathFxbool = false;
+			app->scene->player->death.Reset();
 		}
 		else if (app->sceneTitle->mapSelect == false)
 		{
 			//posicion inicial del level 2
 			app->scene->player->ChangePosition(125, 600);
+			app->scene->player->deathFxbool = false;
+			app->scene->player->death.Reset();
 		}
 
 		app->scene->player->estadoP = app->scene->player->MOVIMIENTO;
