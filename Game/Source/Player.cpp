@@ -500,10 +500,7 @@ void Player::Movimiento()
 		}
 
 
-		if (app->input->GetKey(SDL_SCANCODE_0) == KEY_DOWN && !godMode) // -- ANIMACI�N MORIR
-		{
-			estadoP = DEATH;
-		}
+
 
 	}
 	else
@@ -528,6 +525,11 @@ void Player::Movimiento()
 
 	}
 	
+	if (app->input->GetKey(SDL_SCANCODE_0) == KEY_DOWN && !godMode) // -- ANIMACI�N MORIR
+	{
+		estadoP = DEATH;
+	}
+
 	if (estadoP == VICTORY)
 	{
 		vel = b2Vec2(0, -GRAVITY_Y);
@@ -620,10 +622,10 @@ bool Player::Update()
 		
 	}
 
-	if (estadoP == DEATH && !godMode)
+	if (estadoP == DEATH && !godMode && !deathFxbool)
 	{
 		deathTimer.Start(4);
-		estadoP = NONE;
+		//estadoP = NONE;
 	}
 	if (deathTimer.Test() == FIN)
 	{
