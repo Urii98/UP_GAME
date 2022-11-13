@@ -629,6 +629,7 @@ bool Player::Update()
 	}
 	if (deathTimer.Test() == FIN)
 	{
+		estadoP = NONE;
 		app->render->playerPosition.x = 542;
 		app->render->playerPosition.y = 410;
 		app->sceneEnding->ending = true;
