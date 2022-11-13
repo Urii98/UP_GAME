@@ -573,6 +573,20 @@ bool Player::Update()
 	//std::cout << (app->render->playerPosition.x / app->win->GetScale()) << "    " << (app->render->playerPosition.y / app->win->GetScale())  << std::endl;
 
 
+	if (estadoP == DEATH && !godMode && !deathFxbool)
+	{
+		deathTimer.Start(4);
+		//estadoP = NONE;
+	}
+	if (deathTimer.Test() == FIN)
+	{
+		estadoP = NONE;
+		app->render->playerPosition.x = 542;
+		app->render->playerPosition.y = 410;
+		app->sceneEnding->ending = true;
+		//CleanUp();
+	}
+
 	this->active;
 
 	switch (estadoP)
@@ -622,19 +636,7 @@ bool Player::Update()
 		
 	}
 
-	if (estadoP == DEATH && !godMode && !deathFxbool)
-	{
-		deathTimer.Start(4);
-		//estadoP = NONE;
-	}
-	if (deathTimer.Test() == FIN)
-	{
-		estadoP = NONE;
-		app->render->playerPosition.x = 542;
-		app->render->playerPosition.y = 410;
-		app->sceneEnding->ending = true;
-		//CleanUp();
-	}
+
 
 
 	std::cout << "position iPoint.x = " << position.x << std::endl;
