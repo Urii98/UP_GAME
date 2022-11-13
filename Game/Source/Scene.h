@@ -51,7 +51,7 @@ public:
 
 	List<Entity*> entities;
 
-	bool mapSelect;
+	
 
 	//std::vector<Entity*>* vect = new std::vector<Entity*>;
 

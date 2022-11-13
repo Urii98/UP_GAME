@@ -11,6 +11,7 @@
 #include "Defs.h"
 #include "Log.h"
 
+#include "SceneTitle.h"
 
 Scene::Scene(bool isActive) : Module(isActive)
 {
@@ -105,15 +106,7 @@ bool Scene::PreUpdate()
 // Called each loop iteration
 bool Scene::Update(float dt)
 {
-	if (app->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN)//GODMODE
-	{
-		mapSelect = true;
-	}
 
-	if (app->input->GetKey(SDL_SCANCODE_F2) == KEY_DOWN)//GODMODE
-	{
-		mapSelect = false;
-	}
 
 	// L03: DONE 3: Request App to Load / Save when pressing the keys F5 (save) / F6 (load)
 	if (app->input->GetKey(SDL_SCANCODE_F5) == KEY_DOWN)

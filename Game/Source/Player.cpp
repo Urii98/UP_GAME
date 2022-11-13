@@ -224,8 +224,6 @@ bool Player::Start() {
 	currentAnimation = &idleRAnim;
 	direccionP = DERECHA;
 
-	app->scene->mapSelect = true;
-
 	//initilize textures
 	texture = app->tex->Load(texturePath);
 

@@ -130,6 +130,8 @@ public:
     // Called before quitting
     bool CleanUp();
 
+	void CleanColliders();
+
     // Load new map
     bool Load();
 

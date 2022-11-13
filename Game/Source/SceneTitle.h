@@ -43,6 +43,7 @@ public:
 	float alphaFromFade;
 	bool toFade;
 	bool fromFade;
+	bool mapSelect;
 
 };
 

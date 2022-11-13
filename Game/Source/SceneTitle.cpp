@@ -45,6 +45,7 @@ bool SceneTitle::Start() {
 	alphaFromFade = 1.0f;
 	toFade = false;
 	fromFade = true;
+	mapSelect = true;
 
 	return true;
 }
@@ -65,6 +66,17 @@ bool SceneTitle::Update(float dt)
 	{
 		app->audio->PlayMusic(musicStopPath, 2.0);
 		app->fade->Fade(this, app->scene, 60);
+	}
+
+	if (app->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN)//GODMODE
+	{
+		mapSelect = true;
+	}
+
+	if (app->input->GetKey(SDL_SCANCODE_F2) == KEY_DOWN)//GODMODE
+	{
+		mapSelect = false;
+
 	}
 	
 	return true;

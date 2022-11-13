@@ -16,6 +16,7 @@
 #include "Window.h"
 
 #include "Player.h"
+#include "SceneTitle.h"
 
 Map::Map(bool isActive) : Module(isActive), mapLoaded(false)
 {
@@ -36,8 +37,6 @@ bool Map::Awake(pugi::xml_node& config)
     mapFolder = config.child("mapfolder").attribute("path").as_string();
 
     mapFileName = config.child("mapfile").attribute("path").as_string();
-
-
     mapFileName2 = config.child("mapfile2").attribute("path").as_string();
 
     farBackgroundPath = config.child("farBackgroundTexture").attribute("path").as_string();
@@ -64,7 +63,6 @@ void Map::Draw()
     if(mapLoaded == false)
         return;
 
- 
     //PARALLAX EFFECT:  
 
     //printando el fondo:
@@ -81,8 +79,7 @@ void Map::Draw()
        app->render->DrawTexture(middleBackground, 176*i, 208, NULL, 0.5f);
     }
     
-    
-
+   
     /*
     // L04: DONE 6: Iterate all tilesets and draw all their 
     // images in 0,0 (you should have only one tileset for now)
@@ -128,7 +125,6 @@ void Map::Draw()
             }
         }
         mapLayerItem = mapLayerItem->next;
-
     }    
 }
 
@@ -239,13 +235,40 @@ bool Map::CleanUp()
     return true;
 }
 
+void Map::CleanColliders()
+{
+
+    ListItem<PhysBody*>* clearColliderContainer;
+    clearColliderContainer = mapColliderContainer.start;
+
+    while (clearColliderContainer != NULL)
+    {
+        RELEASE(clearColliderContainer->data);
+        clearColliderContainer = clearColliderContainer->next;
+
+    }
+    mapColliderContainer.Clear();
+
+    ListItem<PhysBody*>* clearDeathColliderContainer;
+    clearDeathColliderContainer = mapDeathColliderContainer.start;
+
+    while (clearDeathColliderContainer != NULL)
+    {
+        RELEASE(clearDeathColliderContainer->data);
+        clearDeathColliderContainer = clearDeathColliderContainer->next;
+
+    }
+    mapDeathColliderContainer.Clear();
+}
+
 // Load new map
 bool Map::Load()
 {
     bool ret = true;
+    
 
     pugi::xml_document mapFileXML;
-    if (app->scene->mapSelect == true) {
+    if (app->sceneTitle->mapSelect == true) {
         pugi::xml_parse_result result = mapFileXML.load_file(mapFileName.GetString());
         if (result == NULL)
         {
@@ -254,7 +277,7 @@ bool Map::Load()
         }
 
     }
-    if (app->scene->mapSelect == false) {
+    if (app->sceneTitle->mapSelect == false) {
         pugi::xml_parse_result result = mapFileXML.load_file(mapFileName2.GetString());
         if (result == NULL)
         {
