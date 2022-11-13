@@ -38,7 +38,7 @@ UP Kirby is a 2D platformer where Kirby has to avoid falling into the cliffs in 
 ## Developers
 
  - Oriol Martín Corella - Main Programmer
- - {Dev02} - {Role(s)}
+ - Pau Argiz - Game Designer
 
 
 ## License
