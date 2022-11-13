@@ -37,6 +37,7 @@ public:
 	int limiteIzqX;
 	int limiteDerX;
 	int scalarLimites;
+	int map;
 
 	bool walkDir;
 	int speedX;

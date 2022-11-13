@@ -562,7 +562,7 @@ bool Player::Update()
 	std::cout << "GetmouseY - " << y << std::endl;
 
 	//Camara
-	Camera();
+
 
 	PlayerDebug();
 	PlayerVictory();
@@ -575,21 +575,24 @@ bool Player::Update()
 	switch (estadoP)
 	{
 	case(STOP):
+		Camera();
 		Movimiento();
 		break;
 
 	case(MOVIMIENTO):
+		Camera();
 		Movimiento();
 		break;
 
 	case(DEATH):
+		Camera();
 		app->audio->PlayFx(kirbyDeathFx,0);
 		currentAnimation = &death;
 		break;
 
 	case(VICTORY):
 		Movimiento();
-		
+		Camera();
 		app->audio->PlayFx(kirbyVictoryFx, 0);
 		currentAnimation = &win;
 		estadoP = NONE;
@@ -610,6 +613,8 @@ bool Player::Update()
 	}
 	if (deathTimer.Test() == FIN)
 	{
+		app->render->playerPosition.x = 542;
+		app->render->playerPosition.y = 410;
 		app->sceneEnding->ending = true;
 		//CleanUp();
 	}

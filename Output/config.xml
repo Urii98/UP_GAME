@@ -30,11 +30,11 @@
             musicScenePath="Assets/Audio/Music/MusicLevel.ogg"
             musicStopPath="Assets/Audio/Music/noSound.ogg"
             flapLimit="0" oneJump="false" flying="false" godMode="false" victory="false"/>
-    <item x="256" y="515" texturepath="Assets/Textures/goldCoin.png"/>
-    <item x="416" y="512" texturepath="Assets/Textures/goldCoin.png"/>
-    <item x="354" y="352" texturepath="Assets/Textures/goldCoin.png"/>
-    <item x="200" y="672" texturepath="Assets/Textures/goldCoin.png"/>
-    <item x="500" y="672" texturepath="Assets/Textures/goldCoin.png"/>
+    <item x="256" y="515" texturepath="Assets/Textures/goldCoin.png" map="2"/>
+    <item x="416" y="512" texturepath="Assets/Textures/goldCoin.png" map="2"/>
+    <item x="354" y="352" texturepath="Assets/Textures/goldCoin.png" map="2"/>
+    <item x="200" y="672" texturepath="Assets/Textures/goldCoin.png" map="2"/>
+	<item x="500" y="672" texturepath="Assets/Textures/goldCoin.png" map="2"/>
     <SmallEnemy1 x="350" y="672" scalarLimites="30" speedX="2"
                  walkDir="false" attackE="false" animAtk="false" destroy="false"
                  texturepath="Assets/Textures/Enemies.png"/>
@@ -46,13 +46,13 @@
                  texturepath="Assets/Textures/Enemies.png"/>
     <SmallEnemyFly x="270" y="300" scalarLimites="30" speedY="1"
                  destroy="false"
-                 texturepath="Assets/Textures/Enemies.png"/>
+                 texturepath="Assets/Textures/Enemies.png" map="2"/>
     <SmallEnemyFly x="320" y="350" scalarLimites="30" speedY="2"
                  destroy="false"
-                 texturepath="Assets/Textures/Enemies.png"/>
+                 texturepath="Assets/Textures/Enemies.png" map="2"/>
     <SmallEnemyFly x="350" y="330" scalarLimites="30" speedY="3"
                  destroy="false"
-                 texturepath="Assets/Textures/Enemies.png"/>
+                 texturepath="Assets/Textures/Enemies.png" map="2"/>
     <SmallEnemy2 x="380" y="250" scalarLimites="30" speedX="2"
                  walkDir="false" destroy="false"
                  texturepath="Assets/Textures/Enemies.png"/>

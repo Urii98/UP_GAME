@@ -38,6 +38,7 @@ public:
 	int limiteIzqX;
 	int limiteDerX;
 	int scalarLimites;
+	int map;
 
 	bool walkDir;
 	bool attackE;
