@@ -41,6 +41,7 @@ bool SceneEnding::Update(float dt)
 			//posicion inicial del level 1
 			app->scene->player->ChangePosition(125, 600);
 			app->scene->player->deathFxbool = false;
+			app->scene->player->winFxbool = false;
 			app->scene->player->death.Reset();
 		}
 		else if (app->sceneTitle->mapSelect == false)
@@ -48,6 +49,7 @@ bool SceneEnding::Update(float dt)
 			//posicion inicial del level 2
 			app->scene->player->ChangePosition(125, 600);
 			app->scene->player->deathFxbool = false;
+			app->scene->player->winFxbool = false;
 			app->scene->player->death.Reset();
 		}
 
