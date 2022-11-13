@@ -500,10 +500,7 @@ void Player::Movimiento()
 		}
 
 
-		if (app->input->GetKey(SDL_SCANCODE_0) == KEY_DOWN && !godMode) // -- ANIMACI�N MORIR
-		{
-			estadoP = DEATH;
-		}
+
 
 	}
 	else
@@ -528,6 +525,11 @@ void Player::Movimiento()
 
 	}
 	
+	if (app->input->GetKey(SDL_SCANCODE_0) == KEY_DOWN && !godMode) // -- ANIMACI�N MORIR
+	{
+		estadoP = DEATH;
+	}
+
 	if (estadoP == VICTORY)
 	{
 		vel = b2Vec2(0, -GRAVITY_Y);
@@ -570,6 +572,20 @@ bool Player::Update()
 	std::cout << position.x << "    " << position.y << std::endl;
 	//std::cout << (app->render->playerPosition.x / app->win->GetScale()) << "    " << (app->render->playerPosition.y / app->win->GetScale())  << std::endl;
 
+
+	if (estadoP == DEATH && !godMode && !deathFxbool)
+	{
+		deathTimer.Start(4);
+		//estadoP = NONE;
+	}
+	if (deathTimer.Test() == FIN)
+	{
+		estadoP = NONE;
+		app->render->playerPosition.x = 542;
+		app->render->playerPosition.y = 410;
+		app->sceneEnding->ending = true;
+		//CleanUp();
+	}
 
 	this->active;
 
@@ -620,18 +636,7 @@ bool Player::Update()
 		
 	}
 
-	if (estadoP == DEATH && !godMode)
-	{
-		deathTimer.Start(4);
-		estadoP = NONE;
-	}
-	if (deathTimer.Test() == FIN)
-	{
-		app->render->playerPosition.x = 542;
-		app->render->playerPosition.y = 410;
-		app->sceneEnding->ending = true;
-		//CleanUp();
-	}
+
 
 
 	std::cout << "position iPoint.x = " << position.x << std::endl;
@@ -689,7 +694,6 @@ void Player::OnCollision(PhysBody* physA, PhysBody* physB) {
 
 	case ColliderType::DEATH:
 		LOG("Collision DEATH");
-		app->audio->PlayFx(pickCoinFxId);
 		ChangePosition(125, 600);
 		break;
 
@@ -791,7 +795,7 @@ void Player::PlayerDebug() {
 		estadoP = MOVIMIENTO;
 	}
 
-	if (app->input->GetKey(SDL_SCANCODE_F3) == KEY_DOWN || app->input->GetKey(SDL_SCANCODE_F2) == KEY_DOWN || app->input->GetKey(SDL_SCANCODE_F2) == KEY_DOWN) //comenzar desde el inicio del level
+	if (app->input->GetKey(SDL_SCANCODE_F3) == KEY_DOWN || app->input->GetKey(SDL_SCANCODE_F2) == KEY_DOWN || app->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN) //comenzar desde el inicio del level
 	{
 		ChangePosition(125, 600);
 	}
