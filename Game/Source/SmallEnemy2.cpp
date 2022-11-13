@@ -180,11 +180,6 @@ void SmallEnemy2::Movimiento()
 }
 bool SmallEnemy2::Update()
 {
-	// L07 DONE 4: Add a physics  - update the position of the object from the physics.  
-	position.x = METERS_TO_PIXELS(pbody->body->GetTransform().p.x / app->win->GetScale())-17;
-	position.y = METERS_TO_PIXELS(pbody->body->GetTransform().p.y / app->win->GetScale()) - 15;
-
-
 	switch (estadoSE2) {
 	case STOP:
 		break;
@@ -195,6 +190,9 @@ bool SmallEnemy2::Update()
 		break;
 	}
 
+	// L07 DONE 4: Add a physics  - update the position of the object from the physics.  
+	position.x = METERS_TO_PIXELS(pbody->body->GetTransform().p.x / app->win->GetScale()) - 17;
+	position.y = METERS_TO_PIXELS(pbody->body->GetTransform().p.y / app->win->GetScale()) - 15;
 
 	currentAnimationEnemy->Update();
 	SDL_Rect rect = currentAnimationEnemy->GetCurrentFrame();
