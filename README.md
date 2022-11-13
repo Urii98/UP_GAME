@@ -2,7 +2,7 @@
 
 ## Description
 
-UP Kirby is a 2D platformer where Kirby has to avoid being hit by enemies or falling into cliffs in order to be able to arrive at the end of the level.
+UP Kirby is a 2D platformer where Kirby has to avoid falling into the cliffs in order to be able to arrive at the end of the level. Be careful, throughout your path, you will find enemies, some of them will kill you, and some of them will restart your jumps, be aware of that!
 
 ## Key Features
 
