@@ -9,6 +9,7 @@
 #include "Point.h"
 #include "Physics.h"
 #include "EntityManager.h" 
+#include "SceneTitle.h"
 
 
 #include "Window.h"
@@ -40,6 +41,8 @@ bool SmallEnemy1::Awake() {
 }
 
 bool SmallEnemy1::Start() {
+
+	
 
 	estadoSE1 = MOVIMIENTO;
 	direccionE = DERECHA;

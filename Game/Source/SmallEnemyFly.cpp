@@ -44,19 +44,19 @@ bool SmallEnemyFly::Start() {
 	if (app->sceneTitle->mapSelect == false) {
 		if (map == 1) {
 			position.x = 5134;
-			position.y = 1174;
+			position.y = 666;
 		}
 		if (map == 2) {
 			position.x = 5794;
-			position.y = 1174;
+			position.y = 666;
 		}
 		if (map == 3) {
 			position.x = 13700;
-			position.y = 740;
+			position.y = 500;
 		}
 		if (map == 4) {
-			position.x = 13764;
-			position.y = 740;
+			position.x = 13720;
+			position.y = 500;
 		}
 
 	}

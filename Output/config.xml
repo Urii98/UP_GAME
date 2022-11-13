@@ -36,15 +36,18 @@
     <item x="6820" y="378" texturepath="Assets/Textures/goldCoin.png" map="3"/>
     <item x="10340" y="220" texturepath="Assets/Textures/goldCoin.png" map="4"/>
 	  
+	  
     <SmallEnemy1 x="350" y="672" scalarLimites="30" speedX="2"
                  walkDir="false" attackE="false" animAtk="false" destroy="false"
-                 texturepath="Assets/Textures/Enemies.png"/>
+                 texturepath="Assets/Textures/Enemies.png" map="1"/>
     <SmallEnemy1 x="440" y="332" scalarLimites="30" speedX="2"
                  walkDir="false" attackE="false" animAtk="false" destroy="false"
-                 texturepath="Assets/Textures/Enemies.png"/>
+                 texturepath="Assets/Textures/Enemies.png" map="2"/>
     <SmallEnemy1 x="330" y="497" scalarLimites="30" speedX="2"
                  walkDir="false" attackE="false" animAtk="false" destroy="false"
-                 texturepath="Assets/Textures/Enemies.png"/>
+                 texturepath="Assets/Textures/Enemies.png" map="3"/>
+	  
+	  
 	<SmallEnemyFly x="-10" y="330" scalarLimites="30" speedY="3"
 				   destroy="false"
 				   texturepath="Assets/Textures/Enemies.png" map="1"/>
@@ -57,15 +60,56 @@
 	<SmallEnemyFly x="-40" y="330" scalarLimites="30" speedY="3"
                  destroy="false"
                  texturepath="Assets/Textures/Enemies.png" map="4"/>
-    <SmallEnemy2 x="380" y="250" scalarLimites="30" speedX="2"
+	  
+	  
+    <SmallEnemy2 x="380" y="250" scalarLimites="3" speedX="2"
                  walkDir="false" destroy="false"
-                 texturepath="Assets/Textures/Enemies.png"/>
-    <SmallEnemy2 x="470" y="200" scalarLimites="30" speedX="2"
+                 texturepath="Assets/Textures/Enemies.png" map="1"/>
+    <SmallEnemy2 x="470" y="200" scalarLimites="3" speedX="2"
                  walkDir="false" destroy="false"
-                 texturepath="Assets/Textures/Enemies.png"/>
-    <SmallEnemy2 x="360" y="300" scalarLimites="30" speedX="2"
+                 texturepath="Assets/Textures/Enemies.png" map="2"/>
+    <SmallEnemy2 x="360" y="300" scalarLimites="3" speedX="2"
                  walkDir="false" destroy="false"
-                 texturepath="Assets/Textures/Enemies.png"/>
+                 texturepath="Assets/Textures/Enemies.png" map="3"/>
+	  <SmallEnemy2 x="380" y="250" scalarLimites="3" speedX="2"
+                 walkDir="false" destroy="false"
+                 texturepath="Assets/Textures/Enemies.png" map="4"/>
+	  <SmallEnemy2 x="470" y="200" scalarLimites="3" speedX="2"
+				   walkDir="false" destroy="false"
+				   texturepath="Assets/Textures/Enemies.png" map="5"/>
+	  <SmallEnemy2 x="380" y="250" scalarLimites="3" speedX="2"
+                 walkDir="false" destroy="false"
+                 texturepath="Assets/Textures/Enemies.png" map="6"/>
+	  <SmallEnemy2 x="470" y="200" scalarLimites="3" speedX="2"
+				   walkDir="false" destroy="false"
+				   texturepath="Assets/Textures/Enemies.png" map="7"/>
+	  <SmallEnemy2 x="380" y="250" scalarLimites="3" speedX="2"
+                 walkDir="false" destroy="false"
+                 texturepath="Assets/Textures/Enemies.png" map="8"/>
+	  <SmallEnemy2 x="470" y="200" scalarLimites="3" speedX="2"
+				   walkDir="false" destroy="false"
+				   texturepath="Assets/Textures/Enemies.png" map="9"/>
+	  <SmallEnemy2 x="380" y="250" scalarLimites="3" speedX="2"
+                 walkDir="false" destroy="false"
+                 texturepath="Assets/Textures/Enemies.png" map="10"/>
+	  <SmallEnemy2 x="470" y="200" scalarLimites="3" speedX="2"
+				   walkDir="false" destroy="false"
+				   texturepath="Assets/Textures/Enemies.png" map="11"/>
+	  <SmallEnemy2 x="380" y="250" scalarLimites="3" speedX="2"
+                 walkDir="false" destroy="false"
+                 texturepath="Assets/Textures/Enemies.png" map="12"/>
+	  <SmallEnemy2 x="470" y="200" scalarLimites="3" speedX="2"
+				   walkDir="false" destroy="false"
+				   texturepath="Assets/Textures/Enemies.png" map="13"/>
+	  <SmallEnemy2 x="380" y="250" scalarLimites="3" speedX="2"
+                 walkDir="false" destroy="false"
+                 texturepath="Assets/Textures/Enemies.png" map="14"/>
+	  <SmallEnemy2 x="470" y="200" scalarLimites="3" speedX="2"
+				   walkDir="false" destroy="false"
+				   texturepath="Assets/Textures/Enemies.png" map="15"/>
+	  <SmallEnemy2 x="470" y="200" scalarLimites="3" speedX="2"
+				  walkDir="false" destroy="false"
+				  texturepath="Assets/Textures/Enemies.png" map="16"/>
     
   </scene>
   
