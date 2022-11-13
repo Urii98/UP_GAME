@@ -44,5 +44,5 @@ UP Kirby is a 2D platformer where Kirby has to avoid being hit by enemies or fal
 
 This project is licensed under an unmodified MIT license, which is an OSI-certified license that allows static linking with closed source software. Check [LICENSE](LICENSE) for further details.
 
-AdditionalLicenses
+Additional Licenses
 - Tileset: https://unity.com/legal/as-terms
