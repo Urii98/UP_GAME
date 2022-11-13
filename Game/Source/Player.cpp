@@ -808,15 +808,15 @@ void Player::PlayerDebug() {
 }
 
 void Player::PlayerVictory() {
-	if (position.x > 7630 && position.y < 500) {
+	if (position.x > 7630 && position.y < 500 && !victory) {
 		app->audio->PlayMusic(musicStopPath, 0);
 		estadoP = VICTORY;
 		victory = true;
 	}
 
-	/*if (position.x > 1100 && position.y < 500 && !victory) {
+	if (position.x > 1100 && position.y < 500 && !victory) {
 		app->audio->PlayMusic(musicStopPath,0);
   		estadoP = VICTORY;
 		victory = true;
-	}*/
+	}
 }
