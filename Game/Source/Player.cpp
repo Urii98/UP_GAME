@@ -564,6 +564,9 @@ bool Player::Update()
 	std::cout << "GetmouseX - " << x << std::endl;
 	std::cout << "GetmouseY - " << y << std::endl;
 
+	std::cout << "GetmouseX  - METERS - " << PIXEL_TO_METERS(x) << std::endl;
+	std::cout << "GetmouseY  - METERS - " << PIXEL_TO_METERS(y) << std::endl;
+
 	//Camara
 
 

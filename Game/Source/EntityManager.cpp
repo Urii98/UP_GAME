@@ -13,6 +13,7 @@
 #include "SmallEnemy1.h"
 #include "SmallEnemy2.h"
 #include "SmallEnemyFly.h"
+#include "PlayerSensors.h"
 
 EntityManager::EntityManager(bool isActive) : Module(isActive)
 {
@@ -111,6 +112,10 @@ Entity* EntityManager::CreateEntity(EntityType type)
 
 	case EntityType::SMALLENEMY2:
 		entity = new SmallEnemy2();
+		break;
+
+	case EntityType::SENSORS:
+		entity = new PlayerSensors();
 		break;
 	default: break;
 	}

@@ -77,6 +77,8 @@ bool Scene::Awake(pugi::xml_node& config)
 		
 	}
 
+	playerSensor = (PlayerSensors*)app->entityManager->CreateEntity(EntityType::SENSORS);
+
 
 	//L02: DONE 3: Instantiate the player using the entity manager
 	player = (Player*)app->entityManager->CreateEntity(EntityType::PLAYER);

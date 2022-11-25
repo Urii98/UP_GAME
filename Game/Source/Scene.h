@@ -9,6 +9,7 @@
 #include "SmallEnemy2.h"
 #include "SmallEnemyFly.h"
 #include "Physics.h"
+#include "PlayerSensors.h"
 
 
 struct SDL_Texture;
@@ -48,6 +49,7 @@ public:
 
 	//L02: DONE 3: Declare a Player attribute 
 	Player* player;
+	PlayerSensors* playerSensor;
 
 	List<Entity*> entities;
 
