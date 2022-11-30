@@ -41,13 +41,17 @@ bool FadeToBlack::Update(float dt)
 		{
 			moduleToDisable->Disable();
 
+			/*if (moduleToEnable->name == "scene")
+			{
+				app->entityManager->Enable();
+				app->map->Enable();
+			}*/
+			moduleToEnable->Enable();
 			if (moduleToEnable->name == "scene")
 			{
 				app->entityManager->Enable();
 				app->map->Enable();
 			}
-			moduleToEnable->Enable();
-
 			currentStep = Fade_Step::FROM_BLACK;
 		}
 	}

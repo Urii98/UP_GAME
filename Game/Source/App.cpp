@@ -58,6 +58,7 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 
 	//L07 DONE 2: Add Physics module
 	AddModule(physics);  //20 de memoria (hasta aqui) + modulos fade y render
+	AddModule(pathfinding);
 	AddModule(sceneManager);
 	
 	AddModule(sceneLogo); //7 de memoria x si solo  --> nse pq no se eliminan aunq he probado con breakpoint y se llama a delete texture y funciona normal

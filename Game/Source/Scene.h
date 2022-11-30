@@ -54,6 +54,7 @@ public:
 
 	List<Entity*> entities;
 
+	bool retLoad = false;
 	
 
 	//std::vector<Entity*>* vect = new std::vector<Entity*>;

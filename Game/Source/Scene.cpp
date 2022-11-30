@@ -95,11 +95,11 @@ bool Scene::Start()
 {	
 
 	// L03: DONE: Load map
-	bool retLoad = app->map->Load();
+	retLoad = app->map->Load();
 
 
-	// L12 Create walkability map
-	if (retLoad) {
+	//// L12 Create walkability map
+	/*if (retLoad) {
 		int w, h;
 		uchar* data = NULL;
 
@@ -108,7 +108,7 @@ bool Scene::Start()
 
 		RELEASE_ARRAY(data);
 
-	}
+	}*/
 
 	// L04: DONE 7: Set the window title with map/tileset info
 	SString title("Map:%dx%d Tiles:%dx%d Tilesets:%d",
@@ -127,6 +127,7 @@ bool Scene::Start()
 
 	return true;
 }
+
 
 // Called each loop iteration
 bool Scene::PreUpdate()
