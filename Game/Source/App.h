@@ -25,6 +25,7 @@ class FadeToBlack;
 class SceneLogo;
 class SceneTitle;
 class SceneEnding;
+class PathFinding;
 
 
 class App
@@ -105,6 +106,7 @@ public:
 	Map* map;
 	//L07 DONE 2: Add Physics module
 	Physics* physics;
+	PathFinding* pathfinding;
 
 	FadeToBlack* fade;
 	

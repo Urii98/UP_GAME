@@ -30,6 +30,7 @@
     <ClCompile Include="Source\SmallEnemy2.cpp" />
     <ClCompile Include="Source\SceneManager.cpp" />
     <ClCompile Include="Source\PlayerSensors.cpp" />
+    <ClCompile Include="Source\Pathfinding.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Window.h" />
@@ -85,6 +86,7 @@
     <ClInclude Include="Source\SceneManager.h" />
     <ClInclude Include="Source\MemLeaks.h" />
     <ClInclude Include="Source\PlayerSensors.h" />
+    <ClInclude Include="Source\Pathfinding.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="External">

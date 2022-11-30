@@ -13,6 +13,7 @@
 #include "SceneTitle.h"
 #include "FadeToBlack.h"
 #include "SceneManager.h"
+#include "Pathfinding.h"
 
 #include <memory>
 
@@ -27,25 +28,6 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 {
 	frames = 0;
 	
-	
-
-	//input = new Input();
-	//win = new Window();
-	//render = new Render();
-	//tex = new Textures();
-	//audio = new Audio();
-	////L07 DONE 2: Add Physics module
-	//physics = new Physics();
-	//
-	//sceneLogo = new SceneLogo();
-	//sceneTitle = new SceneTitle();
-	//sceneEnding = new SceneEnding();
-
-	//scene = new Scene();
-	//entityManager = new EntityManager();
-	//map = new Map();
-
-	//fade = new FadeToBlack();
 
 	input = new Input(true);
 	win = new Window(true);
@@ -54,6 +36,7 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	audio = new Audio(true);
 	//L07 DONE 2: Add Physics module
 	physics = new Physics(true);
+	pathfinding = new PathFinding(true);
 	sceneManager = new SceneManager(true);
 
 	sceneLogo = new SceneLogo(true);
