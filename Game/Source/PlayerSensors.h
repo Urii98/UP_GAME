@@ -25,6 +25,11 @@ public:
 
 public:
 	PhysBody* jumpSensor; 
+
+	bool resetjumps;
+	int frames;
+
+	PhysBody* sensArr[100];
 };
 
 #endif // __PLAYER_SENSORS_H__

@@ -22,27 +22,25 @@ bool PlayerSensors::Start()
 {
 	//jumpSensor = app->physics->CreateRectangleSensor(app->scene->player->position.x, app->scene->player->position.x, 15, 5, bodyType::DYNAMIC);
 	//jumpSensor = app->physics->CreateRectangle(app->scene->player->position.x, app->scene->player->position.x, 15, 5, bodyType::DYNAMIC);
-	jumpSensor = app->physics->CreateRectangle(2.8f, 6.4f, 7, 7, bodyType::DYNAMIC);
+	jumpSensor = app->physics->CreateRectangleSensor(0, 0, 12, 10, bodyType::DYNAMIC);
 	jumpSensor->ctype = ColliderType::SENSOR;
+
+	jumpSensor->listener = this;
+
+	frames = 0;
+	resetjumps = false;
+	
 	return true;
 }
 
 bool PlayerSensors::Update()
-{
-	iPoint  playerPos;
-	playerPos.x = METERS_TO_PIXELS(app->scene->player->pbody->body->GetTransform().p.x / app->win->GetScale()) - 14;
-	playerPos.y = METERS_TO_PIXELS(app->scene->player->pbody->body->GetTransform().p.y / app->win->GetScale()) - 10;
+{	
+	b2Vec2 vecPlayerPos = b2Vec2(app->scene->player->pbody->body->GetTransform().p.x, app->scene->player->pbody->body->GetTransform().p.y+0.90);
+
+	jumpSensor->body->SetTransform(vecPlayerPos, 0);
 	
-	b2Vec2 vecPlayerPos = b2Vec2(playerPos.x, playerPos.y);
-
-	b2Vec2 hardCodePos = b2Vec2(2.8f, 6.4f);
-
-
-	jumpSensor->body->SetTransform(hardCodePos, 0);
-
-	std::cout << "SENSOR  -  X :" << playerPos.x << std::endl;
-	std::cout << "SENSOR  -  Y :" << playerPos.y << std::endl;
-	
+	std::cout << "SENSOR  -  X :" << jumpSensor->body->GetTransform().p.x << std::endl;
+	std::cout << "SENSOR  -  Y :" << jumpSensor->body->GetTransform().p.y << std::endl;
 
 	return true;
 
@@ -61,4 +59,24 @@ bool PlayerSensors::CleanUp()
 void PlayerSensors::OnCollision(PhysBody* physA, PhysBody* physB)
 {
 
+	if (resetjumps)
+		frames++;
+
+	switch (physB->ctype)
+	{
+	case ColliderType::PLATFORM:
+		if (!resetjumps || frames >20)
+		{
+			app->scene->player->collisionP = app->scene->player->COLLISION;
+			app->scene->player->oneJump = false;
+			app->scene->player->flying = false;
+			app->scene->player->flapLimit = 0;
+			app->scene->player->jumpRAnim.Reset();
+			app->scene->player->jumpLAnim.Reset();
+			frames = 0;
+			resetjumps = true;
+		}
+
+		break;
+	}
 }

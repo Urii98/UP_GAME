@@ -75,7 +75,9 @@ public:
 	int scalarSpeedYDown;
 
 	bool oneJump;
+	bool flying;
 	bool victory;
+	int flapLimit;
 
 	int prevPosition;
 
@@ -125,8 +127,6 @@ private:
 	SDL_Timer toDescent;
 	SDL_Timer deathTimer;
 	SDL_Timer flapLimitTimer;
-	bool flying;
-	int flapLimit;
 
 	void Movimiento();
 	void Camera();

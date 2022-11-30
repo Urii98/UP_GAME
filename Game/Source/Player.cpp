@@ -561,11 +561,9 @@ bool Player::Update()
 	auto x = app->input->GetMouseX();
 	auto y = app->input->GetMouseY();
 
-	std::cout << "GetmouseX - " << x << std::endl;
-	std::cout << "GetmouseY - " << y << std::endl;
+	//std::cout << "GetmouseX - " << x << std::endl;
+	//std::cout << "GetmouseY - " << y << std::endl;
 
-	std::cout << "GetmouseX  - METERS - " << PIXEL_TO_METERS(x) << std::endl;
-	std::cout << "GetmouseY  - METERS - " << PIXEL_TO_METERS(y) << std::endl;
 
 	//Camara
 
@@ -642,12 +640,15 @@ bool Player::Update()
 
 
 
-	std::cout << "position iPoint.x = " << position.x << std::endl;
-	std::cout << "position iPoint.y = " << position.y << std::endl;
-	std::cout << "position pbody get Transform = " << METERS_TO_PIXELS(pbody->body->GetTransform().p.x) << std::endl;
-	std::cout << "position pbody get Transform = " << METERS_TO_PIXELS(pbody->body->GetTransform().p.y) << std::endl;
-	std::cout << "CAMERA POSITION.y" << app->render->camera.y << std::endl;
+	//std::cout << "position iPoint.x = " << position.x << std::endl;
+	//std::cout << "position iPoint.y = " << position.y << std::endl;
+	//std::cout << "position pbody get Transform = " << METERS_TO_PIXELS(pbody->body->GetTransform().p.x) << std::endl;
+	//std::cout << "position pbody get Transform = " << METERS_TO_PIXELS(pbody->body->GetTransform().p.y) << std::endl;
+	//std::cout << "CAMERA POSITION.y" << app->render->camera.y << std::endl;
 
+
+	std::cout << "position pbody get Transform = " << pbody->body->GetTransform().p.x << std::endl;
+	std::cout << "position pbody get Transform = " << pbody->body->GetTransform().p.y << std::endl;
 
 	if (teleport.turn == true)
 	{
@@ -675,7 +676,7 @@ bool Player::CleanUp()
 {
 	app->tex->UnLoad(texture);
 	pbody->body->GetWorld()->DestroyBody(pbody->body);
-	std::cout << "entrando en Cleanup - Player" << std::endl;
+	//std::cout << "entrando en Cleanup - Player" << std::endl;
 	//la memoria de player la libero directamente en scene
 	//app->entityManager->DestroyEntity(this);
 
@@ -702,13 +703,13 @@ void Player::OnCollision(PhysBody* physA, PhysBody* physB) {
 
 	case ColliderType::PLATFORM:
 		LOG("Collision PLATFORM");
-		collisionP = COLLISION;
-		jumpRAnim.Reset();
-		jumpLAnim.Reset();
-		oneJump = false;
-		flying = false;
-		flapLimit = 0;
-		std::cout << "PLATFORM COLLISION" << std::endl;
+		//	collisionP = COLLISION;
+		//jumpRAnim.Reset();
+		//jumpLAnim.Reset();
+		//oneJump = false;
+		//flying = false;
+		//flapLimit = 0;
+		//std::cout << "PLATFORM COLLISION" << std::endl;
 		break;
 
 	case ColliderType::ENEMY:
