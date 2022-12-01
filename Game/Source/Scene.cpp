@@ -99,16 +99,18 @@ bool Scene::Start()
 
 
 	//// L12 Create walkability map
-	/*if (retLoad) {
+	if (retLoad) {
 		int w, h;
 		uchar* data = NULL;
 
 		bool retWalkMap = app->map->CreateWalkabilityMap(w, h, &data);
+		w += 1;
+		h += 1;
 		if (retWalkMap) app->pathfinding->SetMap(w, h, data);
 
 		RELEASE_ARRAY(data);
 
-	}*/
+	}
 
 	// L04: DONE 7: Set the window title with map/tileset info
 	SString title("Map:%dx%d Tiles:%dx%d Tilesets:%d",
@@ -163,8 +165,9 @@ bool Scene::Update(float dt)
 
 	int mouseX, mouseY;
 	app->input->GetMousePosition(mouseX, mouseY);
-	iPoint mouseTile = app->map->WorldToMap(mouseX - app->render->camera.x - app->map->mapData.tileWidth / 2,
-											mouseY - app->render->camera.y - app->map->mapData.tileHeight / 2);
+	iPoint mouseTile = app->map->WorldToMap((mouseX + (-(app->render->camera.x)-260))/32,
+											(mouseY + -(app->render->camera.y)+320)/32 - app->map->mapData.tileHeight / 2);
+
 
 	//Convert again the tile coordinates to world coordinates to render the texture of the tile
 	iPoint highlightedTileWorld = app->map->MapToWorld(mouseTile.x, mouseTile.y);
@@ -190,6 +193,7 @@ bool Scene::Update(float dt)
 	const DynArray<iPoint>* path = app->pathfinding->GetLastPath();
 	for (uint i = 0; i < path->Count(); ++i)
 	{
+		pruebas = true;
 		iPoint pos = app->map->MapToWorld(path->At(i)->x, path->At(i)->y);
 		app->render->DrawTexture(mouseTileTex, pos.x, pos.y);
 	}
@@ -200,6 +204,8 @@ bool Scene::Update(float dt)
 
 	return true;
 }
+
+
 
 // Called each loop iteration
 bool Scene::PostUpdate()

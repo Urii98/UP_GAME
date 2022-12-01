@@ -42,6 +42,11 @@ bool PathFinding::CheckBoundaries(const iPoint& pos) const
 {
 	return (pos.x >= 0 && pos.x <= (int)width &&
 			pos.y >= 0 && pos.y <= (int)height);
+
+	pos.x;
+	pos.y;
+	width;
+	height;
 }
 
 // Utility: returns true is the tile is walkable

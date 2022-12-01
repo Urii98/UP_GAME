@@ -39,8 +39,8 @@ bool PlayerSensors::Update()
 
 	jumpSensor->body->SetTransform(vecPlayerPos, 0);
 	
-	std::cout << "SENSOR  -  X :" << jumpSensor->body->GetTransform().p.x << std::endl;
-	std::cout << "SENSOR  -  Y :" << jumpSensor->body->GetTransform().p.y << std::endl;
+	//std::cout << "SENSOR  -  X :" << jumpSensor->body->GetTransform().p.x << std::endl;
+	//std::cout << "SENSOR  -  Y :" << jumpSensor->body->GetTransform().p.y << std::endl;
 
 	return true;
 

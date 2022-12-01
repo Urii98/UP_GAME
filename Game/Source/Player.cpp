@@ -570,7 +570,7 @@ bool Player::Update()
 
 	PlayerDebug();
 	PlayerVictory();
-	std::cout << position.x << "    " << position.y << std::endl;
+	//std::cout << position.x << "    " << position.y << std::endl;
 	//std::cout << (app->render->playerPosition.x / app->win->GetScale()) << "    " << (app->render->playerPosition.y / app->win->GetScale())  << std::endl;
 
 
@@ -647,8 +647,8 @@ bool Player::Update()
 	//std::cout << "CAMERA POSITION.y" << app->render->camera.y << std::endl;
 
 
-	std::cout << "position pbody get Transform = " << pbody->body->GetTransform().p.x << std::endl;
-	std::cout << "position pbody get Transform = " << pbody->body->GetTransform().p.y << std::endl;
+	//std::cout << "position pbody get Transform = " << pbody->body->GetTransform().p.x << std::endl;
+	//std::cout << "position pbody get Transform = " << pbody->body->GetTransform().p.y << std::endl;
 
 	if (teleport.turn == true)
 	{

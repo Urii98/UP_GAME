@@ -46,6 +46,9 @@ public:
 
 	bool SaveState(pugi::xml_node&);
 
+	void Prueba();
+	bool pruebas = false;
+
 public:
 
 	//L02: DONE 3: Declare a Player attribute 

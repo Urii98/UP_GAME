@@ -56,16 +56,19 @@ bool Map::Start()
     farBackground = app->tex->Load(farBackgroundPath);
     middleBackground = app->tex->Load(middleBackgroundPath);
 
-    //if (app->scene->retLoad) {
-    //    int w, h;
-    //    uchar* data = NULL;
 
-    //    bool retWalkMap = app->map->CreateWalkabilityMap(w, h, &data);
-    //    if (retWalkMap) app->pathfinding->SetMap(w, h, data);
 
-    //    RELEASE_ARRAY(data);
 
-    //}
+ /*   if (app->scene->retLoad) {
+        int w, h;
+        uchar* data = NULL;
+
+        bool retWalkMap = app->map->CreateWalkabilityMap(w, h, &data);
+        if (retWalkMap) app->pathfinding->SetMap(w, h, data);
+
+        RELEASE_ARRAY(data);
+
+    }*/
 
     return ret;
 }
@@ -455,6 +458,8 @@ bool Map::Load()
             mapLayer = mapLayer->next;
         }
     }
+
+
 
     if(mapFileXML) mapFileXML.reset();
 
