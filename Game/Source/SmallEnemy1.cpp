@@ -240,27 +240,27 @@ bool SmallEnemy1::Update()
 	std::cout << position.x << " - " << position.y << std::endl;
 
 
-	//iPoint playerPos = { app->scene->player->position.x / 32, app->scene->player->position.y / 32 };
-	//iPoint myPos = { position.x / 64 , position.y / 64 };
-	//iPoint aux = { myPos.x + 3, myPos.y };
+	iPoint playerPos = { app->scene->player->position.x / 32, app->scene->player->position.y / 32 };
+	iPoint myPos = { position.x / 64 , position.y / 64 };
+	iPoint aux = { myPos.x + 3, myPos.y };
 
-	//std::cout << "tile: " << playerPos.x << " - " << playerPos.y << std::endl;
+	std::cout << "tile: " << playerPos.x << " - " << playerPos.y << std::endl;
 
-	//app->pathfinding->CreatePath(myPos, aux);
+	app->pathfinding->CreatePath(myPos, aux);
 
-	////b2Vec2 vel = b2Vec2(speedX, -GRAVITY_Y);
-	////pbody->body->SetLinearVelocity(vel);
+	//b2Vec2 vel = b2Vec2(speedX, -GRAVITY_Y);
+	//pbody->body->SetLinearVelocity(vel);
 
-	//const DynArray<iPoint>* path = app->pathfinding->GetLastPath();
-	//for (uint i = 0; i < path->Count(); ++i)
-	//{
+	const DynArray<iPoint>* path = app->pathfinding->GetLastPath();
+	for (uint i = 0; i < path->Count(); ++i)
+	{
 
-	//	iPoint pos = app->map->MapToWorld(path->At(i)->x, path->At(i)->y);
-	//	app->render->DrawTexture(app->scene->mouseTileTex, pos.x, pos.y);
-	//	
-	//	//if(i==1)
-	//	
-	//}
+		iPoint pos = app->map->MapToWorld(path->At(i)->x, path->At(i)->y);
+		app->render->DrawTexture(app->scene->mouseTileTex, pos.x, pos.y);
+		
+		//if(i==1)
+		
+	}
 
 
 	//auto toX = custom_lerp(position.x,path->At(1)->x*32,50);
