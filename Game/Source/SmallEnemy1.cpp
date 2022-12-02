@@ -222,8 +222,8 @@ void SmallEnemy1::desesperadoPeroNoTanto()
 	}
 
 
-	//auto toX = custom_lerp(position.x,path->At(1)->x*32,50);
-	auto toX = path->At(0)->x*32;
+	//auto toX = custom_lerp(position.x,path->At(1)->x*64,0.9f);
+	auto toX = path->At(1)->x*64;
 
 	b2Vec2 resetPos = b2Vec2(PIXEL_TO_METERS(toX), PIXEL_TO_METERS(position.y));
 	pbody->body->SetTransform(resetPos, 0);
@@ -275,15 +275,15 @@ bool SmallEnemy1::Update()
 	//desesperacion();
 	currentAnimationEnemy = &walkRAnimEnemy;
 
-	if (app->input->GetKey(SDL_SCANCODE_K) == KEY_REPEAT)
+	if (app->input->GetKey(SDL_SCANCODE_K) == KEY_DOWN)
 	{
 		/*position.x++;
 
 		b2Vec2 resetPos = b2Vec2(PIXEL_TO_METERS(position.x), PIXEL_TO_METERS(position.y));
 		pbody->body->SetTransform(resetPos, 0);*/
 
-		//desesperadoPeroNoTanto();
-		desesperacion();
+		desesperadoPeroNoTanto();
+		//desesperacion();
 
 	}
 
