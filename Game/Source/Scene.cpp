@@ -52,6 +52,7 @@ bool Scene::Awake(pugi::xml_node& config)
 			item->parameters = itemNode;
 
 			entities.Add(item);
+			break;
 
 		
 	}
@@ -180,9 +181,9 @@ bool Scene::Update(float dt)
 			/*app->pathfinding->CreatePath(origin, mouseTile);
 			originSelected = false;*/
 
-			/*iPoint aux = { app->scene->player->position.x / 32,app->scene->player->position.y / 32 };
+			iPoint aux = { app->scene->player->position.x / 32,app->scene->player->position.y / 32 };
 			app->pathfinding->CreatePath(origin, aux);
-			originSelected = false;*/
+			originSelected = false;
 		}
 		else
 		{

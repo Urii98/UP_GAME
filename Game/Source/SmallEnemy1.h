@@ -29,7 +29,12 @@ public:
 private:
 
 	void Movimiento();
+	
 	void Ataque();
+
+	void ChasePathFinding();
+
+	void desesperacion();
 
 public:
 
@@ -76,6 +81,9 @@ private:
 	SDL_Timer attackAnimTimer;
 	//DONE 4: Add a physics
 //	PhysBody* pbody;
+
+	iPoint lastPos;
+	int pathIterator;
 };
 
 #endif // !__SMALL_ENEMY_1__

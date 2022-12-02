@@ -11,8 +11,11 @@
 #include "EntityManager.h" 
 #include "SceneTitle.h"
 
-
 #include "Window.h"
+
+#include "Map.h"
+#include "Pathfinding.h"
+#include "Defs.h"
 
 
 SmallEnemy1::SmallEnemy1() : Entity(EntityType::SMALLENEMY1)
@@ -102,7 +105,7 @@ bool SmallEnemy1::Start() {
 
 void SmallEnemy1::Movimiento()
 {
-	if (position.x <= limiteDerX && !walkDir)
+	/*if (position.x <= limiteDerX && !walkDir)
 	{
 		b2Vec2 vel = b2Vec2(speedX, -GRAVITY_Y);
 		pbody->body->SetLinearVelocity(vel);
@@ -124,7 +127,7 @@ void SmallEnemy1::Movimiento()
 	else
 	{
 		walkDir = false;
-	}
+	}*/
 }
 
 void SmallEnemy1::Ataque() {
@@ -173,20 +176,69 @@ void SmallEnemy1::Ataque() {
 	//animacion ataque
 }
 
+void SmallEnemy1::desesperacion()
+{
+
+	std::cout << position.x << " - " << position.y << std::endl;
+
+	currentAnimationEnemy = &walkRAnimEnemy;
+
+	iPoint playerPos = { app->scene->player->position.x / 32, app->scene->player->position.y / 32 };
+	iPoint myPos = { position.x / 32 , position.y / 32 };
+	iPoint aux = { myPos.x + 3, myPos.y };
+
+	app->pathfinding->CreatePath(myPos, aux);
+//	app->pathfinding->CreatePath(myPos, playerPos);
+
+	b2Vec2 vel = b2Vec2(speedX, -GRAVITY_Y);
+	pbody->body->SetLinearVelocity(vel);
+
+
+	const DynArray<iPoint>* path = app->pathfinding->GetLastPath();
+	for (uint i = 0; i < path->Count(); ++i)
+	{
+
+		iPoint pos = app->map->MapToWorld(path->At(i)->x, path->At(i)->y);
+		app->render->DrawTexture(app->scene->mouseTileTex, pos.x, pos.y);
+	}
+}
+
 bool SmallEnemy1::Update()
 {
+
+	// L07 DONE 4: Add a physics  - update the position of the object from the physics.  
+	position.x = METERS_TO_PIXELS(pbody->body->GetTransform().p.x);
+	position.y = METERS_TO_PIXELS(pbody->body->GetTransform().p.y);
+
+	/*position.x = METERS_TO_PIXELS(pbody->body->GetTransform().p.x / app->win->GetScale()) - 10;
+	position.y = METERS_TO_PIXELS(pbody->body->GetTransform().p.y / app->win->GetScale()) - 7;*/
+
+	//desesperacion();
+	currentAnimationEnemy = &walkRAnimEnemy;
+
+	if (app->input->GetKey(SDL_SCANCODE_K) == KEY_REPEAT)
+	{
+		position.x++;
+
+		b2Vec2 resetPos = b2Vec2(PIXEL_TO_METERS(position.x), PIXEL_TO_METERS(position.y));
+		pbody->body->SetTransform(resetPos, 0);
+
+	}
+
+	//while(position == path[int i])
+
 	switch (estadoSE1) {
 	case STOP:
 		break;
 	case MOVIMIENTO:
 		Movimiento();
-		if (app->scene->player->position.x <limiteDerX && 
+	/*	if (app->scene->player->position.x <limiteDerX && 
 			app->scene->player->position.x > limiteIzqX-50 &&
 			app->scene->player->position.y > position.y -20 && 
 			app->scene->player->position.y < position.y+20)
 		{
 			estadoSE1 = ATAQUE;
-		}
+		}*/
 		
 		break;
 	case ATAQUE:
@@ -196,14 +248,11 @@ bool SmallEnemy1::Update()
 		break;
 	}
 
-	// L07 DONE 4: Add a physics  - update the position of the object from the physics.  
-	position.x = METERS_TO_PIXELS(pbody->body->GetTransform().p.x / app->win->GetScale()) - 10;
-	position.y = METERS_TO_PIXELS(pbody->body->GetTransform().p.y / app->win->GetScale()) - 7;
 
 
 	currentAnimationEnemy->Update();
 	SDL_Rect rect = currentAnimationEnemy->GetCurrentFrame();
-	app->render->DrawTexture(texture, position.x, position.y, &rect);
+	app->render->DrawTexture(texture, position.x / app->win->GetScale() - 10, position.y / app->win->GetScale() - 7, &rect);
 	
 
 	if (destroy)
@@ -213,7 +262,27 @@ bool SmallEnemy1::Update()
 		destroy = false;
 	}
 
+	//ChasePathFinding();
+
 	return true;
+}
+
+void SmallEnemy1::ChasePathFinding()
+{
+
+	iPoint playerPos = { app->scene->player->position.x / 32, app->scene->player->position.y / 32 };
+	iPoint myPos = { position.x / 32 , position.y / 32 };
+
+	app->pathfinding->CreatePath(myPos, playerPos);
+
+	const DynArray<iPoint>* path = app->pathfinding->GetLastPath();
+	for (uint i = 0; i < path->Count(); ++i)
+	{
+		
+		iPoint pos = app->map->MapToWorld(path->At(i)->x, path->At(i)->y);
+		app->render->DrawTexture(app->scene->mouseTileTex, pos.x, pos.y);
+	}
+
 }
 
 bool SmallEnemy1::CleanUp()

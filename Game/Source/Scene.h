@@ -59,6 +59,8 @@ public:
 
 	bool retLoad = false;
 	
+	SDL_Texture* mouseTileTex = nullptr;
+	SDL_Texture* originTex = nullptr;
 
 	//std::vector<Entity*>* vect = new std::vector<Entity*>;
 
@@ -66,8 +68,7 @@ public:
 private:
 	SDL_Texture* img;
 
-	SDL_Texture* mouseTileTex = nullptr;
-	SDL_Texture* originTex = nullptr;
+	
 
 	// L12: Debug pathfing
 	iPoint origin;
