@@ -100,6 +100,10 @@ bool SmallEnemy1::Start() {
 
 	pbody->listener = this;
 
+	pruebaPath = false;
+	toX = 0.0f;
+	toXdif = 0.0f;
+
 	return true;
 }
 
@@ -201,17 +205,20 @@ void SmallEnemy1::desesperacion()
 	}
 }
 
-void SmallEnemy1::desesperadoPeroNoTanto()
+void SmallEnemy1::movimientoNoChasing()
 {
 	
 	std::cout << position.x << " - " << position.y << std::endl;
-
 
 	iPoint playerPos = { app->scene->player->position.x / 32, app->scene->player->position.y / 32 };
 	iPoint myPos = { position.x / 64 , position.y / 64 };
 	iPoint aux = { myPos.x + 3, myPos.y };
 
-	app->pathfinding->CreatePath(myPos, aux);
+	if (!pruebaPath)
+	{
+		app->pathfinding->CreatePath(myPos, aux);
+	}
+		
 	
 	const DynArray<iPoint>* path = app->pathfinding->GetLastPath();
 	for (uint i = 0; i < path->Count(); ++i)
@@ -222,12 +229,25 @@ void SmallEnemy1::desesperadoPeroNoTanto()
 	}
 
 
-	//auto toX = custom_lerp(position.x,path->At(1)->x*64,0.9f);
-	auto toX = path->At(1)->x*64;
+	if (!pruebaPath)
+	{
+		auto aux = position.x;
+		toX = custom_lerp(position.x, path->At(1)->x * 64, 0.1f);
+		toXdif = toX - aux;
+		pruebaPath = true;
+	}
+	
+	//auto toX = path->At(1)->x*64;
 
 	b2Vec2 resetPos = b2Vec2(PIXEL_TO_METERS(toX), PIXEL_TO_METERS(position.y));
 	pbody->body->SetTransform(resetPos, 0);
 
+	toX += toXdif;
+
+	if (toX == path->At(1)->x * 64)
+	{
+		pruebaPath = false;
+	}
 }
 
 bool SmallEnemy1::Update()
@@ -244,7 +264,7 @@ bool SmallEnemy1::Update()
 	iPoint myPos = { position.x / 64 , position.y / 64 };
 	iPoint aux = { myPos.x + 3, myPos.y };
 
-	std::cout << "tile: " << playerPos.x << " - " << playerPos.y << std::endl;
+	std::cout << "tile: " << myPos.x << " - " << myPos.y << std::endl;
 
 	app->pathfinding->CreatePath(myPos, aux);
 
@@ -275,14 +295,14 @@ bool SmallEnemy1::Update()
 	//desesperacion();
 	currentAnimationEnemy = &walkRAnimEnemy;
 
-	if (app->input->GetKey(SDL_SCANCODE_K) == KEY_DOWN)
+	if (app->input->GetKey(SDL_SCANCODE_K) == KEY_REPEAT)
 	{
 		/*position.x++;
 
 		b2Vec2 resetPos = b2Vec2(PIXEL_TO_METERS(position.x), PIXEL_TO_METERS(position.y));
 		pbody->body->SetTransform(resetPos, 0);*/
 
-		desesperadoPeroNoTanto();
+		movimientoNoChasing();
 		//desesperacion();
 
 	}

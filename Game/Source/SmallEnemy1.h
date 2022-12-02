@@ -36,7 +36,7 @@ private:
 
 	void desesperacion();
 
-	void desesperadoPeroNoTanto();
+	void movimientoNoChasing();
 
 public:
 
@@ -86,6 +86,9 @@ private:
 
 	iPoint lastPos;
 	int pathIterator;
+	bool pruebaPath;
+	float toX;
+	float toXdif;
 };
 
 #endif // !__SMALL_ENEMY_1__
