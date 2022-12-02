@@ -12,7 +12,7 @@
  <layer id="5" name="Fondo" width="250" height="30">
   <properties>
    <property name="Draw" type="bool" value="true"/>
-    <property name="Navigation" type="bool" value="true"/>
+   <property name="Navigation" type="bool" value="true"/>
   </properties>
   <data>
    <tile/>
@@ -24327,8 +24327,8 @@
    <tile gid="941"/>
    <tile gid="941"/>
    <tile gid="941"/>
-   <tile/>
-   <tile/>
+   <tile gid="941"/>
+   <tile gid="941"/>
    <tile gid="941"/>
    <tile gid="941"/>
    <tile gid="941"/>
@@ -25538,13 +25538,13 @@
    <tile/>
    <tile/>
    <tile gid="941"/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
+   <tile gid="941"/>
+   <tile gid="941"/>
+   <tile gid="941"/>
+   <tile gid="941"/>
+   <tile gid="941"/>
+   <tile gid="941"/>
+   <tile gid="941"/>
    <tile gid="941"/>
    <tile gid="941"/>
    <tile gid="941"/>
