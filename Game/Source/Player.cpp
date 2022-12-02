@@ -561,8 +561,8 @@ bool Player::Update()
 	auto x = app->input->GetMouseX();
 	auto y = app->input->GetMouseY();
 
-	//std::cout << "GetmouseX - " << x << std::endl;
-	//std::cout << "GetmouseY - " << y << std::endl;
+	std::cout << "GetmouseX - " << x << std::endl;
+	std::cout << "GetmouseY - " << y << std::endl;
 
 
 	//Camara

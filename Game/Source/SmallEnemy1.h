@@ -36,6 +36,8 @@ private:
 
 	void desesperacion();
 
+	void desesperadoPeroNoTanto();
+
 public:
 
 	Animation* currentAnimationEnemy = nullptr;
