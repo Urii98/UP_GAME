@@ -96,6 +96,7 @@ private:
 	bool firstPath;
 	bool achievedRightBorder;
 	bool achievedLeftBorder;
+	bool debug;
 };
 
 #endif // !__SMALL_ENEMY_1__

@@ -112,6 +112,7 @@ bool SmallEnemy1::Start() {
 	achievedRightBorder = false;
 	achievedLeftBorder = true;
 	destination = 0.0f;
+	debug = false;
 	currentAnimationEnemy = &walkRAnimEnemy;
 
 	return true;
@@ -210,7 +211,7 @@ void SmallEnemy1::desesperacion()
 	for (uint i = 0; i < path->Count(); ++i)
 	{
 		iPoint pos = app->map->MapToWorld(path->At(i)->x, path->At(i)->y);
-		app->render->DrawTexture(app->scene->point, pos.x, pos.y);
+		//app->render->DrawTexture(app->scene->point, pos.x, pos.y);
 	}
 }
 
@@ -243,7 +244,11 @@ void SmallEnemy1::sentryMovement()
 
 	const DynArray<iPoint>* path = app->pathfinding->GetLastPath();
 
-	app->pathfinding->DrawLastPath();
+	if (debug)
+	{
+		app->pathfinding->DrawLastPath();
+	}
+	
 
 	if (startPath)
 	{
@@ -357,6 +362,18 @@ bool SmallEnemy1::Update()
 		break;
 	}
 
+	if (app->input->GetKey(SDL_SCANCODE_F9) == KEY_DOWN)
+	{
+		if (!debug)
+		{
+			debug = true;
+		}
+		else
+		{
+			debug = false;
+		}
+	}
+
 
 
 	currentAnimationEnemy->Update();
@@ -389,7 +406,7 @@ void SmallEnemy1::ChasePathFinding()
 	{
 		
 		iPoint pos = app->map->MapToWorld(path->At(i)->x, path->At(i)->y);
-		app->render->DrawTexture(app->scene->point, pos.x, pos.y);
+		//app->render->DrawTexture(app->scene->point, pos.x, pos.y);
 	}
 
 }
