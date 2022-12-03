@@ -124,7 +124,7 @@ bool Scene::Start()
 	app->win->SetTitle(title.GetString());
 
 	// Texture to highligh mouse position 
-	mouseTileTex = app->tex->Load("Assets/Maps/path.png");
+	point = app->tex->Load("Assets/Maps/point.png");
 	// Texture to show path origin 
 	originTex = app->tex->Load("Assets/Maps/x.png");
 
@@ -171,7 +171,7 @@ bool Scene::Update(float dt)
 
 	//Convert again the tile coordinates to world coordinates to render the texture of the tile
 	iPoint highlightedTileWorld = app->map->MapToWorld(mouseTile.x, mouseTile.y);
-	app->render->DrawTexture(mouseTileTex, highlightedTileWorld.x, highlightedTileWorld.y);
+	app->render->DrawTexture(point, highlightedTileWorld.x, highlightedTileWorld.y);
 
 	//Test compute path function
 	if (app->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_DOWN)
@@ -199,7 +199,7 @@ bool Scene::Update(float dt)
 	{
 		pruebas = true;
 		iPoint pos = app->map->MapToWorld(path->At(i)->x, path->At(i)->y);
-		app->render->DrawTexture(mouseTileTex, pos.x, pos.y);
+		app->render->DrawTexture(point, pos.x, pos.y);
 	}
 
 	// L12: Debug pathfinding
@@ -232,6 +232,9 @@ bool Scene::CleanUp()
 	//delete vect;
 
 	app->tex->UnLoad(img);
+	app->tex->UnLoad(point);
+	app->tex->UnLoad(originTex);
+
 
 	ListItem<Entity*>* destroyEntities;
 	destroyEntities = entities.start;
@@ -245,6 +248,7 @@ bool Scene::CleanUp()
 	}
 
 	
+
 
 	//memoryleak
 	return true;

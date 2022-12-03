@@ -59,7 +59,7 @@ public:
 
 	bool retLoad = false;
 	
-	SDL_Texture* mouseTileTex = nullptr;
+	SDL_Texture* point = nullptr;
 	SDL_Texture* originTex = nullptr;
 
 	//std::vector<Entity*>* vect = new std::vector<Entity*>;

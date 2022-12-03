@@ -25,6 +25,7 @@ public:
 	// Destructor
 	~PathFinding();
 
+	
 	// Called before quitting
 	bool CleanUp();
 
@@ -48,6 +49,8 @@ public:
 
 	// Utility: return the walkability value of a tile
 	uchar GetTileAt(const iPoint& pos) const;
+
+	void DrawLastPath();
 
 private:
 

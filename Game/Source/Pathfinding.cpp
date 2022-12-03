@@ -4,6 +4,9 @@
 #include "Defs.h"
 #include "Log.h"
 
+#include "Map.h"
+#include "Scene.h"
+
 PathFinding::PathFinding(bool isActive) : Module(isActive), map(NULL), lastPath(DEFAULT_PATH_LENGTH), width(0), height(0)
 {
 	name.Create("pathfinding");
@@ -174,6 +177,22 @@ int PathNode::CalculateF(const iPoint& destination)
 
 	return g + h;
 }
+
+void PathFinding::DrawLastPath()
+{
+
+	const DynArray<iPoint>* path = GetLastPath();
+
+	for (uint i = 0; i < path->Count(); ++i)
+	{
+
+		iPoint pos = app->map->MapToWorld(path->At(i)->x, path->At(i)->y);
+		app->render->DrawTexture(app->scene->point, pos.x, pos.y);
+
+	}
+}
+
+
 
 // ----------------------------------------------------------------------------------
 // Actual A* algorithm: return number of steps in the creation of the path or -1 ----

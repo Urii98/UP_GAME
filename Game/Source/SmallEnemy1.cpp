@@ -16,6 +16,7 @@
 #include "Map.h"
 #include "Pathfinding.h"
 #include "Defs.h"
+#include <cmath>
 
 
 SmallEnemy1::SmallEnemy1() : Entity(EntityType::SMALLENEMY1)
@@ -100,9 +101,18 @@ bool SmallEnemy1::Start() {
 
 	pbody->listener = this;
 
-	pruebaPath = false;
-	toX = 0.0f;
-	toXdif = 0.0f;
+	startPath = true;
+	nextFootStep = 0.0f;
+	amountToMoveInX = 0.0f;
+	initialPosition = { position.x / 64, position.y / 64 };
+	range = 4;
+	leftBorder = { position.x / 64, (position.y / 64) +1 };
+	rightBorder = { initialPosition.x + range, (position.y / 64) +1};
+	firstPath = true;
+	achievedRightBorder = false;
+	achievedLeftBorder = true;
+	destination = 0.0f;
+	currentAnimationEnemy = &walkRAnimEnemy;
 
 	return true;
 }
@@ -199,54 +209,79 @@ void SmallEnemy1::desesperacion()
 	const DynArray<iPoint>* path = app->pathfinding->GetLastPath();
 	for (uint i = 0; i < path->Count(); ++i)
 	{
-
 		iPoint pos = app->map->MapToWorld(path->At(i)->x, path->At(i)->y);
-		app->render->DrawTexture(app->scene->mouseTileTex, pos.x, pos.y);
+		app->render->DrawTexture(app->scene->point, pos.x, pos.y);
 	}
 }
 
-void SmallEnemy1::movimientoNoChasing()
+void SmallEnemy1::sentryMovement()
 {
-	
-	std::cout << position.x << " - " << position.y << std::endl;
 
-	iPoint playerPos = { app->scene->player->position.x / 32, app->scene->player->position.y / 32 };
-	iPoint myPos = { position.x / 64 , position.y / 64 };
-	iPoint aux = { myPos.x + 3, myPos.y };
-
-	if (!pruebaPath)
+	if (startPath)
 	{
-		app->pathfinding->CreatePath(myPos, aux);
+		if (firstPath)
+		{
+			app->pathfinding->CreatePath(leftBorder, rightBorder);
+			firstPath = false;
+		}
+		else
+		{
+			if (achievedLeftBorder)
+			{
+				iPoint myPos = { (int)std::round(nextFootStep / 64) , position.y / 64 };
+				app->pathfinding->CreatePath(myPos, rightBorder);
+				currentAnimationEnemy = &walkRAnimEnemy;
+			}
+			else if (achievedRightBorder)
+			{
+				iPoint myPos = { (int)std::round(nextFootStep / 64) , position.y / 64 };
+				app->pathfinding->CreatePath(myPos, leftBorder);
+				currentAnimationEnemy = &walkLAnimEnemy;
+			}
+		}
 	}
-		
-	
+
 	const DynArray<iPoint>* path = app->pathfinding->GetLastPath();
-	for (uint i = 0; i < path->Count(); ++i)
-	{
 
-		iPoint pos = app->map->MapToWorld(path->At(i)->x, path->At(i)->y);
-		app->render->DrawTexture(app->scene->mouseTileTex, pos.x, pos.y);
+	app->pathfinding->DrawLastPath();
+
+	if (startPath)
+	{
+		
+		if (path->At(1) != nullptr)
+		{
+			int aux = position.x;
+			destination = path->At(1)->x * 64;
+			nextFootStep = custom_lerp(position.x, destination, 0.05f);
+			amountToMoveInX = nextFootStep - aux;
+			startPath = false;
+		}
+		
 	}
 
+	b2Vec2 movePos = b2Vec2(PIXEL_TO_METERS(nextFootStep), PIXEL_TO_METERS(position.y));
+	pbody->body->SetTransform(movePos, 0);
 
-	if (!pruebaPath)
+	nextFootStep += amountToMoveInX;
+
+	if (nextFootStep > destination && achievedLeftBorder == true)
 	{
-		auto aux = position.x;
-		toX = custom_lerp(position.x, path->At(1)->x * 64, 0.1f);
-		toXdif = toX - aux;
-		pruebaPath = true;
+		startPath = true;
+	} 
+	else if (nextFootStep < destination && achievedRightBorder == true)
+	{
+		startPath = true;
 	}
 	
-	//auto toX = path->At(1)->x*64;
-
-	b2Vec2 resetPos = b2Vec2(PIXEL_TO_METERS(toX), PIXEL_TO_METERS(position.y));
-	pbody->body->SetTransform(resetPos, 0);
-
-	toX += toXdif;
-
-	if (toX == path->At(1)->x * 64)
+	if (position.x / 64 > rightBorder.x-1)
 	{
-		pruebaPath = false;
+		achievedRightBorder = true;
+		achievedLeftBorder = false;
+	}
+	else if (position.x / 64 < leftBorder.x)
+	{
+		achievedLeftBorder = true;
+		achievedRightBorder = false;
 	}
 }
 
@@ -257,30 +292,20 @@ bool SmallEnemy1::Update()
 	position.x = METERS_TO_PIXELS(pbody->body->GetTransform().p.x);
 	position.y = METERS_TO_PIXELS(pbody->body->GetTransform().p.y);
 
-	std::cout << position.x << " - " << position.y << std::endl;
-
-
+	
 	iPoint playerPos = { app->scene->player->position.x / 32, app->scene->player->position.y / 32 };
 	iPoint myPos = { position.x / 64 , position.y / 64 };
 	iPoint aux = { myPos.x + 3, myPos.y };
 
 	std::cout << "tile: " << myPos.x << " - " << myPos.y << std::endl;
 
-	app->pathfinding->CreatePath(myPos, aux);
+	//app->pathfinding->CreatePath(myPos, aux);
 
 	//b2Vec2 vel = b2Vec2(speedX, -GRAVITY_Y);
 	//pbody->body->SetLinearVelocity(vel);
 
-	const DynArray<iPoint>* path = app->pathfinding->GetLastPath();
-	for (uint i = 0; i < path->Count(); ++i)
-	{
-
-		iPoint pos = app->map->MapToWorld(path->At(i)->x, path->At(i)->y);
-		app->render->DrawTexture(app->scene->mouseTileTex, pos.x, pos.y);
-		
-		//if(i==1)
-		
-	}
+	/*const DynArray<iPoint>* path = app->pathfinding->GetLastPath();
+	app->pathfinding->DrawLastPath();*/
 
 
 	//auto toX = custom_lerp(position.x,path->At(1)->x*32,50);
@@ -293,19 +318,19 @@ bool SmallEnemy1::Update()
 	position.y = METERS_TO_PIXELS(pbody->body->GetTransform().p.y / app->win->GetScale()) - 7;*/
 
 	//desesperacion();
-	currentAnimationEnemy = &walkRAnimEnemy;
+	
 
-	if (app->input->GetKey(SDL_SCANCODE_K) == KEY_REPEAT)
-	{
-		/*position.x++;
+	//if (app->input->GetKey(SDL_SCANCODE_K) == KEY_REPEAT)
+	//{
+	//	/*position.x++;
 
-		b2Vec2 resetPos = b2Vec2(PIXEL_TO_METERS(position.x), PIXEL_TO_METERS(position.y));
-		pbody->body->SetTransform(resetPos, 0);*/
+	//	b2Vec2 resetPos = b2Vec2(PIXEL_TO_METERS(position.x), PIXEL_TO_METERS(position.y));
+	//	pbody->body->SetTransform(resetPos, 0);*/
 
-		movimientoNoChasing();
-		//desesperacion();
+	//	sentryMovement();
+	//	//desesperacion();
 
-	}
+	//}
 
 	//while(position == path[int i])
 
@@ -313,7 +338,7 @@ bool SmallEnemy1::Update()
 	case STOP:
 		break;
 	case MOVIMIENTO:
-		Movimiento();
+		//Movimiento();
 	/*	if (app->scene->player->position.x <limiteDerX && 
 			app->scene->player->position.x > limiteIzqX-50 &&
 			app->scene->player->position.y > position.y -20 && 
@@ -321,6 +346,8 @@ bool SmallEnemy1::Update()
 		{
 			estadoSE1 = ATAQUE;
 		}*/
+
+		sentryMovement();
 		
 		break;
 	case ATAQUE:
@@ -362,7 +389,7 @@ void SmallEnemy1::ChasePathFinding()
 	{
 		
 		iPoint pos = app->map->MapToWorld(path->At(i)->x, path->At(i)->y);
-		app->render->DrawTexture(app->scene->mouseTileTex, pos.x, pos.y);
+		app->render->DrawTexture(app->scene->point, pos.x, pos.y);
 	}
 
 }
@@ -373,12 +400,6 @@ bool SmallEnemy1::CleanUp()
 
 	app->tex->UnLoad(texture);
 	active = false;
-
-	//if(!destroy)
-	//{
-	//	app->physics->world->DestroyBody(pbody->body);
-	//	//pbody->body->GetWorld()->DestroyBody(pbody->body);
-	//}
 
 	return true;
 }

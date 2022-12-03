@@ -36,7 +36,7 @@ private:
 
 	void desesperacion();
 
-	void movimientoNoChasing();
+	void sentryMovement();
 
 public:
 
@@ -86,9 +86,16 @@ private:
 
 	iPoint lastPos;
 	int pathIterator;
-	bool pruebaPath;
-	float toX;
-	float toXdif;
+	
+	iPoint initialPosition, leftBorder, rightBorder;
+	int range;
+	bool startPath;
+	float nextFootStep;
+	float amountToMoveInX;
+	float destination;
+	bool firstPath;
+	bool achievedRightBorder;
+	bool achievedLeftBorder;
 };
 
 #endif // !__SMALL_ENEMY_1__
