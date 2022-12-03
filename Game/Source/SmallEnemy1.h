@@ -34,7 +34,7 @@ private:
 
 	void ChasePathFinding();
 
-	void desesperacion();
+	void chaseMovement();
 
 	void sentryMovement();
 

@@ -191,28 +191,37 @@ void SmallEnemy1::Ataque() {
 	//animacion ataque
 }
 
-void SmallEnemy1::desesperacion()
+void SmallEnemy1::chaseMovement()
 {
 
-	std::cout << position.x << " - " << position.y << std::endl;
-
 	iPoint playerPos = { app->scene->player->position.x / 32, app->scene->player->position.y / 32 };
-	iPoint myPos = { position.x / 64 , position.y / 64 };
-	iPoint aux = { myPos.x + 3, myPos.y };
+	//iPoint myPos = { position.x / 64 , position.y / 64 };
+	iPoint myPos = { (int)std::round(nextFootStep / 64) , position.y / 64 };
 
-	app->pathfinding->CreatePath(myPos, aux);
-//	app->pathfinding->CreatePath(myPos, playerPos);
-
-	b2Vec2 vel = b2Vec2(speedX, -GRAVITY_Y);
-	pbody->body->SetLinearVelocity(vel);
-
+	app->pathfinding->CreatePath(myPos, playerPos);
 
 	const DynArray<iPoint>* path = app->pathfinding->GetLastPath();
-	for (uint i = 0; i < path->Count(); ++i)
+
+	if (debug)
 	{
-		iPoint pos = app->map->MapToWorld(path->At(i)->x, path->At(i)->y);
-		//app->render->DrawTexture(app->scene->point, pos.x, pos.y);
+		app->pathfinding->DrawLastPath();
 	}
+
+	if (path->At(1) != nullptr)
+	{
+		int aux = position.x;
+		destination = path->At(1)->x * 64;
+		nextFootStep = custom_lerp(position.x, destination, 0.05f);
+		amountToMoveInX = nextFootStep - aux;
+		startPath = false;
+	}
+
+	b2Vec2 movePos = b2Vec2(PIXEL_TO_METERS(nextFootStep), PIXEL_TO_METERS(position.y));
+	pbody->body->SetTransform(movePos, 0);
+
+	nextFootStep += amountToMoveInX;
+
+
 }
 
 void SmallEnemy1::sentryMovement()
@@ -344,19 +353,32 @@ bool SmallEnemy1::Update()
 		break;
 	case MOVIMIENTO:
 		//Movimiento();
-	/*	if (app->scene->player->position.x <limiteDerX && 
+		sentryMovement();
+		if (app->scene->player->position.x <limiteDerX && 
 			app->scene->player->position.x > limiteIzqX-50 &&
-			app->scene->player->position.y > position.y -20 && 
-			app->scene->player->position.y < position.y+20)
+			app->scene->player->position.y > position.y -40 && 
+			app->scene->player->position.y < position.y+40)
 		{
 			estadoSE1 = ATAQUE;
-		}*/
+		}
 
-		sentryMovement();
+		if (std::abs(app->scene->player->position.x*2 - position.x) < 15)
+		{
+			estadoSE1 = ATAQUE;
+		}
+
+		
+		
 		
 		break;
 	case ATAQUE:
-		Ataque();
+		//Ataque();
+		chaseMovement();
+
+		if (std::abs(app->scene->player->position.x*2 - position.x) > 15)
+		{
+			estadoSE1 = MOVIMIENTO;
+		}
 		break;
 	default:
 		break;
