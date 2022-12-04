@@ -38,6 +38,10 @@ private:
 
 	void sentryMovement();
 
+	void returnMovement();
+
+
+
 public:
 
 	Animation* currentAnimationEnemy = nullptr;
@@ -63,9 +67,10 @@ public:
 
 	enum estadoSEnemy1 {
 		STOP = 0,
-		MOVIMIENTO,
-		ATAQUE,
+		SENTRY,
+		CHASE,
 		DEATH,
+		RETURN,
 		NONE,
 	};
 	int estadoSE1;
@@ -97,6 +102,9 @@ private:
 	bool achievedRightBorder;
 	bool achievedLeftBorder;
 	bool debug;
+	int playerTileX;
+	int playerTileY;
+	int limitToChase;
 };
 
 #endif // !__SMALL_ENEMY_1__

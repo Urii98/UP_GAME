@@ -48,7 +48,7 @@ bool SmallEnemy1::Start() {
 
 	
 
-	estadoSE1 = MOVIMIENTO;
+	estadoSE1 = SENTRY;
 	direccionE = DERECHA;
 
 	limiteIzqX = position.x - scalarLimites;
@@ -105,7 +105,7 @@ bool SmallEnemy1::Start() {
 	nextFootStep = 0.0f;
 	amountToMoveInX = 0.0f;
 	initialPosition = { position.x / 64, position.y / 64 };
-	range = 4;
+	range = 5;
 	leftBorder = { position.x / 64, (position.y / 64) +1 };
 	rightBorder = { initialPosition.x + range, (position.y / 64) +1};
 	firstPath = true;
@@ -113,82 +113,12 @@ bool SmallEnemy1::Start() {
 	achievedLeftBorder = true;
 	destination = 0.0f;
 	debug = false;
+	playerTileX = 0;
+	playerTileY = 0;
 	currentAnimationEnemy = &walkRAnimEnemy;
+	limitToChase = 0;
 
 	return true;
-}
-
-void SmallEnemy1::Movimiento()
-{
-	/*if (position.x <= limiteDerX && !walkDir)
-	{
-		b2Vec2 vel = b2Vec2(speedX, -GRAVITY_Y);
-		pbody->body->SetLinearVelocity(vel);
-		direccionE = DERECHA;
-		currentAnimationEnemy = &walkRAnimEnemy;
-	}
-	else
-	{
-		walkDir = true;
-	}
-
-	if (position.x >= limiteIzqX && walkDir)
-	{
-		b2Vec2 vel = b2Vec2(-speedX, -GRAVITY_Y);
-		pbody->body->SetLinearVelocity(vel);
-		direccionE = IZQUIERDA;
-		currentAnimationEnemy = &walkLAnimEnemy;
-	}
-	else
-	{
-		walkDir = false;
-	}*/
-}
-
-void SmallEnemy1::Ataque() {
-
-	//animacion angry
-	if (!attackE)
-	{
-		if (direccionE == DERECHA)
-		{
-			currentAnimationEnemy = &angryRAnimEnemy;
-		}
-		else if (direccionE == IZQUIERDA)
-		{
-			currentAnimationEnemy = &angryLAnimEnemy;
-			
-		}
-		attackE = true;
-		attackAnimTimer.Start(1.5); //timer para cambiar a la animacion de atacar
-		b2Vec2 vel = b2Vec2(0, -GRAVITY_Y);
-		pbody->body->SetLinearVelocity(vel);
-	}
-	
-
-	if (attackAnimTimer.Test() == FIN && !animAtk) //termina la pausa para la animacion de angry y se procede a atacar
-	{
-		animAtk = true;
-	}
-
-
-	if (attackE && animAtk) //perseguir y animacion atk en loop
-	{
-		if (app->scene->player->position.x < position.x)
-		{
-			b2Vec2 vel = b2Vec2(-speedX, -GRAVITY_Y);
-			pbody->body->SetLinearVelocity(vel);
-			currentAnimationEnemy = &attackLAnimEnemy;
-		}
-		else if (app->scene->player->position.x > position.x)
-		{
-			b2Vec2 vel = b2Vec2(speedX, -GRAVITY_Y);
-			pbody->body->SetLinearVelocity(vel);
-			currentAnimationEnemy = &attackRAnimEnemy;
-		}
-	}
-
-	//animacion ataque
 }
 
 void SmallEnemy1::chaseMovement()
@@ -216,12 +146,83 @@ void SmallEnemy1::chaseMovement()
 		startPath = false;
 	}
 
+	if (position.x > destination)
+	{
+		currentAnimationEnemy = &walkLAnimEnemy;
+	}
+	else if (position.x < destination)
+	{
+		currentAnimationEnemy = &walkRAnimEnemy;
+	}
+
 	b2Vec2 movePos = b2Vec2(PIXEL_TO_METERS(nextFootStep), PIXEL_TO_METERS(position.y));
 	pbody->body->SetTransform(movePos, 0);
 
 	nextFootStep += amountToMoveInX;
 
 
+}
+
+void SmallEnemy1::returnMovement()
+{
+	if (startPath)
+	{
+		if (firstPath)
+		{
+			iPoint myPos = {position.x / 64, position.y / 64};
+			app->pathfinding->CreatePath(myPos, leftBorder);
+			firstPath = false;
+		}
+		else
+		{
+			iPoint myPos = { (int)std::round(nextFootStep / 64) , position.y / 64 };
+			app->pathfinding->CreatePath(myPos, leftBorder);
+		}
+	}
+
+	const DynArray<iPoint>* path = app->pathfinding->GetLastPath();
+
+	if (debug)
+	{
+		app->pathfinding->DrawLastPath();
+	}
+
+	if (startPath)
+	{
+
+		if (path->At(1) != nullptr)
+		{
+			int aux = position.x;
+			destination = path->At(1)->x * 64;
+			nextFootStep = custom_lerp(position.x, destination, 0.05f);
+			amountToMoveInX = nextFootStep - aux;
+			startPath = false;
+		}
+
+	}
+
+	if (position.x > destination)
+	{
+		currentAnimationEnemy = &walkLAnimEnemy;
+	}
+	else if (position.x < destination)
+	{
+		currentAnimationEnemy = &walkRAnimEnemy;
+	}
+
+	b2Vec2 movePos = b2Vec2(PIXEL_TO_METERS(nextFootStep), PIXEL_TO_METERS(position.y));
+	pbody->body->SetTransform(movePos, 0);
+
+	nextFootStep += amountToMoveInX;
+
+	if (position.x > destination)
+	{
+		startPath = true;
+	}
+	else if (position.x < destination)
+	{
+		startPath = true;
+	}
 }
 
 void SmallEnemy1::sentryMovement()
@@ -311,75 +312,60 @@ bool SmallEnemy1::Update()
 	iPoint myPos = { position.x / 64 , position.y / 64 };
 	iPoint aux = { myPos.x + 3, myPos.y };
 
-	std::cout << "tile: " << myPos.x << " - " << myPos.y << std::endl;
-
-	//app->pathfinding->CreatePath(myPos, aux);
-
-	//b2Vec2 vel = b2Vec2(speedX, -GRAVITY_Y);
-	//pbody->body->SetLinearVelocity(vel);
-
-	/*const DynArray<iPoint>* path = app->pathfinding->GetLastPath();
-	app->pathfinding->DrawLastPath();*/
-
-
-	//auto toX = custom_lerp(position.x,path->At(1)->x*32,50);
-	//auto toX = path->At(0)->x * 32;
-
 	
-
-
-	/*position.x = METERS_TO_PIXELS(pbody->body->GetTransform().p.x / app->win->GetScale()) - 10;
-	position.y = METERS_TO_PIXELS(pbody->body->GetTransform().p.y / app->win->GetScale()) - 7;*/
-
-	//desesperacion();
 	
-
-	//if (app->input->GetKey(SDL_SCANCODE_K) == KEY_REPEAT)
-	//{
-	//	/*position.x++;
-
-	//	b2Vec2 resetPos = b2Vec2(PIXEL_TO_METERS(position.x), PIXEL_TO_METERS(position.y));
-	//	pbody->body->SetTransform(resetPos, 0);*/
-
-	//	sentryMovement();
-	//	//desesperacion();
-
-	//}
-
-	//while(position == path[int i])
-
 	switch (estadoSE1) {
 	case STOP:
 		break;
-	case MOVIMIENTO:
-		//Movimiento();
+	case SENTRY:
 		sentryMovement();
-		if (app->scene->player->position.x <limiteDerX && 
-			app->scene->player->position.x > limiteIzqX-50 &&
-			app->scene->player->position.y > position.y -40 && 
-			app->scene->player->position.y < position.y+40)
-		{
-			estadoSE1 = ATAQUE;
-		}
 
-		if (std::abs(app->scene->player->position.x*2 - position.x) < 15)
+		playerTileX = app->scene->player->position.x / 32;
+		playerTileY = app->scene->player->position.y / 32;
+		if (playerTileX > leftBorder.x &&
+			playerTileX < rightBorder.x &&
+			playerTileY > (position.y / 64) - 2 &&
+			playerTileY <(position.y / 64) + 2)
 		{
-			estadoSE1 = ATAQUE;
+			estadoSE1 = CHASE;
 		}
 
 		
 		
 		
 		break;
-	case ATAQUE:
-		//Ataque();
+	case CHASE:
 		chaseMovement();
 
-		if (std::abs(app->scene->player->position.x*2 - position.x) > 15)
+		playerTileX = app->scene->player->position.x / 32;
+		limitToChase = std::abs(playerTileX - (position.x / 64));
+
+		if (limitToChase > 5)
 		{
-			estadoSE1 = MOVIMIENTO;
+			estadoSE1 = RETURN;
+			startPath = true;
+			firstPath = true;
+			achievedRightBorder = false;
+			achievedLeftBorder = true;
+
 		}
+
 		break;
+
+	case RETURN:
+		returnMovement();
+
+		if (position.x / 64 == leftBorder.x)
+		{
+			estadoSE1 = SENTRY;
+			startPath = true;
+			firstPath = true;
+			achievedRightBorder = false;
+			achievedLeftBorder = true;
+		}
+
+		break;
+
 	default:
 		break;
 	}
@@ -396,12 +382,9 @@ bool SmallEnemy1::Update()
 		}
 	}
 
-
-
 	currentAnimationEnemy->Update();
 	SDL_Rect rect = currentAnimationEnemy->GetCurrentFrame();
 	app->render->DrawTexture(texture, position.x / app->win->GetScale() - 10, position.y / app->win->GetScale() - 7, &rect);
-	
 
 	if (destroy)
 	{
@@ -410,28 +393,9 @@ bool SmallEnemy1::Update()
 		destroy = false;
 	}
 
-	//ChasePathFinding();
-
 	return true;
 }
 
-void SmallEnemy1::ChasePathFinding()
-{
-
-	iPoint playerPos = { app->scene->player->position.x / 32, app->scene->player->position.y / 32 };
-	iPoint myPos = { position.x / 32 , position.y / 32 };
-
-	app->pathfinding->CreatePath(myPos, playerPos);
-
-	const DynArray<iPoint>* path = app->pathfinding->GetLastPath();
-	for (uint i = 0; i < path->Count(); ++i)
-	{
-		
-		iPoint pos = app->map->MapToWorld(path->At(i)->x, path->At(i)->y);
-		//app->render->DrawTexture(app->scene->point, pos.x, pos.y);
-	}
-
-}
 
 bool SmallEnemy1::CleanUp()
 {
