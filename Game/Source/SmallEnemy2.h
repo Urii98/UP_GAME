@@ -28,7 +28,8 @@ public:
 
 private:
 
-	void Movimiento();
+
+	void sentryMovement();
 
 public:
 
@@ -49,7 +50,7 @@ public:
 
 	enum estadoSEnemy1 {
 		STOP = 0,
-		MOVIMIENTO,
+		SENTRY,
 		DEATH,
 		NONE,
 	};
@@ -68,6 +69,17 @@ private:
 	SDL_Timer deathAnimationTimer;
 	//DONE 4: Add a physics
 //	PhysBody* pbody;
+
+	iPoint initialPosition, leftBorder, rightBorder;
+	int range;
+	bool startPath;
+	float nextFootStep;
+	float amountToMoveInX;
+	float destination;
+	bool firstPath;
+	bool achievedRightBorder;
+	bool achievedLeftBorder;
+	bool debug;
 };
 
 #endif // !__SMALL_ENEMY_2__

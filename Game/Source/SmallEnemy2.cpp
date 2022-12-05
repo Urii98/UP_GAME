@@ -14,6 +14,9 @@
 
 #include "Window.h"
 
+#include "Map.h"
+#include "Pathfinding.h"
+
 
 SmallEnemy2::SmallEnemy2() : Entity(EntityType::SMALLENEMY2)
 {
@@ -40,74 +43,74 @@ bool SmallEnemy2::Awake() {
 
 bool SmallEnemy2::Start() {
 
-	if (app->sceneTitle->mapSelect == false) {
-		if (map == 1) {
-			position.x = 6586;
-			position.y = 1182;
-		}
-		if (map == 2) {
-			position.x = 7232;
-			position.y = 1182;
-		}
-		if (map == 3) {
-			position.x = 6920;
-			position.y = 926;
-		}
-		if (map == 4) {
-			position.x = 6586;
-			position.y = 670;
-		}
-		if (map == 5) {
-			position.x = 7232;
-			position.y = 670;
-		}
-		if (map == 6) {
-			position.x = 8890;
-			position.y = 1694;
-		}
-		if (map == 7) {
-			position.x = 8844;
-			position.y = 1246;
-		}
-		if (map == 8) {
-			position.x = 8352;
-			position.y = 1246;
-		}
-		if (map == 9) {
-			position.x = 8544;
-			position.y = 798;
-		}
-		if (map == 10) {
-			position.x = 8948;
-			position.y = 798;
-		}
-		if (map == 11) {
-			position.x = 9856;
-			position.y = 734;
-		}
-		if (map == 12) {
-			position.x = 10368;
-			position.y = 926;
-		}
-		if (map == 13) {
-			position.x = 10886;
-			position.y = 1118;
-		}
-		if (map == 14) {
-			position.x = 11382;
-			position.y = 1118;
-		}
-		if (map == 15) {
-			position.x = 12168;
-			position.y = 1118;
-		}
-		if (map == 16) {
-			position.x = 12942;
-			position.y = 1118;
-		}
-	}
+	//if (app->sceneTitle->mapSelect == false) {
+	//	if (map == 1) {
+	//		position.x = 6586;
+	//		position.y = 1182;
+	//	}
+	//	if (map == 2) {
+	//		position.x = 7232;
+	//		position.y = 1182;
+	//	}
+	//	if (map == 3) {
+	//		position.x = 6920;
+	//		position.y = 926;
+	//	}
+	//	if (map == 4) {
+	//		position.x = 6586;
+	//		position.y = 670;
+	//	}
+	//	if (map == 5) {
+	//		position.x = 7232;
+	//		position.y = 670;
+	//	}
+	//	if (map == 6) {
+	//		position.x = 8890;
+	//		position.y = 1694;
+	//	}
+	//	if (map == 7) {
+	//		position.x = 8844;
+	//		position.y = 1246;
+	//	}
+	//	if (map == 8) {
+	//		position.x = 8352;
+	//		position.y = 1246;
+	//	}
+	//	if (map == 9) {
+	//		position.x = 8544;
+	//		position.y = 798;
+	//	}
+	//	if (map == 10) {
+	//		position.x = 8948;
+	//		position.y = 798;
+	//	}
+	//	if (map == 11) {
+	//		position.x = 9856;
+	//		position.y = 734;
+	//	}
+	//	if (map == 12) {
+	//		position.x = 10368;
+	//		position.y = 926;
+	//	}
+	//	if (map == 13) {
+	//		position.x = 10886;
+	//		position.y = 1118;
+	//	}
+	//	if (map == 14) {
+	//		position.x = 11382;
+	//		position.y = 1118;
+	//	}
+	//	if (map == 15) {
+	//		position.x = 12168;
+	//		position.y = 1118;
+	//	}
+	//	if (map == 16) {
+	//		position.x = 12942;
+	//		position.y = 1118;
+	//	}
+	//}
 
-	estadoSE2 = MOVIMIENTO;
+	estadoSE2 = SENTRY;
 	direccionSE2 = DERECHA;
 
 	limiteIzqX = position.x - scalarLimites;
@@ -149,54 +152,142 @@ bool SmallEnemy2::Start() {
 
 	pbody->listener = this;
 
+
+	startPath = true;
+	nextFootStep = 0.0f;
+	amountToMoveInX = 0.0f;
+	initialPosition = { position.x / 64, position.y / 64 };
+	range = 12;
+	leftBorder = { position.x / 64, (position.y / 64)};
+	rightBorder = { initialPosition.x + range, (position.y / 64)};
+	firstPath = true;
+	achievedRightBorder = false;
+	achievedLeftBorder = true;
+	destination = 0.0f;
+	debug = false;
+	currentAnimationEnemy = &walkLAnimEnemy;
+
 	return true;
 }
 
-void SmallEnemy2::Movimiento()
+void SmallEnemy2::sentryMovement()
 {
-	if (position.x <= limiteDerX && !walkDir)
+
+	if (startPath)
 	{
-		b2Vec2 vel = b2Vec2(speedX, -GRAVITY_Y);
-		pbody->body->SetLinearVelocity(vel);
-		direccionSE2 = DERECHA;
-		currentAnimationEnemy = &walkLAnimEnemy;
-	}
-	else
-	{
-		walkDir = true;
+		if (firstPath)
+		{
+			app->pathfinding->CreatePath(leftBorder, rightBorder);
+			firstPath = false;
+		}
+		else
+		{
+			if (achievedLeftBorder)
+			{
+				iPoint myPos = { (int)std::round(nextFootStep / 64) , position.y / 64 };
+				app->pathfinding->CreatePath(myPos, rightBorder);
+				currentAnimationEnemy = &walkLAnimEnemy;
+			}
+			else if (achievedRightBorder)
+			{
+				iPoint myPos = { (int)std::round(nextFootStep / 64) , position.y / 64 };
+				app->pathfinding->CreatePath(myPos, leftBorder);
+				currentAnimationEnemy = &walkRAnimEnemy;
+			}
+		}
 	}
 
-	if (position.x >= limiteIzqX && walkDir)
+	const DynArray<iPoint>* path = app->pathfinding->GetLastPath();
+
+	if (debug)
 	{
-		b2Vec2 vel = b2Vec2(-speedX, -GRAVITY_Y);
-		pbody->body->SetLinearVelocity(vel);
-		direccionSE2 = IZQUIERDA;
-		currentAnimationEnemy = &walkRAnimEnemy;
+		app->pathfinding->DrawLastPath();
 	}
-	else
+
+
+	if (startPath)
 	{
-		walkDir = false;
+
+		if (path->At(1) != nullptr)
+		{
+			int aux = position.x;
+			destination = path->At(1)->x * 64;
+			nextFootStep = custom_lerp(position.x, destination, 0.02f);
+			amountToMoveInX = nextFootStep - aux;
+			startPath = false;
+		}
+
 	}
+
+	b2Vec2 movePos = b2Vec2(PIXEL_TO_METERS(nextFootStep), PIXEL_TO_METERS(position.y));
+	pbody->body->SetTransform(movePos, 0);
+
+	nextFootStep += amountToMoveInX;
+
+	if (nextFootStep > destination && achievedLeftBorder == true)
+	{
+		startPath = true;
+	}
+	else if (nextFootStep < destination && achievedRightBorder == true)
+	{
+		startPath = true;
+	}
+
+	if (achievedLeftBorder)
+	{
+		int limitToChange = std::abs(position.x/64 - rightBorder.x);
+		if (limitToChange == 1)
+		{
+			achievedRightBorder = true;
+			achievedLeftBorder = false;
+		}
+	}
+	else if (achievedRightBorder)
+	{
+		int limitToChange = std::abs(position.x / 64 - leftBorder.x);
+		if (limitToChange == 1)
+		{
+			achievedLeftBorder = true;
+			achievedRightBorder = false;
+		}
+	}
+
 }
+
 bool SmallEnemy2::Update()
 {
+
+	// L07 DONE 4: Add a physics  - update the position of the object from the physics.  
+	position.x = METERS_TO_PIXELS(pbody->body->GetTransform().p.x);
+	position.y = METERS_TO_PIXELS(pbody->body->GetTransform().p.y);
+
 	switch (estadoSE2) {
 	case STOP:
 		break;
-	case MOVIMIENTO:
-		Movimiento();
+	case SENTRY:
+		sentryMovement();
+
 		break;
 	default:
 		break;
 	}
 
-	// L07 DONE 4: Add a physics  - update the position of the object from the physics.  
-	position.x = METERS_TO_PIXELS(pbody->body->GetTransform().p.x / app->win->GetScale()) - 17;
-	position.y = METERS_TO_PIXELS(pbody->body->GetTransform().p.y / app->win->GetScale()) - 15;
+	if (app->input->GetKey(SDL_SCANCODE_F9) == KEY_DOWN)
+	{
+		if (!debug)
+		{
+			debug = true;
+		}
+		else
+		{
+			debug = false;
+		}
+	}
+	std::cout <<"position acabado el movement" << position.x << std::endl;
 
 	currentAnimationEnemy->Update();
 	SDL_Rect rect = currentAnimationEnemy->GetCurrentFrame();
-	app->render->DrawTexture(texture, position.x, position.y, &rect);
+	app->render->DrawTexture(texture, position.x / app->win->GetScale() - 17, position.y / app->win->GetScale() - 15, &rect);
 
 	if (destroy)
 	{
@@ -214,12 +305,6 @@ bool SmallEnemy2::CleanUp()
 
 	app->tex->UnLoad(texture);
 	active = false;
-
-	//if (!destroy)
-	//{
-	//	app->physics->world->DestroyBody(pbody->body);
-	//	//pbody->body->GetWorld()->DestroyBody(pbody->body);
-	//}
 
 	return true;
 }

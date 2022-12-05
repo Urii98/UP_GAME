@@ -28,12 +28,6 @@ public:
 
 private:
 
-	void Movimiento();
-	
-	void Ataque();
-
-	void ChasePathFinding();
-
 	void chaseMovement();
 
 	void sentryMovement();
@@ -105,6 +99,7 @@ private:
 	int playerTileX;
 	int playerTileY;
 	int limitToChase;
+	bool attackAnimation;
 };
 
 #endif // !__SMALL_ENEMY_1__

@@ -60,7 +60,6 @@ bool SmallEnemy1::Start() {
 	walkRAnimEnemy.loop = true;
 	walkRAnimEnemy.speed = 0.125f;
 
-	
 	walkLAnimEnemy.PushBack({ 776,1297,24,21 });
 	walkLAnimEnemy.PushBack({ 818,1297,24,21 });
 	walkLAnimEnemy.PushBack({ 864,1297,24,21 });
@@ -117,6 +116,7 @@ bool SmallEnemy1::Start() {
 	playerTileY = 0;
 	currentAnimationEnemy = &walkRAnimEnemy;
 	limitToChase = 0;
+	attackAnimation = false;
 
 	return true;
 }
@@ -124,8 +124,20 @@ bool SmallEnemy1::Start() {
 void SmallEnemy1::chaseMovement()
 {
 
+	if (!attackAnimation)
+	{
+		attackAnimTimer.Start(0.30);
+		attackAnimation = true;
+	}
+	
+	if (attackAnimTimer.Test() == EJECUTANDO)
+	{
+		currentAnimationEnemy = &angryRAnimEnemy;
+		return;
+	}
+		
+
 	iPoint playerPos = { app->scene->player->position.x / 32, app->scene->player->position.y / 32 };
-	//iPoint myPos = { position.x / 64 , position.y / 64 };
 	iPoint myPos = { (int)std::round(nextFootStep / 64) , position.y / 64 };
 
 	app->pathfinding->CreatePath(myPos, playerPos);
@@ -141,18 +153,18 @@ void SmallEnemy1::chaseMovement()
 	{
 		int aux = position.x;
 		destination = path->At(1)->x * 64;
-		nextFootStep = custom_lerp(position.x, destination, 0.05f);
+		nextFootStep = custom_lerp(position.x, destination, 0.075f);
 		amountToMoveInX = nextFootStep - aux;
 		startPath = false;
 	}
 
 	if (position.x > destination)
 	{
-		currentAnimationEnemy = &walkLAnimEnemy;
+		currentAnimationEnemy = &attackLAnimEnemy;
 	}
 	else if (position.x < destination)
 	{
-		currentAnimationEnemy = &walkRAnimEnemy;
+		currentAnimationEnemy = &attackRAnimEnemy;
 	}
 
 	b2Vec2 movePos = b2Vec2(PIXEL_TO_METERS(nextFootStep), PIXEL_TO_METERS(position.y));
@@ -165,6 +177,7 @@ void SmallEnemy1::chaseMovement()
 
 void SmallEnemy1::returnMovement()
 {
+	attackAnimation = false;
 	if (startPath)
 	{
 		if (firstPath)

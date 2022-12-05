@@ -52,8 +52,6 @@ bool Scene::Awake(pugi::xml_node& config)
 			item->parameters = itemNode;
 
 			entities.Add(item);
-			break;
-
 		
 	}
 
