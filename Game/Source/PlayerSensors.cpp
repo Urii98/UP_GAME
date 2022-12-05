@@ -42,6 +42,8 @@ bool PlayerSensors::Update()
 	//std::cout << "SENSOR  -  X :" << jumpSensor->body->GetTransform().p.x << std::endl;
 	//std::cout << "SENSOR  -  Y :" << jumpSensor->body->GetTransform().p.y << std::endl;
 
+	frames++;
+
 	return true;
 
 }
@@ -59,9 +61,6 @@ bool PlayerSensors::CleanUp()
 void PlayerSensors::OnCollision(PhysBody* physA, PhysBody* physB)
 {
 
-	if (resetjumps)
-		frames++;
-
 	switch (physB->ctype)
 	{
 	case ColliderType::PLATFORM:
@@ -69,7 +68,7 @@ void PlayerSensors::OnCollision(PhysBody* physA, PhysBody* physB)
 		{
 			app->scene->player->collisionP = app->scene->player->COLLISION;
 			app->scene->player->oneJump = false;
-			app->scene->player->flying = false;
+   			app->scene->player->flying = false;
 			app->scene->player->flapLimit = 0;
 			app->scene->player->jumpRAnim.Reset();
 			app->scene->player->jumpLAnim.Reset();
