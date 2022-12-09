@@ -157,7 +157,7 @@ bool SmallEnemy2::Start() {
 	nextFootStep = 0.0f;
 	amountToMoveInX = 0.0f;
 	initialPosition = { position.x / 64, position.y / 64 };
-	range = 6;
+	range = 5;
 	leftBorder = { position.x / 64, (position.y / 64)};
 	rightBorder = { initialPosition.x + range, (position.y / 64)};
 	firstPath = true;

@@ -35,47 +35,47 @@ bool Scene::Awake(pugi::xml_node& config)
 	for (pugi::xml_node itemNode = config.child("item"); itemNode; itemNode = itemNode.next_sibling("item"))
 	{
 
-			Item* item = (Item*)app->entityManager->CreateEntity(EntityType::ITEM);
-			item->parameters = itemNode;
+		Item* item = (Item*)app->entityManager->CreateEntity(EntityType::ITEM);
+		item->parameters = itemNode;
 
-			entities.Add(item);
+		entities.Add(item);
 
 
 	
 		
 	}
 
-	//for (pugi::xml_node itemNode = config.child("SmallEnemy1"); itemNode; itemNode = itemNode.next_sibling("SmallEnemy1"))
-	//{
-
-	//		SmallEnemy1* item = (SmallEnemy1*)app->entityManager->CreateEntity(EntityType::SMALLENEMY1);
-	//		item->parameters = itemNode;
-
-	//		entities.Add(item);
-	//	
-	//}
-
-	for (pugi::xml_node itemNode = config.child("SmallEnemyFly"); itemNode; itemNode = itemNode.next_sibling("SmallEnemyFly"))
+	for (pugi::xml_node itemNode = config.child("SmallEnemy1"); itemNode; itemNode = itemNode.next_sibling("SmallEnemy1"))
 	{
 
-			SmallEnemyFly* item = (SmallEnemyFly*)app->entityManager->CreateEntity(EntityType::SMALLENEMYFLY);
+			SmallEnemy1* item = (SmallEnemy1*)app->entityManager->CreateEntity(EntityType::SMALLENEMY1);
 			item->parameters = itemNode;
 
 			entities.Add(item);
 		
+	}
+
+	for (pugi::xml_node itemNode = config.child("SmallEnemyFly"); itemNode; itemNode = itemNode.next_sibling("SmallEnemyFly"))
+	{
+
+		SmallEnemyFly* item = (SmallEnemyFly*)app->entityManager->CreateEntity(EntityType::SMALLENEMYFLY);
+		item->parameters = itemNode;
+
+		entities.Add(item);
+		
 		
 	}
 
-	//for (pugi::xml_node itemNode = config.child("SmallEnemy2"); itemNode; itemNode = itemNode.next_sibling("SmallEnemy2"))
-	//{
+	for (pugi::xml_node itemNode = config.child("SmallEnemy2"); itemNode; itemNode = itemNode.next_sibling("SmallEnemy2"))
+	{
 
-	//		SmallEnemy2* item = (SmallEnemy2*)app->entityManager->CreateEntity(EntityType::SMALLENEMY2);
-	//		item->parameters = itemNode;
-	//		entities.Add(item);
-	//	
-	//
-	//	
-	//}
+		SmallEnemy2* item = (SmallEnemy2*)app->entityManager->CreateEntity(EntityType::SMALLENEMY2);
+		item->parameters = itemNode;
+		entities.Add(item);
+
+
+
+	}
 
 	playerSensor = (PlayerSensors*)app->entityManager->CreateEntity(EntityType::SENSORS);
 
