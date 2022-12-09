@@ -96,7 +96,7 @@ private:
 	int playerTileX;
 	int playerTileY;
 	int limitToChase;
-	bool attackAnimation;
+	
 
 	
 };

@@ -119,7 +119,6 @@ bool SmallEnemyFly::Start() {
 	playerTileY = 0;
 	currentAnimationFlyEnemy = &idleLFlyAnim;
 	limitToChase = 0;
-	attackAnimation = false;
 
 	return true;
 }
@@ -173,16 +172,23 @@ void SmallEnemyFly::chaseprueba()
 		int auxY = position.y;
 		destinationInX = path->At(1)->x * 64;
 		destinationInY = path->At(1)->y * 64;
-		
 
-		nextFootStepInX = custom_lerp(position.x, destinationInX, 0.075f);
-		nextFootStepInY = custom_lerp(position.y, destinationInY, 0.075f);
+		nextFootStepInX = custom_lerp(position.x, destinationInX, 0.055f);
+		nextFootStepInY = custom_lerp(position.y, destinationInY, 0.055f);
 
 		amountToMoveInX = nextFootStepInX - auxX;
 		amountToMoveInY = nextFootStepInY - auxY;
 		startPath = false;
 	}
 
+	if (position.x > destinationInX)
+	{
+		currentAnimationFlyEnemy = &chaseLFlyAnim;
+	}
+	else if (position.x < destinationInX)
+	{
+		currentAnimationFlyEnemy = &chaseRFlyAnim;
+	}
 
 	b2Vec2 movePos = b2Vec2(PIXEL_TO_METERS(nextFootStepInX), PIXEL_TO_METERS(nextFootStepInY));
 	pbody->body->SetTransform(movePos, 0);
@@ -331,6 +337,7 @@ void SmallEnemyFly::OnCollision(PhysBody* physA, PhysBody* physB)
 			currentAnimationFlyEnemy = &deathRAnimEnemy;
 		}
 		
+		estadoSEF1 = STOP;
 
 		break;
 	}
