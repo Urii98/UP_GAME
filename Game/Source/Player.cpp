@@ -794,7 +794,7 @@ void Player::PlayerDebug() {
 
 	if (godMode)
 	{
-		std::cout << "GODMODE ACTIVADO" << std::endl;
+		//std::cout << "GODMODE ACTIVADO" << std::endl;
 		flapLimit = 0;
 		estadoP = MOVIMIENTO;
 	}

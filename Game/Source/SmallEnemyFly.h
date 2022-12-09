@@ -30,6 +30,14 @@ private:
 
 	void Movimiento();
 
+	void ChaseMovement();
+	void ChaseMovementinY();
+	void chaseprueba();
+
+	void SentryMovement();
+
+	void ReturnMovement();
+
 public:
 
 	Animation* currentAnimationFlyEnemy = nullptr;
@@ -41,15 +49,23 @@ public:
 
 	int speedY;
 
-	Animation flyAnimEnemy;
-	Animation deathAnimEnemy;
+	Animation idleRFlyAnim;
+	Animation idleLFlyAnim;
+
+	Animation chaseRFlyAnim;
+	Animation chaseLFlyAnim;
+
+	Animation deathRAnimEnemy;
+	Animation deathLAnimEnemy;
 
 	//bool destroy;
 
 	enum estadoSEnemy1 {
 		STOP = 0,
-		MOVIMIENTO,
+		SENTRY,
+		CHASE,
 		DEATH,
+		RETURN,
 		NONE,
 	};
 	int estadoSEF1;
@@ -61,6 +77,28 @@ private:
 	SDL_Timer deathAnimationTimer;
 	//DONE 4: Add a physics
 //	PhysBody* pbody;
+	bool firstSentryMovement;
+
+
+	iPoint initialPosition, leftBorder, rightBorder;
+	int range;
+	bool startPath;
+	float nextFootStepInX;
+	float nextFootStepInY;
+	float amountToMoveInX;
+	float amountToMoveInY;
+	float destinationInX;
+	float destinationInY;
+	bool firstPath;
+	bool achievedRightBorder;
+	bool achievedLeftBorder;
+	bool debug;
+	int playerTileX;
+	int playerTileY;
+	int limitToChase;
+	bool attackAnimation;
+
+	
 };
 
 #endif // !__SMALL_ENEMY_FLY__

@@ -28,11 +28,11 @@ public:
 
 private:
 
-	void chaseMovement();
+	void ChaseMovement();
 
-	void sentryMovement();
+	void SentryMovement();
 
-	void returnMovement();
+	void ReturnMovement();
 
 
 

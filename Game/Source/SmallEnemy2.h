@@ -29,7 +29,7 @@ public:
 private:
 
 
-	void sentryMovement();
+	void SentryMovement();
 
 public:
 

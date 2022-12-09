@@ -172,6 +172,9 @@ bool EntityManager::LoadState(pugi::xml_node& data)
 
 	app->scene->player->ChangePosition(posX, posY);
 
+	//Comprobar de alguna manera que no se han destruido los enemigos,
+	//de no haberse destruido, entonces cogemos sus datos y los mandamos a cada uno para su posición con un teleport
+
 	return true;
 }
 

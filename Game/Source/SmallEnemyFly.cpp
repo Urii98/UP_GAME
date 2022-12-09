@@ -11,9 +11,12 @@
 #include "EntityManager.h" 
 #include "SceneTitle.h"
 
-
-
 #include "Window.h"
+
+#include "Map.h"
+#include "Pathfinding.h"
+#include "Defs.h"
+#include <cmath>
 
 
 SmallEnemyFly::SmallEnemyFly() : Entity(EntityType::SMALLENEMYFLY)
@@ -41,44 +44,46 @@ bool SmallEnemyFly::Awake() {
 
 bool SmallEnemyFly::Start() {
 
-	if (app->sceneTitle->mapSelect == false) {
-		if (map == 1) {
-			position.x = 5134;
-			position.y = 666;
-		}
-		if (map == 2) {
-			position.x = 5794;
-			position.y = 666;
-		}
-		if (map == 3) {
-			position.x = 13700;
-			position.y = 500;
-		}
-		if (map == 4) {
-			position.x = 13720;
-			position.y = 500;
-		}
+	estadoSEF1 = SENTRY;
 
-	}
-	estadoSEF1 = MOVIMIENTO;
-	
 	limiteSup = position.y - scalarLimites;
 	limiteInf = position.y + scalarLimites;
 
-	flyAnimEnemy.PushBack({ 766,513,25,23 });
-	flyAnimEnemy.PushBack({ 806,513,25,23 });
-	flyAnimEnemy.PushBack({ 845,513,25,23 });
-	flyAnimEnemy.PushBack({ 877,513,25,23 });
-	flyAnimEnemy.loop = true;
-	flyAnimEnemy.speed = 0.125f;
 
-	deathAnimEnemy.PushBack({808,550,25,23});
-	deathAnimEnemy.PushBack({ 770,550,25,23 });
-	deathAnimEnemy.loop = false;
-	deathAnimEnemy.speed = 0.095f;
+	idleLFlyAnim.PushBack({ 766,513,25,23 });
+	idleLFlyAnim.PushBack({ 845,513,25,23 });
+	idleLFlyAnim.loop = true;
+	idleLFlyAnim.speed = 0.125f;
+
+	chaseLFlyAnim.PushBack({ 766,513,25,23 });
+	chaseLFlyAnim.PushBack({ 806,513,25,23 });
+	chaseLFlyAnim.PushBack({ 845,513,25,23 });
+	chaseLFlyAnim.PushBack({ 877,513,25,23 });
+	chaseLFlyAnim.loop = true;
+	chaseLFlyAnim.speed = 0.125f;
+
+	deathLAnimEnemy.PushBack({ 808,550,25,23 });
+	deathLAnimEnemy.PushBack({ 770,550,25,23 });
+	deathLAnimEnemy.loop = false;
+	deathLAnimEnemy.speed = 0.095f;
+
 	
+	idleRFlyAnim.PushBack({ 726,513,25,23 });
+	idleRFlyAnim.PushBack({ 649,513,25,23 });
+	idleRFlyAnim.loop = true;
+	idleRFlyAnim.speed = 0.125f;
 	
-	currentAnimationFlyEnemy = &flyAnimEnemy;
+	chaseRFlyAnim.PushBack({ 726,513,25,23 });
+	chaseRFlyAnim.PushBack({ 686,513,25,23 });
+	chaseRFlyAnim.PushBack({ 649,513,25,23 });
+	chaseRFlyAnim.PushBack({ 615,513,25,23 });
+	chaseRFlyAnim.loop = true;
+	chaseRFlyAnim.speed = 0.125f;
+		
+	deathRAnimEnemy.PushBack({ 685,550,25,23 });
+	deathRAnimEnemy.PushBack({ 723,550,25,23 });
+	deathRAnimEnemy.loop = false;
+	deathRAnimEnemy.speed = 0.095f;
 
 	//initilize textures
 	texture = app->tex->Load(texturePath);
@@ -91,45 +96,187 @@ bool SmallEnemyFly::Start() {
 
 	pbody->listener = this;
 
+	pbody->body->SetGravityScale(0.0);
+
+	firstSentryMovement = false;
+
+	startPath = true;
+	nextFootStepInX = 0.0f;
+	nextFootStepInY = 0.0f;
+	amountToMoveInX = 0.0f;
+	amountToMoveInY = 0.0f;
+	initialPosition = { position.x / 64, position.y / 64 };
+	range = 5;
+	leftBorder = { position.x / 64, (position.y / 64) + 1 };
+	rightBorder = { initialPosition.x + range, (position.y / 64) + 1 };
+	firstPath = true;
+	achievedRightBorder = false;
+	achievedLeftBorder = true;
+	destinationInX = 0.0f;
+	destinationInY = 0.0f;
+	debug = false;
+	playerTileX = 0;
+	playerTileY = 0;
+	currentAnimationFlyEnemy = &idleLFlyAnim;
+	limitToChase = 0;
+	attackAnimation = false;
+
 	return true;
 }
 
-void SmallEnemyFly::Movimiento()
+void SmallEnemyFly::SentryMovement()
 {
-	if (position.y == limiteInf)
-	{
-		b2Vec2 vel = b2Vec2(0, speedY);
-		pbody->body->ApplyForce(vel, pbody->body->GetLocalCenter(), true);
-		
-	}
-	
-	if(position.y>= limiteSup)
+	if (position.y >= limiteInf || !firstSentryMovement)
 	{
 		b2Vec2 vel = b2Vec2(0, -speedY);
 		pbody->body->ApplyForce(vel, pbody->body->GetLocalCenter(), true);
 		
 	}
+
+	if (position.y <= limiteSup )
+	{
+		b2Vec2 vel = b2Vec2(0, speedY);
+		pbody->body->ApplyForce(vel, pbody->body->GetLocalCenter(), true);
+		firstSentryMovement = true;
+
+	}
 }
+
+
+void SmallEnemyFly::chaseprueba() 
+{
+
+	iPoint playerPos = { app->scene->player->position.x / 32, app->scene->player->position.y / 32 };
+	iPoint myPos = { (int)std::round(nextFootStepInX / 64) , (int)std::round(nextFootStepInY / 64) };
+
+	if (firstPath)
+	{
+		iPoint myFirstPos = { position.x/64 , position.y / 64 };
+		app->pathfinding->CreatePath(myFirstPos, playerPos);
+		firstPath = false;
+	}
+	else
+	{
+		app->pathfinding->CreatePath(myPos, playerPos);
+	}
+
+	const DynArray<iPoint>* path = app->pathfinding->GetLastPath();
+
+	if (debug)
+	{
+		app->pathfinding->DrawLastPath();
+	}
+
+	if (path->At(1) != nullptr)
+	{
+		int auxX = position.x;
+		int auxY = position.y;
+		destinationInX = path->At(1)->x * 64;
+		destinationInY = path->At(1)->y * 64;
+		
+
+		nextFootStepInX = custom_lerp(position.x, destinationInX, 0.075f);
+		nextFootStepInY = custom_lerp(position.y, destinationInY, 0.075f);
+
+		amountToMoveInX = nextFootStepInX - auxX;
+		amountToMoveInY = nextFootStepInY - auxY;
+		startPath = false;
+	}
+
+
+	b2Vec2 movePos = b2Vec2(PIXEL_TO_METERS(nextFootStepInX), PIXEL_TO_METERS(nextFootStepInY));
+	pbody->body->SetTransform(movePos, 0);
+
+	nextFootStepInX += amountToMoveInX;
+	nextFootStepInY += amountToMoveInY;
+
+}
+
+void SmallEnemyFly::ReturnMovement()
+{
+
+}
+
 bool SmallEnemyFly::Update()
 {
 	// L07 DONE 4: Add a physics  - update the position of the object from the physics.  
-	position.x = METERS_TO_PIXELS(pbody->body->GetTransform().p.x / app->win->GetScale()) - 10;
-	position.y = METERS_TO_PIXELS(pbody->body->GetTransform().p.y / app->win->GetScale()) - 15;
+	position.x = METERS_TO_PIXELS(pbody->body->GetTransform().p.x);
+	position.y = METERS_TO_PIXELS(pbody->body->GetTransform().p.y);
 
-	
+
 	switch (estadoSEF1) {
 	case STOP:
 		break;
-	case MOVIMIENTO:
-		Movimiento();
+	case SENTRY:
+		SentryMovement();
+
+		playerTileX = app->scene->player->position.x / 32;
+		playerTileY = app->scene->player->position.y / 32;
+		if (playerTileX > leftBorder.x-range/2 && playerTileX < rightBorder.x) //como el leftborder empieza en la posicion inicial, para que el rango en X sea igual tanto de izq como de derecha le resto el rango/2 a la primera parte
+		{
+			if (playerTileY > (position.y / 64) - 2 && playerTileY < (position.y / 64) + 2)
+			{
+				estadoSEF1 = CHASE;
+			}
+		}
+			
+
 		break;
+
+	case CHASE:
+
+		chaseprueba();
+		//ChaseMovement();
+
+		/*playerTileX = app->scene->player->position.x / 32;
+		limitToChase = std::abs(playerTileX - (position.x / 64));
+
+		if (limitToChase > 5)
+		{
+			estadoSEF1 = RETURN;
+			startPath = true;
+			firstPath = true;
+			achievedRightBorder = false;
+			achievedLeftBorder = true;
+
+		}*/
+
+		break;
+
+	case RETURN:
+
+		ReturnMovement();
+
+		if (position.x / 64 == leftBorder.x)
+		{
+			estadoSEF1 = SENTRY;
+			startPath = true;
+			firstPath = true;
+			achievedRightBorder = false;
+			achievedLeftBorder = true;
+		}
+
+		break;
+
 	default:
 		break;
 	}
 
+	if (app->input->GetKey(SDL_SCANCODE_F9) == KEY_DOWN)
+	{
+		if (!debug)
+		{
+			debug = true;
+		}
+		else
+		{
+			debug = false;
+		}
+	}
+
 	currentAnimationFlyEnemy->Update();
 	SDL_Rect rect = currentAnimationFlyEnemy->GetCurrentFrame();
-	app->render->DrawTexture(texture, position.x, position.y, &rect);
+	app->render->DrawTexture(texture, position.x / app->win->GetScale() - 10, position.y / app->win->GetScale() - 15, &rect);
 
 	if (deathAnimationTimer.Test() == FIN)
 	{
@@ -171,8 +318,20 @@ void SmallEnemyFly::OnCollision(PhysBody* physA, PhysBody* physB)
 	{
 	case ColliderType::PLAYER:
 		//destroy = true;
-		deathAnimationTimer.Start(0.20f);
-		currentAnimationFlyEnemy = &deathAnimEnemy;
+
+		if (currentAnimationFlyEnemy == &idleLFlyAnim || currentAnimationFlyEnemy == &chaseLFlyAnim)
+		{
+			deathAnimationTimer.Start(0.20f);
+			currentAnimationFlyEnemy = &deathLAnimEnemy;
+		}
+
+		if (currentAnimationFlyEnemy == &idleRFlyAnim || currentAnimationFlyEnemy == &chaseRFlyAnim)
+		{
+			deathAnimationTimer.Start(0.20f);
+			currentAnimationFlyEnemy = &deathRAnimEnemy;
+		}
+		
+
 		break;
 	}
 }

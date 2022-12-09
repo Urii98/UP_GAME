@@ -121,7 +121,7 @@ bool SmallEnemy1::Start() {
 	return true;
 }
 
-void SmallEnemy1::chaseMovement()
+void SmallEnemy1::ChaseMovement()
 {
 
 	if (!attackAnimation)
@@ -175,7 +175,7 @@ void SmallEnemy1::chaseMovement()
 
 }
 
-void SmallEnemy1::returnMovement()
+void SmallEnemy1::ReturnMovement()
 {
 	attackAnimation = false;
 	if (startPath)
@@ -238,7 +238,7 @@ void SmallEnemy1::returnMovement()
 	}
 }
 
-void SmallEnemy1::sentryMovement()
+void SmallEnemy1::SentryMovement()
 {
 
 	if (startPath)
@@ -320,18 +320,16 @@ bool SmallEnemy1::Update()
 	position.x = METERS_TO_PIXELS(pbody->body->GetTransform().p.x);
 	position.y = METERS_TO_PIXELS(pbody->body->GetTransform().p.y);
 
-	
-	iPoint playerPos = { app->scene->player->position.x / 32, app->scene->player->position.y / 32 };
-	iPoint myPos = { position.x / 64 , position.y / 64 };
-	iPoint aux = { myPos.x + 3, myPos.y };
-
-	
+	//
+	//iPoint playerPos = { app->scene->player->position.x / 32, app->scene->player->position.y / 32 };
+	//iPoint myPos = { position.x / 64 , position.y / 64 };
+	//iPoint aux = { myPos.x + 3, myPos.y };
 	
 	switch (estadoSE1) {
 	case STOP:
 		break;
 	case SENTRY:
-		sentryMovement();
+		SentryMovement();
 
 		playerTileX = app->scene->player->position.x / 32;
 		playerTileY = app->scene->player->position.y / 32;
@@ -348,7 +346,7 @@ bool SmallEnemy1::Update()
 		
 		break;
 	case CHASE:
-		chaseMovement();
+		ChaseMovement();
 
 		playerTileX = app->scene->player->position.x / 32;
 		limitToChase = std::abs(playerTileX - (position.x / 64));
@@ -366,7 +364,7 @@ bool SmallEnemy1::Update()
 		break;
 
 	case RETURN:
-		returnMovement();
+		ReturnMovement();
 
 		if (position.x / 64 == leftBorder.x)
 		{

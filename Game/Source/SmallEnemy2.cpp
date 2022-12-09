@@ -170,7 +170,7 @@ bool SmallEnemy2::Start() {
 	return true;
 }
 
-void SmallEnemy2::sentryMovement()
+void SmallEnemy2::SentryMovement()
 {
 
 	if (startPath)
@@ -265,7 +265,7 @@ bool SmallEnemy2::Update()
 	case STOP:
 		break;
 	case SENTRY:
-		sentryMovement();
+		SentryMovement();
 
 		break;
 	default:
@@ -283,7 +283,7 @@ bool SmallEnemy2::Update()
 			debug = false;
 		}
 	}
-	std::cout <<"position acabado el movement" << position.x << std::endl;
+	//std::cout <<"position acabado el movement" << position.x << std::endl;
 
 	currentAnimationEnemy->Update();
 	SDL_Rect rect = currentAnimationEnemy->GetCurrentFrame();
