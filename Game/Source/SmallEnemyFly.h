@@ -28,10 +28,6 @@ public:
 
 private:
 
-	void Movimiento();
-
-	void ChaseMovement();
-	void ChaseMovementinY();
 	void chaseprueba();
 
 	void SentryMovement();

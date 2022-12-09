@@ -141,7 +141,6 @@ void SmallEnemyFly::SentryMovement()
 	}
 }
 
-
 void SmallEnemyFly::chaseprueba() 
 {
 
@@ -232,7 +231,6 @@ bool SmallEnemyFly::Update()
 	case CHASE:
 
 		chaseprueba();
-		//ChaseMovement();
 
 		/*playerTileX = app->scene->player->position.x / 32;
 		limitToChase = std::abs(playerTileX - (position.x / 64));
