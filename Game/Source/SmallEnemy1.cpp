@@ -140,7 +140,7 @@ void SmallEnemy1::ChaseMovement()
 	iPoint playerPos = { app->scene->player->position.x / 32, app->scene->player->position.y / 32 };
 	iPoint myPos = { (int)std::round(nextFootStep / 64) , position.y / 64 };
 
-	app->pathfinding->CreatePath(myPos, playerPos);
+	int ret = app->pathfinding->CreatePath(myPos, playerPos,"terrestre");
 
 	const DynArray<iPoint>* path = app->pathfinding->GetLastPath();
 
@@ -172,6 +172,10 @@ void SmallEnemy1::ChaseMovement()
 
 	nextFootStep += amountToMoveInX;
 
+	if (ret == -1)
+	{
+ 		estadoSE1 = RETURN;
+	}
 
 }
 
@@ -183,13 +187,13 @@ void SmallEnemy1::ReturnMovement()
 		if (firstPath)
 		{
 			iPoint myPos = {position.x / 64, position.y / 64};
-			app->pathfinding->CreatePath(myPos, leftBorder);
+			app->pathfinding->CreatePath(myPos, leftBorder, "terrestre");
 			firstPath = false;
 		}
 		else
 		{
 			iPoint myPos = { (int)std::round(nextFootStep / 64) , position.y / 64 };
-			app->pathfinding->CreatePath(myPos, leftBorder);
+			app->pathfinding->CreatePath(myPos, leftBorder, "terrestre");
 		}
 	}
 
@@ -245,7 +249,7 @@ void SmallEnemy1::SentryMovement()
 	{
 		if (firstPath)
 		{
-			app->pathfinding->CreatePath(leftBorder, rightBorder);
+			app->pathfinding->CreatePath(leftBorder, rightBorder, "terrestre");
 			firstPath = false;
 		}
 		else
@@ -253,13 +257,13 @@ void SmallEnemy1::SentryMovement()
 			if (achievedLeftBorder)
 			{
 				iPoint myPos = { (int)std::round(nextFootStep / 64) , position.y / 64 };
-				app->pathfinding->CreatePath(myPos, rightBorder);
+				app->pathfinding->CreatePath(myPos, rightBorder, "terrestre");
 				currentAnimationEnemy = &walkRAnimEnemy;
 			}
 			else if (achievedRightBorder)
 			{
 				iPoint myPos = { (int)std::round(nextFootStep / 64) , position.y / 64 };
-				app->pathfinding->CreatePath(myPos, leftBorder);
+				app->pathfinding->CreatePath(myPos, leftBorder, "terrestre");
 				currentAnimationEnemy = &walkLAnimEnemy;
 			}
 		}

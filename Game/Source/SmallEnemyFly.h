@@ -28,7 +28,7 @@ public:
 
 private:
 
-	void chaseprueba();
+	void ChaseMovement();
 
 	void SentryMovement();
 

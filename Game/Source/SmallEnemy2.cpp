@@ -157,7 +157,7 @@ bool SmallEnemy2::Start() {
 	nextFootStep = 0.0f;
 	amountToMoveInX = 0.0f;
 	initialPosition = { position.x / 64, position.y / 64 };
-	range = 12;
+	range = 6;
 	leftBorder = { position.x / 64, (position.y / 64)};
 	rightBorder = { initialPosition.x + range, (position.y / 64)};
 	firstPath = true;
@@ -177,7 +177,7 @@ void SmallEnemy2::SentryMovement()
 	{
 		if (firstPath)
 		{
-			app->pathfinding->CreatePath(leftBorder, rightBorder);
+			app->pathfinding->CreatePath(leftBorder, rightBorder, "terrestre");
 			firstPath = false;
 		}
 		else
@@ -185,13 +185,13 @@ void SmallEnemy2::SentryMovement()
 			if (achievedLeftBorder)
 			{
 				iPoint myPos = { (int)std::round(nextFootStep / 64) , position.y / 64 };
-				app->pathfinding->CreatePath(myPos, rightBorder);
+				app->pathfinding->CreatePath(myPos, rightBorder, "terrestre");
 				currentAnimationEnemy = &walkLAnimEnemy;
 			}
 			else if (achievedRightBorder)
 			{
 				iPoint myPos = { (int)std::round(nextFootStep / 64) , position.y / 64 };
-				app->pathfinding->CreatePath(myPos, leftBorder);
+				app->pathfinding->CreatePath(myPos, leftBorder, "terrestre");
 				currentAnimationEnemy = &walkRAnimEnemy;
 			}
 		}

@@ -37,7 +37,7 @@
     <item x="10340" y="220" texturepath="Assets/Textures/goldCoin.png" map="4"/>
 	  
 	  
-    <SmallEnemy1 x="6474" y="572" scalarLimites="30" speedX="2"
+    <SmallEnemy1 x="550" y="700" scalarLimites="30" speedX="2"
                  walkDir="false" attackE="false" animAtk="false" destroy="false"
                  texturepath="Assets/Textures/Enemies.png" map="1"/>
     <SmallEnemy1 x="2500" y="672" scalarLimites="30" speedX="2"
@@ -53,12 +53,10 @@
 				   texturepath="Assets/Textures/Enemies.png" map="1"/>
 	  
 	  
-    <SmallEnemy2 x="10340" y="734" scalarLimites="3" speedX="2"
+    <SmallEnemy2 x="550" y="700" scalarLimites="3" speedX="2"
                  walkDir="false" destroy="false"
                  texturepath="Assets/Textures/Enemies.png" map="1"/>
-    <SmallEnemy2 x="6994" y="734" scalarLimites="3" speedX="2"
-                 walkDir="false" destroy="false"
-                 texturepath="Assets/Textures/Enemies.png" map="2"/>
+
    
     
   </scene>

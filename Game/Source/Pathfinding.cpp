@@ -53,16 +53,10 @@ bool PathFinding::CheckBoundaries(const iPoint& pos) const
 }
 
 // Utility: returns true is the tile is walkable
-bool PathFinding::IsWalkable(const iPoint& pos) const
+bool PathFinding::IsWalkable(const iPoint& pos, const char* type) const
 {
-	//if smallenemyfly
-	//uchar t = GetTileAt(pos);
-	//return t != INVALID_WALK_CODE && t > 1;
-									//Aqui ^ le decimos que en el navigation sea valor 2
-									// 0 = nonwalkable
-									// 1 = walkable para terrestres
-									// 2 = walkable para voladores
-						//En vez de 0, 1 o 2, serán los numeros que se encuentre en gid para cada color del metadata
+	uchar t = GetTileAt(pos);
+
 
 
 	ListItem<MapLayer*>* mapLayerItem;
@@ -78,22 +72,47 @@ bool PathFinding::IsWalkable(const iPoint& pos) const
 		mapLayerItem = mapLayerItem->next;
 	}
 
-	if (navigationLayer->Get(pos.x, pos.y) == 942)
+
+
+	if (navigationLayer->Get(pos.x, pos.y) == 942) //rojo
 	{
-		auto a = "rojo";
+		return false;
 	}
 
-	if (navigationLayer->Get(pos.x, pos.y) == 943)
+	if (t != INVALID_WALK_CODE)
 	{
-		auto a = "verde";
+		if (navigationLayer->Get(pos.x, pos.y) == 943)
+		{
+			auto a = "verde";
+			
+			if (type == "terrestre")
+			{
+				return true;
+			}
+			else {
+				return false;
+			}
+
+		}
+
+		if (navigationLayer->Get(pos.x, pos.y) == 944)
+		{
+			auto a = "azul";
+
+			if (type == "aereo")
+			{
+				return true;
+			}
+			else {
+				return false;
+			}
+		}
+
 	}
 
-	if (navigationLayer->Get(pos.x, pos.y) == 944)
-	{
-		auto a = "azul";
-	}
+	//si no hay nada pintado, para el terrestre quiere decir que por ahí podrá tmb hacer path, p.e acantilados:
 
-	uchar t = GetTileAt(pos);
+	
 	return t != INVALID_WALK_CODE && t > 0;
 
 }
@@ -172,29 +191,29 @@ PathNode::PathNode(const PathNode& node) : g(node.g), h(node.h), pos(node.pos), 
 // PathNode -------------------------------------------------------------------------
 // Fills a list (PathList) of all valid adjacent pathnodes
 // ----------------------------------------------------------------------------------
-uint PathNode::FindWalkableAdjacents(PathList& listToFill) const
+uint PathNode::FindWalkableAdjacents(PathList& listToFill, const char* type) const
 {
 	iPoint cell;
 	uint before = listToFill.list.Count();
 
 	// north
 	cell.Create(pos.x, pos.y + 1);
-	if(app->pathfinding->IsWalkable(cell))
+	if(app->pathfinding->IsWalkable(cell, type))
 		listToFill.list.Add(PathNode(-1, -1, cell, this));
 
 	// south
 	cell.Create(pos.x, pos.y - 1);
-	if(app->pathfinding->IsWalkable(cell))
+	if(app->pathfinding->IsWalkable(cell, type))
 		listToFill.list.Add(PathNode(-1, -1, cell, this));
 
 	// east
 	cell.Create(pos.x + 1, pos.y);
-	if(app->pathfinding->IsWalkable(cell))
+	if(app->pathfinding->IsWalkable(cell, type))
 		listToFill.list.Add(PathNode(-1, -1, cell, this));
 
 	// west
 	cell.Create(pos.x - 1, pos.y);
-	if(app->pathfinding->IsWalkable(cell))
+	if(app->pathfinding->IsWalkable(cell, type))
 		listToFill.list.Add(PathNode(-1, -1, cell, this));
 
 	return listToFill.list.Count();
@@ -238,13 +257,13 @@ void PathFinding::DrawLastPath()
 // ----------------------------------------------------------------------------------
 // Actual A* algorithm: return number of steps in the creation of the path or -1 ----
 // ----------------------------------------------------------------------------------
-int PathFinding::CreatePath(const iPoint& origin, const iPoint& destination)
+int PathFinding::CreatePath(const iPoint& origin, const iPoint& destination, const char* type)
 {
 	int ret = -1;
 	int iterations = 0;
 
 	// L12: TODO 1: if origin or destination are not walkable, return -1
-	if (IsWalkable(origin) && IsWalkable(destination))
+	if (IsWalkable(origin, type) && IsWalkable(destination, type))
 	{
 		// L12: TODO 2: Create two lists: open, close
 		PathList open;
@@ -284,7 +303,7 @@ int PathFinding::CreatePath(const iPoint& origin, const iPoint& destination)
 
 			// L12: TODO 5: Fill a list of all adjancent nodes
 			PathList adjacent;
-			node->data.FindWalkableAdjacents(adjacent);
+			node->data.FindWalkableAdjacents(adjacent, type);
 
 			// L12: TODO 6: Iterate adjancent nodes:
 			// If it is a better path, Update the parent
