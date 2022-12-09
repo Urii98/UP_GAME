@@ -65,30 +65,33 @@ bool PathFinding::IsWalkable(const iPoint& pos) const
 						//En vez de 0, 1 o 2, serán los numeros que se encuentre en gid para cada color del metadata
 
 
-	//ListItem<MapLayer*>* mapLayerItem;
-	//mapLayerItem = app->map->mapData.maplayers.start;
-	//MapLayer* navigationLayer = mapLayerItem->data;
+	ListItem<MapLayer*>* mapLayerItem;
+	mapLayerItem = app->map->mapData.maplayers.start;
+	MapLayer* navigationLayer = mapLayerItem->data;
 
-	//while (mapLayerItem != NULL) {
+	while (mapLayerItem != NULL) {
 
-	//	if (mapLayerItem->data->properties.GetProperty("Navigation") != NULL && mapLayerItem->data->properties.GetProperty("Navigation")->value) {
-	//		navigationLayer = mapLayerItem->data;
-	//	}
+		if (mapLayerItem->data->properties.GetProperty("Navigation") != NULL && mapLayerItem->data->properties.GetProperty("Navigation")->value) {
+			navigationLayer = mapLayerItem->data;
+		}
 
-	//	mapLayerItem = mapLayerItem->next;
-	//}
+		mapLayerItem = mapLayerItem->next;
+	}
 
-	//if (navigationLayer->Get(pos.x, pos.y) == 940)
-	//{
-	//	auto a = "rojo";
-	//}
+	if (navigationLayer->Get(pos.x, pos.y) == 942)
+	{
+		auto a = "rojo";
+	}
 
-	//if (navigationLayer->Get(pos.x, pos.y) == 941)
-	//{
-	//	auto a = "verde";
+	if (navigationLayer->Get(pos.x, pos.y) == 943)
+	{
+		auto a = "verde";
+	}
 
-
-	//}
+	if (navigationLayer->Get(pos.x, pos.y) == 944)
+	{
+		auto a = "azul";
+	}
 
 	uchar t = GetTileAt(pos);
 	return t != INVALID_WALK_CODE && t > 0;
