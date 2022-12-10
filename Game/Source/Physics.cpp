@@ -39,6 +39,7 @@ bool Physics::Start()
 	world->SetContactListener(this);
 
 	debug = false;
+	timeSteps = 60.0f;
 
 	return true;
 }
@@ -48,9 +49,21 @@ bool Physics::PreUpdate()
 {
 	bool ret = true;
 
+	if (app->input->GetKey(SDL_SCANCODE_F11) == KEY_DOWN)
+	{
+		if (timeSteps == 30.0f)
+		{
+			timeSteps = 60.0f;
+		}
+		else if (timeSteps == 60.0f)
+		{
+			timeSteps = 30.0f;
+		}
+	}
+
 	// Step (update) the World
 	// WARNING: WE ARE STEPPING BY CONSTANT 1/60 SECONDS!
-	world->Step(1.0f / 60.0f, 6, 2);
+	world->Step(1.0f / timeSteps, 6, 2);
 
 	// Because Box2D does not automatically broadcast collisions/contacts with sensors, 
 	// we have to manually search for collisions and "call" the equivalent to the ModulePhysics::BeginContact() ourselves...

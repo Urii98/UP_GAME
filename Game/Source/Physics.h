@@ -85,6 +85,7 @@ public:
 	void BeginContact(b2Contact* contact);
 
 	b2World* world;
+	float32 timeSteps;
 	bool debug;
 
 private:
