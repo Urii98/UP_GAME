@@ -5,6 +5,7 @@
 #include "Point.h"
 #include "SDL/include/SDL.h"
 #include "Animation.h"
+#include "SDL_Timer.h"
 
 struct SDL_Texture;
 
@@ -30,6 +31,8 @@ public:
 	bool isPicked = false;
 	Animation* currentCoinAnimation = nullptr;
 
+	SDL_Timer timeToDestroy;
+
 	//bool destroy;
 
 private:
@@ -42,6 +45,8 @@ private:
 
 	Animation coinAnimation;
 	Animation effectAnimation;
+
+	bool soundFX;
 
 	//DONE 4: Add a physics to an item
 //	PhysBody* pbody;

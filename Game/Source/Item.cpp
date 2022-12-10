@@ -36,17 +36,17 @@ bool Item::Start() {
 
 	for (int i = 0; i < 5; i++)
 	{
-		coinAnimation.PushBack({ 0 + 32*i ,0,32,32 });
+		coinAnimation.PushBack({ 0 + 24*i ,0,24,24 });
 	}
 	coinAnimation.loop = true;
-	coinAnimation.speed = 0.15f;
+	coinAnimation.speed = 0.12f;
 
 	for (int i = 0; i < 4; i++)
 	{
 		effectAnimation.PushBack({ 0 + 32 * i ,0,32,32 });
 	}
 	effectAnimation.loop = false;
-	effectAnimation.speed = 0.01f;
+	effectAnimation.speed = 0.3f;
 	
 
 	if (app->sceneTitle->mapSelect == false) {
@@ -82,8 +82,10 @@ bool Item::Start() {
 
 	pbody->listener = this;
 	currentCoinAnimation = &coinAnimation;
+	
 
 	destroy = false;
+	soundFX = false;
 
 	return true;
 }
@@ -97,6 +99,12 @@ bool Item::Update()
 	currentCoinAnimation->Update();
 	SDL_Rect rect = currentCoinAnimation->GetCurrentFrame();
 	app->render->DrawTexture(coinTexture, position.x, position.y, &rect);
+	
+
+	if (timeToDestroy.Test() == FIN)
+	{
+		destroy = true;
+	}
 
 	if (destroy)
 	{
@@ -130,7 +138,19 @@ void Item::OnCollision(PhysBody* physA, PhysBody* physB) {
 	{
 	case ColliderType::PLAYER:
 
-		destroy = true;
+		//destroy = true;
+		currentCoinAnimation = &effectAnimation;
+		coinTexture = effectTexture;
+
+		if (!soundFX)
+		{
+			app->audio->PlayFx(app->scene->player->pickCoinFxId);
+			soundFX = true;
+		}
+
+		timeToDestroy.Start(0.12f);
+		
+
 		break;
 	}
 

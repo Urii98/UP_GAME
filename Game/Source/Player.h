@@ -107,6 +107,7 @@ public:
 
 	transformPosition teleport;
 
+	int pickCoinFxId;
 private:
 
 	//L02: DONE 1: Declare player parameters
@@ -118,7 +119,7 @@ private:
 
 	const char* texturePath;
 
-	int pickCoinFxId;
+	
 	int kirbyDeathFx;
 	int kirbyVictoryFx;
 
