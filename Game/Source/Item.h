@@ -4,6 +4,7 @@
 #include "Entity.h"
 #include "Point.h"
 #include "SDL/include/SDL.h"
+#include "Animation.h"
 
 struct SDL_Texture;
 
@@ -27,12 +28,20 @@ public:
 public:
 	int map;
 	bool isPicked = false;
+	Animation* currentCoinAnimation = nullptr;
+
 	//bool destroy;
 
 private:
 
-	SDL_Texture* texture;
-	const char* texturePath;
+	SDL_Texture* coinTexture;
+	const char* coinTexturePath;
+
+	SDL_Texture* effectTexture;
+	const char* effectTexturePath;
+
+	Animation coinAnimation;
+	Animation effectAnimation;
 
 	//DONE 4: Add a physics to an item
 //	PhysBody* pbody;

@@ -25,13 +25,29 @@ bool Item::Awake() {
 	position.x = parameters.attribute("x").as_int();
 	position.y = parameters.attribute("y").as_int();
 	
-	texturePath = parameters.attribute("texturepath").as_string();
+	coinTexturePath = parameters.attribute("texturepath").as_string();
+	effectTexturePath = parameters.attribute("effecttexturepath").as_string();
 	map = parameters.attribute("map").as_int();
 
 	return true;
 }
 
 bool Item::Start() {
+
+	for (int i = 0; i < 5; i++)
+	{
+		coinAnimation.PushBack({ 0 + 32*i ,0,32,32 });
+	}
+	coinAnimation.loop = true;
+	coinAnimation.speed = 0.15f;
+
+	for (int i = 0; i < 4; i++)
+	{
+		effectAnimation.PushBack({ 0 + 32 * i ,0,32,32 });
+	}
+	effectAnimation.loop = false;
+	effectAnimation.speed = 0.01f;
+	
 
 	if (app->sceneTitle->mapSelect == false) {
 		if (map == 1) {
@@ -53,8 +69,10 @@ bool Item::Start() {
 
 	}
 
+
 	//initilize textures
-	texture = app->tex->Load(texturePath);
+	coinTexture = app->tex->Load(coinTexturePath);
+	effectTexture = app->tex->Load(effectTexturePath);
 	
 	// L07 DONE 4: Add a physics to an item - initialize the physics body
 	pbody = app->physics->CreateCircle(position.x + 16, position.y + 16, 16, bodyType::STATIC);
@@ -63,6 +81,7 @@ bool Item::Start() {
 	pbody->ctype = ColliderType::ITEM;
 
 	pbody->listener = this;
+	currentCoinAnimation = &coinAnimation;
 
 	destroy = false;
 
@@ -75,8 +94,9 @@ bool Item::Update()
 	position.x = METERS_TO_PIXELS(pbody->body->GetTransform().p.x / app->win->GetScale()) - 16;
 	position.y = METERS_TO_PIXELS(pbody->body->GetTransform().p.y / app->win->GetScale()) - 16;
 
-	
-	app->render->DrawTexture(texture, position.x, position.y, NULL);
+	currentCoinAnimation->Update();
+	SDL_Rect rect = currentCoinAnimation->GetCurrentFrame();
+	app->render->DrawTexture(coinTexture, position.x, position.y, &rect);
 
 	if (destroy)
 	{
@@ -86,6 +106,9 @@ bool Item::Update()
 		destroy = false;
 	}
 
+	
+
+
 	return true;
 }
 
@@ -93,7 +116,8 @@ bool Item::CleanUp()
 {
 	//memoryleak
 
-	app->tex->UnLoad(texture);
+	app->tex->UnLoad(coinTexture);
+	app->tex->UnLoad(effectTexture);
 	active = false;
 	//la memoria del item se destruye en scene
 
