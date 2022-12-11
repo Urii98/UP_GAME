@@ -338,12 +338,19 @@ bool SmallEnemyFly::Update()
 
 		if (position.x / 64 == leftBorder.x)
 		{
+
+			b2Vec2 movePos = b2Vec2(PIXEL_TO_METERS(position.x), PIXEL_TO_METERS(position.y));
+			pbody->body->SetTransform(movePos, 0);
+
 			estadoSEF1 = SENTRY;
 			startPath = true;
 			firstPath = true;
 			achievedRightBorder = false;
 			achievedLeftBorder = true;
 			firstSentryMovement = false;
+
+			currentAnimationFlyEnemy = &idleRFlyAnim;
+
 		}
 
 		break;
