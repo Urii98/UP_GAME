@@ -82,6 +82,16 @@ public:
 	
 	};
 
+	virtual void LoadInfo(iPoint pos)
+	{
+
+	}
+
+	virtual void SaveInfo()
+	{
+
+	}
+
 public:
 
 	SString name;

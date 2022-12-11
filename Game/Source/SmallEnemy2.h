@@ -26,6 +26,8 @@ public:
 
 	void OnCollision(PhysBody* physA, PhysBody* physB) override;
 
+	void LoadInfo(iPoint pos);
+
 private:
 
 
@@ -80,6 +82,10 @@ private:
 	bool achievedRightBorder;
 	bool achievedLeftBorder;
 	bool debug;
+	
+	bool changeDataFromSave;
+	int posXFromSave;
+	int posYFromSave;
 };
 
 #endif // !__SMALL_ENEMY_2__

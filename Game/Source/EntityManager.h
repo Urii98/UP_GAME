@@ -37,9 +37,15 @@ public:
 
 	bool SaveState(pugi::xml_node&);
 
+	void SaveEntities(pugi::xml_node&, ListItem<Entity*>* entity, iPoint pos);
+	void LoadEntities(pugi::xml_node&, ListItem<Entity*>* entity);
+
 public:
 
 	List<Entity*> entities;
+	int numSmallEnemy1;
+	int numSmallEnemy2;
+	int numSmallEnemyFly;
 
 };
 

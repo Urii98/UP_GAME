@@ -140,6 +140,12 @@ void SmallEnemy1::ChaseMovement()
 	iPoint playerPos = { app->scene->player->position.x / 32, app->scene->player->position.y / 32 };
 	iPoint myPos = { (int)std::round(nextFootStep / 64) , position.y / 64 };
 
+	if (changedDataFromSave)
+	{
+		myPos = { (int)std::round(newData.posX / 64) , newData.posY / 64 };
+		changedDataFromSave = false;
+	}
+
 	int ret = app->pathfinding->CreatePath(myPos, playerPos,"terrestre");
 
 	const DynArray<iPoint>* path = app->pathfinding->GetLastPath();
@@ -193,6 +199,14 @@ void SmallEnemy1::ReturnMovement()
 		else
 		{
 			iPoint myPos = { (int)std::round(nextFootStep / 64) , position.y / 64 };
+
+			if (changedDataFromSave)
+			{
+				myPos = { (int)std::round(newData.posX / 64) , newData.posY / 64 };
+				changedDataFromSave = false;
+			}
+
+
 			app->pathfinding->CreatePath(myPos, leftBorder, "terrestre");
 		}
 	}
@@ -259,12 +273,28 @@ void SmallEnemy1::SentryMovement()
 				iPoint myPos = { (int)std::round(nextFootStep / 64) , position.y / 64 };
 				app->pathfinding->CreatePath(myPos, rightBorder, "terrestre");
 				currentAnimationEnemy = &walkRAnimEnemy;
+
+				if (changedDataFromSave)
+				{
+					myPos = { (int)std::round(newData.posX / 64) , newData.posY / 64 };
+					app->pathfinding->CreatePath(myPos, rightBorder, "terrestre");
+					changedDataFromSave = false;
+				}
+
+
 			}
 			else if (achievedRightBorder)
 			{
 				iPoint myPos = { (int)std::round(nextFootStep / 64) , position.y / 64 };
 				app->pathfinding->CreatePath(myPos, leftBorder, "terrestre");
 				currentAnimationEnemy = &walkLAnimEnemy;
+
+				if (changedDataFromSave)
+				{
+					myPos = { (int)std::round(newData.posX / 64) , newData.posY / 64 };
+					app->pathfinding->CreatePath(myPos, rightBorder, "terrestre");
+					changedDataFromSave = false;
+				}
 			}
 		}
 	}
@@ -433,4 +463,43 @@ void SmallEnemy1::OnCollision(PhysBody* physA, PhysBody* physB)
 	
 		break;
 	}
+}
+
+void SmallEnemy1::LoadInfo(iPoint pos)
+{
+
+	newData.posX = pos.x;
+	newData.posY = pos.y;
+	changedDataFromSave = true;
+
+
+	b2Vec2 movePos = b2Vec2(PIXEL_TO_METERS(newData.posX), PIXEL_TO_METERS(newData.posY));
+	pbody->body->SetTransform(movePos, 0);
+
+	startPath = newData.startPath;
+	nextFootStep = newData.nextFootStep;
+	amountToMoveInX = newData.amountToMoveInX;
+	destination = newData.destination;
+	firstPath = newData.firstPath;
+	achievedRightBorder = newData.achievedRightBorder;
+	achievedLeftBorder = newData.achievedLeftBorder;
+	attackAnimation = newData.attackAnimation;
+	estadoSE1 = newData.estado;
+	currentAnimationEnemy = newData.animation;
+
+}
+
+void SmallEnemy1::SaveInfo()
+{
+
+	newData.startPath = startPath;
+	newData.nextFootStep = nextFootStep;
+	newData.amountToMoveInX = amountToMoveInX;
+	newData.destination = destination;
+	newData.firstPath = firstPath;
+	newData.achievedRightBorder = achievedRightBorder;
+	newData.achievedLeftBorder = achievedLeftBorder;
+	newData.attackAnimation = attackAnimation;
+	newData.estado = estadoSE1;
+	newData.animation = currentAnimationEnemy;
 }

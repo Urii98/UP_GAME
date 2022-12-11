@@ -75,7 +75,7 @@ bool Item::Start() {
 	effectTexture = app->tex->Load(effectTexturePath);
 	
 	// L07 DONE 4: Add a physics to an item - initialize the physics body
-	pbody = app->physics->CreateCircle(position.x + 16, position.y + 16, 16, bodyType::STATIC);
+	pbody = app->physics->CreateCircle(position.x, position.y, 12, bodyType::STATIC);
 
 	// L07 DONE 7: Assign collider type
 	pbody->ctype = ColliderType::ITEM;
@@ -93,12 +93,12 @@ bool Item::Start() {
 bool Item::Update()
 {
 	// L07 DONE 4: Add a physics to an item - update the position of the object from the physics.  
-	position.x = METERS_TO_PIXELS(pbody->body->GetTransform().p.x / app->win->GetScale()) - 16;
-	position.y = METERS_TO_PIXELS(pbody->body->GetTransform().p.y / app->win->GetScale()) - 16;
+	position.x = METERS_TO_PIXELS(pbody->body->GetTransform().p.x);
+	position.y = METERS_TO_PIXELS(pbody->body->GetTransform().p.y);
 
 	currentCoinAnimation->Update();
 	SDL_Rect rect = currentCoinAnimation->GetCurrentFrame();
-	app->render->DrawTexture(coinTexture, position.x, position.y, &rect);
+	app->render->DrawTexture(coinTexture, position.x / app->win->GetScale() - 13, position.y / app->win->GetScale() - 13, &rect);
 	
 
 	if (timeToDestroy.Test() == FIN)

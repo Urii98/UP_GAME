@@ -167,6 +167,8 @@ bool SmallEnemy2::Start() {
 	debug = false;
 	currentAnimationEnemy = &walkLAnimEnemy;
 
+	changeDataFromSave = false;
+
 	return true;
 }
 
@@ -187,12 +189,29 @@ void SmallEnemy2::SentryMovement()
 				iPoint myPos = { (int)std::round(nextFootStep / 64) , position.y / 64 };
 				app->pathfinding->CreatePath(myPos, rightBorder, "terrestre");
 				currentAnimationEnemy = &walkLAnimEnemy;
+
+				if (changeDataFromSave)
+				{
+					myPos = { (int)std::round(posXFromSave / 64) , posYFromSave / 64 };
+					app->pathfinding->CreatePath(myPos, rightBorder, "terrestre");
+					changeDataFromSave = false;
+				}
+
 			}
 			else if (achievedRightBorder)
 			{
 				iPoint myPos = { (int)std::round(nextFootStep / 64) , position.y / 64 };
 				app->pathfinding->CreatePath(myPos, leftBorder, "terrestre");
 				currentAnimationEnemy = &walkRAnimEnemy;
+
+				if (changeDataFromSave)
+				{
+					myPos = { (int)std::round(posXFromSave / 64) , posYFromSave / 64 };
+					app->pathfinding->CreatePath(myPos, leftBorder, "terrestre");
+					changeDataFromSave = false;
+				}
+
+
 			}
 		}
 	}
@@ -311,7 +330,7 @@ bool SmallEnemy2::CleanUp()
 
 void SmallEnemy2::OnCollision(PhysBody* physA, PhysBody* physB)
 {
-
+	
 	switch (physB->ctype)
 	{
 	case ColliderType::PLAYER:
@@ -320,4 +339,15 @@ void SmallEnemy2::OnCollision(PhysBody* physA, PhysBody* physB)
 
 		break;
 	}
+}
+
+void SmallEnemy2::LoadInfo(iPoint pos)
+{
+	posXFromSave = pos.x;
+	posYFromSave = pos.y;
+	startPath = true;
+	changeDataFromSave = true;
+
+	b2Vec2 movePos = b2Vec2(PIXEL_TO_METERS(posXFromSave), PIXEL_TO_METERS(posYFromSave));
+	pbody->body->SetTransform(movePos, 0);
 }

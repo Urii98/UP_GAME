@@ -26,6 +26,11 @@ public:
 
 	void OnCollision(PhysBody* physA, PhysBody* physB) override;
 
+	void LoadInfo(iPoint pos);
+
+	void SaveInfo();
+	
+
 private:
 
 	void ChaseMovement();
@@ -33,6 +38,7 @@ private:
 	void SentryMovement();
 
 	void ReturnMovement();
+
 
 
 
@@ -100,6 +106,25 @@ private:
 	int playerTileY;
 	int limitToChase;
 	bool attackAnimation;
+
+	struct dataFromSave
+	{
+		int posX;
+		int posY;
+		bool startPath;
+		float nextFootStep;
+		float amountToMoveInX;
+		float destination;
+		bool firstPath;
+		bool achievedRightBorder;
+		bool achievedLeftBorder;
+		bool attackAnimation;
+		int estado;
+		Animation* animation = nullptr;
+
+	} newData;
+
+	bool changedDataFromSave;
 };
 
 #endif // !__SMALL_ENEMY_1__

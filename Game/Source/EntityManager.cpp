@@ -62,6 +62,11 @@ bool EntityManager::Start() {
 			ret = item->data->Start();
 	}
 
+	numSmallEnemy1 = 0;
+	numSmallEnemy2 = 0;
+	numSmallEnemyFly = 0;
+
+
 	return ret;
 }
 
@@ -167,15 +172,81 @@ bool EntityManager::Update(float dt)
 
 bool EntityManager::LoadState(pugi::xml_node& data)
 {
-	auto posX = data.child("playerScene1").attribute("x").as_int();
-	auto posY = data.child("playerScene1").attribute("y").as_int();
+	int posX = data.child("playerScene1").attribute("x").as_int();
+	int posY = data.child("playerScene1").attribute("y").as_int();
 
 	app->scene->player->ChangePosition(posX, posY);
 
 	//Comprobar de alguna manera que no se han destruido los enemigos,
 	//de no haberse destruido, entonces cogemos sus datos y los mandamos a cada uno para su posición con un teleport
 
+	ListItem<Entity*>* dataEntities;
+	dataEntities = entities.start;
+
+	while (dataEntities != NULL)
+	{
+
+		LoadEntities(data, dataEntities);
+		dataEntities = dataEntities->next;
+
+	}
+
+	numSmallEnemy1 = 0;
+	numSmallEnemy2 = 0;
+	numSmallEnemyFly = 0;
+
 	return true;
+}
+
+void EntityManager::LoadEntities(pugi::xml_node& data, ListItem<Entity*>* entity)
+{
+
+	if (entity->data->name == "SmallEnemy1")
+	{
+		numSmallEnemy1++;
+
+		std::string aux = "SmallEnemy1";
+		std::string nameEntity = aux + std::to_string(numSmallEnemy1);
+		const char* nameToPrint = nameEntity.c_str();
+
+		int posX = data.child(nameToPrint).attribute("x").as_int();
+		int posY = data.child(nameToPrint).attribute("y").as_int();
+
+		iPoint entityPos = { posX, posY };
+		entity->data->LoadInfo(entityPos);
+
+
+	}
+	else if (entity->data->name == "SmallEnemy2")
+	{
+		numSmallEnemy2++;
+
+		std::string aux = "SmallEnemy2";
+		std::string nameEntity = aux + std::to_string(numSmallEnemy2);
+		const char* nameToPrint = nameEntity.c_str();
+
+		int posX = data.child(nameToPrint).attribute("x").as_int();
+		int posY = data.child(nameToPrint).attribute("y").as_int();
+
+		iPoint entityPos = { posX, posY };
+		entity->data->LoadInfo(entityPos);
+
+
+	}
+	else if (entity->data->name == "SmallEnemyFly")
+	{
+		numSmallEnemyFly++;
+
+		std::string aux = "SmallEnemyFly";
+		std::string nameEntity = aux + std::to_string(numSmallEnemyFly);
+		const char* nameToPrint = nameEntity.c_str();
+
+		int posX = data.child(nameToPrint).attribute("x").as_int();
+		int posY = data.child(nameToPrint).attribute("y").as_int();
+
+
+
+	}
 }
 
 
@@ -194,7 +265,61 @@ bool EntityManager::SaveState(pugi::xml_node& data)
 		playerScene1.append_attribute("y") = app->scene->player->position.y * 2 + 5;
 	}
 
+	ListItem<Entity*>* dataEntities;
+	dataEntities = entities.start;
+	
+	while (dataEntities != NULL)
+	{
+		SaveEntities(data, dataEntities, dataEntities->data->position);
+		dataEntities = dataEntities->next;
+	}
 
+	numSmallEnemy1 = 0;
+	numSmallEnemy2 = 0;
+	numSmallEnemyFly = 0;
 
 	return true;
+}
+
+void EntityManager::SaveEntities(pugi::xml_node& data, ListItem<Entity*>* entity, iPoint pos)
+{
+	
+	if (entity->data->name == "SmallEnemy1")
+	{
+		numSmallEnemy1++;
+		std::string aux = "SmallEnemy1";
+		std::string nameEntity = aux + std::to_string(numSmallEnemy1);
+		const char* nameToPrint = nameEntity.c_str();
+
+		pugi::xml_node smallEnemy1 = data.append_child(nameToPrint);
+		smallEnemy1.append_attribute("x") = pos.x;
+		smallEnemy1.append_attribute("y") = pos.y;
+
+		entity->data->SaveInfo();
+
+
+	}
+	else if (entity->data->name == "SmallEnemy2")
+	{
+
+		numSmallEnemy2++;
+		std::string aux = "SmallEnemy2";
+		std::string nameEntity = aux + std::to_string(numSmallEnemy2);
+		const char* nameToPrint = nameEntity.c_str();
+
+		pugi::xml_node smallEnemy2 = data.append_child(nameToPrint);
+		smallEnemy2.append_attribute("x") = pos.x;
+		smallEnemy2.append_attribute("y") = pos.y;
+	}
+	else if (entity->data->name == "SmallEnemyFly")
+	{
+		numSmallEnemyFly++;
+		std::string aux = "SmallEnemyFly";
+		std::string nameEntity = aux + std::to_string(numSmallEnemyFly);
+		const char* nameToPrint = nameEntity.c_str();
+
+		pugi::xml_node smallEnemyFly = data.append_child(nameToPrint);
+		smallEnemyFly.append_attribute("x") = pos.x;
+		smallEnemyFly.append_attribute("y") = pos.y;
+	}
 }

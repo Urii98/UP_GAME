@@ -96,7 +96,6 @@ bool Scene::Start()
 	// L03: DONE: Load map
 	retLoad = app->map->Load();
 
-
 	//// L12 Create walkability map
 	if (retLoad) {
 		int w, h;

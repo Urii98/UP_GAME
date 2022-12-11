@@ -5,13 +5,19 @@
 	<textures />
 	<audio />
 	<:anonymous />
+	<pathfinding />
 	<sceneManager />
 	<sceneLogo />
 	<sceneTitle />
 	<scene />
 	<sceneEnding />
 	<entitymanager>
-		<playerScene1 x="348" y="563" />
+		<playerScene1 x="310" y="739" />
+		<SmallEnemy11 x="1017" y="757" />
+		<SmallEnemy12 x="2803" y="693" />
+		<SmallEnemy13 x="2870" y="713" />
+		<SmallEnemyFly1 x="7512" y="552" />
+		<SmallEnemy21 x="636" y="752" />
 	</entitymanager>
 	<map />
 	<fade />
