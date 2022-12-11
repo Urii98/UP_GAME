@@ -341,7 +341,7 @@ void SmallEnemy2::OnCollision(PhysBody* physA, PhysBody* physB)
 	}
 }
 
-void SmallEnemy2::LoadInfo(iPoint pos)
+void SmallEnemy2::LoadInfo(iPoint pos, int state)
 {
 	posXFromSave = pos.x;
 	posYFromSave = pos.y;

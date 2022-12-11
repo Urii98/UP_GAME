@@ -26,6 +26,12 @@ public:
 
 	void OnCollision(PhysBody* physA, PhysBody* physB) override;
 
+	void LoadInfo(iPoint pos, int state);
+
+	void SaveInfo();
+
+	int GetState();
+
 private:
 
 	void ChaseMovement();
@@ -93,6 +99,27 @@ private:
 	int playerTileY;
 	int limitToChase;
 	
+	struct dataFromSave
+	{
+		int posX;
+		int posY;
+		bool startPath;
+		float nextFootStepInX;
+		float nextFootStepInY;
+		float amountToMoveInX;
+		float amountToMoveInY;
+		float destinationInX;
+		float destinationInY;
+		bool firstPath;
+		bool achievedRightBorder;
+		bool achievedLeftBorder;
+		bool attackAnimation;
+		int estado;
+		Animation* animation = nullptr;
+
+	} newData;
+
+	bool changedDataFromSave;
 
 	
 };

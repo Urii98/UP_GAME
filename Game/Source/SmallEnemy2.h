@@ -26,7 +26,7 @@ public:
 
 	void OnCollision(PhysBody* physA, PhysBody* physB) override;
 
-	void LoadInfo(iPoint pos);
+	void LoadInfo(iPoint pos, int state);
 
 private:
 
@@ -53,7 +53,9 @@ public:
 	enum estadoSEnemy1 {
 		STOP = 0,
 		SENTRY,
+		CHASE,
 		DEATH,
+		RETURN,
 		NONE,
 	};
 	int estadoSE2;

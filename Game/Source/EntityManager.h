@@ -41,7 +41,6 @@ public:
 	void LoadEntities(pugi::xml_node&, ListItem<Entity*>* entity);
 
 public:
-
 	List<Entity*> entities;
 	int numSmallEnemy1;
 	int numSmallEnemy2;

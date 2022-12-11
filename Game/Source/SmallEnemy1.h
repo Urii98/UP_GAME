@@ -26,9 +26,11 @@ public:
 
 	void OnCollision(PhysBody* physA, PhysBody* physB) override;
 
-	void LoadInfo(iPoint pos);
+	void LoadInfo(iPoint pos, int state);
 
 	void SaveInfo();
+
+	int GetState();
 	
 
 private:

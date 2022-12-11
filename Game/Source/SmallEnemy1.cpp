@@ -118,6 +118,8 @@ bool SmallEnemy1::Start() {
 	limitToChase = 0;
 	attackAnimation = false;
 
+	changedDataFromSave = false;
+
 	return true;
 }
 
@@ -465,11 +467,12 @@ void SmallEnemy1::OnCollision(PhysBody* physA, PhysBody* physB)
 	}
 }
 
-void SmallEnemy1::LoadInfo(iPoint pos)
+void SmallEnemy1::LoadInfo(iPoint pos, int state)
 {
 
 	newData.posX = pos.x;
 	newData.posY = pos.y;
+	newData.estado = state;
 	changedDataFromSave = true;
 
 
@@ -484,7 +487,6 @@ void SmallEnemy1::LoadInfo(iPoint pos)
 	achievedRightBorder = newData.achievedRightBorder;
 	achievedLeftBorder = newData.achievedLeftBorder;
 	attackAnimation = newData.attackAnimation;
-	estadoSE1 = newData.estado;
 	currentAnimationEnemy = newData.animation;
 
 }
@@ -500,6 +502,10 @@ void SmallEnemy1::SaveInfo()
 	newData.achievedRightBorder = achievedRightBorder;
 	newData.achievedLeftBorder = achievedLeftBorder;
 	newData.attackAnimation = attackAnimation;
-	newData.estado = estadoSE1;
 	newData.animation = currentAnimationEnemy;
+}
+
+int SmallEnemy1::GetState()
+{
+	return estadoSE1;
 }

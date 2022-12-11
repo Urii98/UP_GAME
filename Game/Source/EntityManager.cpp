@@ -213,7 +213,8 @@ void EntityManager::LoadEntities(pugi::xml_node& data, ListItem<Entity*>* entity
 		int posY = data.child(nameToPrint).attribute("y").as_int();
 
 		iPoint entityPos = { posX, posY };
-		entity->data->LoadInfo(entityPos);
+		int entityState = data.child(nameToPrint).attribute("state").as_int();
+		entity->data->LoadInfo(entityPos, entityState);
 
 
 	}
@@ -229,7 +230,7 @@ void EntityManager::LoadEntities(pugi::xml_node& data, ListItem<Entity*>* entity
 		int posY = data.child(nameToPrint).attribute("y").as_int();
 
 		iPoint entityPos = { posX, posY };
-		entity->data->LoadInfo(entityPos);
+		entity->data->LoadInfo(entityPos,0);
 
 
 	}
@@ -244,7 +245,9 @@ void EntityManager::LoadEntities(pugi::xml_node& data, ListItem<Entity*>* entity
 		int posX = data.child(nameToPrint).attribute("x").as_int();
 		int posY = data.child(nameToPrint).attribute("y").as_int();
 
-
+		iPoint entityPos = { posX, posY };
+		int entityState = data.child(nameToPrint).attribute("state").as_int();
+		entity->data->LoadInfo(entityPos, entityState);
 
 	}
 }
@@ -294,9 +297,11 @@ void EntityManager::SaveEntities(pugi::xml_node& data, ListItem<Entity*>* entity
 		pugi::xml_node smallEnemy1 = data.append_child(nameToPrint);
 		smallEnemy1.append_attribute("x") = pos.x;
 		smallEnemy1.append_attribute("y") = pos.y;
+		smallEnemy1.append_attribute("state") = entity->data->GetState();
+
 
 		entity->data->SaveInfo();
-
+		
 
 	}
 	else if (entity->data->name == "SmallEnemy2")
@@ -321,5 +326,8 @@ void EntityManager::SaveEntities(pugi::xml_node& data, ListItem<Entity*>* entity
 		pugi::xml_node smallEnemyFly = data.append_child(nameToPrint);
 		smallEnemyFly.append_attribute("x") = pos.x;
 		smallEnemyFly.append_attribute("y") = pos.y;
+		smallEnemyFly.append_attribute("state") = entity->data->GetState();
+
+		entity->data->SaveInfo();
 	}
 }

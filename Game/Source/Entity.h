@@ -82,7 +82,7 @@ public:
 	
 	};
 
-	virtual void LoadInfo(iPoint pos)
+	virtual void LoadInfo(iPoint pos, int state)
 	{
 
 	}
@@ -90,6 +90,11 @@ public:
 	virtual void SaveInfo()
 	{
 
+	}
+
+	virtual int GetState()
+	{
+		return 0;
 	}
 
 public:

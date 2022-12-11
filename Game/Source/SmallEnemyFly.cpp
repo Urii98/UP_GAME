@@ -119,6 +119,8 @@ bool SmallEnemyFly::Start() {
 	playerTileY = 0;
 	currentAnimationFlyEnemy = &idleLFlyAnim;
 	limitToChase = 0;
+	
+	changedDataFromSave = false;
 
 	return true;
 }
@@ -146,6 +148,12 @@ void SmallEnemyFly::ChaseMovement()
 	int ret = 0;
 	iPoint playerPos = { app->scene->player->position.x / 32, app->scene->player->position.y / 32 };
 	iPoint myPos = { (int)std::round(nextFootStepInX / 64) , (int)std::round(nextFootStepInY / 64) };
+
+	if (changedDataFromSave)
+	{
+		myPos = { (int)std::round(newData.posX / 64) , newData.posY / 64 };
+		changedDataFromSave = false;
+	}
 
 	if (firstPath)
 	{
@@ -222,6 +230,11 @@ void SmallEnemyFly::ReturnMovement()
 		}
 		else
 		{
+			if (changedDataFromSave)
+			{
+				myPos = { (int)std::round(newData.posX / 64) , newData.posY / 64 };
+				changedDataFromSave = false;
+			}
 			app->pathfinding->CreatePath(myPos, leftBorder, "aereo");
 		}
 	}
@@ -412,4 +425,51 @@ void SmallEnemyFly::OnCollision(PhysBody* physA, PhysBody* physB)
 
 		break;
 	}
+}
+
+void SmallEnemyFly::LoadInfo(iPoint pos, int state)
+{
+
+	newData.posX = pos.x;
+	newData.posY = pos.y;
+	newData.estado = state;
+	changedDataFromSave = true;
+
+
+	b2Vec2 movePos = b2Vec2(PIXEL_TO_METERS(newData.posX), PIXEL_TO_METERS(newData.posY));
+	pbody->body->SetTransform(movePos, 0);
+
+	startPath = newData.startPath;
+	nextFootStepInX = newData.nextFootStepInX;
+	nextFootStepInY = newData.nextFootStepInY;
+	amountToMoveInX = newData.amountToMoveInX;
+	amountToMoveInY = newData.amountToMoveInY;
+	destinationInX = newData.destinationInX;
+	destinationInY = newData.destinationInY;
+	firstPath = newData.firstPath;
+	achievedRightBorder = newData.achievedRightBorder;
+	achievedLeftBorder = newData.achievedLeftBorder;
+	currentAnimationFlyEnemy = newData.animation;
+
+}
+
+void SmallEnemyFly::SaveInfo()
+{
+
+	newData.startPath = startPath;
+	newData.nextFootStepInX = nextFootStepInX;
+	newData.nextFootStepInY = nextFootStepInY;
+	newData.amountToMoveInX = amountToMoveInX;
+	newData.amountToMoveInY = amountToMoveInY;
+	newData.destinationInX = destinationInX;
+	newData.destinationInY = destinationInY;
+	newData.firstPath = firstPath;
+	newData.achievedRightBorder = achievedRightBorder;
+	newData.achievedLeftBorder = achievedLeftBorder;
+	newData.animation = currentAnimationFlyEnemy;
+}
+
+int SmallEnemyFly::GetState()
+{
+	return estadoSEF1;
 }
