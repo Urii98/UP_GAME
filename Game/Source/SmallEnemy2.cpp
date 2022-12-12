@@ -314,6 +314,14 @@ bool SmallEnemy2::Update()
 	SDL_Rect rect = currentAnimationEnemy->GetCurrentFrame();
 	app->render->DrawTexture(texture, position.x / app->win->GetScale() - 17, position.y / app->win->GetScale() - 15, &rect);
 
+	if (position.y > 1856 ||
+		position.x < 0 ||
+		position.x > 15936 ||
+		position.y < 0)
+	{
+		destroy = true;
+	}
+
 	if (destroy)
 	{
 		pbody->body->GetWorld()->DestroyBody(pbody->body);

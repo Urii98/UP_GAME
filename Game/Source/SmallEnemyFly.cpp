@@ -459,7 +459,15 @@ bool SmallEnemyFly::Update()
 	SDL_Rect rect = currentAnimationFlyEnemy->GetCurrentFrame();
 	app->render->DrawTexture(texture, position.x / app->win->GetScale() - 10, position.y / app->win->GetScale() - 15, &rect);
 
-	if (deathAnimationTimer.Test() == FIN)
+	if (position.y > 1856 ||
+		position.x < 0 ||
+		position.x > 15936 ||
+		position.y < 0)
+	{
+		destroy = true;
+	}
+
+	if (deathAnimationTimer.Test() == FIN || destroy)
 	{
 		pbody->body->GetWorld()->DestroyBody(pbody->body);
 		app->tex->UnLoad(texture);
