@@ -143,6 +143,89 @@ void SmallEnemyFly::SentryMovement()
 	}
 }
 
+void SmallEnemyFly::ChaseMovement2()
+{
+	int ret = 0;
+	iPoint playerPos = { app->scene->player->position.x / 32, app->scene->player->position.y / 32 };
+	iPoint myPos = { (int)std::round(position.x / 64) , (int)std::round(position.y / 64) };
+
+	b2Vec2 vel = b2Vec2(0, 0);
+
+	if (firstPath)
+	{
+		iPoint myFirstPos = { position.x / 64 , position.y / 64 };
+		ret = app->pathfinding->CreatePath(myFirstPos, playerPos, "aereo");
+		firstPath = false;
+	}
+	else
+	{
+		ret = app->pathfinding->CreatePath(myPos, playerPos, "aereo");
+	}
+
+	if (ret != -1)
+	{
+		const DynArray<iPoint>* path = app->pathfinding->GetLastPath();
+
+
+
+		if (debug)
+		{
+			app->pathfinding->DrawLastPath();
+		}
+
+		if (path->At(1) != nullptr)
+		{
+
+			if (path->At(1)->x * 32 > app->scene->player->position.x)
+			{
+				vel = b2Vec2(-2.8f, 0);
+				if (path->At(1)->y * 32 > app->scene->player->position.y)
+				{
+					vel = b2Vec2(-2.8f, -2.8f);
+				}
+				else if (path->At(1)->y * 32 < app->scene->player->position.y)
+				{
+					vel = b2Vec2(-2.8f, 2.8f);
+				}
+
+			}
+			else if (path->At(1)->x * 32 < app->scene->player->position.x)
+			{
+				vel = b2Vec2(2.8f, 0);
+				if (path->At(1)->y * 32 > app->scene->player->position.y)
+				{
+					vel = b2Vec2(2.8f, -2.8f);
+				}
+				else if (path->At(1)->y * 32 < app->scene->player->position.y)
+				{
+					vel = b2Vec2(2.8f, 2.8f);
+				}
+			}
+
+			pbody->body->ApplyForce(vel, pbody->body->GetLocalCenter(), true);
+			
+		
+			//pbody->body->SetLinearVelocity(vel);
+
+			destinationInX = path->At(1)->x * 64;
+			destinationInY = path->At(1)->y * 64;
+			startPath = false;
+		}
+
+
+		if (position.x > destinationInX)
+		{
+			currentAnimationFlyEnemy = &chaseLFlyAnim;
+		}
+		else if (position.x < destinationInX)
+		{
+			currentAnimationFlyEnemy = &chaseRFlyAnim;
+		}
+
+	}
+
+}
+
 void SmallEnemyFly::ChaseMovement()
 {
 	int ret = 0;
@@ -315,12 +398,13 @@ bool SmallEnemyFly::Update()
 
 	case CHASE:
 
-		ChaseMovement();
+//		ChaseMovement();
+		ChaseMovement2();
 
 		playerTileX = app->scene->player->position.x / 32;
 		limitToChase = std::abs(playerTileX - (position.x / 64));
 
-		if (limitToChase > 5)
+	/*	if (limitToChase > 15)
 		{
 			estadoSEF1 = RETURN;
 			startPath = true;
@@ -328,7 +412,7 @@ bool SmallEnemyFly::Update()
 			achievedRightBorder = false;
 			achievedLeftBorder = true;
 
-		}
+		}*/
 
 		break;
 
@@ -440,11 +524,18 @@ void SmallEnemyFly::LoadInfo(iPoint pos, int state)
 	newData.posX = pos.x;
 	newData.posY = pos.y;
 	newData.estado = state;
+	estadoSEF1 = state;
 	changedDataFromSave = true;
 
-
+	if (state == 1)
+	{
+		pbody->body->SetLinearVelocity(b2Vec2(0, 0));
+		pbody->body->SetAngularVelocity(0);
+	}
+	
 	b2Vec2 movePos = b2Vec2(PIXEL_TO_METERS(newData.posX), PIXEL_TO_METERS(newData.posY));
 	pbody->body->SetTransform(movePos, 0);
+	
 
 	startPath = newData.startPath;
 	nextFootStepInX = newData.nextFootStepInX;

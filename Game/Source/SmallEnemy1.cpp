@@ -473,6 +473,7 @@ void SmallEnemy1::LoadInfo(iPoint pos, int state)
 	newData.posX = pos.x;
 	newData.posY = pos.y;
 	newData.estado = state;
+	estadoSE1 = state;
 	changedDataFromSave = true;
 
 

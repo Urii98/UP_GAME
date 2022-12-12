@@ -35,6 +35,7 @@ public:
 private:
 
 	void ChaseMovement();
+	void ChaseMovement2();
 
 	void SentryMovement();
 
