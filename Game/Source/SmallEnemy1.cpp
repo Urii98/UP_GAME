@@ -118,7 +118,8 @@ bool SmallEnemy1::Start() {
 	playerTileX = 0;
 	playerTileY = 0;
 	currentAnimationEnemy = &walkRAnimEnemy;
-	limitToChase = 0;
+	limitToChaseX = 0;
+	limitToChaseY = 0;
 	attackAnimation = false;
 
 	changedDataFromSave = false;
@@ -767,9 +768,11 @@ bool SmallEnemy1::Update()
 		}*/
 
 		playerTileX = app->scene->player->position.x / 32;
-		limitToChase = std::abs(playerTileX - (position.x / 64));
+		playerTileY = app->scene->player->position.y / 32;
+		limitToChaseX = std::abs(playerTileX - (position.x / 64));
+		limitToChaseY = std::abs(playerTileY - (position.y / 64));
 
-		if (limitToChase < 5)
+		if (limitToChaseX < 5 && limitToChaseY < 4)
 		{
 			estadoSE1 = CHASE;
 		}
@@ -780,10 +783,12 @@ bool SmallEnemy1::Update()
 		ChaseMovement2();
 
 		playerTileX = app->scene->player->position.x / 32;
-		limitToChase = std::abs(playerTileX - (position.x / 64));
+		playerTileY = app->scene->player->position.y / 32;
+		limitToChaseX = std::abs(playerTileX - (position.x / 64));
+		limitToChaseY = std::abs(playerTileY - (position.y / 64));
 
 
-		if (limitToChase > 5)
+		if (limitToChaseX > 4 && limitToChaseY >3)
 		{
 			estadoSE1 = RETURN;
 			startPath = true;
@@ -808,9 +813,10 @@ bool SmallEnemy1::Update()
 		}
 
 		playerTileX = app->scene->player->position.x / 32;
-		limitToChase = std::abs(playerTileX - (position.x / 64));
+		limitToChaseX = std::abs(playerTileX - (position.x / 64));
+		limitToChaseY = std::abs(playerTileY - (position.y / 64));
 
-		if (limitToChase < 5)
+		if (limitToChaseX < 5 && limitToChaseY < 4)
 		{
 			estadoSE1 = CHASE;
 		}

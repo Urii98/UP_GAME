@@ -109,7 +109,8 @@ private:
 	bool debug;
 	int playerTileX;
 	int playerTileY;
-	int limitToChase;
+	int limitToChaseX;
+	int limitToChaseY;
 	bool attackAnimation;
 
 	struct dataFromSave
