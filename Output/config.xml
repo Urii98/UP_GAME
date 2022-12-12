@@ -23,7 +23,7 @@
 
   <!-- L02: DONE: Add an element for the entity manager and add the player parameters -->
   <scene>
-    <player x="7300" y="450" scalarSpeedX="6" scalarSpeedY="9" scalarSpeedYDown="6"
+    <player x="1100" y="450" scalarSpeedX="6" scalarSpeedY="9" scalarSpeedYDown="6"
             texturepath="Assets/Textures/KirbySS.png" 
             coinFxPath="Assets/Audio/Fx/coin.ogg" kirbyDeathFxPath="Assets/Audio/Fx/KirbyDeathFx.ogg"
             kirbyVictoryFxPath="Assets/Audio/Fx/KirbyVictoryFx.ogg"
@@ -37,15 +37,10 @@
     <item x="10340" y="220" texturepath="Assets/Textures/goldCoin.png" effecttexturepath ="Assets/Textures/coinEffect.png" map="4"/>
 	  
 	  
-    <SmallEnemy1 x="420" y="704" scalarLimites="30" speedX="2"
+    <SmallEnemy1 x="500" y="704" scalarLimites="30" speedX="2"
                  walkDir="false" attackE="false" animAtk="false" destroy="false"
                  texturepath="Assets/Textures/Enemies.png" map="1"/>
-    <SmallEnemy1 x="420" y="672" scalarLimites="30" speedX="2"
-                 walkDir="false" attackE="false" animAtk="false" destroy="false"
-                 texturepath="Assets/Textures/Enemies.png" map="2"/>
-    <SmallEnemy1 x="520" y="672" scalarLimites="30" speedX="2"
-                 walkDir="false" attackE="false" animAtk="false" destroy="false"
-                 texturepath="Assets/Textures/Enemies.png" map="3"/>
+
 	  
 	  
 	  <SmallEnemyFly x="7600" y="550" scalarLimites="30" speedY="3"
@@ -55,7 +50,7 @@
 				   destroy="false"
 				   texturepath="Assets/Textures/Enemies.png" textureangrypath="Assets/Textures/EnemiesAngry.png" map="1"/>	  
 	  
-    <SmallEnemy2 x="1650" y="705" scalarLimites="3" speedX="2"
+    <SmallEnemy2 x="1650" y="730" scalarLimites="3" speedX="2"
                  walkDir="false" destroy="false"
                  texturepath="Assets/Textures/Enemies.png" map="1"/>
 

@@ -30,7 +30,7 @@ bool SmallEnemy2::Awake() {
 	position.x = parameters.attribute("x").as_int();
 	position.y = parameters.attribute("y").as_int();
 	scalarLimites = parameters.attribute("scalarLimites").as_int();
-	speedX = parameters.attribute("speedX").as_int();
+	speedinX = parameters.attribute("speedX").as_int();
 
 	texturePath = parameters.attribute("texturepath").as_string();
 
@@ -152,7 +152,7 @@ bool SmallEnemy2::Start() {
 
 	pbody->listener = this;
 
-	pbody->body->SetGravityScale(2.0f);
+	pbody->body->SetGravityScale(8.0f);
 
 
 	startPath = true;
@@ -175,11 +175,178 @@ bool SmallEnemy2::Start() {
 	lastPosinY = 0;
 	framesStopped = 0;
 
+	speedX = 3.8;
+	speedLimit = 7;
+
 	return true;
 }
 
 void SmallEnemy2::SentryMovement2()
 {
+	int ret = 0;
+	b2Vec2 vel = b2Vec2(0, 0);
+	iPoint myPos = { 0,0 };
+
+	if (position.y / 64 != leftBorder.y)
+	{
+		leftBorder = { position.x / 64, (position.y / 64) };
+		rightBorder = { leftBorder.x + range, (position.y / 64) };
+	}
+
+	if (startPath)
+	{
+		if (firstPath)
+		{
+			ret = app->pathfinding->CreatePath(leftBorder, rightBorder, "terrestre");
+			firstPath = false;
+			if (ret == -1) 
+			{
+				while (ret == -1)
+				{
+					leftBorder.x = leftBorder.x - 1;
+					rightBorder.x = rightBorder.x - 1;
+					ret = app->pathfinding->CreatePath(leftBorder, rightBorder, "terrestre");
+				}
+			}
+		}
+		else
+		{
+			if (achievedLeftBorder)
+			{
+				myPos = { position.x / 64 , position.y / 64 };
+				ret = app->pathfinding->CreatePath(myPos, rightBorder, "terrestre");
+				currentAnimationEnemy = &walkLAnimEnemy;
+
+				if (changeDataFromSave)
+				{
+					myPos = { (int)std::round(posXFromSave / 64) , posYFromSave / 64 };
+					ret = app->pathfinding->CreatePath(myPos, rightBorder, "terrestre");
+					changeDataFromSave = false;
+				}
+
+				if (ret == -1)
+				{
+					while (ret == -1)
+					{
+						rightBorder.x = rightBorder.x - 1;
+						ret = app->pathfinding->CreatePath(myPos, rightBorder, "terrestre");
+					}
+				}
+
+			}
+			else if (achievedRightBorder)
+			{
+				myPos = { position.x / 64 , position.y / 64 };
+				ret = app->pathfinding->CreatePath(myPos, leftBorder, "terrestre");
+				currentAnimationEnemy = &walkRAnimEnemy;
+
+				if (changeDataFromSave)
+				{
+					myPos = { (int)std::round(posXFromSave / 64) , posYFromSave / 64 };
+					ret = app->pathfinding->CreatePath(myPos, leftBorder, "terrestre");
+					changeDataFromSave = false;
+				}
+
+				if (ret == -1)
+				{
+					while (ret == -1)
+					{
+						leftBorder.x = leftBorder.x - 1;
+						ret = app->pathfinding->CreatePath(myPos, leftBorder, "terrestre");
+					}
+				}
+
+			}
+		}
+	}
+
+	if (ret != -1)
+	{
+		const DynArray<iPoint>* path = app->pathfinding->GetLastPath();
+
+		if (debug)
+		{
+			app->pathfinding->DrawLastPath();
+		}
+
+		if (path->At(1) != nullptr)
+		{
+			if (path->At(1)->x * 64 > position.x)
+			{
+				vel = b2Vec2(speedX, 0);
+			}
+			else if (path->At(1)->x * 64 < position.x)
+			{
+				vel = b2Vec2(-speedX, 0);
+			}
+		}
+
+		//pbody->body->ApplyForce(vel, pbody->body->GetLocalCenter(), true);
+		pbody->body->SetLinearVelocity(vel);	
+		if(path->At(1) != NULL)
+		destination = path->At(1)->x * 64;
+
+	}
+
+	if (pbody->body->GetLinearVelocity().x > speedLimit)
+	{
+		b2Vec2 vel = pbody->body->GetLinearVelocity();
+		vel.x = speedLimit;
+		pbody->body->SetLinearVelocity(vel);
+	}
+	else if (pbody->body->GetLinearVelocity().x < -speedLimit)
+	{
+		b2Vec2 vel = pbody->body->GetLinearVelocity();
+		vel.x = -speedLimit;
+		pbody->body->SetLinearVelocity(vel);
+	}
+
+	if (position.x > destination)
+	{
+		currentAnimationEnemy = &walkRAnimEnemy;
+	}
+	else if (position.x < destination)
+	{
+		currentAnimationEnemy = &walkLAnimEnemy;
+	}
+
+	if (achievedLeftBorder)
+	{
+		int limitToChange = std::abs(position.x / 64 - rightBorder.x);
+
+		std::cout << limitToChange << std::endl;
+		if (limitToChange == 0)
+		{
+			achievedRightBorder = true;
+			achievedLeftBorder = false;
+		}
+	}
+	else if (achievedRightBorder)
+	{
+		int limitToChange = std::abs(position.x / 64 - leftBorder.x);
+		if (limitToChange == 0)
+		{
+			achievedLeftBorder = true;
+			achievedRightBorder = false;
+		}
+	}
+
+	if (lastPosinX == position.x && lastPosinY == position.y)
+	{
+		framesStopped++;
+		std::cout <<"framesStopped - " << framesStopped << std::endl;
+	}
+
+	lastPosinX = position.x;
+	lastPosinY = position.y;
+
+	if (framesStopped > 60)
+	{
+		b2Vec2 vel = b2Vec2(0, -70);
+		//pbody->body->ApplyForce(vel, pbody->body->GetLocalCenter(), true);
+		pbody->body->ApplyLinearImpulse(vel, pbody->body->GetLocalCenter(), true);
+		framesStopped = 0;
+	}
 
 }
 
@@ -345,7 +512,7 @@ bool SmallEnemy2::Update()
 	case STOP:
 		break;
 	case SENTRY:
-		SentryMovement();
+		SentryMovement2();
 
 		break;
 	default:

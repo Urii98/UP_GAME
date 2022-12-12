@@ -43,7 +43,7 @@ public:
 	int map;
 
 	bool walkDir;
-	int speedX;
+	int speedinX;
 
 	Animation walkRAnimEnemy;
 	Animation walkLAnimEnemy;
@@ -92,6 +92,8 @@ private:
 	int lastPosinX;
 	int lastPosinY;
 	int framesStopped;
+
+	float speedX, speedLimit;
 };
 
 #endif // !__SMALL_ENEMY_2__
