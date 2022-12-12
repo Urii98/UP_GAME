@@ -35,6 +35,7 @@ bool SmallEnemyFly::Awake() {
 	speedY = parameters.attribute("speedY").as_int();
 
 	texturePath = parameters.attribute("texturepath").as_string();
+	textureAngryPath = parameters.attribute("textureangrypath").as_string();
 
 	destroy = parameters.attribute("destroy").as_bool();
 	map = parameters.attribute("map").as_int();
@@ -87,6 +88,7 @@ bool SmallEnemyFly::Start() {
 
 	//initilize textures
 	texture = app->tex->Load(texturePath);
+	angryTexture = app->tex->Load(textureAngryPath);
 
 	// L07 DONE 4: Add a physics  - initialize the physics body
 	pbody = app->physics->CreateCircle(position.x + 12, position.y + 12, 9, bodyType::DYNAMIC);
@@ -119,6 +121,7 @@ bool SmallEnemyFly::Start() {
 	playerTileY = 0;
 	currentAnimationFlyEnemy = &idleLFlyAnim;
 	limitToChase = 0;
+	speedX = 2.8f;
 	
 	changedDataFromSave = false;
 	newData.startPath = startPath;
@@ -190,27 +193,27 @@ void SmallEnemyFly::ChaseMovement2()
 
 			if (path->At(1)->x * 32 > app->scene->player->position.x)
 			{
-				vel = b2Vec2(-2.8f, 0);
+				vel = b2Vec2(-speedX, 0);
 				if (path->At(1)->y * 32 > app->scene->player->position.y)
 				{
-					vel = b2Vec2(-2.8f, -2.8f);
+					vel = b2Vec2(-speedX, -speedX);
 				}
 				else if (path->At(1)->y * 32 < app->scene->player->position.y)
 				{
-					vel = b2Vec2(-2.8f, 2.8f);
+					vel = b2Vec2(-speedX, speedX);
 				}
 
 			}
 			else if (path->At(1)->x * 32 < app->scene->player->position.x)
 			{
-				vel = b2Vec2(2.8f, 0);
+				vel = b2Vec2(speedX, 0);
 				if (path->At(1)->y * 32 > app->scene->player->position.y)
 				{
-					vel = b2Vec2(2.8f, -2.8f);
+					vel = b2Vec2(speedX, -speedX);
 				}
 				else if (path->At(1)->y * 32 < app->scene->player->position.y)
 				{
-					vel = b2Vec2(2.8f, 2.8f);
+					vel = b2Vec2(speedX, speedX);
 				}
 			}
 
@@ -428,6 +431,9 @@ bool SmallEnemyFly::Update()
 
 		break;
 
+	case DEATH:
+		break;
+
 	case RETURN:
 
 		ReturnMovement();
@@ -469,7 +475,16 @@ bool SmallEnemyFly::Update()
 
 	currentAnimationFlyEnemy->Update();
 	SDL_Rect rect = currentAnimationFlyEnemy->GetCurrentFrame();
-	app->render->DrawTexture(texture, position.x / app->win->GetScale() - 10, position.y / app->win->GetScale() - 15, &rect);
+
+	if (estadoSEF1 == CHASE || estadoSEF1 == DEATH)
+	{
+		app->render->DrawTexture(angryTexture, position.x / app->win->GetScale() - 10, position.y / app->win->GetScale() - 15, &rect);
+	} 
+	else
+	{
+		app->render->DrawTexture(texture, position.x / app->win->GetScale() - 10, position.y / app->win->GetScale() - 15, &rect);
+	}
+	
 
 	if (position.y > 1856 ||
 		position.x < 0 ||
@@ -532,7 +547,7 @@ void SmallEnemyFly::OnCollision(PhysBody* physA, PhysBody* physB)
 			currentAnimationFlyEnemy = &deathRAnimEnemy;
 		}
 		
-		estadoSEF1 = STOP;
+		estadoSEF1 = DEATH;
 
 		break;
 	}

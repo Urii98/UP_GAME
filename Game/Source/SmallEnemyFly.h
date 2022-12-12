@@ -76,7 +76,9 @@ public:
 private:
 
 	SDL_Texture* texture;
+	SDL_Texture* angryTexture;
 	const char* texturePath;
+	const char* textureAngryPath;
 	SDL_Timer deathAnimationTimer;
 	//DONE 4: Add a physics
 //	PhysBody* pbody;
@@ -122,7 +124,7 @@ private:
 
 	bool changedDataFromSave;
 
-	
+	float speedX;
 };
 
 #endif // !__SMALL_ENEMY_FLY__

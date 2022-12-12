@@ -37,7 +37,7 @@
     <item x="10340" y="220" texturepath="Assets/Textures/goldCoin.png" effecttexturepath ="Assets/Textures/coinEffect.png" map="4"/>
 	  
 	  
-    <SmallEnemy1 x="6500" y="450" scalarLimites="30" speedX="2"
+    <SmallEnemy1 x="580" y="450" scalarLimites="30" speedX="2"
                  walkDir="false" attackE="false" animAtk="false" destroy="false"
                  texturepath="Assets/Textures/Enemies.png" map="1"/>
     <SmallEnemy1 x="420" y="672" scalarLimites="30" speedX="2"
@@ -50,7 +50,16 @@
 	  
 	  <SmallEnemyFly x="7500" y="550" scalarLimites="30" speedY="3"
 				   destroy="false"
-				   texturepath="Assets/Textures/Enemies.png" map="1"/>
+				   texturepath="Assets/Textures/Enemies.png" textureangrypath="Assets/Textures/EnemiesAngry.png" map="1"/>
+    <SmallEnemyFly x="7300" y="550" scalarLimites="30" speedY="3"
+          destroy="false"
+          texturepath="Assets/Textures/Enemies.png" textureangrypath="Assets/Textures/EnemiesAngry.png" map="1"/>
+    <SmallEnemyFly x="7800" y="550" scalarLimites="30" speedY="3"
+          destroy="false"
+          texturepath="Assets/Textures/Enemies.png" textureangrypath="Assets/Textures/EnemiesAngry.png" map="1"/>
+    <SmallEnemyFly x="8100" y="550" scalarLimites="30" speedY="3"
+          destroy="false"
+          texturepath="Assets/Textures/Enemies.png" textureangrypath="Assets/Textures/EnemiesAngry.png" map="1"/>
 	  
 	  
     <SmallEnemy2 x="720" y="450" scalarLimites="3" speedX="2"
