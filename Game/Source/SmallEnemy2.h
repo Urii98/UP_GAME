@@ -30,7 +30,7 @@ public:
 
 private:
 
-
+	void SentryMovement2();
 	void SentryMovement();
 
 public:
@@ -88,6 +88,10 @@ private:
 	bool changeDataFromSave;
 	int posXFromSave;
 	int posYFromSave;
+
+	int lastPosinX;
+	int lastPosinY;
+	int framesStopped;
 };
 
 #endif // !__SMALL_ENEMY_2__

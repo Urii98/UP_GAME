@@ -100,6 +100,8 @@ bool SmallEnemy1::Start() {
 
 	pbody->listener = this;
 
+	pbody->body->SetGravityScale(2.0f);
+	
 	startPath = true;
 	nextFootStep = 0.0f;
 	amountToMoveInX = 0.0f;
@@ -129,6 +131,9 @@ bool SmallEnemy1::Start() {
 	newData.attackAnimation = attackAnimation;
 	newData.animation = currentAnimationEnemy;
 
+	framesStopped = 0;
+	lastPosinX = 0;
+	lastPosinY = 0;
 
 	return true;
 }
@@ -185,6 +190,7 @@ void SmallEnemy1::ChaseMovement()
 		currentAnimationEnemy = &attackRAnimEnemy;
 	}
 
+
 	b2Vec2 movePos = b2Vec2(PIXEL_TO_METERS(nextFootStep), PIXEL_TO_METERS(position.y));
 	pbody->body->SetTransform(movePos, 0);
 
@@ -194,6 +200,24 @@ void SmallEnemy1::ChaseMovement()
 	{
  		estadoSE1 = RETURN;
 	}
+
+
+	//if (lastPosinX == position.x && lastPosinY == position.y)
+	//{
+	//	framesStopped++;
+	//	std::cout <<"framesStopped - " << framesStopped << std::endl;
+	//}
+
+	//lastPosinX = position.x;
+	//lastPosinY = position.y;
+
+	//if (framesStopped > 60)
+	//{
+	//	b2Vec2 vel = b2Vec2(0, -3.1);
+	//	//pbody->body->ApplyForce(vel, pbody->body->GetLocalCenter(), true);
+	//	pbody->body->ApplyLinearImpulse(vel, pbody->body->GetLocalCenter(), true);
+	//	framesStopped = 0;
+	//}
 
 }
 
@@ -277,6 +301,7 @@ void SmallEnemy1::ReturnMovement()
 
 void SmallEnemy1::SentryMovement()
 {
+	int ret = 0;
 	if (position.y / 64 != leftBorder.y)
 	{
 		leftBorder = { position.x / 64, (position.y / 64) };
@@ -287,7 +312,16 @@ void SmallEnemy1::SentryMovement()
 	{
 		if (firstPath)
 		{
-			app->pathfinding->CreatePath(leftBorder, rightBorder, "terrestre");
+			ret = app->pathfinding->CreatePath(leftBorder, rightBorder, "terrestre");
+			if (ret == -1) //AKAAAAAAAAAAAAAAAAAA
+			{
+				while (ret == -1)
+				{
+					leftBorder.x = leftBorder.x - 1;
+					rightBorder.x = rightBorder.x - 1;
+					ret = app->pathfinding->CreatePath(leftBorder, rightBorder, "terrestre");
+				}
+			}
 			firstPath = false;
 		}
 		else
@@ -295,33 +329,53 @@ void SmallEnemy1::SentryMovement()
 			if (achievedLeftBorder)
 			{
 				iPoint myPos = { (int)std::round(nextFootStep / 64) , position.y / 64 };
-				app->pathfinding->CreatePath(myPos, rightBorder, "terrestre");
+				ret = app->pathfinding->CreatePath(myPos, rightBorder, "terrestre");
 				currentAnimationEnemy = &walkRAnimEnemy;
 
 				if (changedDataFromSave)
 				{
 					myPos = { (int)std::round(newData.posX / 64) , newData.posY / 64 };
-					app->pathfinding->CreatePath(myPos, rightBorder, "terrestre");
+					ret = app->pathfinding->CreatePath(myPos, rightBorder, "terrestre");
 					changedDataFromSave = false;
 				}
 
+				if (ret == -1) //AKAAAAAAAAAAAAAAAAAA
+				{
+					while (ret == -1)
+					{
+						rightBorder.x = rightBorder.x - 1;
+						ret = app->pathfinding->CreatePath(myPos, rightBorder, "terrestre");
+					}
+				}
 
 			}
 			else if (achievedRightBorder)
 			{
 				iPoint myPos = { (int)std::round(nextFootStep / 64) , position.y / 64 };
-				app->pathfinding->CreatePath(myPos, leftBorder, "terrestre");
+				ret = app->pathfinding->CreatePath(myPos, leftBorder, "terrestre");
 				currentAnimationEnemy = &walkLAnimEnemy;
 
 				if (changedDataFromSave)
 				{
 					myPos = { (int)std::round(newData.posX / 64) , newData.posY / 64 };
-					app->pathfinding->CreatePath(myPos, rightBorder, "terrestre");
+					ret =  app->pathfinding->CreatePath(myPos, leftBorder, "terrestre");
 					changedDataFromSave = false;
 				}
+
+				while (ret == -1)
+				{
+					leftBorder.x = leftBorder.x - 1;
+					ret = app->pathfinding->CreatePath(myPos, leftBorder, "terrestre");
+				}
+
 			}
 		}
 	}
+
+	//if (ret == -1)
+	//{
+	//	int a = 4;
+	//}
 
 	const DynArray<iPoint>* path = app->pathfinding->GetLastPath();
 

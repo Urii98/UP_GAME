@@ -127,6 +127,10 @@ private:
 	} newData;
 
 	bool changedDataFromSave;
+
+	int framesStopped;
+	int lastPosinX;
+	int lastPosinY;
 };
 
 #endif // !__SMALL_ENEMY_1__
