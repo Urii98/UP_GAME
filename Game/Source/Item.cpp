@@ -46,7 +46,7 @@ bool Item::Start() {
 		effectAnimation.PushBack({ 0 + 32 * i ,0,32,32 });
 	}
 	effectAnimation.loop = false;
-	effectAnimation.speed = 0.3f;
+	effectAnimation.speed = 0.2f;
 	
 
 	if (app->sceneTitle->mapSelect == false) {
@@ -148,7 +148,7 @@ void Item::OnCollision(PhysBody* physA, PhysBody* physB) {
 			soundFX = true;
 		}
 
-		timeToDestroy.Start(0.12f);
+		timeToDestroy.Start(0.2f);
 		
 
 		break;

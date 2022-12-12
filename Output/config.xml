@@ -48,16 +48,25 @@
                  texturepath="Assets/Textures/Enemies.png" map="3"/>
 	  
 	  
-	  <SmallEnemyFly x="7500" y="550" scalarLimites="30" speedY="3"
+	  <SmallEnemyFly x="7600" y="550" scalarLimites="30" speedY="3"
 				   destroy="false"
 				   texturepath="Assets/Textures/Enemies.png" textureangrypath="Assets/Textures/EnemiesAngry.png" map="1"/>
-    <SmallEnemyFly x="7300" y="550" scalarLimites="30" speedY="3"
-          destroy="false"
-          texturepath="Assets/Textures/Enemies.png" textureangrypath="Assets/Textures/EnemiesAngry.png" map="1"/>
+    <SmallEnemyFly x="7700" y="550" scalarLimites="30" speedY="3"
+				   destroy="false"
+				   texturepath="Assets/Textures/Enemies.png" textureangrypath="Assets/Textures/EnemiesAngry.png" map="1"/>
     <SmallEnemyFly x="7800" y="550" scalarLimites="30" speedY="3"
           destroy="false"
           texturepath="Assets/Textures/Enemies.png" textureangrypath="Assets/Textures/EnemiesAngry.png" map="1"/>
+    <SmallEnemyFly x="7900" y="550" scalarLimites="30" speedY="3"
+				   destroy="false"
+				   texturepath="Assets/Textures/Enemies.png" textureangrypath="Assets/Textures/EnemiesAngry.png" map="1"/>
+    <SmallEnemyFly x="8000" y="550" scalarLimites="30" speedY="3"
+          destroy="false"
+          texturepath="Assets/Textures/Enemies.png" textureangrypath="Assets/Textures/EnemiesAngry.png" map="1"/>
     <SmallEnemyFly x="8100" y="550" scalarLimites="30" speedY="3"
+				   destroy="false"
+				   texturepath="Assets/Textures/Enemies.png" textureangrypath="Assets/Textures/EnemiesAngry.png" map="1"/>
+    <SmallEnemyFly x="8200" y="550" scalarLimites="30" speedY="3"
           destroy="false"
           texturepath="Assets/Textures/Enemies.png" textureangrypath="Assets/Textures/EnemiesAngry.png" map="1"/>
 	  
