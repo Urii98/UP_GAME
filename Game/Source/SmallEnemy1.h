@@ -138,6 +138,9 @@ private:
 
 	float speedX;
 	float speedLimit;
+
+	bool auxBug;
+	int intBug;
 };
 
 #endif // !__SMALL_ENEMY_1__

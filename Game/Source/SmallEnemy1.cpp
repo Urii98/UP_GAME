@@ -140,6 +140,9 @@ bool SmallEnemy1::Start() {
 	speedX = 3.0f;
 	speedLimit = 8.0f;
 
+	auxBug = false;
+	intBug = 0;
+
 	return true;
 }
 
@@ -552,7 +555,7 @@ void SmallEnemy1::ChaseMovement2()
 			}
 
 			pbody->body->ApplyForce(vel, pbody->body->GetLocalCenter(), true);
-			std::cout << "linear velocity - " << pbody->body->GetLinearVelocity().x << std::endl;
+			//std::cout << "linear velocity - " << pbody->body->GetLinearVelocity().x << std::endl;
 
 			if (pbody->body->GetLinearVelocity().x > speedLimit)
 			{
@@ -584,6 +587,25 @@ void SmallEnemy1::ChaseMovement2()
 		}
 
 	}
+
+	if (lastPosinX == position.x && lastPosinY == position.y)
+	{
+		framesStopped++;
+		
+	}
+
+	lastPosinX = position.x;
+	lastPosinY = position.y;
+
+	if (framesStopped > 60)
+	{
+		b2Vec2 vel = b2Vec2(0, -2);
+		//pbody->body->ApplyForce(vel, pbody->body->GetLocalCenter(), true);
+		pbody->body->ApplyLinearImpulse(vel, pbody->body->GetLocalCenter(), true);
+		std::cout << "impulso linear vertical aplicado " << std::endl;
+		framesStopped = 0;
+	}
+
 
 
 
@@ -721,7 +743,6 @@ void SmallEnemy1::SentryMovement2()
 	{
 		int limitToChange = std::abs(position.x / 64 - rightBorder.x);
 
-		std::cout << limitToChange << std::endl;
 		if (limitToChange == 0)
 		{
 			achievedRightBorder = true;
@@ -737,6 +758,25 @@ void SmallEnemy1::SentryMovement2()
 			achievedRightBorder = false;
 		}
 	}
+
+	if (lastPosinX == position.x && lastPosinY == position.y)
+	{
+		framesStopped++;
+
+	}
+
+	lastPosinX = position.x;
+	lastPosinY = position.y;
+
+	if (framesStopped > 60)
+	{
+		b2Vec2 vel = b2Vec2(0, -2);
+		//pbody->body->ApplyForce(vel, pbody->body->GetLocalCenter(), true);
+		pbody->body->ApplyLinearImpulse(vel, pbody->body->GetLocalCenter(), true);
+		std::cout << "impulso linear vertical aplicado " << std::endl;
+		framesStopped = 0;
+	}
+
 }
 
 bool SmallEnemy1::Update()
@@ -783,12 +823,10 @@ bool SmallEnemy1::Update()
 		ChaseMovement2();
 
 		playerTileX = app->scene->player->position.x / 32;
-		playerTileY = app->scene->player->position.y / 32;
 		limitToChaseX = std::abs(playerTileX - (position.x / 64));
-		limitToChaseY = std::abs(playerTileY - (position.y / 64));
 
 
-		if (limitToChaseX > 4 && limitToChaseY >3)
+		if (limitToChaseX > 4)
 		{
 			estadoSE1 = RETURN;
 			startPath = true;
