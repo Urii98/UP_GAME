@@ -185,8 +185,11 @@ bool EntityManager::LoadState(pugi::xml_node& data)
 
 	while (dataEntities != NULL)
 	{
-
-		LoadEntities(data, dataEntities);
+		if (dataEntities->data->destroy != true)
+		{
+			LoadEntities(data, dataEntities);
+			
+		}
 		dataEntities = dataEntities->next;
 
 	}
@@ -214,6 +217,7 @@ void EntityManager::LoadEntities(pugi::xml_node& data, ListItem<Entity*>* entity
 
 		iPoint entityPos = { posX, posY };
 		int entityState = data.child(nameToPrint).attribute("state").as_int();
+
 		entity->data->LoadInfo(entityPos, entityState);
 
 
@@ -230,6 +234,7 @@ void EntityManager::LoadEntities(pugi::xml_node& data, ListItem<Entity*>* entity
 		int posY = data.child(nameToPrint).attribute("y").as_int();
 
 		iPoint entityPos = { posX, posY };
+
 		entity->data->LoadInfo(entityPos,0);
 
 
@@ -247,6 +252,7 @@ void EntityManager::LoadEntities(pugi::xml_node& data, ListItem<Entity*>* entity
 
 		iPoint entityPos = { posX, posY };
 		int entityState = data.child(nameToPrint).attribute("state").as_int();
+
 		entity->data->LoadInfo(entityPos, entityState);
 
 	}
