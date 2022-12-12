@@ -279,7 +279,11 @@ bool EntityManager::SaveState(pugi::xml_node& data)
 	
 	while (dataEntities != NULL)
 	{
-		SaveEntities(data, dataEntities, dataEntities->data->position);
+		if (dataEntities->data->destroy != true)
+		{
+			SaveEntities(data, dataEntities, dataEntities->data->position);
+		}
+		
 		dataEntities = dataEntities->next;
 	}
 

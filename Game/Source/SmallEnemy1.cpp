@@ -119,6 +119,16 @@ bool SmallEnemy1::Start() {
 	attackAnimation = false;
 
 	changedDataFromSave = false;
+	newData.startPath = startPath;
+	newData.nextFootStep = nextFootStep;
+	newData.amountToMoveInX = amountToMoveInX;
+	newData.destination = destination;
+	newData.firstPath = firstPath;
+	newData.achievedRightBorder = achievedRightBorder;
+	newData.achievedLeftBorder = achievedLeftBorder;
+	newData.attackAnimation = attackAnimation;
+	newData.animation = currentAnimationEnemy;
+
 
 	return true;
 }
@@ -508,6 +518,8 @@ void SmallEnemy1::LoadInfo(iPoint pos, int state)
 	achievedRightBorder = newData.achievedRightBorder;
 	achievedLeftBorder = newData.achievedLeftBorder;
 	attackAnimation = newData.attackAnimation;
+	
+	if (newData.animation != NULL)
 	currentAnimationEnemy = newData.animation;
 
 }

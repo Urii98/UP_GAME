@@ -121,6 +121,18 @@ bool SmallEnemyFly::Start() {
 	limitToChase = 0;
 	
 	changedDataFromSave = false;
+	newData.startPath = startPath;
+	newData.nextFootStepInX = nextFootStepInX;
+	newData.nextFootStepInY = nextFootStepInY;
+	newData.amountToMoveInX = amountToMoveInX;
+	newData.amountToMoveInY = amountToMoveInY;
+	newData.destinationInX = destinationInX;
+	newData.destinationInY = destinationInY;
+	newData.firstPath = firstPath;
+	newData.achievedRightBorder = achievedRightBorder;
+	newData.achievedLeftBorder = achievedLeftBorder;
+	newData.animation = currentAnimationFlyEnemy;
+
 
 	return true;
 }
@@ -555,6 +567,7 @@ void SmallEnemyFly::LoadInfo(iPoint pos, int state)
 	firstPath = newData.firstPath;
 	achievedRightBorder = newData.achievedRightBorder;
 	achievedLeftBorder = newData.achievedLeftBorder;
+	if(newData.animation != NULL)
 	currentAnimationFlyEnemy = newData.animation;
 
 }
