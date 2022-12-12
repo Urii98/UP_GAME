@@ -35,11 +35,14 @@ public:
 
 private:
 
-	void ChaseMovement();
+	//void ChaseMovement();
+	void ChaseMovement2();
 
-	void SentryMovement();
+	//void SentryMovement();
+	void SentryMovement2();
 
-	void ReturnMovement();
+	//void ReturnMovement();
+	void ReturnMovement2();
 
 
 
@@ -56,7 +59,7 @@ public:
 	bool walkDir;
 	bool attackE;
 	bool animAtk;
-	int speedX;
+	int speedinX;
 
 	Animation walkRAnimEnemy;
 	Animation walkLAnimEnemy;
@@ -131,6 +134,9 @@ private:
 	int framesStopped;
 	int lastPosinX;
 	int lastPosinY;
+
+	float speedX;
+	float speedLimit;
 };
 
 #endif // !__SMALL_ENEMY_1__
