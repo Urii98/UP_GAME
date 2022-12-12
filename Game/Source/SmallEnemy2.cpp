@@ -175,6 +175,12 @@ bool SmallEnemy2::Start() {
 void SmallEnemy2::SentryMovement()
 {
 
+	if (position.y / 64 != leftBorder.y)
+	{
+		leftBorder = { position.x / 64, (position.y / 64) };
+		rightBorder = { leftBorder.x + range, (position.y / 64) };
+	}
+
 	if (startPath)
 	{
 		if (firstPath)

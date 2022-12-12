@@ -189,6 +189,13 @@ void SmallEnemy1::ChaseMovement()
 
 void SmallEnemy1::ReturnMovement()
 {
+
+	if (position.y / 64 != leftBorder.y)
+	{
+		leftBorder = { position.x / 64, (position.y / 64) };
+		rightBorder = { leftBorder.x + range, (position.y / 64) };
+	}
+
 	attackAnimation = false;
 	if (startPath)
 	{
@@ -260,6 +267,11 @@ void SmallEnemy1::ReturnMovement()
 
 void SmallEnemy1::SentryMovement()
 {
+	if (position.y / 64 != leftBorder.y)
+	{
+		leftBorder = { position.x / 64, (position.y / 64) };
+		rightBorder = { leftBorder.x + range, (position.y / 64) };
+	}
 
 	if (startPath)
 	{
