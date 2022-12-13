@@ -104,6 +104,9 @@ public:
 	Animation flyLAnim;
 	Animation death;
 	Animation win;
+	
+	Animation swordAttackRAnim;
+	Animation swordAttackLAnim;
 
 	transformPosition teleport;
 

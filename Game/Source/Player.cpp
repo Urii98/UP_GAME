@@ -219,6 +219,26 @@ bool Player::Start() {
 	win.loop = false;
 	win.speed = 0.085f;
 
+	swordAttackRAnim.PushBack({ 168,1439,42,48 });
+	swordAttackRAnim.PushBack({ 217,1439,42,48 });
+	swordAttackRAnim.PushBack({ 209,1439,42,48 });
+	swordAttackRAnim.PushBack({ 324,1439,47,48 });
+	swordAttackRAnim.PushBack({ 387,1439,47,48 });
+	swordAttackRAnim.PushBack({ 451,1439,47,48 });
+
+
+	swordAttackRAnim.PushBack({ 39,1519,50,48 });
+	swordAttackRAnim.PushBack({ 110,1519,58,48 });
+	swordAttackRAnim.PushBack({ 188,1519,63,48 });
+	swordAttackRAnim.PushBack({ 271,1519,74,48 });
+	swordAttackRAnim.PushBack({ 367,1519,52,48 });
+	swordAttackRAnim.PushBack({ 439,1519,67,48 });
+	swordAttackRAnim.PushBack({ 524,1519,69,48 });
+	swordAttackRAnim.PushBack({ 609,1519,35,48 });
+	swordAttackRAnim.loop = true;
+	swordAttackRAnim.speed = 0.4f;
+
+
 	speedX = scalarSpeedX * app->win->GetScale();
 	speedY = scalarSpeedY * app->win->GetScale();
 	speedYDown = scalarSpeedYDown * app->win->GetScale(); //para cuando estamos en el aire y apretamos "S" para bajar m�s r�pido
@@ -668,7 +688,16 @@ bool Player::Update()
 void Player::PostUpdate()
 {
 	SDL_Rect rect = currentAnimation->GetCurrentFrame();
-	app->render->DrawTexture(texture, position.x, position.y, &rect);
+
+	if (currentAnimation == &swordAttackRAnim)
+	{
+		app->render->DrawTexture(texture, position.x-13, position.y-26, &rect);
+	}
+	else
+	{
+		app->render->DrawTexture(texture, position.x, position.y, &rect);
+	}
+	
 }
 
 

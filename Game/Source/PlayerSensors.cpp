@@ -51,14 +51,26 @@ bool PlayerSensors::Update()
 
 		if (skillSwitch == false)
 		{
-			skill = app->physics->CreateRectangleSensor(0, 0, 20, 10, bodyType::KINEMATIC);
-			b2Vec2 vecPlayerPos = b2Vec2(app->scene->player->pbody->body->GetTransform().p.x + 1.50, app->scene->player->pbody->body->GetTransform().p.y);
+			skill = app->physics->CreateRectangleSensor(0, 0, 38, 70, bodyType::KINEMATIC);
+			b2Vec2 vecPlayerPos = b2Vec2(app->scene->player->pbody->body->GetTransform().p.x + 1.50, app->scene->player->pbody->body->GetTransform().p.y-0.56);
+			
 
 			skill->body->SetTransform(vecPlayerPos, 0);
 			skillSwitch = true;
-			skill->body->SetAngularVelocity(0.5f);
+			
+			aux = *app->scene->player->currentAnimation;
+
+			if (app->scene->player->direccionP == app->scene->player->DERECHA)
+			{
+				app->scene->player->currentAnimation = &app->scene->player->swordAttackRAnim;
+			}
+			else
+			{
+				app->scene->player->currentAnimation = &app->scene->player->swordAttackLAnim;
+			}
+			
 		}
-		skill->body->SetAngularVelocity(2.0f);
+		
 		
 	}
 	if (skillTimer.Test() == FIN)
@@ -66,6 +78,7 @@ bool PlayerSensors::Update()
 		skill->body->GetWorld()->DestroyBody(skill->body);
 		skillSwitch = false;
 		
+		app->scene->player->currentAnimation = &aux;
 	}
 
 	

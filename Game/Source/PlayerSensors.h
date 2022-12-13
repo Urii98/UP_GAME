@@ -5,6 +5,7 @@
 #include "Point.h"
 #include "Physics.h"
 #include "SDL_Timer.h"
+#include "Animation.h"
 
 class PlayerSensors : public Entity
 {
@@ -33,6 +34,8 @@ public:
 
 	bool resetjumps;
 	int frames;
+
+	Animation aux;
 
 	
 };
