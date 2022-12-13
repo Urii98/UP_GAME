@@ -4,6 +4,7 @@
 #include "Entity.h"
 #include "Point.h"
 #include "Physics.h"
+#include "SDL_Timer.h"
 
 class PlayerSensors : public Entity
 {
@@ -26,10 +27,14 @@ public:
 public:
 	PhysBody* jumpSensor; 
 
+	PhysBody* skill;
+	SDL_Timer skillTimer;
+	bool skillSwitch = false;
+
 	bool resetjumps;
 	int frames;
 
-	PhysBody* sensArr[100];
+	
 };
 
 #endif // __PLAYER_SENSORS_H__

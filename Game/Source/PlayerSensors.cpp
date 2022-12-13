@@ -35,6 +35,7 @@ bool PlayerSensors::Start()
 
 bool PlayerSensors::Update()
 {	
+	
 	b2Vec2 vecPlayerPos = b2Vec2(app->scene->player->pbody->body->GetTransform().p.x, app->scene->player->pbody->body->GetTransform().p.y+0.90);
 
 	jumpSensor->body->SetTransform(vecPlayerPos, 0);
@@ -43,6 +44,38 @@ bool PlayerSensors::Update()
 	//std::cout << "SENSOR  -  Y :" << jumpSensor->body->GetTransform().p.y << std::endl;
 
 	frames++;
+
+	if (app->input->GetKey(SDL_SCANCODE_G) == KEY_DOWN)
+	{
+		skillTimer.Start(1.0f);
+
+		if (skillSwitch == false)
+		{
+			skill = app->physics->CreateRectangleSensor(0, 0, 20, 10, bodyType::STATIC);
+			b2Vec2 vecPlayerPos = b2Vec2(app->scene->player->pbody->body->GetTransform().p.x + 1.50, app->scene->player->pbody->body->GetTransform().p.y);
+
+			skill->body->SetTransform(vecPlayerPos, 0);
+			skillSwitch = true;
+		}
+		
+	}
+	if (skillTimer.Test() == FIN)
+	{
+		skill->body->GetWorld()->DestroyBody(skill->body);
+		skillSwitch = false;
+		
+	}
+
+	
+
+	/*if (aux)
+	{
+		if (skill->body->IsActive() == true)
+		b2Vec2 vecPlayerPos = b2Vec2(app->scene->player->pbody->body->GetTransform().p.x + 1.50, app->scene->player->pbody->body->GetTransform().p.y);
+
+		skill->body->SetTransform(vecPlayerPos, 0);
+	}*/
+	
 
 	return true;
 
