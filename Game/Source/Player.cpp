@@ -221,12 +221,10 @@ bool Player::Start() {
 
 	swordAttackRAnim.PushBack({ 168,1439,42,48 });
 	swordAttackRAnim.PushBack({ 217,1439,42,48 });
-	swordAttackRAnim.PushBack({ 209,1439,42,48 });
+	swordAttackRAnim.PushBack({ 269,1439,42,48 });
 	swordAttackRAnim.PushBack({ 324,1439,47,48 });
 	swordAttackRAnim.PushBack({ 387,1439,47,48 });
 	swordAttackRAnim.PushBack({ 451,1439,47,48 });
-
-
 	swordAttackRAnim.PushBack({ 39,1519,50,48 });
 	swordAttackRAnim.PushBack({ 110,1519,58,48 });
 	swordAttackRAnim.PushBack({ 188,1519,63,48 });
@@ -238,6 +236,23 @@ bool Player::Start() {
 	swordAttackRAnim.loop = true;
 	swordAttackRAnim.speed = 0.4f;
 
+	
+	swordAttackLAnim.PushBack({ 461,1885,42,48 });
+	swordAttackLAnim.PushBack({ 412,1885,42,48 });
+	swordAttackLAnim.PushBack({ 360,1885,42,48 });
+	swordAttackLAnim.PushBack({ 301,1885,47,48 });
+	swordAttackLAnim.PushBack({ 238,1885,47,48 });
+	swordAttackLAnim.PushBack({ 174,1885,47,48 });
+	swordAttackLAnim.PushBack({ 582,1965,50,48 });
+	swordAttackLAnim.PushBack({ 502,1965,58,48 });
+	swordAttackLAnim.PushBack({ 420,1965,63,48 });
+	swordAttackLAnim.PushBack({ 326,1965,74,48 });
+	swordAttackLAnim.PushBack({ 252,1965,52,48 });
+	swordAttackLAnim.PushBack({ 164,1965,68,48 });
+	swordAttackLAnim.PushBack({ 78,1965,69,48 });
+	swordAttackLAnim.PushBack({ 27,1965,35,48 });
+	swordAttackLAnim.loop = true;
+	swordAttackLAnim.speed = 0.4f;
 
 	speedX = scalarSpeedX * app->win->GetScale();
 	speedY = scalarSpeedY * app->win->GetScale();
@@ -692,6 +707,10 @@ void Player::PostUpdate()
 	if (currentAnimation == &swordAttackRAnim)
 	{
 		app->render->DrawTexture(texture, position.x-13, position.y-26, &rect);
+	}
+	else if (currentAnimation == &swordAttackLAnim)
+	{
+		app->render->DrawTexture(texture, position.x -23, position.y - 26, &rect);
 	}
 	else
 	{
