@@ -2,6 +2,7 @@
 #include "App.h"
 #include "Scene.h"
 #include "Window.h"
+#include "Audio.h"
 #include <iostream>
 
 PlayerSensors::PlayerSensors() : Entity(EntityType::SENSORS)
@@ -89,6 +90,8 @@ bool PlayerSensors::Update()
 			app->scene->player->posXBeforeAttack = (app->scene->player->position.x * app->win->GetScale()) +28;
 			app->scene->player->posYBeforeAttack = (app->scene->player->position.y * app->win->GetScale()) +20;
 
+
+			app->audio->PlayFx(app->scene->player->swordFxId);
 			
 		}
 		

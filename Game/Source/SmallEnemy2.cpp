@@ -581,6 +581,7 @@ bool SmallEnemy2::Update()
 		enemyIsDead = true;
 		currentAnimationEnemy = &deathEffect;
 		app->audio->PlayFx(deathFxId);
+		
 	}
 
 	if (enemyIsDead)

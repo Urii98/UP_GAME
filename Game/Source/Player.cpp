@@ -42,6 +42,7 @@ bool Player::Awake() {
 	coinSFx = parameters.attribute("coinFxPath").as_string();
 	deathSFx = parameters.attribute("kirbyDeathFxPath").as_string();
 	victorySFx = parameters.attribute("kirbyVictoryFxPath").as_string();
+	swordFxPath = parameters.attribute("swordFxPath").as_string();
 
 	musicScenePath = parameters.attribute("musicScenePath").as_string();
 	musicStopPath = parameters.attribute("musicStopPath").as_string();
@@ -57,6 +58,7 @@ bool Player::Awake() {
 	pickCoinFxId = app->audio->LoadFx(coinSFx);
 	kirbyDeathFx = app->audio->LoadFx(deathSFx);
 	kirbyVictoryFx = app->audio->LoadFx(victorySFx);
+	swordFxId = app->audio->LoadFx(swordFxPath);
 
 	texturePath = parameters.attribute("texturepath").as_string();
 	

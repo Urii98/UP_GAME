@@ -112,6 +112,7 @@ public:
 	transformPosition teleport;
 
 	int pickCoinFxId;
+	int swordFxId;
 
 	int posXBeforeAttack;
 	int posYBeforeAttack;
@@ -145,9 +146,11 @@ private:
 	const char* coinSFx;
 	const char* deathSFx;
 	const char* victorySFx;
+	
 
 	const char* musicScenePath;
 	const char* musicStopPath;
+	const char* swordFxPath;
 
 };
 

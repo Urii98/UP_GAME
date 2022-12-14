@@ -29,6 +29,7 @@
             kirbyVictoryFxPath="Assets/Audio/Fx/KirbyVictoryFx.ogg"
             musicScenePath="Assets/Audio/Music/MusicLevel.ogg"
             musicStopPath="Assets/Audio/Music/noSound.ogg"
+            swordFxPath="Assets/Audio/Fx/sword.wav"
             flapLimit="0" oneJump="false" flying="false" godMode="false" victory="false"/>
 	  
     <item x="600" y="602" texturepath="Assets/Textures/goldCoin.png" effecttexturepath ="Assets/Textures/coinEffect.png" map="1"/>
