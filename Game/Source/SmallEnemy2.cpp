@@ -39,6 +39,9 @@ bool SmallEnemy2::Awake() {
 	destroy = parameters.attribute("destroy").as_bool();
 	map = parameters.attribute("map").as_int();
 
+	deathFxPath = parameters.attribute("deathFxPath").as_string();
+	deathFxId = app->audio->LoadFx(deathFxPath);
+
 	return true;
 }
 
@@ -197,7 +200,7 @@ bool SmallEnemy2::Start() {
 
 	speedX = 3.8;
 	speedLimit = 7;
-	aaa = false;
+	enemyIsDead = false;
 
 	return true;
 }
@@ -575,11 +578,12 @@ bool SmallEnemy2::Update()
 
 	if (deathEffectTimer.Test() == FIN)
 	{
-		aaa = true;
+		enemyIsDead = true;
 		currentAnimationEnemy = &deathEffect;
+		app->audio->PlayFx(deathFxId);
 	}
 
-	if (aaa)
+	if (enemyIsDead)
 	{
 		app->render->DrawTexture(deathTexture, position.x / app->win->GetScale() - 17, position.y / app->win->GetScale() - 15, &rect);
 	}
@@ -617,6 +621,7 @@ bool SmallEnemy2::CleanUp()
 	//memoryleak
 
 	app->tex->UnLoad(texture);
+	app->tex->UnLoad(deathTexture);
 	active = false;
 
 	return true;

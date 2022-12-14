@@ -81,7 +81,10 @@ private:
 
 	SDL_Timer deathAnimationTimer;
 	SDL_Timer deathEffectTimer;
-	bool aaa;
+	bool enemyIsDead;
+	int deathFxId;
+	const char* deathFxPath;
+
 	//DONE 4: Add a physics
 //	PhysBody* pbody;
 

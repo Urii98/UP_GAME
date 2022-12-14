@@ -52,7 +52,8 @@
 	  
     <SmallEnemy2 x="350" y="448" scalarLimites="3" speedX="2"
                  walkDir="false" destroy="false"
-                 texturepath="Assets/Textures/Enemies.png" deathpath="Assets/Textures/enemy-death.png" map="1"/>
+                 texturepath="Assets/Textures/Enemies.png" deathpath="Assets/Textures/enemy-death.png" map="1"
+                 deathFxPath="Assets/Audio/Fx/enemyExplode.wav"/>
 
    
     
