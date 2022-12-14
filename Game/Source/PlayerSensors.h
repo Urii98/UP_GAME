@@ -30,12 +30,16 @@ public:
 
 	PhysBody* skill;
 	SDL_Timer skillTimer;
+	SDL_Timer skillReset;
 	bool skillSwitch = false;
 
 	bool resetjumps;
 	int frames;
 
 	Animation aux;
+
+	bool enemyCollisioned;
+	b2Vec2 playerSkill;
 
 	
 };

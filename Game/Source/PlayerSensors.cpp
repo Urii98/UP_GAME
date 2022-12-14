@@ -29,7 +29,12 @@ bool PlayerSensors::Start()
 
 	frames = 0;
 	resetjumps = false;
+	enemyCollisioned = false;
 	
+	playerSkill.x = 0;
+	playerSkill.y = 0;
+	skillReset.Start(0.2f);
+
 	return true;
 }
 
@@ -39,24 +44,35 @@ bool PlayerSensors::Update()
 	b2Vec2 vecPlayerPos = b2Vec2(app->scene->player->pbody->body->GetTransform().p.x, app->scene->player->pbody->body->GetTransform().p.y+0.90);
 
 	jumpSensor->body->SetTransform(vecPlayerPos, 0);
-	
-	//std::cout << "SENSOR  -  X :" << jumpSensor->body->GetTransform().p.x << std::endl;
-	//std::cout << "SENSOR  -  Y :" << jumpSensor->body->GetTransform().p.y << std::endl;
 
 	frames++;
 
-	if (app->input->GetKey(SDL_SCANCODE_G) == KEY_DOWN)
+	if (app->input->GetKey(SDL_SCANCODE_G) == KEY_DOWN && skillReset.Test() == FIN )
 	{
 		skillTimer.Start(1.0f);
+		skillReset.Start(3.0f);
 
 		if (skillSwitch == false)
 		{
 			skill = app->physics->CreateRectangleSensor(0, 0, 38, 70, bodyType::KINEMATIC);
-			b2Vec2 vecPlayerPos = b2Vec2(app->scene->player->pbody->body->GetTransform().p.x + 1.50, app->scene->player->pbody->body->GetTransform().p.y-0.56);
+			skill->ctype = ColliderType::SKILL;
+
+			jumpSensor->listener = this;
+
+			if (app->scene->player->direccionP == app->scene->player->DERECHA)
+			{
+				playerSkill = b2Vec2(app->scene->player->pbody->body->GetTransform().p.x + 1.50, app->scene->player->pbody->body->GetTransform().p.y - 0.56);
+			}
+			else if (app->scene->player->direccionP == app->scene->player->IZQUIERDA)
+			{
+				playerSkill = b2Vec2(app->scene->player->pbody->body->GetTransform().p.x - 1.50, app->scene->player->pbody->body->GetTransform().p.y - 0.56);
+			}
+			
 			
 
-			skill->body->SetTransform(vecPlayerPos, 0);
+			skill->body->SetTransform(playerSkill, 0);
 			skillSwitch = true;
+			enemyCollisioned = false;
 			
 			aux = *app->scene->player->currentAnimation;
 
@@ -69,16 +85,26 @@ bool PlayerSensors::Update()
 				app->scene->player->currentAnimation = &app->scene->player->swordAttackLAnim;
 			}
 			
+			app->scene->player->estadoP = app->scene->player->NONE;
+			app->scene->player->posXBeforeAttack = (app->scene->player->position.x * app->win->GetScale()) +28;
+			app->scene->player->posYBeforeAttack = (app->scene->player->position.y * app->win->GetScale()) +20;
+
+			
 		}
 		
 		
 	}
 	if (skillTimer.Test() == FIN)
 	{
-		skill->body->GetWorld()->DestroyBody(skill->body);
 		skillSwitch = false;
+
+		if (enemyCollisioned == false)
+		{
+			skill->body->GetWorld()->DestroyBody(skill->body);
+		}
 		
 		app->scene->player->currentAnimation = &aux;
+		app->scene->player->estadoP = app->scene->player->MOVIMIENTO;
 	}
 
 	
@@ -109,21 +135,44 @@ bool PlayerSensors::CleanUp()
 void PlayerSensors::OnCollision(PhysBody* physA, PhysBody* physB)
 {
 
-	switch (physB->ctype)
+	if (physA->ctype == ColliderType::SENSOR)
 	{
-	case ColliderType::PLATFORM:
-		if (!resetjumps || frames >20)
-		{
-			app->scene->player->collisionP = app->scene->player->COLLISION;
-			app->scene->player->oneJump = false;
-   			app->scene->player->flying = false;
-			app->scene->player->flapLimit = 0;
-			app->scene->player->jumpRAnim.Reset();
-			app->scene->player->jumpLAnim.Reset();
-			frames = 0;
-			resetjumps = true;
-		}
 
-		break;
+
+		switch (physB->ctype)
+		{
+		case ColliderType::PLATFORM:
+			if (!resetjumps || frames > 20)
+			{
+				app->scene->player->collisionP = app->scene->player->COLLISION;
+				app->scene->player->oneJump = false;
+				app->scene->player->flying = false;
+				app->scene->player->flapLimit = 0;
+				app->scene->player->jumpRAnim.Reset();
+				app->scene->player->jumpLAnim.Reset();
+				frames = 0;
+				resetjumps = true;
+			}
+
+			break;
+		}
+	}
+	else if (physA->ctype == ColliderType::SKILL)
+	{
+		switch (physB->ctype)
+		{
+		case ColliderType::ENEMY:
+		
+			enemyCollisioned = true;
+			skill->body->GetWorld()->DestroyBody(skill->body);
+
+			break;
+
+		case ColliderType::ENEMYFLY:
+			enemyCollisioned = true;
+			skill->body->GetWorld()->DestroyBody(skill->body);
+
+			break;
+		}
 	}
 }

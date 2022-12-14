@@ -574,7 +574,12 @@ void SmallEnemy2::OnCollision(PhysBody* physA, PhysBody* physB)
 		destroy = true;
 
 		break;
+	
+	case ColliderType::SKILL:
+		destroy = true;
+
 	}
+	
 }
 
 void SmallEnemy2::LoadInfo(iPoint pos, int state)

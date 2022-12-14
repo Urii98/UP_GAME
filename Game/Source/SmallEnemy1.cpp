@@ -920,6 +920,9 @@ void SmallEnemy1::OnCollision(PhysBody* physA, PhysBody* physB)
 		destroy = true;
 	
 		break;
+
+	case ColliderType::SKILL:
+		destroy = true;
 	}
 }
 

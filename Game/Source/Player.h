@@ -111,6 +111,9 @@ public:
 	transformPosition teleport;
 
 	int pickCoinFxId;
+
+	int posXBeforeAttack;
+	int posYBeforeAttack;
 private:
 
 	//L02: DONE 1: Declare player parameters

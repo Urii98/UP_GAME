@@ -291,6 +291,9 @@ bool Player::Start() {
 	//std::cout << "NUEVA MASA PLAYER - " << pbody->body->GetMass() << std::endl;
 
 	app->audio->PlayMusic(musicScenePath, 0);
+
+	posXBeforeAttack = 0;
+	posYBeforeAttack = 0;
 	
 	return true;
 }
@@ -665,6 +668,8 @@ bool Player::Update()
 		break;
 
 	case(NONE):
+		Camera();
+		ChangePosition(posXBeforeAttack, posYBeforeAttack);
 		break;
 
 	default: 
