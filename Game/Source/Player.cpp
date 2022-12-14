@@ -667,9 +667,11 @@ bool Player::Update()
 		}
 		break;
 
-	case(NONE):
+	case(SKILL):
 		Camera();
 		ChangePosition(posXBeforeAttack, posYBeforeAttack);
+	case(NONE):
+
 		break;
 
 	default: 
@@ -773,7 +775,11 @@ void Player::OnCollision(PhysBody* physA, PhysBody* physB) {
 		}
 		break;
 	case ColliderType::ENEMYFLY:
-		flapLimit = 0;
+		if (!godMode)
+		{
+			estadoP = DEATH;
+
+		}
 		break;
 	case ColliderType::UNKNOWN:
 		LOG("Collision UNKNOWN");

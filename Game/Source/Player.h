@@ -51,6 +51,7 @@ public:
 		DEATH,
 		VICTORY,
 		NONE,
+		SKILL,
 	};
 	int estadoP;
 

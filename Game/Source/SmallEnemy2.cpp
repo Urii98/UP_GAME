@@ -33,6 +33,7 @@ bool SmallEnemy2::Awake() {
 	speedinX = parameters.attribute("speedX").as_int();
 
 	texturePath = parameters.attribute("texturepath").as_string();
+	deathPath = parameters.attribute("deathpath").as_string();
 
 	walkDir = parameters.attribute("walkDir").as_bool();
 	destroy = parameters.attribute("destroy").as_bool();
@@ -141,8 +142,27 @@ bool SmallEnemy2::Start() {
 	//walkLAnimEnemy.pingpong = true;
 	walkLAnimEnemy.speed = 0.125f;
 
+	deathR.PushBack({ 902,974,35,34 });
+	deathR.PushBack({ 853,974,35,34 });
+	deathR.loop = true;
+	deathR.speed = 0.15f;
+
+	deathL.PushBack({ 581,974,35,34 });
+	deathR.PushBack({ 630,974,35,34 });
+	deathR.loop = true;
+	deathR.speed = 0.15f;
+
+	for (int i = 0; i < 6; i++)
+	{
+		deathEffect.PushBack({ 0 + i * 40, 0, 40, 41 }); 
+	}
+	deathEffect.loop = false;
+	deathEffect.speed = 0.25f;
+	
+
 	//initilize textures
 	texture = app->tex->Load(texturePath);
+	deathTexture = app->tex->Load(deathPath);
 
 	// L07 DONE 4: Add a physics  - initialize the physics body
 	pbody = app->physics->CreateCircle(position.x + 12, position.y + 12, 15, bodyType::DYNAMIC);
@@ -177,6 +197,7 @@ bool SmallEnemy2::Start() {
 
 	speedX = 3.8;
 	speedLimit = 7;
+	aaa = false;
 
 	return true;
 }
@@ -515,6 +536,21 @@ bool SmallEnemy2::Update()
 		SentryMovement2();
 
 		break;
+	case DEATH:
+
+		if (app->scene->player->position.x*2 > position.x)
+		{
+			b2Vec2 vel = b2Vec2(-1, -5);
+			pbody->body->ApplyForce(vel, pbody->body->GetLocalCenter(), true);
+		}
+		else if (app->scene->player->position.x*2 < position.x)
+		{
+			b2Vec2 vel = b2Vec2(1, -5);
+			pbody->body->ApplyForce(vel, pbody->body->GetLocalCenter(), true);
+		}
+
+		deathEffectTimer.Start(0.5);
+
 	default:
 		break;
 	}
@@ -530,16 +566,38 @@ bool SmallEnemy2::Update()
 			debug = false;
 		}
 	}
-	//std::cout <<"position acabado el movement" << position.x << std::endl;
+	
+
+
 
 	currentAnimationEnemy->Update();
 	SDL_Rect rect = currentAnimationEnemy->GetCurrentFrame();
-	app->render->DrawTexture(texture, position.x / app->win->GetScale() - 17, position.y / app->win->GetScale() - 15, &rect);
+
+	if (deathEffectTimer.Test() == FIN)
+	{
+		aaa = true;
+		currentAnimationEnemy = &deathEffect;
+	}
+
+	if (aaa)
+	{
+		app->render->DrawTexture(deathTexture, position.x / app->win->GetScale() - 17, position.y / app->win->GetScale() - 15, &rect);
+	}
+	else
+	{
+		app->render->DrawTexture(texture, position.x / app->win->GetScale() - 17, position.y / app->win->GetScale() - 15, &rect);
+	}
+	
 
 	if (position.y > 1856 ||
 		position.x < 0 ||
 		position.x > 15936 ||
 		position.y < 0)
+	{
+		destroy = true;
+	}
+
+	if (deathTimer.Test() == FIN)
 	{
 		destroy = true;
 	}
@@ -576,7 +634,22 @@ void SmallEnemy2::OnCollision(PhysBody* physA, PhysBody* physB)
 		break;
 	
 	case ColliderType::SKILL:
-		destroy = true;
+
+		if (currentAnimationEnemy == &walkLAnimEnemy)
+		{
+			currentAnimationEnemy = &deathL;
+		}
+		else if (currentAnimationEnemy == &walkRAnimEnemy)
+		{
+			currentAnimationEnemy = &deathR;
+		}
+
+		estadoSE2 = DEATH;
+		deathTimer.Start(1.0f);
+		b2Vec2 vel = b2Vec2(0, 0);
+		pbody->body->SetLinearVelocity(vel);
+
+		//destroy = true;
 
 	}
 	

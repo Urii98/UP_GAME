@@ -85,7 +85,7 @@ bool PlayerSensors::Update()
 				app->scene->player->currentAnimation = &app->scene->player->swordAttackLAnim;
 			}
 			
-			app->scene->player->estadoP = app->scene->player->NONE;
+			app->scene->player->estadoP = app->scene->player->SKILL;
 			app->scene->player->posXBeforeAttack = (app->scene->player->position.x * app->win->GetScale()) +28;
 			app->scene->player->posYBeforeAttack = (app->scene->player->position.y * app->win->GetScale()) +20;
 
