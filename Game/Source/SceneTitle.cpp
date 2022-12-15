@@ -40,7 +40,7 @@ bool SceneTitle::Start() {
 
 	char x[120];
 
-	for (int i = 0; i <= 148; i++)
+	for (int i = 0; i <= 146; i++)
 	{
 		sprintf_s(x, "Assets/Textures/Title/ezgif-frame-%d.jpg", i + 1);
 		bgTexture[i] = app->tex->Load(x);
@@ -65,7 +65,7 @@ bool SceneTitle::Update(float dt)
 {
 	chrono.Start(0.18); //el tiempo que pasa entre cada frame de la animación
 
-	if (frame < 147 && chrono.Test() == FIN)
+	if (frame < 145 && chrono.Test() == FIN)
 		frame++;
 
 	if (frame == 5)
@@ -79,18 +79,18 @@ bool SceneTitle::Update(float dt)
 		app->fade->Fade(this, app->scene, 60);
 	}
 
-	if (app->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN)//GODMODE
-	{
-		mapSelect = true;
-		levelSelected = true;
-	}
+	//if (app->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN)//GODMODE
+	//{
+	//	mapSelect = true;
+	//	levelSelected = true;
+	//}
 
-	if (app->input->GetKey(SDL_SCANCODE_F2) == KEY_DOWN)//GODMODE
-	{
-		mapSelect = false;
-		levelSelected = true;
+	//if (app->input->GetKey(SDL_SCANCODE_F2) == KEY_DOWN)//GODMODE
+	//{
+	//	mapSelect = false;
+	//	levelSelected = true;
 
-	}
+	//}
 	
 	return true;
 }
@@ -100,22 +100,22 @@ bool SceneTitle::PostUpdate()
 	SDL_Rect rect = { 0,0,1024,768 };
 	
 	app->render->DrawTexture(bgTexture[frame], 0, 0, &rect, 1.0f, 0.0, 2147483647, 2147483647, false);
-	
-	if (!levelSelected)
-	{
-		app->render->DrawTexture(lvlSelectorTexture,0,0, &rect, 1.0f, 0.0, 2147483647, 2147483647, false);
-	}
-	else
-	{
-		if (mapSelect)
-		{
-			app->render->DrawTexture(lvlOneTexture, 0, 0, &rect, 1.0f, 0.0, 2147483647, 2147483647, false);
-		}
-		else
-		{
-			app->render->DrawTexture(lvlTwoTexture, 0, 0, &rect, 1.0f, 0.0, 2147483647, 2147483647, false);
-		}
-	}
+	//
+	//if (!levelSelected)
+	//{
+	//	app->render->DrawTexture(lvlSelectorTexture,0,0, &rect, 1.0f, 0.0, 2147483647, 2147483647, false);
+	//}
+	//else
+	//{
+	//	if (mapSelect)
+	//	{
+	//		app->render->DrawTexture(lvlOneTexture, 0, 0, &rect, 1.0f, 0.0, 2147483647, 2147483647, false);
+	//	}
+	//	else
+	//	{
+	//		app->render->DrawTexture(lvlTwoTexture, 0, 0, &rect, 1.0f, 0.0, 2147483647, 2147483647, false);
+	//	}
+	//}
 
 	return true;
 }
