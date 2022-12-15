@@ -151,9 +151,9 @@ bool SmallEnemy2::Start() {
 	deathR.speed = 0.15f;
 
 	deathL.PushBack({ 581,974,35,34 });
-	deathR.PushBack({ 630,974,35,34 });
-	deathR.loop = true;
-	deathR.speed = 0.15f;
+	deathL.PushBack({ 630,974,35,34 });
+	deathL.loop = true;
+	deathL.speed = 0.15f;
 
 	for (int i = 0; i < 6; i++)
 	{
@@ -338,7 +338,7 @@ void SmallEnemy2::SentryMovement2()
 	{
 		int limitToChange = std::abs(position.x / 64 - rightBorder.x);
 
-		std::cout << limitToChange << std::endl;
+		
 		if (limitToChange == 0)
 		{
 			achievedRightBorder = true;
@@ -355,175 +355,7 @@ void SmallEnemy2::SentryMovement2()
 		}
 	}
 
-	//if (lastPosinX == position.x && lastPosinY == position.y)
-	//{
-	//	framesStopped++;
-	//	std::cout <<"framesStopped - " << framesStopped << std::endl;
-	//}
-
-	//lastPosinX = position.x;
-	//lastPosinY = position.y;
-
-	//if (framesStopped > 60)
-	//{
-	//	b2Vec2 vel = b2Vec2(0, -70);
-	//	//pbody->body->ApplyForce(vel, pbody->body->GetLocalCenter(), true);
-	//	pbody->body->ApplyLinearImpulse(vel, pbody->body->GetLocalCenter(), true);
-	//	framesStopped = 0;
-	//}
-
 }
-
-//void SmallEnemy2::SentryMovement()
-//{
-//	int ret = 0;
-//
-//	if (position.y / 64 != leftBorder.y)
-//	{
-//		leftBorder = { position.x / 64, (position.y / 64) };
-//		rightBorder = { leftBorder.x + range, (position.y / 64) };
-//	}
-//
-//	if (startPath)
-//	{
-//		if (firstPath)
-//		{
-//			ret = app->pathfinding->CreatePath(leftBorder, rightBorder, "terrestre");
-//			firstPath = false;
-//			if (ret == -1) //AKAAAAAAAAAAAAAAAAAA
-//			{
-//				while (ret == -1)
-//				{
-//					leftBorder.x = leftBorder.x - 1;
-//					rightBorder.x = rightBorder.x - 1;
-//					ret = app->pathfinding->CreatePath(leftBorder, rightBorder, "terrestre");
-//				}
-//			}
-//		}
-//		else
-//		{
-//			if (achievedLeftBorder)
-//			{
-//				iPoint myPos = { (int)std::round(nextFootStep / 64) , position.y / 64 };
-//				ret=app->pathfinding->CreatePath(myPos, rightBorder, "terrestre");
-//				currentAnimationEnemy = &walkLAnimEnemy;
-//
-//				if (changeDataFromSave)
-//				{
-//					myPos = { (int)std::round(posXFromSave / 64) , posYFromSave / 64 };
-//					ret=app->pathfinding->CreatePath(myPos, rightBorder, "terrestre");
-//					changeDataFromSave = false;
-//				}
-//
-//				if (ret == -1) //AKAAAAAAAAAAAAAAAAAA
-//				{
-//					while (ret == -1)
-//					{
-//						rightBorder.x = rightBorder.x - 1;
-//						ret = app->pathfinding->CreatePath(myPos, rightBorder, "terrestre");
-//					}
-//				}
-//
-//			}
-//			else if (achievedRightBorder)
-//			{
-//				iPoint myPos = { (int)std::round(nextFootStep / 64) , position.y / 64 };
-//				ret=app->pathfinding->CreatePath(myPos, leftBorder, "terrestre");
-//				currentAnimationEnemy = &walkRAnimEnemy;
-//
-//				if (changeDataFromSave)
-//				{
-//					myPos = { (int)std::round(posXFromSave / 64) , posYFromSave / 64 };
-//					ret=app->pathfinding->CreatePath(myPos, leftBorder, "terrestre");
-//					changeDataFromSave = false;
-//				}
-//
-//				if (ret == -1) //AKAAAAAAAAAAAAAAAAAA
-//				{
-//					while (ret == -1)
-//					{
-//						leftBorder.x = leftBorder.x - 1;
-//						ret = app->pathfinding->CreatePath(myPos, leftBorder, "terrestre");
-//					}
-//				}
-//
-//			}
-//		}
-//	}
-//
-//	const DynArray<iPoint>* path = app->pathfinding->GetLastPath();
-//
-//	if (debug)
-//	{
-//		app->pathfinding->DrawLastPath();
-//	}
-//
-//
-//	if (startPath)
-//	{
-//
-//		if (path->At(1) != nullptr)
-//		{
-//			int aux = position.x;
-//			destination = path->At(1)->x * 64;
-//			nextFootStep = custom_lerp(position.x, destination, 0.02f);
-//			amountToMoveInX = nextFootStep - aux;
-//			startPath = false;
-//		}
-//
-//	}
-//
-//	b2Vec2 movePos = b2Vec2(PIXEL_TO_METERS(nextFootStep), PIXEL_TO_METERS(position.y));
-//	pbody->body->SetTransform(movePos, 0);
-//
-//	nextFootStep += amountToMoveInX;
-//
-//	if (nextFootStep > destination && achievedLeftBorder == true)
-//	{
-//		startPath = true;
-//	}
-//	else if (nextFootStep < destination && achievedRightBorder == true)
-//	{
-//		startPath = true;
-//	}
-//
-//	if (achievedLeftBorder)
-//	{
-//		int limitToChange = std::abs(position.x/64 - rightBorder.x);
-//		if (limitToChange == 1)
-//		{
-//			achievedRightBorder = true;
-//			achievedLeftBorder = false;
-//		}
-//	}
-//	else if (achievedRightBorder)
-//	{
-//		int limitToChange = std::abs(position.x / 64 - leftBorder.x);
-//		if (limitToChange == 1)
-//		{
-//			achievedLeftBorder = true;
-//			achievedRightBorder = false;
-//		}
-//	}
-//
-//	//if (lastPosinX == position.x && lastPosinY == position.y)
-//	//{
-//	//	framesStopped++;
-//	//	std::cout <<"framesStopped - " << framesStopped << std::endl;
-//	//}
-//
-//	//lastPosinX = position.x;
-//	//lastPosinY = position.y;
-//
-//	//if (framesStopped > 60)
-//	//{
-//	//	b2Vec2 vel = b2Vec2(0, -4.7);
-//	//	//pbody->body->ApplyForce(vel, pbody->body->GetLocalCenter(), true);
-//	//	pbody->body->ApplyLinearImpulse(vel, pbody->body->GetLocalCenter(), true);
-//	//	framesStopped = 0;
-//	//}
-//
-//}
 
 bool SmallEnemy2::Update()
 {
@@ -570,8 +402,6 @@ bool SmallEnemy2::Update()
 		}
 	}
 	
-
-
 
 	currentAnimationEnemy->Update();
 	SDL_Rect rect = currentAnimationEnemy->GetCurrentFrame();
@@ -640,7 +470,7 @@ void SmallEnemy2::OnCollision(PhysBody* physA, PhysBody* physB)
 		break;
 	
 	case ColliderType::SKILL:
-
+		
 		if (currentAnimationEnemy == &walkLAnimEnemy)
 		{
 			currentAnimationEnemy = &deathL;
@@ -656,6 +486,8 @@ void SmallEnemy2::OnCollision(PhysBody* physA, PhysBody* physB)
 		pbody->body->SetLinearVelocity(vel);
 
 		//destroy = true;
+		break;
+		
 
 	}
 	

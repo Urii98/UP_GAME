@@ -160,7 +160,7 @@ void PlayerSensors::OnCollision(PhysBody* physA, PhysBody* physB)
 			break;
 		}
 	}
-	else if (physA->ctype == ColliderType::SKILL)
+	if (physA->ctype == ColliderType::SKILL)
 	{
 		switch (physB->ctype)
 		{

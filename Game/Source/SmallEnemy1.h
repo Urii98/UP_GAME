@@ -68,6 +68,12 @@ public:
 	Animation attackRAnimEnemy;
 	Animation attackLAnimEnemy;
 
+	Animation deathR;
+	Animation deathL;
+	Animation deathEffect;
+
+	SDL_Timer deathTimer;
+
 	//bool destroy;
 
 	enum estadoSEnemy1 {
@@ -91,8 +97,17 @@ private:
 	SDL_Texture* texture;
 	const char* texturePath;
 	SDL_Timer attackAnimTimer;
-	//DONE 4: Add a physics
-//	PhysBody* pbody;
+
+
+	SDL_Texture* deathTexture;
+	const char* deathPath;
+
+	SDL_Timer deathAnimationTimer;
+	SDL_Timer deathEffectTimer;
+	bool enemyIsDead;
+	int deathFxId;
+	const char* deathFxPath;
+
 
 	iPoint lastPos;
 	int pathIterator;
@@ -141,6 +156,7 @@ private:
 
 	bool auxBug;
 	int intBug;
+
 };
 
 #endif // !__SMALL_ENEMY_1__
