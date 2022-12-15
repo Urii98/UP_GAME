@@ -36,7 +36,7 @@ bool SceneEnding::Start() {
 
 bool SceneEnding::Update(float dt)
 {
-	if (app->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN)
+	if (app->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN && ending)
 	{
 		if (app->sceneTitle->mapSelect == true){
 			//posicion inicial del level 1
@@ -55,6 +55,7 @@ bool SceneEnding::Update(float dt)
 		}
 
 		app->scene->player->estadoP = app->scene->player->MOVIMIENTO;
+		app->scene->player->pbody->body->SetActive(true);
 		ending = false;
 		
 	}

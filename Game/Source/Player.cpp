@@ -617,7 +617,7 @@ bool Player::Update()
 	if (estadoP == DEATH && !godMode && !deathFxbool)
 	{
 		deathTimer.Start(4);
-		//estadoP = NONE;
+
 	}
 	if (deathTimer.Test() == FIN)
 	{
@@ -653,6 +653,7 @@ bool Player::Update()
 			app->audio->PlayFx(kirbyDeathFx, 0);
 			b2Vec2 vel = b2Vec2(0, 0);
 			pbody->body->SetLinearVelocity(vel);
+			pbody->body->SetActive(false);
 		}
 
 		break;
