@@ -468,9 +468,9 @@ bool SmallEnemyFly::Update()
 	if (deathAnimationTimer.Test() == FIN || destroy)
 	{
 		pbody->body->GetWorld()->DestroyBody(pbody->body);
-		app->tex->UnLoad(texture);
+//		app->tex->UnLoad(texture);
 		active = false;
-//		CleanUp();
+		CleanUp();
 		destroy = true;
 	}
 

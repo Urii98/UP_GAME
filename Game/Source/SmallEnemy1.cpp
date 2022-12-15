@@ -654,7 +654,6 @@ bool SmallEnemy1::Update()
 	{
 		pbody->body->GetWorld()->DestroyBody(pbody->body);
 		CleanUp();
-		destroy = false;
 	}
 
 	return true;

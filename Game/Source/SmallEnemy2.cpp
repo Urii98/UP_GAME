@@ -414,6 +414,11 @@ bool SmallEnemy2::Update()
 		
 	}
 
+	if (deathTimer.Test() == FIN)
+	{
+		destroy = true;
+	}
+
 	if (enemyIsDead)
 	{
 		app->render->DrawTexture(deathTexture, position.x / app->win->GetScale() - 17, position.y / app->win->GetScale() - 15, &rect);
@@ -432,16 +437,12 @@ bool SmallEnemy2::Update()
 		destroy = true;
 	}
 
-	if (deathTimer.Test() == FIN)
-	{
-		destroy = true;
-	}
+
 
 	if (destroy)
 	{
 		pbody->body->GetWorld()->DestroyBody(pbody->body);
 		CleanUp();
-		destroy = false;
 	}
 
 	return true;
