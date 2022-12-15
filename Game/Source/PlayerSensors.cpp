@@ -56,7 +56,11 @@ bool PlayerSensors::Update()
 		app->scene->player->drawSwordUI = false;
 	}
 
-
+	if (app->scene->player->sword == true)
+	{
+		skillReset.Start(1.0f);
+		app->scene->player->sword = false;
+	}
 
 
 	if (app->input->GetKey(SDL_SCANCODE_G) == KEY_DOWN && skillReset.Test() == FIN && (app->scene->player->estadoP == app->scene->player->MOVIMIENTO || app->scene->player->estadoP == app->scene->player->STOP))

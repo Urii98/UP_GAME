@@ -302,6 +302,7 @@ bool Player::Start() {
 	posXBeforeAttack = 0;
 	posYBeforeAttack = 0;
 	skillSwitch = false;
+	sword = false;
 	drawSwordUI = true;
 	
 	return true;
@@ -661,6 +662,8 @@ bool Player::Update()
 			b2Vec2 vel = b2Vec2(0, 0);
 			pbody->body->SetLinearVelocity(vel);
 			pbody->body->SetActive(false);
+			sword = true;
+
 		}
 
 		break;
@@ -734,13 +737,13 @@ void Player::PostUpdate()
 		app->render->DrawTexture(texture, position.x, position.y, &rect);
 	}
 	
-	if (drawSwordUI) {
-		app->render->DrawTexture(swordUITexture, position.x - 250, position.y - 150);
-	}
-	else
-	{
-		app->render->DrawTexture(swordUITexture, position.x - 250, position.y - 150);
-	}
+	//if (drawSwordUI) {
+	//	app->render->DrawTexture(swordUITexture, position.x - 250, position.y - 150);
+	//}
+	//else
+	//{
+	//	app->render->DrawTexture(swordUITexture, position.x - 250, position.y - 150);
+	//}
 	
 
 }

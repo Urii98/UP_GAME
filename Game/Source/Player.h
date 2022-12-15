@@ -119,6 +119,7 @@ public:
 
 	bool skillSwitch;
 	bool drawSwordUI;
+	bool sword;
 private:
 
 	//L02: DONE 1: Declare player parameters
