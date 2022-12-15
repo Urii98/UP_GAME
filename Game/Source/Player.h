@@ -116,16 +116,21 @@ public:
 
 	int posXBeforeAttack;
 	int posYBeforeAttack;
+
+	bool skillSwitch;
+	bool drawSwordUI;
 private:
 
 	//L02: DONE 1: Declare player parameters
 	SDL_Texture* texture;
+	SDL_Texture* swordUITexture;
 	// L07 DONE 5: Add physics to the player - declare a Physics body
 //	PhysBody* pbody;
 
 	//PhysBody* sensor;
 
 	const char* texturePath;
+	const char* swordUIPath;
 
 	
 	int kirbyDeathFx;

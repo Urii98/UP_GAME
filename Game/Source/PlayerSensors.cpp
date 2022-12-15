@@ -35,6 +35,7 @@ bool PlayerSensors::Start()
 	playerSkill.x = 0;
 	playerSkill.y = 0;
 	skillReset.Start(0.2f);
+	skillDraw.Start(0.2f);
 
 	return true;
 }
@@ -48,12 +49,25 @@ bool PlayerSensors::Update()
 
 	frames++;
 
+	app->scene->player->drawSwordUI = true;
+
+	if (skillDraw.Test() == EJECUTANDO)
+	{
+		app->scene->player->drawSwordUI = false;
+	}
+
+
+
+
 	if (app->input->GetKey(SDL_SCANCODE_G) == KEY_DOWN && skillReset.Test() == FIN )
 	{
 		skillTimer.Start(1.0f);
 		skillReset.Start(3.0f);
+		skillDraw.Start(3.0f);
+		
+		
 
-		if (skillSwitch == false)
+		if (app->scene->player->skillSwitch == false)
 		{
 			skill = app->physics->CreateRectangleSensor(0, 0, 38, 70, bodyType::KINEMATIC);
 			skill->ctype = ColliderType::SKILL;
@@ -72,7 +86,8 @@ bool PlayerSensors::Update()
 			
 
 			skill->body->SetTransform(playerSkill, 0);
-			skillSwitch = true;
+			app->scene->player->skillSwitch = true;
+			
 			enemyCollisioned = false;
 			
 			aux = *app->scene->player->currentAnimation;
@@ -99,7 +114,7 @@ bool PlayerSensors::Update()
 	}
 	if (skillTimer.Test() == FIN)
 	{
-		skillSwitch = false;
+		app->scene->player->skillSwitch = false;
 
 		if (enemyCollisioned == false)
 		{

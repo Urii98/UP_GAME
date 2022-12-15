@@ -16,6 +16,7 @@
 #include "EntityManager.h" 
 #include "SceneLogo.h"
 #include "SceneTitle.h"
+#include "PlayerSensors.h"
 
 
 Player::Player() : Entity(EntityType::PLAYER)
@@ -61,6 +62,7 @@ bool Player::Awake() {
 	swordFxId = app->audio->LoadFx(swordFxPath);
 
 	texturePath = parameters.attribute("texturepath").as_string();
+	swordUIPath = parameters.attribute("swordUIPath").as_string();
 	
 
 	return true;
@@ -266,6 +268,7 @@ bool Player::Start() {
 
 	//initilize textures
 	texture = app->tex->Load(texturePath);
+	swordUITexture = app->tex->Load(swordUIPath);
 
 	// L07 DONE 5: Add physics to the player - initialize physics body
 	pbody = app->physics->CreateCircle(position.x+16, position.y+16, 12, bodyType::DYNAMIC);
@@ -296,6 +299,8 @@ bool Player::Start() {
 
 	posXBeforeAttack = 0;
 	posYBeforeAttack = 0;
+	skillSwitch = false;
+	drawSwordUI = true;
 	
 	return true;
 }
@@ -727,6 +732,15 @@ void Player::PostUpdate()
 		app->render->DrawTexture(texture, position.x, position.y, &rect);
 	}
 	
+	if (drawSwordUI) {
+		app->render->DrawTexture(swordUITexture, position.x - 250, position.y - 150);
+	}
+	else
+	{
+
+	}
+	
+
 }
 
 

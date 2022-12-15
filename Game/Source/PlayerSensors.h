@@ -31,7 +31,7 @@ public:
 	PhysBody* skill;
 	SDL_Timer skillTimer;
 	SDL_Timer skillReset;
-	bool skillSwitch = false;
+	SDL_Timer skillDraw;
 
 	bool resetjumps;
 	int frames;
