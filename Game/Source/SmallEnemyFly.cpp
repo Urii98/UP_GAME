@@ -375,12 +375,12 @@ bool SmallEnemyFly::Update()
 
 		if (app->scene->player->position.x * 2 > position.x)
 		{
-			b2Vec2 vel = b2Vec2(-0.5, -3);
+			b2Vec2 vel = b2Vec2(-0.5, -1.5);
 			pbody->body->ApplyForce(vel, pbody->body->GetLocalCenter(), true);
 		}
 		else if (app->scene->player->position.x * 2 < position.x)
 		{
-			b2Vec2 vel = b2Vec2(0.5, -3);
+			b2Vec2 vel = b2Vec2(0.5, -1.5);
 			pbody->body->ApplyForce(vel, pbody->body->GetLocalCenter(), true);
 		}
 

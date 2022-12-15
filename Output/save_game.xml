@@ -12,9 +12,9 @@
 	<scene />
 	<sceneEnding />
 	<entitymanager>
-		<playerScene1 x="428" y="739" />
-		<SmallEnemy11 x="1559" y="757" state="1" />
-		<SmallEnemy21 x="690" y="752" />
+		<playerScene1 x="6254" y="739" />
+		<SmallEnemy11 x="1548" y="757" state="1" />
+		<SmallEnemy21 x="730" y="752" />
 	</entitymanager>
 	<map />
 	<fade />
