@@ -23,7 +23,7 @@
 
   <!-- L02: DONE: Add an element for the entity manager and add the player parameters -->
   <scene>
-    <player x="1300" y="650" scalarSpeedX="6" scalarSpeedY="9" scalarSpeedYDown="6"
+    <player x="7300" y="650" scalarSpeedX="6" scalarSpeedY="9" scalarSpeedYDown="6"
             texturepath="Assets/Textures/KirbySS.png" 
             coinFxPath="Assets/Audio/Fx/coin.ogg" kirbyDeathFxPath="Assets/Audio/Fx/KirbyDeathFx.ogg"
             kirbyVictoryFxPath="Assets/Audio/Fx/KirbyVictoryFx.ogg"
@@ -47,10 +47,12 @@
 	  
 	  <SmallEnemyFly x="7600" y="550" scalarLimites="30" speedY="3"
 				   destroy="false"
-				   texturepath="Assets/Textures/Enemies.png" textureangrypath="Assets/Textures/EnemiesAngry.png" map="1"/>
+				   texturepath="Assets/Textures/Enemies.png" textureangrypath="Assets/Textures/EnemiesAngry.png" 
+           deathpath="Assets/Textures/enemy-death.png" deathFxPath="Assets/Audio/Fx/enemyExplode.wav" map="1"/>
     <SmallEnemyFly x="7700" y="550" scalarLimites="30" speedY="3"
 				   destroy="false"
-				   texturepath="Assets/Textures/Enemies.png" textureangrypath="Assets/Textures/EnemiesAngry.png" map="1"/>	  
+				   texturepath="Assets/Textures/Enemies.png" textureangrypath="Assets/Textures/EnemiesAngry.png"
+           deathpath="Assets/Textures/enemy-death.png" deathFxPath="Assets/Audio/Fx/enemyExplode.wav" map="1"/>
 	  
     <SmallEnemy2 x="350" y="448" scalarLimites="3" speedX="2"
                  walkDir="false" destroy="false"

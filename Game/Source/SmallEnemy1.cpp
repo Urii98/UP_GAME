@@ -663,7 +663,6 @@ bool SmallEnemy1::Update()
 
 bool SmallEnemy1::CleanUp()
 {
-	//memoryleak
 
 	app->tex->UnLoad(texture);
 	app->tex->UnLoad(deathTexture);

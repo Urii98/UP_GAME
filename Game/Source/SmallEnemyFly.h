@@ -60,8 +60,10 @@ public:
 
 	Animation deathRAnimEnemy;
 	Animation deathLAnimEnemy;
+	Animation deathEffect;
 
-	//bool destroy;
+	SDL_Timer deathTimer;
+
 
 	enum estadoSEnemy1 {
 		STOP = 0,
@@ -79,11 +81,18 @@ private:
 	SDL_Texture* angryTexture;
 	const char* texturePath;
 	const char* textureAngryPath;
-	SDL_Timer deathAnimationTimer;
-	//DONE 4: Add a physics
-//	PhysBody* pbody;
-	bool firstSentryMovement;
 
+
+	SDL_Texture* deathTexture;
+	const char* deathPath;
+
+	SDL_Timer deathAnimationTimer;
+	SDL_Timer deathEffectTimer;
+	bool enemyIsDead;
+	int deathFxId;
+	const char* deathFxPath;
+
+	bool firstSentryMovement;
 
 	iPoint initialPosition, leftBorder, rightBorder;
 	int range;

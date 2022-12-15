@@ -108,7 +108,6 @@ private:
 	int deathFxId;
 	const char* deathFxPath;
 
-
 	iPoint lastPos;
 	int pathIterator;
 	

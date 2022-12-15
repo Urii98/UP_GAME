@@ -12,11 +12,9 @@
 	<scene />
 	<sceneEnding />
 	<entitymanager>
-		<playerScene1 x="6470" y="739" />
-		<SmallEnemy11 x="568" y="757" state="1" />
-		<SmallEnemyFly1 x="6779" y="584" state="2" />
-		<SmallEnemyFly2 x="6755" y="758" state="2" />
-		<SmallEnemy21 x="2432" y="752" />
+		<playerScene1 x="1322" y="739" />
+		<SmallEnemy11 x="1585" y="696" state="2" />
+		<SmallEnemy21 x="718" y="752" />
 	</entitymanager>
 	<map />
 	<fade />
