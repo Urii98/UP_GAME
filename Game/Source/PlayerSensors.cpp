@@ -59,7 +59,7 @@ bool PlayerSensors::Update()
 
 
 
-	if (app->input->GetKey(SDL_SCANCODE_G) == KEY_DOWN && skillReset.Test() == FIN )
+	if (app->input->GetKey(SDL_SCANCODE_G) == KEY_DOWN && skillReset.Test() == FIN && (app->scene->player->estadoP == app->scene->player->MOVIMIENTO || app->scene->player->estadoP == app->scene->player->STOP))
 	{
 		skillTimer.Start(1.0f);
 		skillReset.Start(3.0f);

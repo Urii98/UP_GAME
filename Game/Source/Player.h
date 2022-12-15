@@ -124,6 +124,7 @@ private:
 	//L02: DONE 1: Declare player parameters
 	SDL_Texture* texture;
 	SDL_Texture* swordUITexture;
+	SDL_Texture* swordUIOffTexture;
 	// L07 DONE 5: Add physics to the player - declare a Physics body
 //	PhysBody* pbody;
 
@@ -131,6 +132,7 @@ private:
 
 	const char* texturePath;
 	const char* swordUIPath;
+	const char* swordUIOffPath;
 
 	
 	int kirbyDeathFx;

@@ -63,6 +63,7 @@ bool Player::Awake() {
 
 	texturePath = parameters.attribute("texturepath").as_string();
 	swordUIPath = parameters.attribute("swordUIPath").as_string();
+	swordUIOffPath = parameters.attribute("swordUIOffPath").as_string();
 	
 
 	return true;
@@ -269,6 +270,7 @@ bool Player::Start() {
 	//initilize textures
 	texture = app->tex->Load(texturePath);
 	swordUITexture = app->tex->Load(swordUIPath);
+	swordUIOffTexture = app->tex->Load(swordUIOffPath);
 
 	// L07 DONE 5: Add physics to the player - initialize physics body
 	pbody = app->physics->CreateCircle(position.x+16, position.y+16, 12, bodyType::DYNAMIC);
@@ -737,7 +739,7 @@ void Player::PostUpdate()
 	}
 	else
 	{
-
+		app->render->DrawTexture(swordUITexture, position.x - 250, position.y - 150);
 	}
 	
 
@@ -747,6 +749,8 @@ void Player::PostUpdate()
 bool Player::CleanUp()
 {
 	app->tex->UnLoad(texture);
+	app->tex->UnLoad(swordUITexture);
+	app->tex->UnLoad(swordUIOffTexture);
 	pbody->body->GetWorld()->DestroyBody(pbody->body);
 	//std::cout << "entrando en Cleanup - Player" << std::endl;
 	//la memoria de player la libero directamente en scene

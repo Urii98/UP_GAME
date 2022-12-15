@@ -23,8 +23,8 @@
 
   <!-- L02: DONE: Add an element for the entity manager and add the player parameters -->
   <scene>
-    <player x="7300" y="650" scalarSpeedX="6" scalarSpeedY="9" scalarSpeedYDown="6"
-            texturepath="Assets/Textures/KirbySS.png" swordUIPath="Assets/Textures/c.png"
+    <player x="250" y="650" scalarSpeedX="6" scalarSpeedY="9" scalarSpeedYDown="6"
+            texturepath="Assets/Textures/KirbySS.png" swordUIPath="Assets/Textures/swordUI.png" swordUIOffPath="Assets/Textures/swordUIOff.png"
             coinFxPath="Assets/Audio/Fx/coin.ogg" kirbyDeathFxPath="Assets/Audio/Fx/KirbyDeathFx.ogg"
             kirbyVictoryFxPath="Assets/Audio/Fx/KirbyVictoryFx.ogg"
             musicScenePath="Assets/Audio/Music/MusicLevel.ogg"
