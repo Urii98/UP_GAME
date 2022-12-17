@@ -41,6 +41,8 @@ public:
 	void OnCollision(PhysBody* physA, PhysBody* physB);
 
 	void Player::ChangePosition(int x, int y);
+	
+	void DrawLifePoints();
 
 public:
 
@@ -52,6 +54,7 @@ public:
 		VICTORY,
 		NONE,
 		SKILL,
+		HIT,
 	};
 	int estadoP;
 
@@ -61,11 +64,13 @@ public:
 	};
 	int collisionP;
 
-	enum direccionPlayer {
+	enum direccion {
 		IZQUIERDA,
 		DERECHA,
 	};
-	int direccionP;
+	int direccionP, direccionE;
+
+
 	
 	int speedX;
 	int speedY;
@@ -108,6 +113,11 @@ public:
 	
 	Animation swordAttackRAnim;
 	Animation swordAttackLAnim;
+	
+	Animation hitR, hitL;
+	SDL_Timer hitTimer;
+	SDL_Timer invulnerableTime;
+	bool invulnerable;
 
 	transformPosition teleport;
 
@@ -120,12 +130,14 @@ public:
 	bool skillSwitch;
 	bool drawSwordUI;
 	bool sword;
+	int lifePoints;
 private:
 
 	//L02: DONE 1: Declare player parameters
 	SDL_Texture* texture;
 	SDL_Texture* swordUITexture;
 	SDL_Texture* swordUIOffTexture;
+	SDL_Texture* lifePointsTexture;
 	// L07 DONE 5: Add physics to the player - declare a Physics body
 //	PhysBody* pbody;
 
@@ -134,6 +146,7 @@ private:
 	const char* texturePath;
 	const char* swordUIPath;
 	const char* swordUIOffPath;
+	const char* lifePath;
 
 	
 	int kirbyDeathFx;
@@ -154,11 +167,12 @@ private:
 	const char* coinSFx;
 	const char* deathSFx;
 	const char* victorySFx;
-	
 
 	const char* musicScenePath;
 	const char* musicStopPath;
 	const char* swordFxPath;
+
+	
 
 };
 

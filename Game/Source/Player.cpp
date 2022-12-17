@@ -37,6 +37,7 @@ bool Player::Awake() {
 	scalarSpeedX = parameters.attribute("scalarSpeedX").as_int();
 	scalarSpeedY = parameters.attribute("scalarSpeedY").as_int();
 	scalarSpeedYDown = parameters.attribute("scalarSpeedYDown").as_int();
+	lifePoints = parameters.attribute("lifePoints").as_int();
 
 
 	//initialize audio effect - !! Path is hardcoded, should be loaded from config.xml
@@ -64,6 +65,7 @@ bool Player::Awake() {
 	texturePath = parameters.attribute("texturepath").as_string();
 	swordUIPath = parameters.attribute("swordUIPath").as_string();
 	swordUIOffPath = parameters.attribute("swordUIOffPath").as_string();
+	lifePath = parameters.attribute("lifePath").as_string();
 	
 
 	return true;
@@ -259,6 +261,11 @@ bool Player::Start() {
 	swordAttackLAnim.loop = true;
 	swordAttackLAnim.speed = 0.4f;
 
+	hitR.PushBack({ 706,1034,27,27 });
+	hitR.PushBack({ 651,990,33,33 });
+	hitR.loop = true;
+	hitR.speed = 0.25;
+
 	speedX = scalarSpeedX * app->win->GetScale();
 	speedY = scalarSpeedY * app->win->GetScale();
 	speedYDown = scalarSpeedYDown * app->win->GetScale(); //para cuando estamos en el aire y apretamos "S" para bajar m�s r�pido
@@ -271,6 +278,7 @@ bool Player::Start() {
 	texture = app->tex->Load(texturePath);
 	swordUITexture = app->tex->Load(swordUIPath);
 	swordUIOffTexture = app->tex->Load(swordUIOffPath);
+	lifePointsTexture = app->tex->Load(lifePath);
 
 	// L07 DONE 5: Add physics to the player - initialize physics body
 	pbody = app->physics->CreateCircle(position.x+16, position.y+16, 12, bodyType::DYNAMIC);
@@ -304,6 +312,7 @@ bool Player::Start() {
 	skillSwitch = false;
 	sword = false;
 	drawSwordUI = true;
+	invulnerable = false;
 	
 	return true;
 }
@@ -602,25 +611,14 @@ bool Player::Update()
 	position.x = METERS_TO_PIXELS(pbody->body->GetTransform().p.x / app->win->GetScale()) - 14;
 	position.y = METERS_TO_PIXELS(pbody->body->GetTransform().p.y / app->win->GetScale()) - 10;
 
-	/*b2Vec2 sensorPos = b2Vec2(PIXEL_TO_METERS(position.x), PIXEL_TO_METERS(position.y + 13));
-	sensor->body->SetTransform(sensorPos, 0);*/
-
-
 	auto x = app->input->GetMouseX();
 	auto y = app->input->GetMouseY();
 
-	/*std::cout << "GetmouseX - " << x << std::endl;
-	std::cout << "GetmouseY - " << y << std::endl;*/
-
 
 	//Camara
-
-
 	PlayerDebug();
 	PlayerVictory();
-	//std::cout << position.x << "    " << position.y << std::endl;
-	//std::cout << (app->render->playerPosition.x / app->win->GetScale()) << "    " << (app->render->playerPosition.y / app->win->GetScale())  << std::endl;
-
+	
 
 	if (estadoP == DEATH && !godMode && !deathFxbool)
 	{
@@ -683,6 +681,26 @@ bool Player::Update()
 	case(SKILL):
 		Camera();
 		ChangePosition(posXBeforeAttack, posYBeforeAttack);
+		break;
+
+	case(HIT):
+
+		if (direccionE == DERECHA)
+		{
+			b2Vec2 vel = b2Vec2(-1, -50);
+			pbody->body->ApplyForce(vel, pbody->body->GetLocalCenter(), true);
+		}
+		else if (direccionE == IZQUIERDA)
+		{
+			b2Vec2 vel = b2Vec2(-1, 50);
+			pbody->body->ApplyForce(vel, pbody->body->GetLocalCenter(), true);
+		}
+
+		invulnerable = true;
+		invulnerableTime.Start(2.5);
+
+		break;
+
 	case(NONE):
 
 		break;
@@ -693,18 +711,6 @@ bool Player::Update()
 	}
 
 
-
-
-	//std::cout << "position iPoint.x = " << position.x << std::endl;
-	//std::cout << "position iPoint.y = " << position.y << std::endl;
-	//std::cout << "position pbody get Transform = " << METERS_TO_PIXELS(pbody->body->GetTransform().p.x) << std::endl;
-	//std::cout << "position pbody get Transform = " << METERS_TO_PIXELS(pbody->body->GetTransform().p.y) << std::endl;
-	//std::cout << "CAMERA POSITION.y" << app->render->camera.y << std::endl;
-
-
-	//std::cout << "position pbody get Transform = " << pbody->body->GetTransform().p.x << std::endl;
-	//std::cout << "position pbody get Transform = " << pbody->body->GetTransform().p.y << std::endl;
-
 	if (teleport.turn == true)
 	{
 		b2Vec2 resetPos = b2Vec2(PIXEL_TO_METERS(teleport.posX), PIXEL_TO_METERS(teleport.posY));
@@ -713,6 +719,15 @@ bool Player::Update()
 		teleport.turn = false;
 	}
 
+	if (hitTimer.Test() == FIN && estadoP == HIT)
+	{
+		estadoP = MOVIMIENTO; 
+	}
+
+	if (invulnerableTime.Test() == FIN)
+	{
+		invulnerable = false;
+	}
 
 	currentAnimation->Update();
 	PostUpdate();
@@ -732,11 +747,26 @@ void Player::PostUpdate()
 	{
 		app->render->DrawTexture(texture, position.x -23, position.y - 26, &rect);
 	}
+	else if (estadoP == HIT)
+	{
+		if (direccionE == DERECHA)
+		{	
+			currentAnimation = &hitR;
+			app->render->DrawTexture(texture, position.x, position.y, &rect);
+		}
+		else if (direccionE == IZQUIERDA)
+		{
+			currentAnimation = &hitL;
+			app->render->DrawTexture(texture, position.x, position.y, &rect);
+		}
+	}
 	else
 	{
 		app->render->DrawTexture(texture, position.x, position.y, &rect);
 	}
 	
+	DrawLifePoints();
+
 	//if (drawSwordUI) {
 	//	app->render->DrawTexture(swordUITexture, position.x - 250, position.y - 150);
 	//}
@@ -748,16 +778,47 @@ void Player::PostUpdate()
 
 }
 
+void Player::DrawLifePoints()
+{
+	SDL_Rect lifePoint = { 0,0,15,15 };
+	SDL_Rect noLifePoint = { 0,15,15,15 };
+
+	switch (lifePoints)
+	{
+	case(0):
+		app->render->DrawTexture(lifePointsTexture, position.x - 20, position.y - 15, &noLifePoint);
+		app->render->DrawTexture(lifePointsTexture, position.x - 10, position.y - 15, &noLifePoint);
+		app->render->DrawTexture(lifePointsTexture, position.x, position.y - 15, &noLifePoint);
+		break;
+
+	case(1):
+		app->render->DrawTexture(lifePointsTexture, position.x - 20, position.y - 15, &lifePoint);
+		app->render->DrawTexture(lifePointsTexture, position.x - 10, position.y - 15, &noLifePoint);
+		app->render->DrawTexture(lifePointsTexture, position.x, position.y - 15, &noLifePoint);
+		break;
+
+	case(2):
+		app->render->DrawTexture(lifePointsTexture, position.x - 20, position.y - 15, &lifePoint);
+		app->render->DrawTexture(lifePointsTexture, position.x - 10, position.y - 15, &lifePoint);
+		app->render->DrawTexture(lifePointsTexture, position.x, position.y - 15, &noLifePoint);
+		break;
+
+	case(3):
+		app->render->DrawTexture(lifePointsTexture, position.x - 20, position.y - 15, &lifePoint);
+		app->render->DrawTexture(lifePointsTexture, position.x - 10, position.y - 15, &lifePoint);
+		app->render->DrawTexture(lifePointsTexture, position.x, position.y - 15, &lifePoint);
+		break;
+	}
+}
+
 
 bool Player::CleanUp()
 {
 	app->tex->UnLoad(texture);
 	app->tex->UnLoad(swordUITexture);
 	app->tex->UnLoad(swordUIOffTexture);
+	app->tex->UnLoad(lifePointsTexture);
 	pbody->body->GetWorld()->DestroyBody(pbody->body);
-	//std::cout << "entrando en Cleanup - Player" << std::endl;
-	//la memoria de player la libero directamente en scene
-	//app->entityManager->DestroyEntity(this);
 
 	return true;
 }
@@ -778,31 +839,74 @@ void Player::OnCollision(PhysBody* physA, PhysBody* physB) {
 	case ColliderType::DEATH:
 		LOG("Collision DEATH");
 		ChangePosition(125, 600);
+		if (!godMode)
+		{
+			lifePoints--;
+
+		}
 		break;
 
 	case ColliderType::PLATFORM:
 		LOG("Collision PLATFORM");
-		//	collisionP = COLLISION;
-		//jumpRAnim.Reset();
-		//jumpLAnim.Reset();
-		//oneJump = false;
-		//flying = false;
-		//flapLimit = 0;
-		//std::cout << "PLATFORM COLLISION" << std::endl;
+
 		break;
 
 	case ColliderType::ENEMY:
 		if (!godMode)
 		{
-			estadoP = DEATH;
+			if (lifePoints > 0 && !invulnerable)
+			{
+				estadoP = HIT;
+				b2Vec2 vel = b2Vec2(0, 0);
+				hitTimer.Start(1.0f);
+				pbody->body->SetLinearVelocity(vel);
+				lifePoints--;
+
+				if (physB->body->GetPosition().x > physA->body->GetPosition().x)
+				{
+					direccionE = DERECHA;
+				}
+				else if (physB->body->GetPosition().x < physA->body->GetPosition().x)
+				{
+					direccionE = IZQUIERDA;
+				}
+
+				//audio hit
+			}
 			
+			if(lifePoints == 0)
+			{
+				estadoP = DEATH;
+			}
 		}
 		break;
 	case ColliderType::ENEMYFLY:
 		if (!godMode)
 		{
-			estadoP = DEATH;
+			if (lifePoints > 0 && !invulnerable)
+			{
+				estadoP = HIT;
+				b2Vec2 vel = b2Vec2(0, 0);
+				hitTimer.Start(1.0f);
+				pbody->body->SetLinearVelocity(vel);
+				lifePoints--;
 
+				if (physB->body->GetPosition().x > physA->body->GetPosition().x)
+				{
+					direccionE = DERECHA;
+				}
+				else if (physB->body->GetPosition().x < physA->body->GetPosition().x)
+				{
+					direccionE = IZQUIERDA;
+				}
+
+				//audio hit
+			}
+
+			if (lifePoints == 0)
+			{
+				estadoP = DEATH;
+			}
 		}
 		break;
 	case ColliderType::UNKNOWN:
@@ -861,8 +965,6 @@ void Player::Camera(){
 
 void Player::PlayerDebug() {
 
-	
-
 	if (app->input->GetKey(SDL_SCANCODE_F10) == KEY_DOWN)//GODMODE
 	{
 		if (!godMode)
@@ -901,9 +1003,4 @@ void Player::PlayerVictory() {
 		victory = true;
 	}
 
-	/*if (position.x > 1100 && position.y < 500 && !victory) {
-		app->audio->PlayMusic(musicStopPath,0);
-  		estadoP = VICTORY;
-		victory = true;
-	}*/
 }

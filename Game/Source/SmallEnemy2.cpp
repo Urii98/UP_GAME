@@ -465,9 +465,6 @@ void SmallEnemy2::OnCollision(PhysBody* physA, PhysBody* physB)
 	switch (physB->ctype)
 	{
 	case ColliderType::PLAYER:
-
-		destroy = true;
-
 		break;
 	
 	case ColliderType::SKILL:
