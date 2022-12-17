@@ -461,6 +461,7 @@ bool SmallEnemy2::CleanUp()
 
 void SmallEnemy2::OnCollision(PhysBody* physA, PhysBody* physB)
 {
+	b2Vec2 vel = b2Vec2(0, 0);
 	
 	switch (physB->ctype)
 	{
@@ -480,13 +481,27 @@ void SmallEnemy2::OnCollision(PhysBody* physA, PhysBody* physB)
 
 		estadoSE2 = DEATH;
 		deathTimer.Start(1.0f);
-		b2Vec2 vel = b2Vec2(0, 0);
 		pbody->body->SetLinearVelocity(vel);
 
 		//destroy = true;
 		break;
 		
+	case ColliderType::DEATH:
 
+		if (currentAnimationEnemy == &walkLAnimEnemy)
+		{
+			currentAnimationEnemy = &deathL;
+		}
+		else if (currentAnimationEnemy == &walkRAnimEnemy)
+		{
+			currentAnimationEnemy = &deathR;
+		}
+
+		estadoSE2 = DEATH;
+		deathTimer.Start(1.0f);
+		pbody->body->SetLinearVelocity(vel);
+
+		break;
 	}
 	
 }

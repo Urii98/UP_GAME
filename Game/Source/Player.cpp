@@ -848,11 +848,17 @@ void Player::OnCollision(PhysBody* physA, PhysBody* physB) {
 
 	case ColliderType::DEATH:
 		LOG("Collision DEATH");
-		ChangePosition(125, 600);
+		ChangePosition(125, 750);
 		if (!godMode)
 		{
 			lifePoints--;
+			app->audio->PlayFx(playerDmgId);
 
+		}
+
+		if (lifePoints == 0)
+		{
+			estadoP = DEATH;
 		}
 		break;
 

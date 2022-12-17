@@ -488,7 +488,7 @@ bool SmallEnemyFly::CleanUp()
 
 void SmallEnemyFly::OnCollision(PhysBody* physA, PhysBody* physB)
 {
-
+	b2Vec2 vel = b2Vec2(0, 0);
 	switch (physB->ctype)
 	{
 	case ColliderType::PLAYER:
@@ -509,7 +509,21 @@ void SmallEnemyFly::OnCollision(PhysBody* physA, PhysBody* physB)
 
 		estadoSEF1 = DEATH;
 		deathTimer.Start(1.0f);
-		b2Vec2 vel = b2Vec2(0, 0);
+		pbody->body->SetLinearVelocity(vel);
+		break;
+
+	case ColliderType::DEATH:
+		if (currentAnimationFlyEnemy == &idleLFlyAnim || currentAnimationFlyEnemy == &chaseLFlyAnim)
+		{
+			currentAnimationFlyEnemy = &deathLAnimEnemy;
+		}
+		else if (currentAnimationFlyEnemy == &idleRFlyAnim || currentAnimationFlyEnemy == &chaseRFlyAnim)
+		{
+			currentAnimationFlyEnemy = &deathRAnimEnemy;
+		}
+
+		estadoSEF1 = DEATH;
+		deathTimer.Start(1.0f);
 		pbody->body->SetLinearVelocity(vel);
 		break;
 	}
