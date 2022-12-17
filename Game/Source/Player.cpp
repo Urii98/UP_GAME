@@ -263,8 +263,17 @@ bool Player::Start() {
 
 	hitR.PushBack({ 706,1034,27,27 });
 	hitR.PushBack({ 651,990,33,33 });
+	hitR.PushBack({ 723,990,33,33 });
+	hitR.PushBack({ 761,990,34,33 });
 	hitR.loop = true;
 	hitR.speed = 0.25;
+
+	hitL.PushBack({ 354,1034,27,27 });
+	hitL.PushBack({ 402,990,33,33 });
+	hitL.PushBack({ 330,990,33,33 });
+	hitL.PushBack({ 292,990,33,33 });
+	hitL.loop = true;
+	hitL.speed = 0.25;
 
 	speedX = scalarSpeedX * app->win->GetScale();
 	speedY = scalarSpeedY * app->win->GetScale();
@@ -827,7 +836,6 @@ bool Player::CleanUp()
 void Player::OnCollision(PhysBody* physA, PhysBody* physB) {
 
 	// L07 DONE 7: Detect the type of collision
-	
 	switch (physB->ctype)
 	{
 	case ColliderType::ITEM:
