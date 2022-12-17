@@ -123,6 +123,7 @@ public:
 
 	int pickCoinFxId;
 	int swordFxId;
+	int playerDmgId;
 
 	int posXBeforeAttack;
 	int posYBeforeAttack;
@@ -171,7 +172,7 @@ private:
 	const char* musicScenePath;
 	const char* musicStopPath;
 	const char* swordFxPath;
-
+	const char* playerDmgPath;
 	
 
 };

@@ -45,6 +45,7 @@ bool Player::Awake() {
 	deathSFx = parameters.attribute("kirbyDeathFxPath").as_string();
 	victorySFx = parameters.attribute("kirbyVictoryFxPath").as_string();
 	swordFxPath = parameters.attribute("swordFxPath").as_string();
+	playerDmgPath = parameters.attribute("playerDmgPath").as_string();
 
 	musicScenePath = parameters.attribute("musicScenePath").as_string();
 	musicStopPath = parameters.attribute("musicStopPath").as_string();
@@ -61,6 +62,7 @@ bool Player::Awake() {
 	kirbyDeathFx = app->audio->LoadFx(deathSFx);
 	kirbyVictoryFx = app->audio->LoadFx(victorySFx);
 	swordFxId = app->audio->LoadFx(swordFxPath);
+	playerDmgId = app->audio->LoadFx(playerDmgPath);
 
 	texturePath = parameters.attribute("texturepath").as_string();
 	swordUIPath = parameters.attribute("swordUIPath").as_string();
@@ -879,7 +881,7 @@ void Player::OnCollision(PhysBody* physA, PhysBody* physB) {
 					direccionE = IZQUIERDA;
 				}
 
-				//audio hit
+				app->audio->PlayFx(playerDmgId);
 			}
 			
 			if(lifePoints == 0)
@@ -908,7 +910,7 @@ void Player::OnCollision(PhysBody* physA, PhysBody* physB) {
 					direccionE = IZQUIERDA;
 				}
 
-				//audio hit
+				app->audio->PlayFx(playerDmgId);
 			}
 
 			if (lifePoints == 0)
