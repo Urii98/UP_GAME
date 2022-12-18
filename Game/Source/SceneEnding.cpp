@@ -55,6 +55,7 @@ bool SceneEnding::Update(float dt)
 		}
 
 		app->scene->player->estadoP = app->scene->player->MOVIMIENTO;
+		app->scene->player->currentAnimation = &app->scene->player->idleRAnim;
 		app->scene->player->pbody->body->SetActive(true);
 		app->scene->player->lifePoints = 3;
 		ending = false;

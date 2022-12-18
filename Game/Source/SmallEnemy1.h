@@ -35,13 +35,8 @@ public:
 
 private:
 
-	//void ChaseMovement();
 	void ChaseMovement2();
-
-	//void SentryMovement();
 	void SentryMovement2();
-
-	//void ReturnMovement();
 	void ReturnMovement2();
 
 

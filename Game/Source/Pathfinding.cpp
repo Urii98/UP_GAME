@@ -57,8 +57,6 @@ bool PathFinding::IsWalkable(const iPoint& pos, const char* type) const
 {
 	uchar t = GetTileAt(pos);
 
-
-
 	ListItem<MapLayer*>* mapLayerItem;
 	mapLayerItem = app->map->mapData.maplayers.start;
 	MapLayer* navigationLayer = mapLayerItem->data;
@@ -72,8 +70,6 @@ bool PathFinding::IsWalkable(const iPoint& pos, const char* type) const
 		mapLayerItem = mapLayerItem->next;
 	}
 
-
-
 	if (navigationLayer->Get(pos.x, pos.y) == 942) //rojo
 	{
 		return false;
@@ -83,9 +79,8 @@ bool PathFinding::IsWalkable(const iPoint& pos, const char* type) const
 	{
 		if (navigationLayer->Get(pos.x, pos.y) == 943)
 		{
-			auto a = "verde";
 			
-			if (type == "terrestre")
+			if (type == "terrestre" || type == "aereo")
 			{
 				return true;
 			}
@@ -97,7 +92,6 @@ bool PathFinding::IsWalkable(const iPoint& pos, const char* type) const
 
 		if (navigationLayer->Get(pos.x, pos.y) == 944)
 		{
-			auto a = "azul";
 
 			if (type == "aereo")
 			{

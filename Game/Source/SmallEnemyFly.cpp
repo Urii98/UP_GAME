@@ -232,16 +232,16 @@ void SmallEnemyFly::ChaseMovement2()
 
 			pbody->body->ApplyForce(vel, pbody->body->GetLocalCenter(), true);
 			 
-			if (pbody->body->GetLinearVelocity().x > 12)
+			if (pbody->body->GetLinearVelocity().x > 10)
 			{
 				b2Vec2 vel = pbody->body->GetLinearVelocity();
-				vel.x = 12;
+				vel.x = 10;
 				pbody->body->SetLinearVelocity(vel);
 			}
-			else if (pbody->body->GetLinearVelocity().x < -12)
+			else if (pbody->body->GetLinearVelocity().x < -10)
 			{
 				b2Vec2 vel = pbody->body->GetLinearVelocity();
-				vel.x = -12;
+				vel.x = -10;
 				pbody->body->SetLinearVelocity(vel);
 			}
 		

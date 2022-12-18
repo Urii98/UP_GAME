@@ -47,73 +47,7 @@ bool SmallEnemy2::Awake() {
 
 bool SmallEnemy2::Start() {
 
-	//if (app->sceneTitle->mapSelect == false) {
-	//	if (map == 1) {
-	//		position.x = 6586;
-	//		position.y = 1182;
-	//	}
-	//	if (map == 2) {
-	//		position.x = 7232;
-	//		position.y = 1182;
-	//	}
-	//	if (map == 3) {
-	//		position.x = 6920;
-	//		position.y = 926;
-	//	}
-	//	if (map == 4) {
-	//		position.x = 6586;
-	//		position.y = 670;
-	//	}
-	//	if (map == 5) {
-	//		position.x = 7232;
-	//		position.y = 670;
-	//	}
-	//	if (map == 6) {
-	//		position.x = 8890;
-	//		position.y = 1694;
-	//	}
-	//	if (map == 7) {
-	//		position.x = 8844;
-	//		position.y = 1246;
-	//	}
-	//	if (map == 8) {
-	//		position.x = 8352;
-	//		position.y = 1246;
-	//	}
-	//	if (map == 9) {
-	//		position.x = 8544;
-	//		position.y = 798;
-	//	}
-	//	if (map == 10) {
-	//		position.x = 8948;
-	//		position.y = 798;
-	//	}
-	//	if (map == 11) {
-	//		position.x = 9856;
-	//		position.y = 734;
-	//	}
-	//	if (map == 12) {
-	//		position.x = 10368;
-	//		position.y = 926;
-	//	}
-	//	if (map == 13) {
-	//		position.x = 10886;
-	//		position.y = 1118;
-	//	}
-	//	if (map == 14) {
-	//		position.x = 11382;
-	//		position.y = 1118;
-	//	}
-	//	if (map == 15) {
-	//		position.x = 12168;
-	//		position.y = 1118;
-	//	}
-	//	if (map == 16) {
-	//		position.x = 12942;
-	//		position.y = 1118;
-	//	}
-	//}
-
+	
 	estadoSE2 = SENTRY;
 	direccionSE2 = DERECHA;
 
@@ -182,7 +116,7 @@ bool SmallEnemy2::Start() {
 	nextFootStep = 0.0f;
 	amountToMoveInX = 0.0f;
 	initialPosition = { position.x / 64, position.y / 64 };
-	range = 5;
+	range = 9;
 	leftBorder = { position.x / 64, (position.y / 64)};
 	rightBorder = { initialPosition.x + range, (position.y / 64)};
 	firstPath = true;

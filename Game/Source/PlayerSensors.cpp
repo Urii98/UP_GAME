@@ -21,8 +21,6 @@ bool PlayerSensors::Awake()
 
 bool PlayerSensors::Start()
 {
-	//jumpSensor = app->physics->CreateRectangleSensor(app->scene->player->position.x, app->scene->player->position.x, 15, 5, bodyType::DYNAMIC);
-	//jumpSensor = app->physics->CreateRectangle(app->scene->player->position.x, app->scene->player->position.x, 15, 5, bodyType::DYNAMIC);
 	jumpSensor = app->physics->CreateRectangleSensor(0, 0, 12, 10, bodyType::DYNAMIC);
 	jumpSensor->ctype = ColliderType::SENSOR;
 
@@ -128,17 +126,6 @@ bool PlayerSensors::Update()
 		app->scene->player->currentAnimation = &aux;
 		app->scene->player->estadoP = app->scene->player->MOVIMIENTO;
 	}
-
-	
-
-	/*if (aux)
-	{
-		if (skill->body->IsActive() == true)
-		b2Vec2 vecPlayerPos = b2Vec2(app->scene->player->pbody->body->GetTransform().p.x + 1.50, app->scene->player->pbody->body->GetTransform().p.y);
-
-		skill->body->SetTransform(vecPlayerPos, 0);
-	}*/
-	
 
 	return true;
 

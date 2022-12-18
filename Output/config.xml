@@ -23,7 +23,7 @@
 
   <!-- L02: DONE: Add an element for the entity manager and add the player parameters -->
   <scene>
-    <player x="7300" y="550" scalarSpeedX="6" scalarSpeedY="9" scalarSpeedYDown="6" lifePoints="3"
+    <player x="3000" y="700" scalarSpeedX="6" scalarSpeedY="9" scalarSpeedYDown="6" lifePoints="3"
             texturepath="Assets/Textures/KirbySS.png" swordUIPath="Assets/Textures/swordUI.png" swordUIOffPath="Assets/Textures/swordUIOff.png"
             coinFxPath="Assets/Audio/Fx/coin.ogg" kirbyDeathFxPath="Assets/Audio/Fx/KirbyDeathFx.ogg"
             kirbyVictoryFxPath="Assets/Audio/Fx/KirbyVictoryFx.ogg"
@@ -34,32 +34,39 @@
             lifePath="Assets/Textures/heart.png"
             flapLimit="0" oneJump="false" flying="false" godMode="false" victory="false"/>
 	  
-    <item x="600" y="602" texturepath="Assets/Textures/goldCoin.png" effecttexturepath ="Assets/Textures/coinEffect.png" map="1"/>
+    <item x="1472" y="602" texturepath="Assets/Textures/goldCoin.png" effecttexturepath ="Assets/Textures/coinEffect.png" map="1"/>
     <item x="5830" y="1620" texturepath="Assets/Textures/goldCoin.png" effecttexturepath ="Assets/Textures/coinEffect.png" map="2"/>
     <item x="6820" y="378" texturepath="Assets/Textures/goldCoin.png" effecttexturepath ="Assets/Textures/coinEffect.png" map="3"/>
     <item x="10340" y="220" texturepath="Assets/Textures/goldCoin.png" effecttexturepath ="Assets/Textures/coinEffect.png" map="4"/>
 	  
 	  
-    <SmallEnemy1 x="8750" y="1400" scalarLimites="30" speedX="2"
+    <SmallEnemy1 x="1300" y="700" scalarLimites="30" speedX="2"
                  walkDir="false" attackE="false" animAtk="false" destroy="false"
                  texturepath="Assets/Textures/Enemies.png" deathpath="Assets/Textures/enemy-death.png" map="1"
                  deathFxPath="Assets/Audio/Fx/enemyExplode.wav"/>
+    <SmallEnemy1 x="8704" y="1630" scalarLimites="30" speedX="2"
+             walkDir="false" attackE="false" animAtk="false" destroy="false"
+             texturepath="Assets/Textures/Enemies.png" deathpath="Assets/Textures/enemy-death.png" map="1"
+             deathFxPath="Assets/Audio/Fx/enemyExplode.wav"/>
 
-	  
-	  
-	  <SmallEnemyFly x="7600" y="550" scalarLimites="30" speedY="3"
+	  <SmallEnemyFly x="3200" y="770" scalarLimites="30" speedY="3"
 				   destroy="false"
 				   texturepath="Assets/Textures/Enemies.png" textureangrypath="Assets/Textures/EnemiesAngry.png" 
            deathpath="Assets/Textures/enemy-death.png" deathFxPath="Assets/Audio/Fx/enemyExplode.wav" map="1"/>
-    <SmallEnemyFly x="7700" y="550" scalarLimites="30" speedY="3"
+    <SmallEnemyFly x="3840" y="750" scalarLimites="30" speedY="3"
 				   destroy="false"
 				   texturepath="Assets/Textures/Enemies.png" textureangrypath="Assets/Textures/EnemiesAngry.png"
            deathpath="Assets/Textures/enemy-death.png" deathFxPath="Assets/Audio/Fx/enemyExplode.wav" map="1"/>
 	  
-    <SmallEnemy2 x="700" y="600" scalarLimites="3" speedX="2"
+    <SmallEnemy2 x="6656" y="600" scalarLimites="3" speedX="2"
                  walkDir="false" destroy="false"
                  texturepath="Assets/Textures/Enemies.png" deathpath="Assets/Textures/enemy-death.png" map="1"
                  deathFxPath="Assets/Audio/Fx/enemyExplode.wav"/>
+    <SmallEnemy2 x="5524" y="1600" scalarLimites="3" speedX="2"
+                 walkDir="false" destroy="false"
+                 texturepath="Assets/Textures/Enemies.png" deathpath="Assets/Textures/enemy-death.png" map="1"
+                 deathFxPath="Assets/Audio/Fx/enemyExplode.wav"/>
+
 
    
     

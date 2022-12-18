@@ -733,6 +733,7 @@ bool Player::Update()
 	if (hitTimer.Test() == FIN && estadoP == HIT)
 	{
 		estadoP = MOVIMIENTO; 
+		currentAnimation = &idleRAnim;
 	}
 
 	if (invulnerableTime.Test() == FIN)
@@ -778,14 +779,6 @@ void Player::PostUpdate()
 	
 	DrawLifePoints();
 
-	//if (drawSwordUI) {
-	//	app->render->DrawTexture(swordUITexture, position.x - 250, position.y - 150);
-	//}
-	//else
-	//{
-	//	app->render->DrawTexture(swordUITexture, position.x - 250, position.y - 150);
-	//}
-	
 
 }
 
