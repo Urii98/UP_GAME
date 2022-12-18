@@ -681,6 +681,8 @@ bool Player::Update()
 			app->audio->PlayFx(kirbyVictoryFx, 0);
 			currentAnimation = &win;
 			estadoP = NONE;
+			b2Vec2 vel = b2Vec2(0, 0);
+			pbody->body->SetLinearVelocity(vel);
 			winFxbool = true;
 		}
 		break;
