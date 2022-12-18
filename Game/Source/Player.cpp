@@ -593,10 +593,6 @@ void Player::Movimiento()
 
 	}
 	
-	if (app->input->GetKey(SDL_SCANCODE_0) == KEY_DOWN && !godMode) // -- ANIMACI�N MORIR
-	{
-		estadoP = DEATH;
-	}
 
 	if (estadoP == VICTORY)
 	{
