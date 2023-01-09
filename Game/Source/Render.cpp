@@ -32,6 +32,9 @@ bool Render::Awake(pugi::xml_node& config)
 
 	Uint32 flags = SDL_RENDERER_ACCELERATED;
 
+	isVsync = config.child("vsync").attribute("value").as_bool();
+	framesCap = config.child("frcap").attribute("value").as_int();
+
 	if (config.child("vsync").attribute("value").as_bool(true) == true)
 	{
 		flags |= SDL_RENDERER_PRESENTVSYNC;

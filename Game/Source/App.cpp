@@ -232,11 +232,12 @@ void App::FinishUpdate()
 		averageFps = (averageFps + framesPerSecond) / 2;
 	}
 
+	float expectedFrames = (1.0 / (float)render->framesCap) * 1000;
 
 	// Shows the time measurements in the window title
 	static char title[256];
-	sprintf_s(title, 256, "Av.FPS: %.2f Last sec frames: %i Last dt: %.3f Time since startup: %.3f Frame Count: %I64u ",
-		averageFps, framesPerSecond, dt, secondsSinceStartup, frameCount);
+	sprintf_s(title, 256, "FPS: %.2f Av.FPS: %.2f Last dt: %.3f Vsync: %s ",
+		expectedFrames, averageFps, dt, render->isVsync ? "true" : "false");
 
 	app->win->SetTitle(title);
 }
