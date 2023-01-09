@@ -546,7 +546,7 @@ bool SmallEnemy1::Update()
 		limitToChaseX = std::abs(playerTileX - (position.x / 64));
 
 
-		if (limitToChaseX > 4)
+		/*if (limitToChaseX > 4)
 		{
 			estadoSE1 = RETURN;
 			startPath = true;
@@ -554,7 +554,7 @@ bool SmallEnemy1::Update()
 			achievedRightBorder = false;
 			achievedLeftBorder = true;
 
-		}
+		}*/
 
 		break;
 

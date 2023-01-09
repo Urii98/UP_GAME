@@ -105,6 +105,7 @@ void App::AddModule(Module* module)
 bool App::Awake()
 {
 	bool ret = false;
+	timer = Timer();
 
 	// L01: DONE 3: Load config from XML
 	ret = LoadConfig();
@@ -134,6 +135,11 @@ bool App::Awake()
 // Called before the first frame
 bool App::Start()
 {
+	timer.Start();
+	startupTime.Start();
+	lastSecFrameTime.Start();
+
+
 	bool ret = true;
 	ListItem<Module*>* item;
 	item = modules.start;
@@ -149,6 +155,8 @@ bool App::Start()
 		}
 		item = item->next;
 	}
+
+	LOG("----------------- Time Start(): %f", timer.ReadMSec());
 
 	return ret;
 }
