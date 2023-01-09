@@ -261,7 +261,7 @@ void App::FinishUpdate()
 	// Shows the time measurements in the window title
 	static char title[256];
 	sprintf_s(title, 256, "FPS: %.2f / Av.FPS: %.2f / Last-frame MS: %.3f / Vsync: %s ",
-		expectedFrames, averageFps, dt, render->isVsync ? "true" : "false");
+		expectedFrames, averageFps, dt, render->isVsync ? "ON" : "OFF");
 
 	app->win->SetTitle(title);
 }
