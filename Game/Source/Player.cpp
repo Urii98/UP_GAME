@@ -328,7 +328,7 @@ bool Player::Start() {
 	return true;
 }
 
-void Player::Movimiento()
+void Player::Movimiento(float dt)
 {
 
 	
@@ -599,7 +599,17 @@ void Player::Movimiento()
 		vel = b2Vec2(0, -GRAVITY_Y);
 	}
 
+	vel.x *= dt;
+	vel.y *= dt;
+
+	if (godMode)
+	{
+		vel.y += -195 * dt;
+	}
+
 	pbody->body->SetLinearVelocity(vel);
+
+
 }
 
 void Player::ChangePosition(int x, int y)
@@ -612,8 +622,16 @@ void Player::ChangePosition(int x, int y)
 }
 
 
-bool Player::Update()
+bool Player::Update(float dt)
 {
+	if (app->input->GetKey(SDL_SCANCODE_H) == KEY_DOWN)
+	{
+		speedX = 750;
+		speedY = 1125;
+		speedYDown = 750;
+		
+	}
+
 	//Update player position in pixels: Posici�n del COLLIDER:
 	position.x = METERS_TO_PIXELS(pbody->body->GetTransform().p.x / app->win->GetScale()) - 14;
 	position.y = METERS_TO_PIXELS(pbody->body->GetTransform().p.y / app->win->GetScale()) - 10;
@@ -647,12 +665,12 @@ bool Player::Update()
 	{
 	case(STOP):
 		Camera();
-		Movimiento();
+		Movimiento(dt);
 		break;
 
 	case(MOVIMIENTO):
 		Camera();
-		Movimiento();
+		Movimiento(dt);
 		break;
 
 	case(DEATH):
@@ -676,7 +694,7 @@ bool Player::Update()
 	case(VICTORY):
 		if (!winFxbool)
 		{
-			Movimiento();
+			Movimiento(dt);
 			Camera();
 			app->audio->PlayFx(kirbyVictoryFx, 0);
 			currentAnimation = &win;

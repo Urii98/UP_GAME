@@ -31,7 +31,7 @@ public:
 
 	bool Start();
 
-	bool Update();
+	bool Update(float dt);
 
 	void PostUpdate();
 
@@ -159,7 +159,7 @@ private:
 	SDL_Timer deathTimer;
 	SDL_Timer flapLimitTimer;
 
-	void Movimiento();
+	void Movimiento(float dt);
 	void Camera();
 	void PlayerDebug();
 	void PlayerVictory();
