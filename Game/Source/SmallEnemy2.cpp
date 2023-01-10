@@ -139,7 +139,7 @@ bool SmallEnemy2::Start() {
 	return true;
 }
 
-void SmallEnemy2::SentryMovement2()
+void SmallEnemy2::SentryMovement2(float dt)
 {
 	int ret = 0;
 	b2Vec2 vel = b2Vec2(0, 0);
@@ -240,6 +240,10 @@ void SmallEnemy2::SentryMovement2()
 		}
 
 		//pbody->body->ApplyForce(vel, pbody->body->GetLocalCenter(), true);
+		
+		vel.x *= dt;
+		vel.y *= dt;
+
 		pbody->body->SetLinearVelocity(vel);	
 		if(path->At(1) != NULL)
 		destination = path->At(1)->x * 64;
@@ -291,8 +295,13 @@ void SmallEnemy2::SentryMovement2()
 
 }
 
-bool SmallEnemy2::Update()
+bool SmallEnemy2::Update(float dt)
 {
+	if (app->input->GetKey(SDL_SCANCODE_H) == KEY_DOWN)
+	{
+		speedX = 125;
+
+	}
 
 	// L07 DONE 4: Add a physics  - update the position of the object from the physics.  
 	position.x = METERS_TO_PIXELS(pbody->body->GetTransform().p.x);
@@ -302,7 +311,7 @@ bool SmallEnemy2::Update()
 	case STOP:
 		break;
 	case SENTRY:
-		SentryMovement2();
+		SentryMovement2(dt);
 
 		break;
 	case DEATH:

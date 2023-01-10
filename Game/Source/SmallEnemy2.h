@@ -20,7 +20,7 @@ public:
 
 	bool Start();
 
-	bool Update();
+	bool Update(float dt);
 
 	bool CleanUp();
 
@@ -30,7 +30,7 @@ public:
 
 private:
 
-	void SentryMovement2();
+	void SentryMovement2(float dt);
 	void SentryMovement();
 
 public:
