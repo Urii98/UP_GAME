@@ -134,6 +134,9 @@ bool SmallEnemy2::Start() {
 
 	speedX = 3.8;
 	speedLimit = 7;
+	deathXImpulse = 1.0f;
+	deathYImpulse = 5.0f;
+
 	enemyIsDead = false;
 
 	return true;
@@ -300,6 +303,9 @@ bool SmallEnemy2::Update(float dt)
 	if (app->input->GetKey(SDL_SCANCODE_H) == KEY_DOWN)
 	{
 		speedX = 125;
+		deathXImpulse = 62.5;
+		deathYImpulse= 312.5;
+
 
 	}
 
@@ -318,13 +324,19 @@ bool SmallEnemy2::Update(float dt)
 
 		if (app->scene->player->position.x*2 > position.x)
 		{
-			b2Vec2 vel = b2Vec2(-1, -5);
-			pbody->body->ApplyForce(vel, pbody->body->GetLocalCenter(), true);
+			b2Vec2 vel = b2Vec2(-deathXImpulse, -deathYImpulse);
+			vel.x *= dt;
+			vel.y *= dt;
+			pbody->body->SetLinearVelocity(vel);
+			//pbody->body->ApplyForce(vel, pbody->body->GetLocalCenter(), true);
 		}
 		else if (app->scene->player->position.x*2 < position.x)
 		{
-			b2Vec2 vel = b2Vec2(1, -5);
-			pbody->body->ApplyForce(vel, pbody->body->GetLocalCenter(), true);
+			b2Vec2 vel = b2Vec2(deathXImpulse, -deathYImpulse);
+			vel.x *= dt;
+			vel.y *= dt;
+			pbody->body->SetLinearVelocity(vel);
+			//pbody->body->ApplyForce(vel, pbody->body->GetLocalCenter(), true);
 		}
 
 		deathEffectTimer.Start(0.5);
@@ -364,7 +376,7 @@ bool SmallEnemy2::Update(float dt)
 
 	if (enemyIsDead)
 	{
-		app->render->DrawTexture(deathTexture, position.x / app->win->GetScale() - 17, position.y / app->win->GetScale() - 15, &rect);
+		app->render->DrawTexture(deathTexture, position.x / app->win->GetScale() - 17, position.y / app->win->GetScale() - 25, &rect);
 	}
 	else
 	{

@@ -20,7 +20,7 @@ public:
 
 	bool Start();
 
-	bool Update();
+	bool Update(float dt);
 
 	bool CleanUp();
 
@@ -35,9 +35,9 @@ public:
 private:
 
 	void ChaseMovement();
-	void ChaseMovement2();
+	void ChaseMovement2(float dt);
 
-	void SentryMovement();
+	void SentryMovement(float dt);
 
 	void ReturnMovement();
 
@@ -134,6 +134,8 @@ private:
 	bool changedDataFromSave;
 
 	float speedX;
+	float speedXLimit;
+	float deathXImpulse, deathYImpulse;
 };
 
 #endif // !__SMALL_ENEMY_FLY__

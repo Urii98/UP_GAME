@@ -108,6 +108,8 @@ private:
 	int framesStopped;
 
 	float speedX, speedLimit;
+
+	float deathXImpulse, deathYImpulse;
 };
 
 #endif // !__SMALL_ENEMY_2__

@@ -36,7 +36,9 @@ bool FadeToBlack::Update(float dt)
 
 	if (currentStep == Fade_Step::TO_BLACK)
 	{
-		alpha += 0.01f;
+		//alpha += 0.01f;
+		alpha += 0.625f *dt;
+		std::cout << "Alpha: " << alpha << std::endl;
 		if (alpha > 1.00f)
 		{
 			moduleToDisable->Disable();
@@ -57,7 +59,9 @@ bool FadeToBlack::Update(float dt)
 	}
 	else
 	{
-		alpha -= 0.01f;
+		//alpha -= 0.01f;
+		std::cout << "Alpha: " << alpha << std::endl;
+		alpha -= 0.625f * dt;
 		if (alpha <= 0)
 		{
 			currentStep = Fade_Step::NONE;

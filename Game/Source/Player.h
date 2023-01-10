@@ -76,6 +76,8 @@ public:
 	int speedY;
 	int speedYDown;
 
+	float impulseHitX, impulseHitY;
+
 	int scalarSpeedX;
 	int scalarSpeedY;
 	int scalarSpeedYDown;

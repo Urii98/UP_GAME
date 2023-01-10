@@ -114,7 +114,7 @@ bool SmallEnemy1::Start() {
 	deathTexture = app->tex->Load(deathPath);
 
 	// L07 DONE 4: Add a physics  - initialize the physics body
-	pbody = app->physics->CreateCircle(position.x + 12, position.y + 12, 10, bodyType::DYNAMIC);
+	pbody = app->physics->CreateCircle(position.x + 5, position.y + 12, 13, bodyType::DYNAMIC);
 
 	// L07 DONE 7: Assign collider type
 	pbody->ctype = ColliderType::ENEMY;
@@ -159,7 +159,11 @@ bool SmallEnemy1::Start() {
 	lastPosinY = 0;
 
 	speedX = 3.0f;
+	speedY = 5.0f;
 	speedLimit = 8.0f;
+	deathXImpulse = 0.5f;
+	deathYImpulse = 3.0f;
+
 
 	auxBug = false;
 	intBug = 0;
@@ -236,7 +240,7 @@ void SmallEnemy1::ReturnMovement2()
 
 }
 
-void SmallEnemy1::ChaseMovement2()
+void SmallEnemy1::ChaseMovement2(float dt)
 {
 
 	int ret = 0;
@@ -289,19 +293,26 @@ void SmallEnemy1::ChaseMovement2()
 				vel = b2Vec2(speedX, 0);
 			}
 
+
+			vel.x *= dt;
+			vel.y *= dt;
+
+			
 			pbody->body->ApplyForce(vel, pbody->body->GetLocalCenter(), true);
 			//std::cout << "linear velocity - " << pbody->body->GetLinearVelocity().x << std::endl;
 
-			if (pbody->body->GetLinearVelocity().x > speedLimit)
+			if (pbody->body->GetLinearVelocity().x > speedLimit * dt)
 			{
 				b2Vec2 vel = pbody->body->GetLinearVelocity();
 				vel.x = speedLimit;
+				vel.x *= dt;
 				pbody->body->SetLinearVelocity(vel);
 			}
-			else if (pbody->body->GetLinearVelocity().x < -speedLimit)
+			else if (pbody->body->GetLinearVelocity().x < -speedLimit * dt)
 			{
 				b2Vec2 vel = pbody->body->GetLinearVelocity();
 				vel.x = -speedLimit;
+				vel.x *= dt;
 				pbody->body->SetLinearVelocity(vel);
 			}
 
@@ -346,7 +357,7 @@ void SmallEnemy1::ChaseMovement2()
 
 }
 
-void SmallEnemy1::SentryMovement2()
+void SmallEnemy1::SentryMovement2(float dt)
 {
 	int ret = 0;
 	b2Vec2 vel = b2Vec2(0, 0);
@@ -438,13 +449,16 @@ void SmallEnemy1::SentryMovement2()
 		{
 			if (path->At(1)->x * 64 > position.x)
 			{
-				vel = b2Vec2(speedX, 5.0f);
+				vel = b2Vec2(speedX, speedY);
 			}
 			else if (path->At(1)->x * 64 < position.x)
 			{
-				vel = b2Vec2(-speedX, 5.0f);
+				vel = b2Vec2(-speedX, speedY);
 			}
 		}
+
+		vel.x *= dt;
+		vel.y *= dt;
 
 		pbody->body->SetLinearVelocity(vel);
 		if (path->At(1) != NULL)
@@ -514,8 +528,17 @@ void SmallEnemy1::SentryMovement2()
 
 }
 
-bool SmallEnemy1::Update()
+bool SmallEnemy1::Update(float dt)
 {
+	if (app->input->GetKey(SDL_SCANCODE_H) == KEY_DOWN)
+	{
+		speedX = 190.5;
+		speedY = 312.5;
+		speedLimit = 500;
+		deathXImpulse = 31.25;
+		deathYImpulse = 187.5;
+
+	}
 
 	// L07 DONE 4: Add a physics  - update the position of the object from the physics.  
 	position.x = METERS_TO_PIXELS(pbody->body->GetTransform().p.x);
@@ -525,7 +548,7 @@ bool SmallEnemy1::Update()
 	case STOP:
 		break;
 	case SENTRY:
-		SentryMovement2();
+		SentryMovement2(dt);
 
 		playerTileX = app->scene->player->position.x / 32;
 		playerTileY = app->scene->player->position.y / 32;
@@ -540,7 +563,7 @@ bool SmallEnemy1::Update()
 		
 		break;
 	case CHASE:
-		ChaseMovement2();
+		ChaseMovement2(dt);
 
 		playerTileX = app->scene->player->position.x / 32;
 		limitToChaseX = std::abs(playerTileX - (position.x / 64));
@@ -562,13 +585,19 @@ bool SmallEnemy1::Update()
 
 		if (app->scene->player->position.x * 2 > position.x)
 		{
-			b2Vec2 vel = b2Vec2(-0.5, -3);
-			pbody->body->ApplyForce(vel, pbody->body->GetLocalCenter(), true);
+			b2Vec2 vel = b2Vec2(-deathXImpulse, -deathYImpulse);
+			vel.x *= dt;
+			vel.y *= dt;
+			pbody->body->SetLinearVelocity(vel);
+			//pbody->body->ApplyForce(vel, pbody->body->GetLocalCenter(), true);
 		}
 		else if (app->scene->player->position.x * 2 < position.x)
 		{
-			b2Vec2 vel = b2Vec2(0.5, -3);
-			pbody->body->ApplyForce(vel, pbody->body->GetLocalCenter(), true);
+			b2Vec2 vel = b2Vec2(deathXImpulse, -deathYImpulse);
+			vel.x *= dt;
+			vel.y *= dt;
+			pbody->body->SetLinearVelocity(vel);
+			//pbody->body->ApplyForce(vel, pbody->body->GetLocalCenter(), true);
 		}
 
 		deathEffectTimer.Start(0.5);
@@ -633,7 +662,7 @@ bool SmallEnemy1::Update()
 
 	if (enemyIsDead)
 	{
-		app->render->DrawTexture(deathTexture, position.x / app->win->GetScale() - 10, position.y / app->win->GetScale() - 7, &rect);
+		app->render->DrawTexture(deathTexture, position.x / app->win->GetScale() - 10, position.y / app->win->GetScale() - 20, &rect);
 	}
 	else
 	{

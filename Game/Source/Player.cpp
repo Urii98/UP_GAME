@@ -281,6 +281,9 @@ bool Player::Start() {
 	speedY = scalarSpeedY * app->win->GetScale();
 	speedYDown = scalarSpeedYDown * app->win->GetScale(); //para cuando estamos en el aire y apretamos "S" para bajar m�s r�pido
 
+	impulseHitX = 1;
+	impulseHitY = 50;
+
 	estadoP = STOP;
 	currentAnimation = &idleRAnim;
 	direccionP = DERECHA;
@@ -714,13 +717,19 @@ bool Player::Update(float dt)
 
 		if (direccionE == DERECHA)
 		{
-			b2Vec2 vel = b2Vec2(-1, -50);
-			pbody->body->ApplyForce(vel, pbody->body->GetLocalCenter(), true);
+			b2Vec2 vel = b2Vec2(-impulseHitX, -impulseHitY);
+			vel.x *= dt;
+			vel.y *= dt;
+			pbody->body->SetLinearVelocity(vel);
+			//pbody->body->ApplyForce(vel, pbody->body->GetLocalCenter(), true);
 		}
 		else if (direccionE == IZQUIERDA)
 		{
-			b2Vec2 vel = b2Vec2(-1, 50);
-			pbody->body->ApplyForce(vel, pbody->body->GetLocalCenter(), true);
+			b2Vec2 vel = b2Vec2(-impulseHitX, -impulseHitY);
+			vel.x *= dt;
+			vel.y *= dt;
+			pbody->body->SetLinearVelocity(vel);
+			//pbody->body->ApplyForce(vel, pbody->body->GetLocalCenter(), true);
 		}
 
 		invulnerable = true;

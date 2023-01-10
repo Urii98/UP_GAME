@@ -111,8 +111,6 @@ public:
 	PathFinding* pathfinding;
 
 	FadeToBlack* fade;
-	
-
 
 private:
 

@@ -134,6 +134,10 @@ bool SmallEnemyFly::Start() {
 	currentAnimationFlyEnemy = &idleLFlyAnim;
 	limitToChase = 0;
 	speedX = 2.8f;
+	speedXLimit = 10.0f;
+	deathXImpulse = 0.5f;
+	deathYImpulse = 1.5f;
+
 	
 	changedDataFromSave = false;
 	newData.startPath = startPath;
@@ -153,11 +157,12 @@ bool SmallEnemyFly::Start() {
 	return true;
 }
 
-void SmallEnemyFly::SentryMovement()
+void SmallEnemyFly::SentryMovement(float dt)
 {
 	if (position.y >= limiteInf || !firstSentryMovement)
 	{
 		b2Vec2 vel = b2Vec2(0, -speedY);
+		vel.y *= dt;
 		pbody->body->ApplyForce(vel, pbody->body->GetLocalCenter(), true);
 		
 	}
@@ -165,13 +170,14 @@ void SmallEnemyFly::SentryMovement()
 	if (position.y <= limiteSup )
 	{
 		b2Vec2 vel = b2Vec2(0, speedY);
+		vel.y *= dt;
 		pbody->body->ApplyForce(vel, pbody->body->GetLocalCenter(), true);
 		firstSentryMovement = true;
 
 	}
 }
 
-void SmallEnemyFly::ChaseMovement2()
+void SmallEnemyFly::ChaseMovement2(float dt)
 {
 	int ret = 0;
 	iPoint playerPos = { app->scene->player->position.x / 32, app->scene->player->position.y / 32 };
@@ -230,18 +236,24 @@ void SmallEnemyFly::ChaseMovement2()
 				}
 			}
 
+			vel.x *= dt;
+			vel.y *= dt;
+
 			pbody->body->ApplyForce(vel, pbody->body->GetLocalCenter(), true);
+			//pbody->body->SetLinearVelocity(vel);
 			 
-			if (pbody->body->GetLinearVelocity().x > 10)
+			if (pbody->body->GetLinearVelocity().x > speedXLimit)
 			{
 				b2Vec2 vel = pbody->body->GetLinearVelocity();
-				vel.x = 10;
+				vel.x = speedXLimit;
+				vel.y *= dt;
 				pbody->body->SetLinearVelocity(vel);
 			}
-			else if (pbody->body->GetLinearVelocity().x < -10)
+			else if (pbody->body->GetLinearVelocity().x < -speedXLimit)
 			{
 				b2Vec2 vel = pbody->body->GetLinearVelocity();
-				vel.x = -10;
+				vel.x = -speedXLimit;
+				vel.y *= dt;
 				pbody->body->SetLinearVelocity(vel);
 			}
 		
@@ -337,8 +349,17 @@ void SmallEnemyFly::ReturnMovement()
 
 }
 
-bool SmallEnemyFly::Update()
+bool SmallEnemyFly::Update(float dt)
 {
+	if (app->input->GetKey(SDL_SCANCODE_H) == KEY_DOWN)
+	{
+		speedX = 175;
+		speedY = 187.5;
+		speedXLimit = 625;
+		deathXImpulse = 31.25;
+		deathYImpulse = 93.75;
+	}
+
 	// L07 DONE 4: Add a physics  - update the position of the object from the physics.  
 	position.x = METERS_TO_PIXELS(pbody->body->GetTransform().p.x);
 	position.y = METERS_TO_PIXELS(pbody->body->GetTransform().p.y);
@@ -348,7 +369,7 @@ bool SmallEnemyFly::Update()
 	case STOP:
 		break;
 	case SENTRY:
-		SentryMovement();
+		SentryMovement(dt);
 
 		playerTileX = app->scene->player->position.x / 32;
 		playerTileY = app->scene->player->position.y / 32;
@@ -364,7 +385,7 @@ bool SmallEnemyFly::Update()
 		break;
 
 	case CHASE:
-		ChaseMovement2();
+		ChaseMovement2(dt);
 
 		playerTileX = app->scene->player->position.x / 32;
 		limitToChase = std::abs(playerTileX - (position.x / 64));
@@ -375,13 +396,19 @@ bool SmallEnemyFly::Update()
 
 		if (app->scene->player->position.x * 2 > position.x)
 		{
-			b2Vec2 vel = b2Vec2(-0.5, -1.5);
-			pbody->body->ApplyForce(vel, pbody->body->GetLocalCenter(), true);
+			b2Vec2 vel = b2Vec2(-deathXImpulse, -deathYImpulse);
+			vel.x *= dt;
+			vel.y *= dt;
+			pbody->body->SetLinearVelocity(vel);
+			//pbody->body->ApplyForce(vel, pbody->body->GetLocalCenter(), true);
 		}
 		else if (app->scene->player->position.x * 2 < position.x)
 		{
-			b2Vec2 vel = b2Vec2(0.5, -1.5);
-			pbody->body->ApplyForce(vel, pbody->body->GetLocalCenter(), true);
+			b2Vec2 vel = b2Vec2(deathXImpulse, -deathYImpulse);
+			vel.x *= dt;
+			vel.y *= dt;
+			pbody->body->SetLinearVelocity(vel);
+			//pbody->body->ApplyForce(vel, pbody->body->GetLocalCenter(), true);
 		}
 
 		deathEffectTimer.Start(0.5);
@@ -449,7 +476,7 @@ bool SmallEnemyFly::Update()
 	} 
 	else if (enemyIsDead)
 	{
-		app->render->DrawTexture(deathTexture, position.x / app->win->GetScale() - 10, position.y / app->win->GetScale() - 7, &rect);
+		app->render->DrawTexture(deathTexture, position.x / app->win->GetScale() - 10, position.y / app->win->GetScale() - 30, &rect);
 	}
 	else
 	{

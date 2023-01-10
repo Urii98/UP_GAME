@@ -20,7 +20,7 @@ public:
 
 	bool Start();
 
-	bool Update();
+	bool Update(float dt);
 
 	bool CleanUp();
 
@@ -35,8 +35,8 @@ public:
 
 private:
 
-	void ChaseMovement2();
-	void SentryMovement2();
+	void ChaseMovement2(float dt);
+	void SentryMovement2(float dt);
 	void ReturnMovement2();
 
 
@@ -146,11 +146,14 @@ private:
 	int lastPosinY;
 
 	float speedX;
+	float speedY;
 	float speedLimit;
 
 	bool auxBug;
 	int intBug;
 
+
+	float deathXImpulse, deathYImpulse;
 };
 
 #endif // !__SMALL_ENEMY_1__

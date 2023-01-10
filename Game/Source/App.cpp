@@ -263,6 +263,8 @@ void App::FinishUpdate()
 	sprintf_s(title, 256, "FPS: %.2f / Av.FPS: %.2f / Last-frame MS: %.3f / Vsync: %s ",
 		expectedFrames, averageFps, dt, render->isVsync ? "ON" : "OFF");
 
+	std::cout << "dt: " << dt << std::endl;
+
 	app->win->SetTitle(title);
 }
 
