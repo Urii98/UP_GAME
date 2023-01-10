@@ -60,7 +60,7 @@ bool FadeToBlack::Update(float dt)
 	}
 	else
 	{
-		alpha -= 0.03f;
+		alpha -= 0.01f;
 		//std::cout << "Alpha: " << alpha << std::endl;
 		//alpha -= 0.625f * dt;
 		if (alpha <= 0)
