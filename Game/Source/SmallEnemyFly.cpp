@@ -161,7 +161,6 @@ void SmallEnemyFly::SentryMovement(float dt)
 		b2Vec2 vel = b2Vec2(0, -speedY);
 		//vel.y *= dt;
 		pbody->body->ApplyForce(vel, pbody->body->GetLocalCenter(), true);
-		std::cout << "Velocidad en x: " << pbody->body->GetLinearVelocity().y << std::endl;
 		
 	}
 
@@ -171,7 +170,6 @@ void SmallEnemyFly::SentryMovement(float dt)
 		//vel.y *= dt;
 		pbody->body->ApplyForce(vel, pbody->body->GetLocalCenter(), true);
 		firstSentryMovement = true;
-		std::cout << "Velocidad en x: " << pbody->body->GetLinearVelocity().y << std::endl;
 
 	}
 }

@@ -30,7 +30,7 @@ public:
 
 private:
 
-	void SentryMovement2();
+	void SentryMovement2(float dt);
 	void SentryMovement();
 
 public:
