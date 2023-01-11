@@ -118,7 +118,7 @@ bool Scene::Start()
 		app->map->mapData.tileHeight,
 		app->map->mapData.tilesets.Count());
 
-	app->win->SetTitle(title.GetString());
+	//app->win->SetTitle(title.GetString());
 
 	// Texture to highligh mouse position 
 	point = app->tex->Load("Assets/Maps/point.png");

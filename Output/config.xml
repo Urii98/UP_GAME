@@ -1,6 +1,6 @@
 <config>
   <app>
-    <title>Game Development Testbed</title>
+    <title>Kirby - UP Games</title>
     <organization>UPC</organization>
     <frcap value = "16"/>
   </app>
