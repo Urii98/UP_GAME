@@ -104,6 +104,8 @@ void App::AddModule(Module* module)
 // Called before render is available
 bool App::Awake()
 {
+	timer = Timer();
+
 	bool ret = false;
 
 	// L01: DONE 3: Load config from XML
@@ -112,6 +114,8 @@ bool App::Awake()
 	if (ret == true)
 	{
 		title = configNode.child("app").child("title").child_value(); // L01: DONE 4: Read the title from the config file
+
+		maxFrameDuration = configNode.child("app").child("frcap").attribute("value").as_int();
 
 		ListItem<Module*>* item;
 		item = modules.start;
@@ -127,6 +131,7 @@ bool App::Awake()
 			item = item->next;
 		}
 	}
+	LOG("---------------- Time Awake: %f/n", timer.ReadMSec());
 
 	return ret;
 }
@@ -134,6 +139,11 @@ bool App::Awake()
 // Called before the first frame
 bool App::Start()
 {
+	dt = 0;
+	timer.Start();
+	startupTime.Start();
+	lastSecFrameTime.Start();
+
 	bool ret = true;
 	ListItem<Module*>* item;
 	item = modules.start;
@@ -149,6 +159,8 @@ bool App::Start()
 		}
 		item = item->next;
 	}
+
+	LOG("----------------- Time Start(): %f", timer.ReadMSec());
 
 	return ret;
 }
@@ -198,6 +210,7 @@ bool App::LoadConfig()
 // ---------------------------------------------
 void App::PrepareUpdate()
 {
+	frameTime.Start();
 }
 
 // ---------------------------------------------
@@ -207,6 +220,49 @@ void App::FinishUpdate()
 	if (loadGameRequested == true) LoadFromFile();
 	if (saveGameRequested == true) SaveToFile();
 
+	// Amount of frames since startup
+	frameCount++;
+	// Amount of time since game start (use a low resolution timer)
+	secondsSinceStartup = startupTime.ReadSec();
+	// Amount of ms took the last update
+	dt = frameTime.ReadMSec();
+	// Amount of frames during the last second
+	lastSecFrameCount++;
+
+	if (lastSecFrameTime.ReadMSec() > 1000) {
+		lastSecFrameTime.Start();
+		framesPerSecond = lastSecFrameCount;
+		lastSecFrameCount = 0;
+		// Average FPS for the whole game life
+		averageFps = (averageFps + framesPerSecond) / 2;
+	}
+
+	// L14: TODO 2: Use SDL_Delay to make sure you get your capped framerate
+	// L14: TODO 3: Measure accurately the amount of time SDL_Delay() actually waits compared to what was expected
+
+	float delay = float(maxFrameDuration) - dt;
+
+	PerfTimer delayTimer = PerfTimer();
+	delayTimer.Start();
+	if (maxFrameDuration > 0 && delay > 0) {
+		SDL_Delay(delay);
+		LOG("We waited for %f milliseconds and the real delay is % f", delay, delayTimer.ReadMs());
+		dt = maxFrameDuration;
+	}
+	else {
+		LOG("No wait");
+	}
+
+	float expectedFrames = (1.0 / (float)maxFrameDuration * 1000);
+
+	// Shows the time measurements in the window title
+	static char title[256];
+	sprintf_s(title, 256, "FPS: %.2f / Av.FPS: %.2f / Last-frame MS: %.3f / Vsync: %s ",
+		expectedFrames, averageFps, dt, render->isVsync ? "ON" : "OFF");
+
+	//std::cout << "dt: " << dt << std::endl;
+
+	app->win->SetTitle(title);
 }
 
 // Call modules before each loop iteration
@@ -247,7 +303,7 @@ bool App::DoUpdate()
 			continue;
 		}
 
-		ret = item->data->Update(dt);
+		ret = item->data->Update(dt/1000);
 	}
 
 	return ret;

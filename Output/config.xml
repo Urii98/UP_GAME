@@ -2,10 +2,11 @@
   <app>
     <title>Game Development Testbed</title>
     <organization>UPC</organization>
+    <frcap value = "16"/>
   </app>
 
   <renderer>
-    <vsync value="true"/>
+    <vsync value="false"/>
   </renderer>
 
   <window>
@@ -23,7 +24,7 @@
 
   <!-- L02: DONE: Add an element for the entity manager and add the player parameters -->
   <scene>
-    <player x="600" y="730" scalarSpeedX="6" scalarSpeedY="9" scalarSpeedYDown="6" lifePoints="3"
+    <player x="3000" y="730" scalarSpeedX="6" scalarSpeedY="9" scalarSpeedYDown="6" lifePoints="3"
             texturepath="Assets/Textures/KirbySS.png" swordUIPath="Assets/Textures/swordUI.png" swordUIOffPath="Assets/Textures/swordUIOff.png"
             coinFxPath="Assets/Audio/Fx/coin.ogg" kirbyDeathFxPath="Assets/Audio/Fx/KirbyDeathFx.ogg"
             kirbyVictoryFxPath="Assets/Audio/Fx/KirbyVictoryFx.ogg"
@@ -49,11 +50,11 @@
              texturepath="Assets/Textures/Enemies.png" deathpath="Assets/Textures/enemy-death.png" map="1"
              deathFxPath="Assets/Audio/Fx/enemyExplode.wav"/>
 
-	  <SmallEnemyFly x="3200" y="770" scalarLimites="30" speedY="3"
+	  <SmallEnemyFly x="3200" y="770" scalarLimites="30" speedY="3.0" speedX="2.8"
 				   destroy="false"
 				   texturepath="Assets/Textures/Enemies.png" textureangrypath="Assets/Textures/EnemiesAngry.png" 
            deathpath="Assets/Textures/enemy-death.png" deathFxPath="Assets/Audio/Fx/enemyExplode.wav" map="1"/>
-    <SmallEnemyFly x="3840" y="750" scalarLimites="30" speedY="3"
+    <SmallEnemyFly x="3840" y="750" scalarLimites="30" speedY="3.0" speedX="2.8"
 				   destroy="false"
 				   texturepath="Assets/Textures/Enemies.png" textureangrypath="Assets/Textures/EnemiesAngry.png"
            deathpath="Assets/Textures/enemy-death.png" deathFxPath="Assets/Audio/Fx/enemyExplode.wav" map="1"/>

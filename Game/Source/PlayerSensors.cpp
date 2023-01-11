@@ -38,7 +38,7 @@ bool PlayerSensors::Start()
 	return true;
 }
 
-bool PlayerSensors::Update()
+bool PlayerSensors::Update(float dt)
 {	
 	
 	b2Vec2 vecPlayerPos = b2Vec2(app->scene->player->pbody->body->GetTransform().p.x, app->scene->player->pbody->body->GetTransform().p.y+0.90);

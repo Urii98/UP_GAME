@@ -514,7 +514,7 @@ void SmallEnemy1::SentryMovement2()
 
 }
 
-bool SmallEnemy1::Update()
+bool SmallEnemy1::Update(float dt)
 {
 
 	// L07 DONE 4: Add a physics  - update the position of the object from the physics.  
@@ -546,15 +546,15 @@ bool SmallEnemy1::Update()
 		limitToChaseX = std::abs(playerTileX - (position.x / 64));
 
 
-		if (limitToChaseX > 4)
-		{
-			estadoSE1 = RETURN;
-			startPath = true;
-			firstPath = true;
-			achievedRightBorder = false;
-			achievedLeftBorder = true;
+		//if (limitToChaseX > 4)
+		//{
+		//	estadoSE1 = RETURN;
+		//	startPath = true;
+		//	firstPath = true;
+		//	achievedRightBorder = false;
+		//	achievedLeftBorder = true;
 
-		}
+		//}
 
 		break;
 

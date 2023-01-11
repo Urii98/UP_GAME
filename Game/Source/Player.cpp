@@ -612,7 +612,7 @@ void Player::ChangePosition(int x, int y)
 }
 
 
-bool Player::Update()
+bool Player::Update(float dt)
 {
 	//Update player position in pixels: Posici�n del COLLIDER:
 	position.x = METERS_TO_PIXELS(pbody->body->GetTransform().p.x / app->win->GetScale()) - 14;

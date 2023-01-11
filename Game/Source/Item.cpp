@@ -90,7 +90,7 @@ bool Item::Start() {
 	return true;
 }
 
-bool Item::Update()
+bool Item::Update(float dt)
 {
 	// L07 DONE 4: Add a physics to an item - update the position of the object from the physics.  
 	position.x = METERS_TO_PIXELS(pbody->body->GetTransform().p.x);

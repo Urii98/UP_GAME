@@ -54,6 +54,9 @@ public:
 	SDL_Color background;
 
 	iPoint playerPosition;
+
+	bool isVsync;
+	int framesCap;
 };
 
 #endif // __RENDER_H__

@@ -32,7 +32,8 @@ bool SmallEnemyFly::Awake() {
 	position.y = parameters.attribute("y").as_int();
 	
 	scalarLimites = parameters.attribute("scalarLimites").as_int();
-	speedY = parameters.attribute("speedY").as_int();
+	speedY = parameters.attribute("speedY").as_float();
+	speedX = parameters.attribute("speedX").as_float();
 
 	texturePath = parameters.attribute("texturepath").as_string();
 	textureAngryPath = parameters.attribute("textureangrypath").as_string();
@@ -133,7 +134,7 @@ bool SmallEnemyFly::Start() {
 	playerTileY = 0;
 	currentAnimationFlyEnemy = &idleLFlyAnim;
 	limitToChase = 0;
-	speedX = 2.8f;
+	
 	
 	changedDataFromSave = false;
 	newData.startPath = startPath;
@@ -153,25 +154,29 @@ bool SmallEnemyFly::Start() {
 	return true;
 }
 
-void SmallEnemyFly::SentryMovement()
+void SmallEnemyFly::SentryMovement(float dt)
 {
 	if (position.y >= limiteInf || !firstSentryMovement)
 	{
 		b2Vec2 vel = b2Vec2(0, -speedY);
+		//vel.y *= dt;
 		pbody->body->ApplyForce(vel, pbody->body->GetLocalCenter(), true);
+		std::cout << "Velocidad en x: " << pbody->body->GetLinearVelocity().y << std::endl;
 		
 	}
 
 	if (position.y <= limiteSup )
 	{
 		b2Vec2 vel = b2Vec2(0, speedY);
+		//vel.y *= dt;
 		pbody->body->ApplyForce(vel, pbody->body->GetLocalCenter(), true);
 		firstSentryMovement = true;
+		std::cout << "Velocidad en x: " << pbody->body->GetLinearVelocity().y << std::endl;
 
 	}
 }
 
-void SmallEnemyFly::ChaseMovement2()
+void SmallEnemyFly::ChaseMovement2(float dt)
 {
 	int ret = 0;
 	iPoint playerPos = { app->scene->player->position.x / 32, app->scene->player->position.y / 32 };
@@ -232,16 +237,16 @@ void SmallEnemyFly::ChaseMovement2()
 
 			pbody->body->ApplyForce(vel, pbody->body->GetLocalCenter(), true);
 			 
-			if (pbody->body->GetLinearVelocity().x > 10)
+			if (pbody->body->GetLinearVelocity().x > 13)
 			{
 				b2Vec2 vel = pbody->body->GetLinearVelocity();
-				vel.x = 10;
+				vel.x = 13;
 				pbody->body->SetLinearVelocity(vel);
 			}
-			else if (pbody->body->GetLinearVelocity().x < -10)
+			else if (pbody->body->GetLinearVelocity().x < -13)
 			{
 				b2Vec2 vel = pbody->body->GetLinearVelocity();
-				vel.x = -10;
+				vel.x = -13;
 				pbody->body->SetLinearVelocity(vel);
 			}
 		
@@ -337,7 +342,7 @@ void SmallEnemyFly::ReturnMovement()
 
 }
 
-bool SmallEnemyFly::Update()
+bool SmallEnemyFly::Update(float dt)
 {
 	// L07 DONE 4: Add a physics  - update the position of the object from the physics.  
 	position.x = METERS_TO_PIXELS(pbody->body->GetTransform().p.x);
@@ -348,7 +353,7 @@ bool SmallEnemyFly::Update()
 	case STOP:
 		break;
 	case SENTRY:
-		SentryMovement();
+		SentryMovement(dt); 
 
 		playerTileX = app->scene->player->position.x / 32;
 		playerTileY = app->scene->player->position.y / 32;
@@ -364,7 +369,7 @@ bool SmallEnemyFly::Update()
 		break;
 
 	case CHASE:
-		ChaseMovement2();
+		ChaseMovement2(dt);
 
 		playerTileX = app->scene->player->position.x / 32;
 		limitToChase = std::abs(playerTileX - (position.x / 64));

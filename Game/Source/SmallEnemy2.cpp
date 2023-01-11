@@ -291,7 +291,7 @@ void SmallEnemy2::SentryMovement2()
 
 }
 
-bool SmallEnemy2::Update()
+bool SmallEnemy2::Update(float dt)
 {
 
 	// L07 DONE 4: Add a physics  - update the position of the object from the physics.  

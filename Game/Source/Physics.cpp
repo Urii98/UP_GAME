@@ -17,6 +17,8 @@
 #pragma comment( lib, "../Game/Source/External/Box2D/libx86/ReleaseLib/Box2D.lib" )
 #endif
 
+#include <iostream>
+
 Physics::Physics(bool isActive) : Module(isActive)
 {
 	world = NULL;
@@ -63,7 +65,21 @@ bool Physics::PreUpdate()
 
 	// Step (update) the World
 	// WARNING: WE ARE STEPPING BY CONSTANT 1/60 SECONDS!
-	world->Step(1.0f / timeSteps, 6, 2);
+	
+	if(app->maxFrameDuration != 0)
+	physicsSteps = 1.0f / ((float)app->maxFrameDuration/1000);
+	
+	//std::cout << physicsSteps << std::endl;
+
+	if (app->dt == 0) 
+	{
+		world->Step(1.0f / timeSteps, 6, 2);
+	}
+	else
+	{
+		world->Step(1.0f / physicsSteps, 6, 2);
+	}
+	
 
 	// Because Box2D does not automatically broadcast collisions/contacts with sensors, 
 	// we have to manually search for collisions and "call" the equivalent to the ModulePhysics::BeginContact() ourselves...

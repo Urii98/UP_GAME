@@ -20,7 +20,7 @@ public:
 
 	bool Start();
 
-	bool Update();
+	bool Update(float dt);
 
 	bool CleanUp();
 
@@ -35,9 +35,9 @@ public:
 private:
 
 	void ChaseMovement();
-	void ChaseMovement2();
+	void ChaseMovement2(float dt);
 
-	void SentryMovement();
+	void SentryMovement(float dt);
 
 	void ReturnMovement();
 
@@ -49,8 +49,6 @@ public:
 	int limiteInf;
 	int scalarLimites;
 	int map;
-
-	int speedY;
 
 	Animation idleRFlyAnim;
 	Animation idleLFlyAnim;
@@ -133,7 +131,7 @@ private:
 
 	bool changedDataFromSave;
 
-	float speedX;
+	float speedX, speedY;
 };
 
 #endif // !__SMALL_ENEMY_FLY__

@@ -31,7 +31,7 @@ public:
 
 	bool Start();
 
-	bool Update();
+	bool Update(float dt);
 
 	void PostUpdate();
 
