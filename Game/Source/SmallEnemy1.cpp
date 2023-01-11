@@ -301,14 +301,14 @@ void SmallEnemy1::ChaseMovement2(float dt)
 			pbody->body->ApplyForce(vel, pbody->body->GetLocalCenter(), true);
 			//std::cout << "linear velocity - " << pbody->body->GetLinearVelocity().x << std::endl;
 
-			if (pbody->body->GetLinearVelocity().x > speedLimit * dt)
+			if (pbody->body->GetLinearVelocity().x > speedLimit)
 			{
 				b2Vec2 vel = pbody->body->GetLinearVelocity();
 				vel.x = speedLimit;
 				vel.x *= dt;
 				pbody->body->SetLinearVelocity(vel);
 			}
-			else if (pbody->body->GetLinearVelocity().x < -speedLimit * dt)
+			else if (pbody->body->GetLinearVelocity().x < -speedLimit)
 			{
 				b2Vec2 vel = pbody->body->GetLinearVelocity();
 				vel.x = -speedLimit;
@@ -530,7 +530,7 @@ void SmallEnemy1::SentryMovement2(float dt)
 
 bool SmallEnemy1::Update(float dt)
 {
-	if (app->input->GetKey(SDL_SCANCODE_H) == KEY_DOWN)
+	/*if (app->input->GetKey(SDL_SCANCODE_H) == KEY_DOWN)
 	{
 		speedX = 190.5;
 		speedY = 312.5;
@@ -538,7 +538,7 @@ bool SmallEnemy1::Update(float dt)
 		deathXImpulse = 31.25;
 		deathYImpulse = 187.5;
 
-	}
+	}*/
 
 	// L07 DONE 4: Add a physics  - update the position of the object from the physics.  
 	position.x = METERS_TO_PIXELS(pbody->body->GetTransform().p.x);
