@@ -452,7 +452,7 @@ bool SmallEnemyFly::Update(float dt)
 	} 
 	else if (enemyIsDead)
 	{
-		app->render->DrawTexture(deathTexture, position.x / app->win->GetScale() - 10, position.y / app->win->GetScale() - 7, &rect);
+		app->render->DrawTexture(deathTexture, position.x / app->win->GetScale() - 18, position.y / app->win->GetScale() - 22, &rect);
 	}
 	else
 	{

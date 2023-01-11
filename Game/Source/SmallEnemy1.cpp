@@ -633,7 +633,7 @@ bool SmallEnemy1::Update(float dt)
 
 	if (enemyIsDead)
 	{
-		app->render->DrawTexture(deathTexture, position.x / app->win->GetScale() - 10, position.y / app->win->GetScale() - 7, &rect);
+		app->render->DrawTexture(deathTexture, position.x / app->win->GetScale() - 25, position.y / app->win->GetScale() - 20, &rect);
 	}
 	else
 	{
