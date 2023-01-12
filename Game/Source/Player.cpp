@@ -18,6 +18,8 @@
 #include "SceneTitle.h"
 #include "PlayerSensors.h"
 
+#include "Optick/include/optick.h"
+
 
 Player::Player() : Entity(EntityType::PLAYER)
 {
@@ -614,6 +616,8 @@ void Player::ChangePosition(int x, int y)
 
 bool Player::Update(float dt)
 {
+	OPTICK_EVENT();
+
 	//Update player position in pixels: Posici�n del COLLIDER:
 	position.x = METERS_TO_PIXELS(pbody->body->GetTransform().p.x / app->win->GetScale()) - 14;
 	position.y = METERS_TO_PIXELS(pbody->body->GetTransform().p.y / app->win->GetScale()) - 10;

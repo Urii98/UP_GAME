@@ -5,6 +5,8 @@
 #include "Audio.h"
 #include <iostream>
 
+#include "Optick/include/optick.h"
+
 PlayerSensors::PlayerSensors() : Entity(EntityType::SENSORS)
 {
 	name.Create("PlayerSensors");
@@ -40,7 +42,8 @@ bool PlayerSensors::Start()
 
 bool PlayerSensors::Update(float dt)
 {	
-	
+	OPTICK_EVENT();
+
 	b2Vec2 vecPlayerPos = b2Vec2(app->scene->player->pbody->body->GetTransform().p.x, app->scene->player->pbody->body->GetTransform().p.y+0.90);
 
 	jumpSensor->body->SetTransform(vecPlayerPos, 0);

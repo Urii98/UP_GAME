@@ -9,6 +9,8 @@
 #include "Log.h"
 #include <iostream>
 
+#include "Optick/include/optick.h"
+
 SceneTitle::SceneTitle(bool isActive) : Module(isActive) {
 	name.Create("sceneTitle");
 }
@@ -63,6 +65,8 @@ bool SceneTitle::Start() {
 
 bool SceneTitle::Update(float dt)
 {
+	OPTICK_EVENT();
+
 	chrono.Start(0.18); //el tiempo que pasa entre cada frame de la animación
 
 	if (frame < 145 && chrono.Test() == FIN)
@@ -79,18 +83,6 @@ bool SceneTitle::Update(float dt)
 		app->fade->Fade(this, app->scene, 60);
 	}
 
-	//if (app->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN)//GODMODE
-	//{
-	//	mapSelect = true;
-	//	levelSelected = true;
-	//}
-
-	//if (app->input->GetKey(SDL_SCANCODE_F2) == KEY_DOWN)//GODMODE
-	//{
-	//	mapSelect = false;
-	//	levelSelected = true;
-
-	//}
 	
 	return true;
 }

@@ -2,7 +2,7 @@
   <app>
     <title>Kirby - UP Games</title>
     <organization>UPC</organization>
-    <frcap value = "64"/>
+    <frcap value = "16"/>
   </app>
 
   <renderer>

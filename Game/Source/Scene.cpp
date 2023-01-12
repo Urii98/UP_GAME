@@ -14,6 +14,8 @@
 
 #include "SceneTitle.h"
 
+#include "Optick/include/optick.h"
+
 Scene::Scene(bool isActive) : Module(isActive)
 {
 	name.Create("scene");
@@ -138,6 +140,7 @@ bool Scene::PreUpdate()
 // Called each loop iteration
 bool Scene::Update(float dt)
 {
+	OPTICK_EVENT();
 
 	// L03: DONE 3: Request App to Load / Save when pressing the keys F5 (save) / F6 (load)
 	if (app->input->GetKey(SDL_SCANCODE_F5) == KEY_DOWN)

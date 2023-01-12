@@ -18,6 +18,8 @@
 #include "Defs.h"
 #include <cmath>
 
+#include "Optick/include/optick.h"
+
 
 SmallEnemy1::SmallEnemy1() : Entity(EntityType::SMALLENEMY1)
 {
@@ -516,7 +518,7 @@ void SmallEnemy1::SentryMovement2()
 
 bool SmallEnemy1::Update(float dt)
 {
-
+	OPTICK_EVENT();
 	// L07 DONE 4: Add a physics  - update the position of the object from the physics.  
 	position.x = METERS_TO_PIXELS(pbody->body->GetTransform().p.x);
 	position.y = METERS_TO_PIXELS(pbody->body->GetTransform().p.y);

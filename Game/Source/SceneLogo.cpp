@@ -12,6 +12,8 @@
 
 #include "SceneEnding.h"
 
+#include "Optick/include/optick.h"
+
 
 SceneLogo::SceneLogo(bool isActive) : Module(isActive) {
 	name.Create("sceneLogo");
@@ -50,7 +52,7 @@ bool SceneLogo::Start() {
 
 bool SceneLogo::Update(float dt)
 {
-
+	OPTICK_EVENT();
 
 	if (app->input->GetKey(SDL_SCANCODE_H) == KEY_DOWN)
 	{

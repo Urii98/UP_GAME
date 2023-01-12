@@ -9,6 +9,9 @@
 
 #include"EntityManager.h"
 #include "Map.h"
+
+#include "Optick/include/optick.h"
+
 FadeToBlack::FadeToBlack(bool isActive) : Module(isActive)
 {
 	screenRect = { 0, 0, 1024, 768 };
@@ -31,6 +34,7 @@ bool FadeToBlack::Start()
 
 bool FadeToBlack::Update(float dt)
 {
+	OPTICK_EVENT();
 	// Exit this function if we are not performing a fade
 	if (currentStep == Fade_Step::NONE) return true;
 
