@@ -39,14 +39,14 @@ bool Item::Start() {
 		coinAnimation.PushBack({ 0 + 24*i ,0,24,24 });
 	}
 	coinAnimation.loop = true;
-	coinAnimation.speed = 0.12f;
+	coinAnimation.speed = 7.5f * (app->maxFrameDuration/1000.0);
 
 	for (int i = 0; i < 4; i++)
 	{
 		effectAnimation.PushBack({ 0 + 32 * i ,0,32,32 });
 	}
 	effectAnimation.loop = false;
-	effectAnimation.speed = 0.2f;
+	effectAnimation.speed = 12.5f * (app->maxFrameDuration / 1000.0);
 	
 
 	if (app->sceneTitle->mapSelect == false) {

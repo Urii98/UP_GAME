@@ -36,7 +36,7 @@ bool FadeToBlack::Update(float dt)
 
 	if (currentStep == Fade_Step::TO_BLACK)
 	{
-		alpha += 0.01f;
+		alpha += 0.01f * (dt*65);
 		if (alpha > 1.00f)
 		{
 			moduleToDisable->Disable();
@@ -57,7 +57,7 @@ bool FadeToBlack::Update(float dt)
 	}
 	else
 	{
-		alpha -= 0.01f;
+		alpha -= 0.01f * (dt * 65);
 		if (alpha <= 0)
 		{
 			currentStep = Fade_Step::NONE;
@@ -83,6 +83,12 @@ bool FadeToBlack::PostUpdate()
 		app->render->DrawRectangle(rect, 0, 0, 0, (unsigned char)(255.0f * alpha));
 	}
 
+	if (currentStep == Fade_Step::FROM_BLACK)
+	{
+		// Render the black square with alpha on the screen
+		SDL_Rect rect = { 0,0,1024,768 };
+		app->render->DrawRectangle(rect, 0, 0, 0, (unsigned char)(255.0f * alpha));
+	}
 
 	return true;
 }

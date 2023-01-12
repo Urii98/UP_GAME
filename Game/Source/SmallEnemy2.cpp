@@ -64,7 +64,7 @@ bool SmallEnemy2::Start() {
 	walkRAnimEnemy.PushBack({ 809,926,35,31 });
 	walkRAnimEnemy.loop = true;
 	//walkRAnimEnemy.pingpong = true;
-	walkRAnimEnemy.speed = 0.125f;
+	walkRAnimEnemy.speed = 7.8125f * (app->maxFrameDuration / 1000.0);
 	
 
 	walkLAnimEnemy.PushBack({ 720,926,35,31 });
@@ -77,24 +77,24 @@ bool SmallEnemy2::Start() {
 	walkLAnimEnemy.PushBack({ 675,926,35,31 });
 	walkLAnimEnemy.loop = true;
 	//walkLAnimEnemy.pingpong = true;
-	walkLAnimEnemy.speed = 0.125f;
+	walkLAnimEnemy.speed = 7.8125f * (app->maxFrameDuration / 1000.0);
 
 	deathR.PushBack({ 902,974,35,34 });
 	deathR.PushBack({ 853,974,35,34 });
 	deathR.loop = true;
-	deathR.speed = 0.15f;
+	deathR.speed = 9.375f * (app->maxFrameDuration / 1000.0);
 
 	deathL.PushBack({ 581,974,35,34 });
 	deathL.PushBack({ 630,974,35,34 });
 	deathL.loop = true;
-	deathL.speed = 0.15f;
+	deathL.speed = 9.375f * (app->maxFrameDuration / 1000.0);
 
 	for (int i = 0; i < 6; i++)
 	{
 		deathEffect.PushBack({ 0 + i * 40, 0, 40, 41 }); 
 	}
 	deathEffect.loop = false;
-	deathEffect.speed = 0.25f;
+	deathEffect.speed = 15.625f * (app->maxFrameDuration / 1000.0);
 	
 
 	//initilize textures

@@ -59,44 +59,44 @@ bool SmallEnemyFly::Start() {
 	idleLFlyAnim.PushBack({ 766,513,25,23 });
 	idleLFlyAnim.PushBack({ 845,513,25,23 });
 	idleLFlyAnim.loop = true;
-	idleLFlyAnim.speed = 0.125f;
+	idleLFlyAnim.speed = 7.8125f * (app->maxFrameDuration / 1000.0);
 
 	chaseLFlyAnim.PushBack({ 766,513,25,23 });
 	chaseLFlyAnim.PushBack({ 806,513,25,23 });
 	chaseLFlyAnim.PushBack({ 845,513,25,23 });
 	chaseLFlyAnim.PushBack({ 877,513,25,23 });
 	chaseLFlyAnim.loop = true;
-	chaseLFlyAnim.speed = 0.125f;
+	chaseLFlyAnim.speed = 7.8125f * (app->maxFrameDuration / 1000.0);
 
 	deathLAnimEnemy.PushBack({ 808,550,25,23 });
 	deathLAnimEnemy.PushBack({ 770,550,25,23 });
 	deathLAnimEnemy.loop = true;
-	deathLAnimEnemy.speed = 0.15f;
+	deathLAnimEnemy.speed = 9.375f * (app->maxFrameDuration / 1000.0);
 
 	
 	idleRFlyAnim.PushBack({ 726,513,25,23 });
 	idleRFlyAnim.PushBack({ 649,513,25,23 });
 	idleRFlyAnim.loop = true;
-	idleRFlyAnim.speed = 0.125f;
+	idleRFlyAnim.speed = 7.8125f * (app->maxFrameDuration / 1000.0);
 	
 	chaseRFlyAnim.PushBack({ 726,513,25,23 });
 	chaseRFlyAnim.PushBack({ 686,513,25,23 });
 	chaseRFlyAnim.PushBack({ 649,513,25,23 });
 	chaseRFlyAnim.PushBack({ 615,513,25,23 });
 	chaseRFlyAnim.loop = true;
-	chaseRFlyAnim.speed = 0.125f;
+	chaseRFlyAnim.speed = 7.8125f * (app->maxFrameDuration / 1000.0);
 		
 	deathRAnimEnemy.PushBack({ 685,550,25,23 });
 	deathRAnimEnemy.PushBack({ 723,550,25,23 });
 	deathRAnimEnemy.loop = true;
-	deathRAnimEnemy.speed = 0.15f;
+	deathRAnimEnemy.speed = 9.375f * (app->maxFrameDuration / 1000.0);
 
 	for (int i = 0; i < 6; i++)
 	{
 		deathEffect.PushBack({ 0 + i * 40, 0, 40, 41 });
 	}
 	deathEffect.loop = false;
-	deathEffect.speed = 0.25f;
+	deathEffect.speed = 15.625 * (app->maxFrameDuration / 1000.0);
 
 	//initilize textures
 	texture = app->tex->Load(texturePath);

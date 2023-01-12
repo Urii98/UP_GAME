@@ -84,7 +84,7 @@ bool Player::Start() {
 	idleRAnim.PushBack({ 774, 91, 26, 22 });
 	idleRAnim.PushBack({ 774, 91, 26, 22 });
 	idleRAnim.loop = true;
-	idleRAnim.speed = 0.075f;
+	idleRAnim.speed = 4.6875f * (app->maxFrameDuration / 1000.0);
 
 	//idleLAnim
 	idleLAnim.PushBack({ 286,91,26,22 });
@@ -95,7 +95,7 @@ bool Player::Start() {
 	idleLAnim.PushBack({ 286,91,26,22 });
 	idleLAnim.PushBack({ 286,91,26,22 });
 	idleLAnim.loop = true;
-	idleLAnim.speed = 0.075f;
+	idleLAnim.speed = 4.6875f * (app->maxFrameDuration / 1000.0);
 
 	//walkRAnim
 	for (int i = 0; i < 9; i++)
@@ -104,7 +104,7 @@ bool Player::Start() {
 
 	}
 	walkRAnim.loop = true;
-	walkRAnim.speed = 0.125f;
+	walkRAnim.speed = 7.8125f * (app->maxFrameDuration / 1000.0);
 
 	//walkLAnim
 	for (int i = 0; i < 9; i++)
@@ -113,19 +113,19 @@ bool Player::Start() {
 		walkLAnim.PushBack({ 400 - (29) * i,198, 28, 23 });
 	}
 	walkLAnim.loop = true;
-	walkLAnim.speed = 0.125f;
+	walkLAnim.speed = 7.8125f * (app->maxFrameDuration / 1000.0);
 
 	//downLAnim
 	downLAnim.PushBack({ 181, 303 , 28 ,28 });
 	downLAnim.PushBack({ 212, 303 , 28 ,28 });
 	downLAnim.loop = true;
-	downLAnim.speed = 0.125f;
+	downLAnim.speed = 7.8125f * (app->maxFrameDuration / 1000.0);
 
 	//downRAnim
 	downRAnim.PushBack({ 845,304,28,28 });
 	downRAnim.PushBack({ 876,304,28,28 });
 	downRAnim.loop = true;
-	downRAnim.speed = 0.125f;
+	downRAnim.speed = 7.8125f * (app->maxFrameDuration / 1000.0);
 
 	runRAnim.PushBack({ 704,231,30,24 });
 	runRAnim.PushBack({ 736,231,30,24 });
@@ -136,7 +136,7 @@ bool Player::Start() {
 	runRAnim.PushBack({ 870,231,30,24 });
 	runRAnim.PushBack({ 897,231,30,24 });
 	runRAnim.loop = true;
-	runRAnim.speed = 0.2f;
+	runRAnim.speed = 12.5f * (app->maxFrameDuration / 1000.0);
 
 
 	runLAnim.PushBack({ 352,231,30,24 });
@@ -148,7 +148,7 @@ bool Player::Start() {
 	runLAnim.PushBack({ 186,231,30,24 });
 	runLAnim.PushBack({ 159,231,30,24 });
 	runLAnim.loop = true;
-	runLAnim.speed = 0.2;
+	runLAnim.speed = 12.5f * (app->maxFrameDuration / 1000.0);
 
 
 	//jumpRAnim
@@ -162,7 +162,7 @@ bool Player::Start() {
 	jumpRAnim.PushBack({ 845,304,28,28 });
 	jumpRAnim.PushBack({ 876,304,28,28 });
 	jumpRAnim.loop = false;
-	jumpRAnim.speed = 0.18f;
+	jumpRAnim.speed = 11.25f * (app->maxFrameDuration / 1000.0);
 
 	//jumpLAnim
 	jumpLAnim.PushBack({ 423, 303 , 28 ,28 });
@@ -175,14 +175,14 @@ bool Player::Start() {
 	jumpLAnim.PushBack({ 212, 303 , 28 ,28 });
 	jumpLAnim.PushBack({ 181, 303 , 28 ,28 });
 	jumpLAnim.loop = false;
-	jumpLAnim.speed = 0.18f;
+	jumpLAnim.speed = 11.25f * (app->maxFrameDuration / 1000.0);
 
 	//preflyRAnim
 	preflyRAnim.PushBack({ 785, 388 , 30 ,30 });
 	preflyRAnim.PushBack({ 814, 388 , 30 ,30 });
 	preflyRAnim.PushBack({ 844, 388 , 30 ,30 });
 	preflyRAnim.loop = false;
-	preflyRAnim.speed = 0.125f;
+	preflyRAnim.speed = 7.8125f * (app->maxFrameDuration / 1000.0);
 
 	//flyRAnim
 	flyRAnim.PushBack({ 709,426 ,33 ,32 });
@@ -192,7 +192,7 @@ bool Player::Start() {
 	flyRAnim.PushBack({ 847,426 ,33 ,32 });
 	flyRAnim.PushBack({ 885,426 ,33 ,32 });
 	flyRAnim.loop = true;
-	flyRAnim.speed = 0.125f;
+	flyRAnim.speed = 7.8125f * (app->maxFrameDuration / 1000.0);
 
 
 	//flyLAnim
@@ -203,7 +203,7 @@ bool Player::Start() {
 	flyLAnim.PushBack({ 205,426 ,33 ,32 });
 	flyLAnim.PushBack({ 167,426 ,33 ,32 });
 	flyLAnim.loop = true;
-	flyLAnim.speed = 0.125f;
+	flyLAnim.speed = 7.8125f * (app->maxFrameDuration / 1000.0);
 
 
 	death.PushBack({ 850, 3775, 28, 23 });
@@ -216,7 +216,7 @@ bool Player::Start() {
 	death.PushBack({ 944, 2896, 28, 23 });
 	death.PushBack({ 944, 2896, 28, 23 });
 	death.loop = false;
-	death.speed = 0.085f;
+	death.speed = 5.3125f * (app->maxFrameDuration / 1000.0);
 
 	win.PushBack({ 721, 58, 25, 25 });
 	win.PushBack({ 747, 58, 25, 25 });
@@ -226,7 +226,7 @@ bool Player::Start() {
 	win.PushBack({ 853, 58, 25, 25 });
 	win.PushBack({ 881, 58, 25, 25 });
 	win.loop = false;
-	win.speed = 0.085f;
+	win.speed = 5.3125f * (app->maxFrameDuration / 1000.0);
 
 	swordAttackRAnim.PushBack({ 168,1439,42,48 });
 	swordAttackRAnim.PushBack({ 217,1439,42,48 });
@@ -243,7 +243,7 @@ bool Player::Start() {
 	swordAttackRAnim.PushBack({ 524,1519,69,48 });
 	swordAttackRAnim.PushBack({ 609,1519,35,48 });
 	swordAttackRAnim.loop = true;
-	swordAttackRAnim.speed = 0.4f;
+	swordAttackRAnim.speed = 25.0f * (app->maxFrameDuration / 1000.0);
 
 	
 	swordAttackLAnim.PushBack({ 461,1885,42,48 });
@@ -261,21 +261,21 @@ bool Player::Start() {
 	swordAttackLAnim.PushBack({ 78,1965,69,48 });
 	swordAttackLAnim.PushBack({ 27,1965,35,48 });
 	swordAttackLAnim.loop = true;
-	swordAttackLAnim.speed = 0.4f;
+	swordAttackLAnim.speed = 25.0f * (app->maxFrameDuration / 1000.0);
 
 	hitR.PushBack({ 706,1034,27,27 });
 	hitR.PushBack({ 651,990,33,33 });
 	hitR.PushBack({ 723,990,33,33 });
 	hitR.PushBack({ 761,990,34,33 });
 	hitR.loop = true;
-	hitR.speed = 0.25;
+	hitR.speed = 15.625f * (app->maxFrameDuration / 1000.0);
 
 	hitL.PushBack({ 354,1034,27,27 });
 	hitL.PushBack({ 402,990,33,33 });
 	hitL.PushBack({ 330,990,33,33 });
 	hitL.PushBack({ 292,990,33,33 });
 	hitL.loop = true;
-	hitL.speed = 0.25;
+	hitL.speed = 15.625f * (app->maxFrameDuration / 1000.0);
 
 	speedX = scalarSpeedX * app->win->GetScale();
 	speedY = scalarSpeedY * app->win->GetScale();

@@ -257,7 +257,7 @@ void App::FinishUpdate()
 		LOG("No wait");
 	}
 
-	float expectedFrames = (1.0 / (float)maxFrameDuration * 1000);
+	float expectedFrames = (1.0 / (float)maxFrameDuration * 1000.0);
 
 	// Shows the time measurements in the window title
 	static char title[256];

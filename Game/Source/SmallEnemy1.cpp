@@ -62,52 +62,52 @@ bool SmallEnemy1::Start() {
 	walkRAnimEnemy.PushBack({ 676,1297,24,21 });
 	walkRAnimEnemy.PushBack({ 630,1297,24,21 });
 	walkRAnimEnemy.loop = true;
-	walkRAnimEnemy.speed = 0.125f;
+	walkRAnimEnemy.speed = 7.8125f * (app->maxFrameDuration / 1000.0);
 
 	walkLAnimEnemy.PushBack({ 776,1297,24,21 });
 	walkLAnimEnemy.PushBack({ 818,1297,24,21 });
 	walkLAnimEnemy.PushBack({ 864,1297,24,21 });
 	walkRAnimEnemy.loop = true;
-	walkLAnimEnemy.speed = 0.125f;
+	walkLAnimEnemy.speed = 7.8125f * (app->maxFrameDuration / 1000.0);
 
 	angryRAnimEnemy.PushBack({ 940,1331,24,21 });
 	angryRAnimEnemy.PushBack({ 777,1332,24,21 });
 	angryRAnimEnemy.PushBack({ 817,1332,24,21 });
 	angryRAnimEnemy.loop = false;
-	angryRAnimEnemy.speed = 0.05f;
+	angryRAnimEnemy.speed = 3.125f * (app->maxFrameDuration / 1000.0);
 
 	angryLAnimEnemy.PushBack({ 940,1331,24,21 });
 	angryLAnimEnemy.PushBack({ 717,1332,24,21 });
 	angryLAnimEnemy.PushBack({ 676,1332,24,21 });
 	angryLAnimEnemy.loop = false;
-	angryLAnimEnemy.speed = 0.05f;
+	angryLAnimEnemy.speed = 3.125f * (app->maxFrameDuration / 1000.0);
 
 	attackRAnimEnemy.PushBack({ 863,1327,24,26 });
 	attackRAnimEnemy.PushBack({ 905,1327,24,26 });
 	attackRAnimEnemy.loop = true;
-	attackRAnimEnemy.speed = 0.2f;
+	attackRAnimEnemy.speed = 12.5f * (app->maxFrameDuration / 1000.0);
 
 	attackLAnimEnemy.PushBack({630,1327,24,26});
 	attackLAnimEnemy.PushBack({588,1327,24,26});
 	attackLAnimEnemy.loop = true;
-	attackLAnimEnemy.speed = 0.2f;
+	attackLAnimEnemy.speed = 12.5f * (app->maxFrameDuration / 1000.0);
 
 	deathL.PushBack({ 817,1365,24,21 });
 	deathL.PushBack({ 778,1365,24,21 });
 	deathL.loop = true;
-	deathL.speed = 0.15f;
+	deathL.speed = 9.375f * (app->maxFrameDuration / 1000.0);
 
 	deathR.PushBack({ 903,1365,24,21 });
 	deathR.PushBack({ 863,1365,24,21 });
 	deathR.loop = true;
-	deathR.speed = 0.15f;
+	deathR.speed = 9.375f * (app->maxFrameDuration / 1000.0);
 
 	for (int i = 0; i < 6; i++)
 	{
 		deathEffect.PushBack({ 0 + i * 40, 0, 40, 41 });
 	}
 	deathEffect.loop = false;
-	deathEffect.speed = 0.25f;
+	deathEffect.speed = 15.625f * (app->maxFrameDuration / 1000.0);;
 
 	//initilize textures
 	texture = app->tex->Load(texturePath);
