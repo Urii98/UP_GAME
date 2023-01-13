@@ -31,9 +31,6 @@ public:
 
 public:
 	SDL_Texture* bgTexture[8];
-	SDL_Texture* lvlSelectorTexture;
-	SDL_Texture* lvlOneTexture;
-	SDL_Texture* lvlTwoTexture;
 
 	SDL_Texture* intentoProfiling;
 	int frame;
@@ -42,11 +39,6 @@ public:
 
 	SDL_Timer chrono;
 	SDL_Timer chronoFade;
-
-
-	SString lvlSelectorPath;
-	SString lvlOnePath;
-	SString lvlTwoPath;
 
 	const char* musicTitlePath;
 	const char* musicStopPath;

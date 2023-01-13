@@ -60,9 +60,6 @@ bool SceneTitle::Start() {
 
 	// ---------- 
 
-	/*lvlSelectorTexture = app->tex->Load(lvlSelectorPath.GetString());
-	lvlOneTexture = app->tex->Load(lvlOnePath.GetString());
-	lvlTwoTexture = app->tex->Load(lvlTwoPath.GetString());*/
 
 	frame = 0;
 	rowFrame = 0;
@@ -70,7 +67,6 @@ bool SceneTitle::Start() {
 	alphaFromFade = 1.0f;
 	toFade = false;
 	fromFade = true;
-	mapSelect = true;
 	rowFrameBool = false;
 
 	return true;
@@ -140,7 +136,6 @@ bool SceneTitle::PostUpdate()
 			rowFrame = 0;
 			frame++;
 		}
-		std::cout << "entrando en frame <=30" << std::endl;
 
 	}
 	else if (frame <= 45)
@@ -154,7 +149,7 @@ bool SceneTitle::PostUpdate()
 			rowFrame = 0;
 			frame++;
 		}
-		std::cout << "entrando en frame <=45" << std::endl;
+
 	}
 	else if (frame <= 60)
 	{
@@ -167,7 +162,7 @@ bool SceneTitle::PostUpdate()
 			rowFrame = 0;
 			frame++;
 		}
-		std::cout << "entrando en frame <=60" << std::endl;
+
 	}
 	else if (frame <= 75)
 	{
@@ -180,7 +175,6 @@ bool SceneTitle::PostUpdate()
 			rowFrame = 0;
 			frame++;
 		}
-		std::cout << "entrando en frame <=75" << std::endl;
 	}
 	else if (frame <= 90)
 	{
@@ -193,7 +187,6 @@ bool SceneTitle::PostUpdate()
 			rowFrame = 0;
 			frame++;
 		}
-		std::cout << "entrando en frame <=90" << std::endl;
 	}
 	else if (frame <= 105 )
 	{
@@ -206,7 +199,7 @@ bool SceneTitle::PostUpdate()
 			rowFrame = 0;
 			frame++;
 		}
-		std::cout << "entrando en frame <=105" << std::endl;
+
 	}
 	else if (frame <= 108)
 	{
@@ -219,7 +212,6 @@ bool SceneTitle::PostUpdate()
 			rowFrame = 0;
 			frame++;
 		}
-		std::cout << "entrando en frame <=108" << std::endl;
 	}
 	// ---------- 
 
@@ -233,9 +225,6 @@ bool SceneTitle::CleanUp()
 		app->tex->UnLoad(bgTexture[i]);
 	}
 
-	app->tex->UnLoad(lvlSelectorTexture);
-	app->tex->UnLoad(lvlOneTexture);
-	app->tex->UnLoad(lvlTwoTexture);	
 	
 	return true;
 }
