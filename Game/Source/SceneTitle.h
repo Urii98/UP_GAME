@@ -30,16 +30,20 @@ public:
 	bool CleanUp();
 
 public:
-	SDL_Texture* bgTexture[NUM_IMAGES];
+	SDL_Texture* bgTexture[8];
 	SDL_Texture* lvlSelectorTexture;
 	SDL_Texture* lvlOneTexture;
 	SDL_Texture* lvlTwoTexture;
+
+	SDL_Texture* intentoProfiling;
 	int frame;
+	int rowFrame;
+	bool rowFrameBool;
 
 	SDL_Timer chrono;
 	SDL_Timer chronoFade;
 
-	SString textureTitlePath;
+
 	SString lvlSelectorPath;
 	SString lvlOnePath;
 	SString lvlTwoPath;

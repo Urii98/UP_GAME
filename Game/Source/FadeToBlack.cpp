@@ -40,6 +40,7 @@ bool FadeToBlack::Update(float dt)
 
 	if (currentStep == Fade_Step::TO_BLACK)
 	{
+
 		alpha += 0.01f * (dt*65);
 		if (alpha > 1.00f)
 		{
@@ -50,6 +51,8 @@ bool FadeToBlack::Update(float dt)
 				app->entityManager->Enable();
 				app->map->Enable();
 			}*/
+
+			OPTICK_EVENT();
 			moduleToEnable->Enable();
 			if (moduleToEnable->name == "scene")
 			{

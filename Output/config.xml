@@ -2,7 +2,7 @@
   <app>
     <title>Kirby - UP Games</title>
     <organization>UPC</organization>
-    <frcap value = "16"/>
+    <frcap value = "32"/>
   </app>
 
   <renderer>
@@ -79,6 +79,7 @@
 
   <sceneTitle>
     <textureTitlePath path="Assets/Textures/Title/ezgif-frame-"/>
+    <textureProfPath path="Assets/Textures/Merge/Merge"/>
     <lvlSelectorPath path="Assets/Textures/Title/LvlSelector.png"/>
     <lvlOnePath path="Assets/Textures/Title/LvlOne.png"/>
     <lvlTwoPath path="Assets/Textures/Title/LvlTwo.png"/>

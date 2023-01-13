@@ -72,10 +72,6 @@ bool SceneLogo::Update(float dt)
 }
 
 
-
-
-
-
 bool SceneLogo::PostUpdate()
 {
 	if (!prueba)
@@ -95,5 +91,6 @@ bool SceneLogo::CleanUp()
 {
 	//memoryleak
 	app->tex->UnLoad(textureLogo);
+
 	return true;
 }
