@@ -22,11 +22,6 @@ SceneTitle::~SceneTitle() {
 
 bool SceneTitle::Awake(pugi::xml_node& config) {
 
-	lvlSelectorPath = config.child("lvlSelectorPath").attribute("path").as_string();
-	lvlOnePath = config.child("lvlOnePath").attribute("path").as_string();
-	lvlTwoPath = config.child("lvlTwoPath").attribute("path").as_string();
-
-
 	musicTitlePath = config.child("musicTitlePath").attribute("path").as_string();
 	musicStopPath = config.child("musicStopPath").attribute("path").as_string();
 
@@ -60,6 +55,9 @@ bool SceneTitle::Start() {
 
 	// ---------- 
 
+	/*lvlSelectorTexture = app->tex->Load(lvlSelectorPath.GetString());
+	lvlOneTexture = app->tex->Load(lvlOnePath.GetString());
+	lvlTwoTexture = app->tex->Load(lvlTwoPath.GetString());*/
 
 	frame = 0;
 	rowFrame = 0;
@@ -67,6 +65,7 @@ bool SceneTitle::Start() {
 	alphaFromFade = 1.0f;
 	toFade = false;
 	fromFade = true;
+	mapSelect = true; //no eliminar esta variable ni comentarla
 	rowFrameBool = false;
 
 	return true;
@@ -136,6 +135,7 @@ bool SceneTitle::PostUpdate()
 			rowFrame = 0;
 			frame++;
 		}
+		std::cout << "entrando en frame <=30" << std::endl;
 
 	}
 	else if (frame <= 45)
@@ -149,7 +149,7 @@ bool SceneTitle::PostUpdate()
 			rowFrame = 0;
 			frame++;
 		}
-
+		std::cout << "entrando en frame <=45" << std::endl;
 	}
 	else if (frame <= 60)
 	{
@@ -162,7 +162,7 @@ bool SceneTitle::PostUpdate()
 			rowFrame = 0;
 			frame++;
 		}
-
+		std::cout << "entrando en frame <=60" << std::endl;
 	}
 	else if (frame <= 75)
 	{
@@ -175,6 +175,7 @@ bool SceneTitle::PostUpdate()
 			rowFrame = 0;
 			frame++;
 		}
+		std::cout << "entrando en frame <=75" << std::endl;
 	}
 	else if (frame <= 90)
 	{
@@ -187,6 +188,7 @@ bool SceneTitle::PostUpdate()
 			rowFrame = 0;
 			frame++;
 		}
+		std::cout << "entrando en frame <=90" << std::endl;
 	}
 	else if (frame <= 105 )
 	{
@@ -199,7 +201,7 @@ bool SceneTitle::PostUpdate()
 			rowFrame = 0;
 			frame++;
 		}
-
+		std::cout << "entrando en frame <=105" << std::endl;
 	}
 	else if (frame <= 108)
 	{
@@ -212,6 +214,7 @@ bool SceneTitle::PostUpdate()
 			rowFrame = 0;
 			frame++;
 		}
+		std::cout << "entrando en frame <=108" << std::endl;
 	}
 	// ---------- 
 
@@ -225,6 +228,9 @@ bool SceneTitle::CleanUp()
 		app->tex->UnLoad(bgTexture[i]);
 	}
 
+	app->tex->UnLoad(lvlSelectorTexture);
+	app->tex->UnLoad(lvlOneTexture);
+	app->tex->UnLoad(lvlTwoTexture);	
 	
 	return true;
 }

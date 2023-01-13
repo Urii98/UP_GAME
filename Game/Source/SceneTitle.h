@@ -31,6 +31,9 @@ public:
 
 public:
 	SDL_Texture* bgTexture[8];
+	SDL_Texture* lvlSelectorTexture;
+	SDL_Texture* lvlOneTexture;
+	SDL_Texture* lvlTwoTexture;
 
 	SDL_Texture* intentoProfiling;
 	int frame;
