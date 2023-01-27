@@ -28,6 +28,7 @@ public:
 
 public:
 
+	bool isDiscovered = false;
 	
 	Animation* checkPointCoinAnimation = nullptr;
 

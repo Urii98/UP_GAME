@@ -45,6 +45,7 @@ public:
 	int numSmallEnemy1;
 	int numSmallEnemy2;
 	int numSmallEnemyFly;
+	int posCheckPointX, posCheckPointY;
 
 };
 

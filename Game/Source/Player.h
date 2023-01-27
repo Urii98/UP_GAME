@@ -70,8 +70,6 @@ public:
 	};
 	int direccionP, direccionE;
 
-
-	
 	int speedX;
 	int speedY;
 	int speedYDown;
@@ -133,6 +131,11 @@ public:
 	bool sword;
 	int lifePoints;
 	int moneyPoints;
+
+	int playerCheckPoint;
+	int checkPointsDiscovered;
+	int posXFromCheckPoint;
+	bool collidingWithCheckPoint;
 private:
 
 	//L02: DONE 1: Declare player parameters
@@ -164,6 +167,7 @@ private:
 	void Camera();
 	void PlayerDebug();
 	void PlayerVictory();
+	void TeleportToCheckPoint(int numCheckPoint);
 	//ColliderType CheckCollision();
 	
 	const char* coinSFx;

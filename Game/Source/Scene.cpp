@@ -253,6 +253,7 @@ void Scene::checkPointIterator(CheckPoint& dir)
 			if (item->data->pbody->listener == &dir)
 			{
 				item->data->isCurrent = true;
+				app->SaveGameRequest();
 			}
 			else
 			{

@@ -115,6 +115,7 @@ public:
 	bool destroy;
 
 	bool isCurrent = false;
+	int numCheckPoint;
 };
 
 #endif // __ENTITY_H__

@@ -323,10 +323,13 @@ bool Player::Start() {
 
 	posXBeforeAttack = 0;
 	posYBeforeAttack = 0;
+	checkPointsDiscovered = 0;
 	skillSwitch = false;
 	sword = false;
 	drawSwordUI = true;
 	invulnerable = false;
+	posXFromCheckPoint = 0;
+	collidingWithCheckPoint = false;
 	
 	return true;
 }
@@ -744,6 +747,29 @@ bool Player::Update(float dt)
 		invulnerable = false;
 	}
 
+	if (app->input->GetKey(SDL_SCANCODE_B) == KEY_DOWN)
+	{
+		if (collidingWithCheckPoint)
+		{
+			int checkDist = 0;
+			if (posXFromCheckPoint > position.x)
+			{
+				checkDist = posXFromCheckPoint - position.x;
+			}
+			else if (position.x > posXFromCheckPoint)
+			{
+				checkDist = position.x - posXFromCheckPoint;
+			}
+
+			if (checkDist < 45)
+			{
+				TeleportToCheckPoint(playerCheckPoint);
+			}
+			collidingWithCheckPoint = false;
+		}
+	}
+
+
 	currentAnimation->Update();
 	PostUpdate();
 
@@ -922,6 +948,13 @@ void Player::OnCollision(PhysBody* physA, PhysBody* physB) {
 			}
 		}
 		break;
+
+	case ColliderType::CHECKPOINT:
+		playerCheckPoint = physB->listener->numCheckPoint;
+		posXFromCheckPoint = position.x;
+		collidingWithCheckPoint = true;
+		break;
+
 	case ColliderType::UNKNOWN:
 		LOG("Collision UNKNOWN");
 		break;
@@ -1016,4 +1049,49 @@ void Player::PlayerVictory() {
 		victory = true;
 	}
 
+}
+
+void Player::TeleportToCheckPoint(int numCheckPoint)
+{
+	ListItem<Entity*>* item;
+	item = app->scene->entities.start;
+	int goal = numCheckPoint +1;
+	
+
+
+	if (checkPointsDiscovered == 1)
+	{
+		return;
+	}
+
+	if (numCheckPoint == 6)
+	{
+		goal = 1;
+	}
+
+	if (goal > checkPointsDiscovered)
+	{
+		goal = 1;
+	}
+
+	while (item != NULL)
+	{
+		if (item->data->name == "checkpoint" && item->data->numCheckPoint == 1)
+		{
+			break;
+		}
+		item = item->next;
+	}
+
+	while (item != NULL)
+	{
+		if (goal == item->data->numCheckPoint)
+		{
+			auto pos = item->data->position;
+			ChangePosition(pos.x, pos.y);
+			
+			return;
+		}
+		item = item->next;
+	}
 }

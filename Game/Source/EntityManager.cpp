@@ -187,9 +187,19 @@ bool EntityManager::LoadState(pugi::xml_node& data)
 	int money = data.child("playerScene1").attribute("money").as_int(); 
 	int hp = data.child("playerScene1").attribute("hp").as_int();
 
+
 	app->scene->player->moneyPoints = money;
 	app->scene->player->lifePoints = hp;
 	app->scene->player->ChangePosition(posX, posY);
+	//if (posCheckPointX != 0)
+	//{
+	//	app->scene->player->ChangePosition(posCheckPointX, posCheckPointY);
+	//}
+	//else
+	//{
+	//	app->scene->player->ChangePosition(posX, posY);
+	//}
+	
 
 	//Comprobar de alguna manera que no se han destruido los enemigos,
 	//de no haberse destruido, entonces cogemos sus datos y los mandamos a cada uno para su posición con un teleport
@@ -277,17 +287,35 @@ bool EntityManager::SaveState(pugi::xml_node& data)
 {
 	pugi::xml_node playerScene1 = data.append_child("playerScene1");
 
+	ListItem<Entity*>* item;
+	item = entities.start;
+	int posX = 600, posY = 700;
+	while (item != NULL)
+	{
+
+		if (item->data->name == "checkpoint")
+		{
+			if (item->data->isCurrent == true)
+			{
+				posX = item->data->position.x;
+				posY = item->data->position.y;
+			}
+	
+		}
+		item = item->next;
+	}
+
 	if (app->win->GetScale() == 1)
 	{
-		playerScene1.append_attribute("x") = app->scene->player->position.x+15;
-		playerScene1.append_attribute("y") = app->scene->player->position.y+5;
+		playerScene1.append_attribute("x") = posX;
+		playerScene1.append_attribute("y") = posY;
 		playerScene1.append_attribute("money") = app->scene->player->moneyPoints;
 		playerScene1.append_attribute("hp") = app->scene->player->lifePoints;
 	}
 	else if(app->win->GetScale() == 2) //compensar el escalado para que la posición de guardar sea precisa
 	{
-		playerScene1.append_attribute("x") = app->scene->player->position.x * 2 + 28;
-		playerScene1.append_attribute("y") = app->scene->player->position.y * 2 + 5;
+		playerScene1.append_attribute("x") = posX;
+		playerScene1.append_attribute("y") = posY;
 		playerScene1.append_attribute("money") = app->scene->player->moneyPoints;
 		playerScene1.append_attribute("hp") = app->scene->player->lifePoints;
 	}

@@ -13,7 +13,7 @@
 
 #include "Window.h"
 
-CheckPoint::CheckPoint() : Entity(EntityType::ITEM)
+CheckPoint::CheckPoint() : Entity(EntityType::CHECKPOINT)
 {
 	name.Create("checkpoint");
 }
@@ -24,6 +24,7 @@ bool CheckPoint::Awake() {
 
 	position.x = parameters.attribute("x").as_int();
 	position.y = parameters.attribute("y").as_int();
+	numCheckPoint = parameters.attribute("num").as_int();
 
 	checkPointTexturePath = parameters.attribute("texturepath").as_string();
 
@@ -48,7 +49,7 @@ bool CheckPoint::Start() {
 	pbody = app->physics->CreateRectangleSensor(position.x, position.y, 40, 40, bodyType::STATIC);
 
 	// L07 DONE 7: Assign collider type
-	pbody->ctype = ColliderType::ITEM;
+	pbody->ctype = ColliderType::CHECKPOINT;
 
 	pbody->listener = this;
 	checkPointCoinAnimation = &checkPoint;
@@ -107,6 +108,11 @@ void CheckPoint::OnCollision(PhysBody* physA, PhysBody* physB) {
 
 		auto dir = this;
 		app->scene->checkPointIterator(*dir);
+		if (!isDiscovered)
+		{
+			app->scene->player->checkPointsDiscovered++;
+		}
+		isDiscovered = true;
 
 		break;
 	}
