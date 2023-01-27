@@ -72,7 +72,13 @@
     <hpitem x="5930" y="1620" texturepath="Assets/Textures/cherry.png" effecttexturepath ="Assets/Textures/hpEffect.png" map="2"/>
     <hpitem x="6920" y="378" texturepath="Assets/Textures/cherry.png" effecttexturepath ="Assets/Textures/hpEffect.png" map="3"/>
     <hpitem x="10540" y="220" texturepath="Assets/Textures/cherry.png" effecttexturepath ="Assets/Textures/hpEffect.png" map="4"/>
-   
+
+    <checkpoint x="930" y="745" texturepath="Assets/Textures/sign.png"/>
+    <checkpoint x="1280" y="745" texturepath="Assets/Textures/sign.png"/>
+    <checkpoint x="2560" y="361" texturepath="Assets/Textures/sign.png"/>
+    <checkpoint x="6464" y="489" texturepath="Assets/Textures/sign.png"/>
+    <checkpoint x="8576" y="1705" texturepath="Assets/Textures/sign.png"/>
+    <checkpoint x="12800" y="745" texturepath="Assets/Textures/sign.png"/>
     
   </scene>
   

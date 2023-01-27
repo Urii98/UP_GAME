@@ -15,6 +15,7 @@
 #include "SmallEnemyFly.h"
 #include "PlayerSensors.h"
 #include "HpItem.h"
+#include "CheckPoint.h"
 
 EntityManager::EntityManager(bool isActive) : Module(isActive)
 {
@@ -126,6 +127,11 @@ Entity* EntityManager::CreateEntity(EntityType type)
 
 	case EntityType::HPITEM:
 		entity = new HpItem();
+		break;
+
+	case EntityType::CHECKPOINT:
+		entity = new CheckPoint();
+		break;
 	default: break;
 	}
 

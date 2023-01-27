@@ -27,7 +27,7 @@ bool Item::Awake() {
 	
 	coinTexturePath = parameters.attribute("texturepath").as_string();
 	effectTexturePath = parameters.attribute("effecttexturepath").as_string();
-	map = parameters.attribute("map").as_int();
+
 
 	return true;
 }
@@ -48,27 +48,6 @@ bool Item::Start() {
 	effectAnimation.loop = false;
 	effectAnimation.speed = 12.5f * (app->maxFrameDuration / 1000.0);
 	
-
-	if (app->sceneTitle->mapSelect == false) {
-		if (map == 1) {
-			position.x = 4328;
-			position.y = 430;
-		}
-		if (map == 2) {
-			position.x = 6976;
-			position.y = 82;
-		}
-		if (map == 3) {
-			position.x = 12352;
-			position.y = 768;
-		}
-		if (map == 4) {
-			position.x = 14696;
-			position.y = 244;
-		}
-
-	}
-
 
 	//initilize textures
 	coinTexture = app->tex->Load(coinTexturePath);

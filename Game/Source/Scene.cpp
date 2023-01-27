@@ -88,6 +88,16 @@ bool Scene::Awake(pugi::xml_node& config)
 
 	}
 
+	for (pugi::xml_node itemNode = config.child("checkpoint"); itemNode; itemNode = itemNode.next_sibling("checkpoint"))
+	{
+
+		CheckPoint* item = (CheckPoint*)app->entityManager->CreateEntity(EntityType::CHECKPOINT);
+		item->parameters = itemNode;
+
+		entities.Add(item);
+
+	}
+
 	playerSensor = (PlayerSensors*)app->entityManager->CreateEntity(EntityType::SENSORS);
 
 
@@ -228,4 +238,28 @@ bool Scene::SaveState(pugi::xml_node& data)
 {
 	
 	return true;
+}
+
+void Scene::checkPointIterator(CheckPoint& dir)
+{
+	ListItem<Entity*>* item;
+	item = entities.start;
+
+	while (item != NULL)
+	{
+		
+		if (item->data->name == "checkpoint")
+		{
+			if (item->data->pbody->listener == &dir)
+			{
+				item->data->isCurrent = true;
+			}
+			else
+			{
+				item->data->isCurrent = false;
+			}
+		}
+		item = item->next;
+	}
+
 }

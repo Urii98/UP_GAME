@@ -17,6 +17,7 @@ enum class EntityType
 	SMALLENEMYFLY,
 	SENSORS,
 	HPITEM,
+	CHECKPOINT,
 	UNKNOWN
 };
 
@@ -112,6 +113,8 @@ public:
 
 	PhysBody* pbody;
 	bool destroy;
+
+	bool isCurrent = false;
 };
 
 #endif // __ENTITY_H__

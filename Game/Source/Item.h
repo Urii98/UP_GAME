@@ -27,7 +27,7 @@ public:
 	void OnCollision(PhysBody* physA, PhysBody* physB);
 
 public:
-	int map;
+
 	bool isPicked = false;
 	Animation* currentCoinAnimation = nullptr;
 

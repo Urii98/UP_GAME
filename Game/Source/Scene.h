@@ -11,6 +11,7 @@
 #include "Physics.h"
 #include "PlayerSensors.h"
 #include "HpItem.h"
+#include "CheckPoint.h"
 
 
 
@@ -47,7 +48,7 @@ public:
 
 	bool SaveState(pugi::xml_node&);
 
-	void Prueba();
+	void checkPointIterator(CheckPoint& dir);
 	bool pruebas = false;
 
 public:
