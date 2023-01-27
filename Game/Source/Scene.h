@@ -10,6 +10,7 @@
 #include "SmallEnemyFly.h"
 #include "Physics.h"
 #include "PlayerSensors.h"
+#include "HpItem.h"
 
 
 

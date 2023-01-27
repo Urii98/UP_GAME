@@ -8,7 +8,6 @@
 #include "EntityManager.h"
 #include "Map.h"
 #include "PathFinding.h"
-
 #include "Defs.h"
 #include "Log.h"
 
@@ -76,6 +75,16 @@ bool Scene::Awake(pugi::xml_node& config)
 		entities.Add(item);
 
 
+
+	}
+
+	for (pugi::xml_node itemNode = config.child("hpitem"); itemNode; itemNode = itemNode.next_sibling("hpitem"))
+	{
+	
+		HpItem* item = (HpItem*)app->entityManager->CreateEntity(EntityType::HPITEM);
+		item->parameters = itemNode;
+
+		entities.Add(item);
 
 	}
 

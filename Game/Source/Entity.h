@@ -16,6 +16,7 @@ enum class EntityType
 	SMALLENEMY2,
 	SMALLENEMYFLY,
 	SENSORS,
+	HPITEM,
 	UNKNOWN
 };
 

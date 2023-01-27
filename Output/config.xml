@@ -68,7 +68,10 @@
                  texturepath="Assets/Textures/Enemies.png" deathpath="Assets/Textures/enemy-death.png" map="1"
                  deathFxPath="Assets/Audio/Fx/enemyExplode.wav"/>
 
-
+    <hpitem x="1572" y="602" texturepath="Assets/Textures/cherry.png" effecttexturepath ="Assets/Textures/hpEffect.png" map="1"/>
+    <hpitem x="5930" y="1620" texturepath="Assets/Textures/cherry.png" effecttexturepath ="Assets/Textures/hpEffect.png" map="2"/>
+    <hpitem x="6920" y="378" texturepath="Assets/Textures/cherry.png" effecttexturepath ="Assets/Textures/hpEffect.png" map="3"/>
+    <hpitem x="10540" y="220" texturepath="Assets/Textures/cherry.png" effecttexturepath ="Assets/Textures/hpEffect.png" map="4"/>
    
     
   </scene>
