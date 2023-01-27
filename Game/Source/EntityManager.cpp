@@ -174,7 +174,11 @@ bool EntityManager::LoadState(pugi::xml_node& data)
 {
 	int posX = data.child("playerScene1").attribute("x").as_int();
 	int posY = data.child("playerScene1").attribute("y").as_int();
+	int money = data.child("playerScene1").attribute("money").as_int(); 
+	int hp = data.child("playerScene1").attribute("hp").as_int();
 
+	app->scene->player->moneyPoints = money;
+	app->scene->player->lifePoints = hp;
 	app->scene->player->ChangePosition(posX, posY);
 
 	//Comprobar de alguna manera que no se han destruido los enemigos,
@@ -267,11 +271,15 @@ bool EntityManager::SaveState(pugi::xml_node& data)
 	{
 		playerScene1.append_attribute("x") = app->scene->player->position.x+15;
 		playerScene1.append_attribute("y") = app->scene->player->position.y+5;
+		playerScene1.append_attribute("money") = app->scene->player->moneyPoints;
+		playerScene1.append_attribute("hp") = app->scene->player->lifePoints;
 	}
 	else if(app->win->GetScale() == 2) //compensar el escalado para que la posición de guardar sea precisa
 	{
 		playerScene1.append_attribute("x") = app->scene->player->position.x * 2 + 28;
 		playerScene1.append_attribute("y") = app->scene->player->position.y * 2 + 5;
+		playerScene1.append_attribute("money") = app->scene->player->moneyPoints;
+		playerScene1.append_attribute("hp") = app->scene->player->lifePoints;
 	}
 
 	ListItem<Entity*>* dataEntities;

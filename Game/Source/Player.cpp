@@ -40,6 +40,7 @@ bool Player::Awake() {
 	scalarSpeedY = parameters.attribute("scalarSpeedY").as_int();
 	scalarSpeedYDown = parameters.attribute("scalarSpeedYDown").as_int();
 	lifePoints = parameters.attribute("lifePoints").as_int();
+	moneyPoints = parameters.attribute("moneyPoints").as_int();
 
 
 	//initialize audio effect - !! Path is hardcoded, should be loaded from config.xml
@@ -838,6 +839,7 @@ void Player::OnCollision(PhysBody* physA, PhysBody* physB) {
 	case ColliderType::ITEM:
 		LOG("Collision ITEM");
 		app->audio->PlayFx(pickCoinFxId);
+		moneyPoints += 100;
 		//ChangePosition(30, 30);
 		break;
 

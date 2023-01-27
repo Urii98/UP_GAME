@@ -132,6 +132,7 @@ public:
 	bool drawSwordUI;
 	bool sword;
 	int lifePoints;
+	int moneyPoints;
 private:
 
 	//L02: DONE 1: Declare player parameters
