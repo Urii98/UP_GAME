@@ -59,6 +59,7 @@ bool SceneEnding::Update(float dt)
 		app->scene->player->pbody->body->SetActive(true);
 		app->scene->player->lifePoints = 3;
 		ending = false;
+		app->scene->timer.Start(); 
 		
 	}
 

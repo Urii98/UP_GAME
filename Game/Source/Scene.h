@@ -12,6 +12,7 @@
 #include "PlayerSensors.h"
 #include "HpItem.h"
 #include "CheckPoint.h"
+#include "Timer.h"
 
 
 
@@ -63,6 +64,7 @@ public:
 	
 	SDL_Texture* point = nullptr;
 	SDL_Texture* originTex = nullptr;
+	Timer timer;
 
 	//std::vector<Entity*>* vect = new std::vector<Entity*>;
 

@@ -330,6 +330,7 @@ bool Player::Start() {
 	invulnerable = false;
 	posXFromCheckPoint = 0;
 	collidingWithCheckPoint = false;
+	timerDead = false;
 	
 	return true;
 }
@@ -676,6 +677,8 @@ bool Player::Update(float dt)
 			pbody->body->SetLinearVelocity(vel);
 			pbody->body->SetActive(false);
 			sword = true;
+			//app->scene->timer.Start();
+			timerDead = false;
 
 		}
 
@@ -773,6 +776,12 @@ bool Player::Update(float dt)
 	currentAnimation->Update();
 	PostUpdate();
 
+	if (app->scene->timer.ReadSec() > 300 && !timerDead && !godMode)
+	{
+		estadoP = DEATH;
+		timerDead = true;
+	}
+
 	return true;
 }
 
@@ -865,7 +874,7 @@ void Player::OnCollision(PhysBody* physA, PhysBody* physB) {
 	case ColliderType::ITEM:
 		LOG("Collision ITEM");
 		app->audio->PlayFx(pickCoinFxId);
-		moneyPoints += 100;
+		moneyPoints += 1;
 		//ChangePosition(30, 30);
 		break;
 

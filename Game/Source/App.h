@@ -28,6 +28,7 @@ class SceneLogo;
 class SceneTitle;
 class SceneEnding;
 class PathFinding;
+class ModuleFonts;
 
 
 class App
@@ -111,6 +112,7 @@ public:
 	PathFinding* pathfinding;
 
 	FadeToBlack* fade;
+	ModuleFonts* fonts;
 	
 	uint32 maxFrameDuration = 0;
 	float dt;

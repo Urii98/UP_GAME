@@ -14,6 +14,7 @@
 #include "FadeToBlack.h"
 #include "SceneManager.h"
 #include "Pathfinding.h"
+#include "ModuleFonts.h"
 
 #include <memory>
 
@@ -49,6 +50,7 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	entityManager = new EntityManager(false);
 	map = new Map(false);
 	fade = new FadeToBlack(true);
+	fonts = new ModuleFonts(true);
 
 
 	// Ordered for awake / Start / Update
@@ -74,6 +76,7 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 
 	// Render last to swap buffer
 	AddModule(fade);
+	AddModule(fonts);
 	AddModule(render);
 	
 	

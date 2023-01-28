@@ -145,6 +145,7 @@ bool Scene::Start()
 	point = app->tex->Load("Assets/Maps/point.png");
 	// Texture to show path origin 
 	originTex = app->tex->Load("Assets/Maps/x.png");
+	timer.Start();
 
 	return true;
 }

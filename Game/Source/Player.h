@@ -128,6 +128,7 @@ public:
 
 	bool skillSwitch;
 	bool drawSwordUI;
+	bool timerDead;
 	bool sword;
 	int lifePoints;
 	int moneyPoints;
