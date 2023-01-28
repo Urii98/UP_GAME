@@ -186,11 +186,13 @@ bool EntityManager::LoadState(pugi::xml_node& data)
 	int posY = data.child("playerScene1").attribute("y").as_int();
 	int money = data.child("playerScene1").attribute("money").as_int(); 
 	int hp = data.child("playerScene1").attribute("hp").as_int();
+	int podium = data.child("playerScene1").attribute("highscore").as_int();
 
 
 	app->scene->player->moneyPoints = money;
 	app->scene->player->lifePoints = hp;
 	app->scene->player->ChangePosition(posX, posY);
+	app->scene->player->highestScore = podium;
 	//if (posCheckPointX != 0)
 	//{
 	//	app->scene->player->ChangePosition(posCheckPointX, posCheckPointY);
@@ -311,6 +313,7 @@ bool EntityManager::SaveState(pugi::xml_node& data)
 		playerScene1.append_attribute("y") = posY;
 		playerScene1.append_attribute("money") = app->scene->player->moneyPoints;
 		playerScene1.append_attribute("hp") = app->scene->player->lifePoints;
+		playerScene1.append_attribute("highscore") = app->scene->player->highestScore;
 	}
 	else if(app->win->GetScale() == 2) //compensar el escalado para que la posición de guardar sea precisa
 	{
@@ -318,6 +321,7 @@ bool EntityManager::SaveState(pugi::xml_node& data)
 		playerScene1.append_attribute("y") = posY;
 		playerScene1.append_attribute("money") = app->scene->player->moneyPoints;
 		playerScene1.append_attribute("hp") = app->scene->player->lifePoints;
+		playerScene1.append_attribute("highscore") = app->scene->player->highestScore;
 	}
 
 	ListItem<Entity*>* dataEntities;

@@ -42,6 +42,9 @@ bool ModuleFonts::Start()
 	hourglassPath = "Assets/Textures/hourglass.png";
 	hourglassTexture = app->tex->Load(hourglassPath);
 
+	podiumPath = "Assets/Textures/podium.png";
+	podiumTexture = app->tex->Load(podiumPath);
+
 	return true;
 }
 
@@ -173,16 +176,20 @@ bool ModuleFonts::PostUpdate() //para que aparezca en screenlogo y screentitle
 	bool ret = true;
 
 	//StarCoinUI
-	app->scene->player->moneyPoints;
 	std::string moneyToString = std::to_string(app->scene->player->moneyPoints);
 	const char* moneyChar = moneyToString.c_str();
-
 	BlitText(45, 9, textFont, moneyChar);
 	app->render->DrawTexture(starCoinUITexture, 15, -5, 0, 0.0f, 0.0f, 2147483647, 2147483647, false);
 
+	//podiumUI
+	std::string podiumToString = std::to_string(app->scene->player->highestScore);
+	const char* podiumChar = podiumToString.c_str();
+	BlitText(450, 11, textFont, podiumChar);
+	app->render->DrawTexture(podiumTexture, 425, 0, 0, 0.0f, 0.0f, 2147483647, 2147483647, false);
 
+
+	//hourglassUI
 	currentAnimation->Update();
-
 	std::string timeToString = std::to_string(app->scene->timer.ReadSec());
 	const char* timeChar = timeToString.c_str();
 	SDL_Rect rect = currentAnimation->GetCurrentFrame();
@@ -198,6 +205,7 @@ bool ModuleFonts::CleanUp()
 	UnLoad(textFont);
 	app->tex->UnLoad(starCoinUITexture);
 	app->tex->UnLoad(hourglassTexture);
+	app->tex->UnLoad(podiumTexture);
 	
 
 	return ret;

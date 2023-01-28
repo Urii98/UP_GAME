@@ -114,6 +114,8 @@ void CheckPoint::OnCollision(PhysBody* physA, PhysBody* physB) {
 		}
 		isDiscovered = true;
 
+
+
 		break;
 	}
 

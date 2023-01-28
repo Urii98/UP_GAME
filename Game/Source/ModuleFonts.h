@@ -61,6 +61,9 @@ private:
 	SDL_Texture* starCoinUITexture;
 	const char* starCoinUIPath;
 
+	SDL_Texture* podiumTexture;
+	const char* podiumPath;
+
 	SDL_Texture* hourglassTexture;
 	const char* hourglassPath;
 

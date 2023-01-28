@@ -59,7 +59,7 @@ bool HpItem::Start() {
 	pbody = app->physics->CreateCircle(position.x, position.y, 16, bodyType::STATIC);
 
 	// L07 DONE 7: Assign collider type
-	pbody->ctype = ColliderType::ITEM;
+	pbody->ctype = ColliderType::HPITEM;
 
 	pbody->listener = this;
 	currentHpAnimation = &hpAnimation;
@@ -125,7 +125,7 @@ void HpItem::OnCollision(PhysBody* physA, PhysBody* physB) {
 
 		if (!soundFX)
 		{
-			app->audio->PlayFx(app->scene->player->pickCoinFxId);
+			app->audio->PlayFx(app->scene->player->hpId);
 			soundFX = true;
 		}
 

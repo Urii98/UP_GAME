@@ -122,6 +122,7 @@ public:
 	int pickCoinFxId;
 	int swordFxId;
 	int playerDmgId;
+	int hpId;
 
 	int posXBeforeAttack;
 	int posYBeforeAttack;
@@ -136,6 +137,7 @@ public:
 	int playerCheckPoint;
 	int checkPointsDiscovered;
 	int posXFromCheckPoint;
+	int highestScore;
 	bool collidingWithCheckPoint;
 private:
 
@@ -174,6 +176,7 @@ private:
 	const char* coinSFx;
 	const char* deathSFx;
 	const char* victorySFx;
+	const char* hpSFx;
 
 	const char* musicScenePath;
 	const char* musicStopPath;

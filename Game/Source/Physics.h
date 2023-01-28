@@ -37,6 +37,7 @@ enum class ColliderType {
 	SENSOR,
 	SKILL,
 	CHECKPOINT,
+	HPITEM,
 	UNKNOWN
 	// ..
 };

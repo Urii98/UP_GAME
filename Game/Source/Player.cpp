@@ -49,6 +49,7 @@ bool Player::Awake() {
 	victorySFx = parameters.attribute("kirbyVictoryFxPath").as_string();
 	swordFxPath = parameters.attribute("swordFxPath").as_string();
 	playerDmgPath = parameters.attribute("playerDmgPath").as_string();
+	hpSFx = "Assets/Audio/Fx/hp.ogg";
 
 	musicScenePath = parameters.attribute("musicScenePath").as_string();
 	musicStopPath = parameters.attribute("musicStopPath").as_string();
@@ -66,6 +67,7 @@ bool Player::Awake() {
 	kirbyVictoryFx = app->audio->LoadFx(victorySFx);
 	swordFxId = app->audio->LoadFx(swordFxPath);
 	playerDmgId = app->audio->LoadFx(playerDmgPath);
+	hpId = app->audio->LoadFx(hpSFx);
 
 	texturePath = parameters.attribute("texturepath").as_string();
 	swordUIPath = parameters.attribute("swordUIPath").as_string();
@@ -331,6 +333,7 @@ bool Player::Start() {
 	posXFromCheckPoint = 0;
 	collidingWithCheckPoint = false;
 	timerDead = false;
+	highestScore = 0;
 	
 	return true;
 }
@@ -695,6 +698,7 @@ bool Player::Update(float dt)
 			b2Vec2 vel = b2Vec2(0, 0);
 			pbody->body->SetLinearVelocity(vel);
 			winFxbool = true;
+			highestScore = app->scene->timer.ReadSec();
 		}
 		break;
 
@@ -780,6 +784,11 @@ bool Player::Update(float dt)
 	{
 		estadoP = DEATH;
 		timerDead = true;
+	}
+
+	if (app->input->GetKey(SDL_SCANCODE_Y) == KEY_DOWN)
+	{
+		highestScore = 2;
 	}
 
 	return true;
@@ -875,7 +884,7 @@ void Player::OnCollision(PhysBody* physA, PhysBody* physB) {
 		LOG("Collision ITEM");
 		app->audio->PlayFx(pickCoinFxId);
 		moneyPoints += 1;
-		//ChangePosition(30, 30);
+		
 		break;
 
 	case ColliderType::DEATH:
