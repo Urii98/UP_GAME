@@ -86,27 +86,27 @@
     <musicTitlePath path="Assets/Audio/Music/MusicSceneTitle.ogg"/>
     <musicStopPath path="Assets/Audio/Music/noSound.ogg"/>
 	  
-	  <mainMenuScreen path="Assets/Audio/Music/noSound.ogg"/>
-	  <playSelected path="Assets/Audio/Music/noSound.ogg"/>
-	  <newGameSelected path="Assets/Audio/Music/noSound.ogg"/>
-	  <settingsSelected path="Assets/Audio/Music/noSound.ogg"/>
-	  <exitSelected path="Assets/Audio/Music/noSound.ogg"/>
-	  
-	  <defaultSettingsMenu path="Assets/Audio/Music/noSound.ogg"/>
-	  <xCircle path="Assets/Audio/Music/noSound.ogg"/>
-	  <xCircleSelected path="Assets/Audio/Music/noSound.ogg"/>
+    <mainMenuScreenPath path="Assets/MenuScreenTitle/General.png"/>
+	<playSelectedPath path="Assets/MenuScreenTitle/play.png"/>
+	<newGameSelectedPath path="Assets/MenuScreenTitle/newgame.png"/>
+	<settingsSelectedPath path="Assets/MenuScreenTitle/settings.png"/>
+	<exitSelectedPath path="Assets/MenuScreenTitle/exit.png"/>
 
-	  <audioSelected path="Assets/Audio/Music/noSound.ogg"/>
-	  <fxBar path="Assets/Audio/Music/noSound.ogg"/>
-	  <musicBar path="Assets/Audio/Music/noSound.ogg"/>
-	  <fxCircle path="Assets/Audio/Music/noSound.ogg"/>
-	  <musicCircle path="Assets/Audio/Music/noSound.ogg"/>
+	<defaultSettingsMenuPath path="Assets/MenuScreenTitle/defaultsettingsmenu.png"/>
+	<xCirclePath path="Assets/MenuScreenTitle/cross.png"/>
+	<xCircleSelectedPath path="Assets/MenuScreenTitle/crossSelected.png"/>
 
-	  <screenSelected path="Assets/Audio/Music/noSound.ogg"/>
-	  <fullScreenTrue path="Assets/Audio/Music/noSound.ogg"/>
-	  <vSyncTrue path="Assets/Audio/Music/noSound.ogg"/>
+	<audioSelectedPath path="Assets/MenuScreenTitle/audiosettings.png"/>
+	<fxBarPath path="Assets/MenuScreenTitle/fxbar.png"/>
+	<musicBarPath path="Assets/MenuScreenTitle/musicbar.png"/>
+	<fxCirclePath path="Assets/MenuScreenTitle/elipse.png"/>
+	<musicCirclePath path="Assets/MenuScreenTitle/elipse.png"/>
 
-	  <creditsSelected path="Assets/Audio/Music/noSound.ogg"/>
+	<screenSelectedPath path="Assets/MenuScreenTitle/screenScreen.png"/>
+	<fullScreenTruePath path="Assets/MenuScreenTitle/crossUp.png"/>
+	<vSyncTruePath path="Assets/MenuScreenTitle/crossDown.png"/>
+
+	<creditsSelectedPath path="Assets/MenuScreenTitle/creditsScreen.png"/>
 	  
   </sceneTitle>
 

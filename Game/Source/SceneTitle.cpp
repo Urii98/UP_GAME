@@ -29,31 +29,32 @@ bool SceneTitle::Awake(pugi::xml_node& config) {
 	musicTitlePath = config.child("musicTitlePath").attribute("path").as_string();
 	musicStopPath = config.child("musicStopPath").attribute("path").as_string();
 
-	mainMenuScreen = app->tex->Load("Assets/NewGlobalMenu/MainMenuNoSelected.png");
-	playSelected = app->tex->Load("Assets/NewGlobalMenu/StartSelected.png");
-	newGameSelected = app->tex->Load("Assets/NewGlobalMenu/NewGameSelected.png");
-	settingsSelected = app->tex->Load("Assets/NewGlobalMenu/SettingsSelected.png");
-	exitSelected = app->tex->Load("Assets/NewGlobalMenu/ExitSelected.png");
+
+	mainMenuScreenPath = config.child("mainMenuScreenPath").attribute("path").as_string();
+	playSelectedPath = config.child("playSelectedPath").attribute("path").as_string();
+	newGameSelectedPath = config.child("newGameSelectedPath").attribute("path").as_string();
+	settingsSelectedPath = config.child("settingsSelectedPath").attribute("path").as_string();
+	exitSelectedPath = config.child("exitSelectedPath").attribute("path").as_string();
 
 	//Default settings 
-	defaultSettingsMenu = app->tex->Load("Assets/NewGlobalMenu/SettingsMenu/defaultSettingsMenu.png");
-	xCircle = app->tex->Load("Assets/NewGlobalMenu/SettingsMenu/xCircle.png");
-	xCircleSelected = app->tex->Load("Assets/NewGlobalMenu/SettingsMenu/xCircleSelected.png");
+	defaultSettingsMenuPath = config.child("defaultSettingsMenuPath").attribute("path").as_string();
+	xCirclePath = config.child("xCirclePath").attribute("path").as_string();
+	xCircleSelectedPath = config.child("xCircleSelectedPath").attribute("path").as_string();
 
 	//AudioSettingsTextures
-	audioSelected = app->tex->Load("Assets/NewGlobalMenu/SettingsMenu/audio/audioSettings.png");
-	fxBar = app->tex->Load("Assets/NewGlobalMenu/SettingsMenu/audio/fxBar.png");
-	musicBar = app->tex->Load("Assets/NewGlobalMenu/SettingsMenu/audio/musicBar.png");
-	fxCircle = app->tex->Load("Assets/NewGlobalMenu/SettingsMenu/audio/volumeBotton.png");
-	musicCircle = app->tex->Load("Assets/NewGlobalMenu/SettingsMenu/audio/volumeBotton.png");
+	audioSelectedPath = config.child("audioSelectedPath").attribute("path").as_string();
+	fxBarPath = config.child("fxBarPath").attribute("path").as_string();
+	musicBarPath = config.child("musicBarPath").attribute("path").as_string();
+	fxCirclePath = config.child("fxCirclePath").attribute("path").as_string();
+	musicCirclePath = config.child("musicCirclePath").attribute("path").as_string();
 
 	//Screen Menu Textures
-	screenSelected = app->tex->Load("Assets/NewGlobalMenu/SettingsMenu/Screen/defaultScreenMenu.png");
-	fullScreenTrue = app->tex->Load("Assets/NewGlobalMenu/SettingsMenu/Screen/fullScreenTrue.png");
-	vSyncTrue = app->tex->Load("Assets/NewGlobalMenu/SettingsMenu/Screen/vSyncTrue.png");
+	screenSelectedPath = config.child("screenSelectedPath").attribute("path").as_string();
+	fullScreenTruePath = config.child("fullScreenTruePath").attribute("path").as_string();
+	vSyncTruePath = config.child("vSyncTruPath").attribute("path").as_string();
 
 	//Credits Menu Textures
-	creditsSelected = app->tex->Load("Assets/NewGlobalMenu/SettingsMenu/Credits/credits.png");
+	creditsSelectedPath = config.child("creditsSelectedPath").attribute("path").as_string();
 
 	return true;
 }
@@ -81,6 +82,28 @@ bool SceneTitle::Start() {
 	lvlSelectorTexture = app->tex->Load(lvlSelectorPath.GetString());
 	lvlOneTexture = app->tex->Load(lvlOnePath.GetString());
 	lvlTwoTexture = app->tex->Load(lvlTwoPath.GetString());
+
+	mainMenuScreen = app->tex->Load(mainMenuScreenPath.GetString());
+	playSelected = app->tex->Load(playSelectedPath.GetString());
+	newGameSelected = app->tex->Load(newGameSelectedPath.GetString());
+	settingsSelected = app->tex->Load(settingsSelectedPath.GetString());
+	exitSelected = app->tex->Load(exitSelectedPath.GetString());
+
+	defaultSettingsMenu = app->tex->Load(defaultSettingsMenuPath.GetString());
+	xCircle = app->tex->Load(xCirclePath.GetString());
+	xCircleSelected = app->tex->Load(xCircleSelectedPath.GetString());
+
+	audioSelected = app->tex->Load(audioSelectedPath.GetString());
+	fxBar = app->tex->Load(fxBarPath.GetString());
+	musicBar = app->tex->Load(musicBarPath.GetString());
+	fxCircle = app->tex->Load(fxCirclePath.GetString());
+	musicCircle = app->tex->Load(musicCirclePath.GetString());
+
+	screenSelected = app->tex->Load(screenSelectedPath.GetString());
+	fullScreenTrue = app->tex->Load(fullScreenTruePath.GetString());
+	vSyncTrue = app->tex->Load(vSyncTruePath.GetString());
+
+	creditsSelected = app->tex->Load(creditsSelectedPath.GetString());
 
 	frame = 0;
 	alphatoFade = 0.0f;
@@ -123,6 +146,9 @@ bool SceneTitle::Update(float dt)
 		app->audio->PlayMusic(musicStopPath, 2.0);
 		app->fade->Fade(this, app->scene, 60);
 	}
+
+	SDL_Rect rect = { 0,0,1024,768 };
+	app->render->DrawTexture(bgTexture[frame], 0, 0, &rect, 1.0f, 0.0, 2147483647, 2147483647, false);
 
 	if (!menuSettings) {
 		//seleccionar opció
@@ -170,8 +196,8 @@ bool SceneTitle::Update(float dt)
 			//Falta colocar el render
 			app->render->DrawTexture(newGameSelected, -app->render->camera.x, -app->render->camera.y, NULL, 1);
 			if (app->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN || app->input->GetMouseButtonDown(left) == KEY_DOWN) {
-				app->scene->player.playedBefore = false;
-				app->scene->reloj = 0;
+				//app->scene->player.playedBefore = false;
+				//app->scene->reloj = 0;
 				active = false;
 				app->scene->active = true;
 			}
@@ -197,9 +223,9 @@ bool SceneTitle::Update(float dt)
 			app->render->camera.y = 0;
 
 			app->render->DrawTexture(exitSelected, -app->render->camera.x, -app->render->camera.y, NULL, 1);
-			if (app->input->GetKey(app->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN || app->input->GetMouseButtonDown(left) == KEY_DOWN)
+			if (app->input->GetKey(app->input->GetKey(SDL_SCANCODE_RETURN)) == KEY_DOWN || app->input->GetMouseButtonDown(left) == KEY_DOWN)
 			{
-				ret = false;
+				return false;
 			}
 			break;
 		}
@@ -242,7 +268,7 @@ bool SceneTitle::Update(float dt)
 			{
 				menuSettings = false;
 				app->SaveGameRequest();
-				loadPreConfig = true;
+				//loadPreConfig = true;
 				app->LoadGameRequest();
 			}
 
@@ -287,9 +313,8 @@ bool SceneTitle::Update(float dt)
 			switch (opcionVolumen)
 			{
 			case 0:
-				app->render->DrawTexture(musicSelectedZone, -app->render->camera.x, -app->render->camera.y, NULL, 1);
 
-				if (app->input->GetMouseButtonDown(left) == KEY_REPEAT && app->input->mouseX <= 1290 && app->input->mouseX >= 820 && app->input->mouseY >= 244 && app->input->mouseY <= 304)
+				/*if (app->input->GetMouseButtonDown(left) == KEY_REPEAT && app->input->mouseX <= 1290 && app->input->mouseX >= 820 && app->input->mouseY >= 244 && app->input->mouseY <= 304)
 				{
 					musicCircle_X = app->input->mouseX - 40;
 				}
@@ -300,15 +325,12 @@ bool SceneTitle::Update(float dt)
 				if (app->audio->volume_mix_max_music < 0)
 				{
 					app->audio->volume_mix_max_music = 0;
-				}
+				}*/
 
 				break;
 			case 1:
 
-				app->render->DrawTexture(fxSelectedZone, -app->render->camera.x, -app->render->camera.y, NULL, 1);
-
-
-				if (app->input->GetMouseButtonDown(left) == KEY_REPEAT && app->input->mouseX <= 1290 && app->input->mouseX >= 820 && app->input->mouseY >= 400 && app->input->mouseY <= 460)
+				/*if (app->input->GetMouseButtonDown(left) == KEY_REPEAT && app->input->mouseX <= 1290 && app->input->mouseX >= 820 && app->input->mouseY >= 400 && app->input->mouseY <= 460)
 				{
 					fxCircle_X = app->input->mouseX - 40;
 				}
@@ -320,9 +342,9 @@ bool SceneTitle::Update(float dt)
 				if (app->audio->volume_mix_max_wav < 0)
 				{
 					app->audio->volume_mix_max_wav = 0;
-				}
+				}*/
 
-				LOG("fxSound: %0.4f", app->audio->volume_mix_max_wav);
+				//LOG("fxSound: %0.4f", app->audio->volume_mix_max_wav);
 
 				break;
 			}
@@ -331,14 +353,14 @@ bool SceneTitle::Update(float dt)
 			if (app->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN || app->input->GetMouseButtonDown(left) == KEY_DOWN)
 			{
 
-				audioMenu = true;;
+				//audioMenu = true;;
 			}
 
 
 			break;
 		case 1:
 			app->render->DrawTexture(screenSelected, -app->render->camera.x, -app->render->camera.y, NULL, 1);
-			if (app->win->fullscreen) {
+			/*if (app->win->fullscreen) {
 				app->render->DrawTexture(fullScreenTrue, -app->render->camera.x, -app->render->camera.y, NULL, 1);
 			}
 			if (app->render->vSync == true) {
@@ -349,49 +371,49 @@ bool SceneTitle::Update(float dt)
 			}
 			else if (x > vSyncMouseZone.x && x<(vSyncMouseZone.x + vSyncMouseZone.w) && y>vSyncMouseZone.y && y < (vSyncMouseZone.y + vSyncMouseZone.h)) {
 				opcionScreen = 1;
-			}
+			}*/
 			switch (opcionScreen)
 			{
 			case 0:
-				if (x > fullScreenZone.x && x<(fullScreenZone.x + fullScreenZone.w) && y>fullScreenZone.y && y < (fullScreenZone.y + fullScreenZone.h)) {
-					if (app->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN || app->input->GetMouseButtonDown(left) == KEY_DOWN)
-					{
-						app->win->fullscreen = !app->win->fullscreen;
-						app->SaveGameRequest();
-						//app->win->CleanUp();
-						//app->win->Awake();
-						app->win->active = false;
-						app->win->active = true;
-						if (app->win->fullscreen == true) {
-							SDL_SetWindowFullscreen(app->win->window, SDL_WINDOW_FULLSCREEN);
-						}
-						else {
-							SDL_SetWindowFullscreen(app->win->window, 0);
-						}
-					}
-				}
+				//if (x > fullScreenZone.x && x<(fullScreenZone.x + fullScreenZone.w) && y>fullScreenZone.y && y < (fullScreenZone.y + fullScreenZone.h)) {
+				//	if (app->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN || app->input->GetMouseButtonDown(left) == KEY_DOWN)
+				//	{
+				//		app->win->fullscreen = !app->win->fullscreen;
+				//		app->SaveGameRequest();
+				//		//app->win->CleanUp();
+				//		//app->win->Awake();
+				//		app->win->active = false;
+				//		app->win->active = true;
+				//		if (app->win->fullscreen == true) {
+				//			SDL_SetWindowFullscreen(app->win->window, SDL_WINDOW_FULLSCREEN);
+				//		}
+				//		else {
+				//			SDL_SetWindowFullscreen(app->win->window, 0);
+				//		}
+				//	}
+				//}
 				break;
 			case 1:
-				if (x > vSyncZone.x && x<(vSyncZone.x + vSyncZone.w) && y>vSyncZone.y && y < (vSyncZone.y + vSyncZone.h)) {
+				//if (x > vSyncZone.x && x<(vSyncZone.x + vSyncZone.w) && y>vSyncZone.y && y < (vSyncZone.y + vSyncZone.h)) {
 
-					if (app->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN || app->input->GetMouseButtonDown(left) == KEY_DOWN)
-					{
-						app->render->vSync = !app->render->vSync;
-						app->SaveGameRequest();
+				//	if (app->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN || app->input->GetMouseButtonDown(left) == KEY_DOWN)
+				//	{
+				//		app->render->vSync = !app->render->vSync;
+				//		app->SaveGameRequest();
 
-						//vSyncMarc = !vSyncMarc;
-					}
-				}
+				//		//vSyncMarc = !vSyncMarc;
+				//	}
+				//}
 				break;
 			}
 			break;
 		case 2:
 			app->render->DrawTexture(creditsSelected, -app->render->camera.x, -app->render->camera.y, NULL, 1);
 
-			if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN || app->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN || app->input->GetMouseButtonDown(left) == KEY_DOWN)
+			/*if (app->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN || app->input->GetMouseButtonDown(left) == KEY_DOWN)
 			{
 				audioMenu = true;;
-			}
+			}*/
 			break;
 		}
 
@@ -414,11 +436,11 @@ bool SceneTitle::Update(float dt)
 
 bool SceneTitle::PostUpdate()
 {
-	SDL_Rect rect = { 0,0,1024,768 };
 	
-	app->render->DrawTexture(bgTexture[frame], 0, 0, &rect, 1.0f, 0.0, 2147483647, 2147483647, false);
+	
+	
 	//
-	//if (!levelSelected)
+	if (!levelSelected)
 	//{
 	//	app->render->DrawTexture(lvlSelectorTexture,0,0, &rect, 1.0f, 0.0, 2147483647, 2147483647, false);
 	//}
