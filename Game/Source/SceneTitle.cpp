@@ -467,7 +467,29 @@ bool SceneTitle::CleanUp()
 
 	app->tex->UnLoad(lvlSelectorTexture);
 	app->tex->UnLoad(lvlOneTexture);
-	app->tex->UnLoad(lvlTwoTexture);	
+	app->tex->UnLoad(lvlTwoTexture);
+
+	app->tex->UnLoad(mainMenuScreen);
+	app->tex->UnLoad(playSelected);
+	app->tex->UnLoad(newGameSelected);
+	app->tex->UnLoad(settingsSelected);
+	app->tex->UnLoad(exitSelected);
+
+	app->tex->UnLoad(defaultSettingsMenu);
+	app->tex->UnLoad(xCircle);
+	app->tex->UnLoad(xCircleSelected);
+
+	app->tex->UnLoad(audioSelected);
+	app->tex->UnLoad(fxBar);
+	app->tex->UnLoad(musicBar);
+	app->tex->UnLoad(fxCircle);
+	app->tex->UnLoad(musicCircle);
+
+	app->tex->UnLoad(screenSelected);
+	app->tex->UnLoad(fullScreenTrue);
+	app->tex->UnLoad(vSyncTrue);
+
+	app->tex->UnLoad(creditsSelected);
 	
 	return true;
 }
