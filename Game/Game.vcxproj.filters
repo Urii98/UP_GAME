@@ -36,6 +36,8 @@
     <ClCompile Include="Source\HpItem.cpp" />
     <ClCompile Include="Source\CheckPoint.cpp" />
     <ClCompile Include="Source\ModuleFonts.cpp" />
+    <ClCompile Include="Source\GuiButton.cpp" />
+    <ClCompile Include="Source\GuiManager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Window.h" />
@@ -97,6 +99,9 @@
     <ClInclude Include="Source\HpItem.h" />
     <ClInclude Include="Source\CheckPoint.h" />
     <ClInclude Include="Source\ModuleFonts.h" />
+    <ClInclude Include="Source\GuiButton.h" />
+    <ClInclude Include="Source\GuiControl.h" />
+    <ClInclude Include="Source\GuiManager.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="External">

@@ -29,6 +29,8 @@ public:
 
 	bool CleanUp();
 
+	bool OnGuiMouseClickEvent(GuiControl* control);
+
 public:
 	SDL_Texture* bgTexture[8];
 	SDL_Texture* lvlSelectorTexture;
@@ -51,6 +53,10 @@ public:
 	bool fromFade;
 	bool levelSelected;
 	bool mapSelect;
+
+	GuiButton* button1;
+	GuiButton* button2;
+
 
 };
 

@@ -3,6 +3,7 @@
 
 #include "Module.h"
 #include "Animation.h"
+#include "SceneTitle.h"
 
 struct SDL_Texture;
 
@@ -25,7 +26,7 @@ public:
 
 	bool CleanUp();
 
-
+	bool OnGuiMouseClickEvent(GuiControl* control);
 
 
 public:
@@ -35,6 +36,9 @@ public:
 
 	SDL_Texture* textureSceneEnding;
 	SString textureSceneEndingPath;
+
+	GuiButton* button1;
+	GuiButton* button2;
 
 };
 

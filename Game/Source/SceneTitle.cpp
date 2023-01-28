@@ -11,6 +11,10 @@
 
 #include "Optick/include/optick.h"
 
+#include "GuiButton.h"
+#include "Window.h"
+#include "GuiManager.h"
+
 SceneTitle::SceneTitle(bool isActive) : Module(isActive) {
 	name.Create("sceneTitle");
 }
@@ -52,6 +56,12 @@ bool SceneTitle::Start() {
 		sprintf_s(x, "Assets/Textures/Merge/Merge%d.png", i + 1);
 		bgTexture[i] = app->tex->Load(x);
 	}
+
+	uint w, h;
+
+	app->win->GetWindowSize(w, h);
+	button1 = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 1, "Button 1", { (int)w / 2 - 50,(int)h / 2 - 30,100,20 }, this);
+	button2 = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 2, "Button 2", { (int)w / 2 - 50,(int)h / 2,100,20 }, this);
 
 	// ---------- 
 
@@ -218,6 +228,7 @@ bool SceneTitle::PostUpdate()
 	}
 	// ---------- 
 
+	//app->guiManager->Draw();
 
 	return true;
 }
@@ -232,5 +243,24 @@ bool SceneTitle::CleanUp()
 	app->tex->UnLoad(lvlOneTexture);
 	app->tex->UnLoad(lvlTwoTexture);	
 	
+	return true;
+}
+
+
+bool SceneTitle::OnGuiMouseClickEvent(GuiControl* control)
+{
+	// L15: DONE 5: Implement the OnGuiMouseClickEvent method
+	LOG("Event by %d ", control->id);
+
+	switch (control->id)
+	{
+	case 1:
+		LOG("Button 1 click");
+		break;
+	case 2:
+		LOG("Button 2 click");
+		break;
+	}
+
 	return true;
 }

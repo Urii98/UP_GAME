@@ -13,6 +13,7 @@
 #include "HpItem.h"
 #include "CheckPoint.h"
 #include "Timer.h"
+#include "GuiButton.h"
 
 
 
@@ -52,6 +53,8 @@ public:
 	void checkPointIterator(CheckPoint& dir);
 	bool pruebas = false;
 
+	bool OnGuiMouseClickEvent(GuiControl* control);
+
 public:
 
 	//L02: DONE 3: Declare a Player attribute 
@@ -72,7 +75,8 @@ public:
 private:
 	SDL_Texture* img;
 
-	
+	GuiButton* button1;
+	GuiButton* button2;
 
 	// L12: Debug pathfing
 	iPoint origin;

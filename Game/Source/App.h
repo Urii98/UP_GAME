@@ -29,6 +29,7 @@ class SceneTitle;
 class SceneEnding;
 class PathFinding;
 class ModuleFonts;
+class GuiManager;
 
 
 class App
@@ -113,6 +114,7 @@ public:
 
 	FadeToBlack* fade;
 	ModuleFonts* fonts;
+	GuiManager* guiManager;
 	
 	uint32 maxFrameDuration = 0;
 	float dt;
