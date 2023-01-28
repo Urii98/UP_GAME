@@ -29,6 +29,32 @@ bool SceneTitle::Awake(pugi::xml_node& config) {
 	musicTitlePath = config.child("musicTitlePath").attribute("path").as_string();
 	musicStopPath = config.child("musicStopPath").attribute("path").as_string();
 
+	mainMenuScreen = app->tex->Load("Assets/NewGlobalMenu/MainMenuNoSelected.png");
+	playSelected = app->tex->Load("Assets/NewGlobalMenu/StartSelected.png");
+	newGameSelected = app->tex->Load("Assets/NewGlobalMenu/NewGameSelected.png");
+	settingsSelected = app->tex->Load("Assets/NewGlobalMenu/SettingsSelected.png");
+	exitSelected = app->tex->Load("Assets/NewGlobalMenu/ExitSelected.png");
+
+	//Default settings 
+	defaultSettingsMenu = app->tex->Load("Assets/NewGlobalMenu/SettingsMenu/defaultSettingsMenu.png");
+	xCircle = app->tex->Load("Assets/NewGlobalMenu/SettingsMenu/xCircle.png");
+	xCircleSelected = app->tex->Load("Assets/NewGlobalMenu/SettingsMenu/xCircleSelected.png");
+
+	//AudioSettingsTextures
+	audioSelected = app->tex->Load("Assets/NewGlobalMenu/SettingsMenu/audio/audioSettings.png");
+	fxBar = app->tex->Load("Assets/NewGlobalMenu/SettingsMenu/audio/fxBar.png");
+	musicBar = app->tex->Load("Assets/NewGlobalMenu/SettingsMenu/audio/musicBar.png");
+	fxCircle = app->tex->Load("Assets/NewGlobalMenu/SettingsMenu/audio/volumeBotton.png");
+	musicCircle = app->tex->Load("Assets/NewGlobalMenu/SettingsMenu/audio/volumeBotton.png");
+
+	//Screen Menu Textures
+	screenSelected = app->tex->Load("Assets/NewGlobalMenu/SettingsMenu/Screen/defaultScreenMenu.png");
+	fullScreenTrue = app->tex->Load("Assets/NewGlobalMenu/SettingsMenu/Screen/fullScreenTrue.png");
+	vSyncTrue = app->tex->Load("Assets/NewGlobalMenu/SettingsMenu/Screen/vSyncTrue.png");
+
+	//Credits Menu Textures
+	creditsSelected = app->tex->Load("Assets/NewGlobalMenu/SettingsMenu/Credits/credits.png");
+
 	return true;
 }
 
@@ -39,6 +65,12 @@ bool SceneTitle::Start() {
 	bool ret = true;
 
 	char x[120];
+
+	opcion = 0;
+	opcionSettings = 0;
+	opcionVolumen = 0;
+	opcionScreen = 0;
+	menuSettings = false;
 
 	for (int i = 0; i <= 146; i++)
 	{
@@ -63,6 +95,19 @@ bool SceneTitle::Start() {
 
 bool SceneTitle::Update(float dt)
 {
+	int x, y, left = 1;
+	app->input->GetMousePosition(x, y);
+	LOG("Mouse x: %d, Mouse y: %d", x, y);
+	SDL_Rect playbt = { 1053,170,231,70 };
+	SDL_Rect newGamebt = { 1053,315,465,70 };
+	SDL_Rect settingsbt = { 1050,462,410,70 };
+	SDL_Rect exitbt = { 1050,610,215,70 };
+
+
+	SDL_Rect audiobt = { 272,156,164,49 };
+	SDL_Rect screenbt = { 272,267,197,49 };
+	SDL_Rect creditsbt = { 272,375,218,49 };
+
 	chrono.Start(0.18); //el tiempo que pasa entre cada frame de la animación
 
 	if (frame < 145 && chrono.Test() == FIN)
@@ -78,29 +123,30 @@ bool SceneTitle::Update(float dt)
 		app->audio->PlayMusic(musicStopPath, 2.0);
 		app->fade->Fade(this, app->scene, 60);
 	}
-	if (!settingsMenu) {
+
+	if (!menuSettings) {
 		//seleccionar opció
-		if ((app->input->GetKey(SDL_SCANCODE_DOWN) == KEY_DOWN || app->input->GetKey(SDL_SCANCODE_W) == KEY_DOWN)) {
+		if ((app->input->GetKey(SDL_SCANCODE_DOWN) == KEY_DOWN)) {
 			if (opcion >= 0 && opcion < 3) {
 				opcion++;
 			}
 		}
-		if ((app->input->GetKey(SDL_SCANCODE_UP) == KEY_DOWN || app->input->GetKey(SDL_SCANCODE_S) == KEY_DOWN)) {
+		if ((app->input->GetKey(SDL_SCANCODE_UP) == KEY_DOWN)) {
 			if (opcion > 0 && opcion <= 3) {
 				opcion--;
 			}
 		}
 
-		if (x > play.x && x<(play.x + play.w) && y>play.y && y < (play.y + play.h)) {
+		if (x > playbt.x && x<(playbt.x + playbt.w) && y>playbt.y && y < (playbt.y + playbt.h)) {
 			opcion = 0;
 		}
-		else if (x > newGame.x && x<(newGame.x + newGame.w) && y>newGame.y && y < (newGame.y + newGame.h)) {
+		else if (x > newGamebt.x && x<(newGamebt.x + newGamebt.w) && y>newGamebt.y && y < (newGamebt.y + newGamebt.h)) {
 			opcion = 1;
 		}
-		else if (x > settings.x && x<(settings.x + settings.w) && y>settings.y && y < (settings.y + settings.h)) {
+		else if (x > settingsbt.x && x<(settingsbt.x + settingsbt.w) && y>settingsbt.y && y < (settingsbt.y + settingsbt.h)) {
 			opcion = 2;
 		}
-		else if (x > exit.x && x<(exit.x + exit.w) && y>exit.y && y < (exit.y + exit.h)) {
+		else if (x > exitbt.x && x<(exitbt.x + exitbt.w) && y>exitbt.y && y < (exitbt.y + exitbt.h)) {
 			opcion = 3;
 		}
 		switch (opcion)
@@ -111,7 +157,7 @@ bool SceneTitle::Update(float dt)
 			app->render->DrawTexture(playSelected, -app->render->camera.x, -app->render->camera.y, NULL, 1);
 
 
-			if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN || app->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN || app->input->GetMouseButtonDown(left) == KEY_DOWN)
+			if (app->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN || app->input->GetMouseButtonDown(left) == KEY_DOWN)
 			{
 				active = false;
 				app->scene->active = true;
@@ -123,7 +169,7 @@ bool SceneTitle::Update(float dt)
 			app->render->camera.y = 0;
 			//Falta colocar el render
 			app->render->DrawTexture(newGameSelected, -app->render->camera.x, -app->render->camera.y, NULL, 1);
-			if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN || app->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN || app->input->GetMouseButtonDown(left) == KEY_DOWN) {
+			if (app->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN || app->input->GetMouseButtonDown(left) == KEY_DOWN) {
 				app->scene->player.playedBefore = false;
 				app->scene->reloj = 0;
 				active = false;
@@ -135,8 +181,8 @@ bool SceneTitle::Update(float dt)
 		case 2:
 			app->render->DrawTexture(settingsSelected, -app->render->camera.x, -app->render->camera.y, NULL, 1);
 			//Menu de ajustes
-			if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN || app->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN || app->input->GetMouseButtonDown(left) == KEY_DOWN) {
-				settingsMenu = true;
+			if (app->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN || app->input->GetMouseButtonDown(left) == KEY_DOWN) {
+				menuSettings = true;
 			}
 
 
@@ -151,48 +197,50 @@ bool SceneTitle::Update(float dt)
 			app->render->camera.y = 0;
 
 			app->render->DrawTexture(exitSelected, -app->render->camera.x, -app->render->camera.y, NULL, 1);
-			if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN || app->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN || app->input->GetMouseButtonDown(left) == KEY_DOWN)
+			if (app->input->GetKey(app->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN || app->input->GetMouseButtonDown(left) == KEY_DOWN)
 			{
 				ret = false;
 			}
 			break;
 		}
 	}
-	else if (settingsMenu) {
+	else if (menuSettings) {
 		//seleccionar opció
 
-		if ((app->input->GetKey(SDL_SCANCODE_DOWN) == KEY_DOWN || app->input->GetKey(SDL_SCANCODE_W) == KEY_DOWN)) {
+		if ((app->input->GetKey(SDL_SCANCODE_DOWN) == KEY_DOWN)) {
 			if (opcion >= 0 && opcion < 2) {
-				settingsOption++;
+				opcionSettings++;
 			}
 		}
-		if ((app->input->GetKey(SDL_SCANCODE_UP) == KEY_DOWN || app->input->GetKey(SDL_SCANCODE_S) == KEY_DOWN)) {
+		if ((app->input->GetKey(SDL_SCANCODE_UP) == KEY_DOWN)) {
 			if (opcion > 0 && opcion <= 2) {
-				settingsOption--;
+				opcionSettings--;
 
 			}
 		}
-		if (x > audio.x && x<(audio.x + audio.w) && y>audio.y && y < (audio.y + audio.h)) {
-			settingsOption = 0;
+		if (x > audiobt.x && x<(audiobt.x + audiobt.w) && y>audiobt.y && y < (audiobt.y + audiobt.h)) {
+			opcionSettings = 0;
 
 		}
-		else if (x > screen.x && x<(screen.x + screen.w) && y>screen.y && y < (screen.y + screen.h)) {
-			settingsOption = 1;
+		else if (x > screenbt.x && x<(screenbt.x + screenbt.w) && y>screenbt.y && y < (screenbt.y + screenbt.h)) {
+			opcionSettings = 1;
 
 		}
-		else if (x > credits.x && x<(credits.x + credits.w) && y>credits.y && y < (credits.y + credits.h)) {
-			settingsOption = 2;
+		else if (x > creditsbt.x && x<(creditsbt.x + creditsbt.w) && y>creditsbt.y && y < (creditsbt.y + creditsbt.h)) {
+			opcionSettings = 2;
 
 		}
+
 		app->render->DrawTexture(defaultSettingsMenu, -app->render->camera.x, -app->render->camera.y, NULL, 1);
 		app->render->DrawTexture(xCircle, -app->render->camera.x, -app->render->camera.y, NULL, 1);
+
 		SDL_Rect xCircleRect = { 1293,138,71,67 };
 		if (x > xCircleRect.x && x<(xCircleRect.x + xCircleRect.w) && y>xCircleRect.y && y < (xCircleRect.y + xCircleRect.h)) {
 			app->render->DrawTexture(xCircleSelected, -app->render->camera.x, -app->render->camera.y, NULL, 1);
 
-			if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN || app->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN || app->input->GetMouseButtonDown(left) == KEY_DOWN)
+			if (app->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN || app->input->GetMouseButtonDown(left) == KEY_DOWN)
 			{
-				settingsMenu = false;
+				menuSettings = false;
 				app->SaveGameRequest();
 				loadPreConfig = true;
 				app->LoadGameRequest();
@@ -206,7 +254,7 @@ bool SceneTitle::Update(float dt)
 		SDL_Rect fullScreenMouseZone = { 529,195,861,97 };
 		SDL_Rect vSyncMouseZone = { 529,361,861,97 };
 
-		switch (settingsOption)
+		switch (opcionSettings)
 		{
 		case 0:
 			app->render->DrawTexture(audioSelected, -app->render->camera.x, -app->render->camera.y, NULL, 1);
@@ -217,26 +265,26 @@ bool SceneTitle::Update(float dt)
 
 
 			if (x > fxZone.x && x<(fxZone.x + fxZone.w) && y>fxZone.y && y < (fxZone.y + fxZone.h)) {
-				volumeOption = 1;
+				opcionVolumen = 1;
 
 			}
 			else if (x > musicZone.x && x<(musicZone.x + musicZone.w) && y>musicZone.y && y < (musicZone.y + musicZone.h)) {
-				volumeOption = 0;
+				opcionVolumen = 0;
 
 			}
 			if ((app->input->GetKey(SDL_SCANCODE_DOWN) == KEY_DOWN || app->input->GetKey(SDL_SCANCODE_W) == KEY_DOWN)) {
 				if (opcion >= 0 && opcion < 1) {
-					volumeOption++;
+					opcionVolumen++;
 				}
 			}
 			if ((app->input->GetKey(SDL_SCANCODE_UP) == KEY_DOWN || app->input->GetKey(SDL_SCANCODE_S) == KEY_DOWN)) {
 				if (opcion > 0 && opcion <= 1) {
-					volumeOption--;
+					opcionVolumen--;
 
 				}
 			}
 
-			switch (volumeOption)
+			switch (opcionVolumen)
 			{
 			case 0:
 				app->render->DrawTexture(musicSelectedZone, -app->render->camera.x, -app->render->camera.y, NULL, 1);
@@ -280,7 +328,7 @@ bool SceneTitle::Update(float dt)
 			}
 
 
-			if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN || app->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN || app->input->GetMouseButtonDown(left) == KEY_DOWN)
+			if (app->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN || app->input->GetMouseButtonDown(left) == KEY_DOWN)
 			{
 
 				audioMenu = true;;
@@ -297,16 +345,16 @@ bool SceneTitle::Update(float dt)
 				app->render->DrawTexture(vSyncTrue, -app->render->camera.x, -app->render->camera.y, NULL, 1);
 			}
 			if (x > fullScreenMouseZone.x && x<(fullScreenMouseZone.x + fullScreenMouseZone.w) && y>fullScreenMouseZone.y && y < (fullScreenMouseZone.y + fullScreenMouseZone.h)) {
-				screenOption = 0;
+				opcionScreen = 0;
 			}
 			else if (x > vSyncMouseZone.x && x<(vSyncMouseZone.x + vSyncMouseZone.w) && y>vSyncMouseZone.y && y < (vSyncMouseZone.y + vSyncMouseZone.h)) {
-				screenOption = 1;
+				opcionScreen = 1;
 			}
-			switch (screenOption)
+			switch (opcionScreen)
 			{
 			case 0:
 				if (x > fullScreenZone.x && x<(fullScreenZone.x + fullScreenZone.w) && y>fullScreenZone.y && y < (fullScreenZone.y + fullScreenZone.h)) {
-					if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN || app->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN || app->input->GetMouseButtonDown(left) == KEY_DOWN)
+					if (app->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN || app->input->GetMouseButtonDown(left) == KEY_DOWN)
 					{
 						app->win->fullscreen = !app->win->fullscreen;
 						app->SaveGameRequest();
@@ -326,7 +374,7 @@ bool SceneTitle::Update(float dt)
 			case 1:
 				if (x > vSyncZone.x && x<(vSyncZone.x + vSyncZone.w) && y>vSyncZone.y && y < (vSyncZone.y + vSyncZone.h)) {
 
-					if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN || app->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN || app->input->GetMouseButtonDown(left) == KEY_DOWN)
+					if (app->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN || app->input->GetMouseButtonDown(left) == KEY_DOWN)
 					{
 						app->render->vSync = !app->render->vSync;
 						app->SaveGameRequest();

@@ -85,6 +85,29 @@
     <lvlTwoPath path="Assets/Textures/Title/LvlTwo.png"/>
     <musicTitlePath path="Assets/Audio/Music/MusicSceneTitle.ogg"/>
     <musicStopPath path="Assets/Audio/Music/noSound.ogg"/>
+	  
+	  <mainMenuScreen path="Assets/Audio/Music/noSound.ogg"/>
+	  <playSelected path="Assets/Audio/Music/noSound.ogg"/>
+	  <newGameSelected path="Assets/Audio/Music/noSound.ogg"/>
+	  <settingsSelected path="Assets/Audio/Music/noSound.ogg"/>
+	  <exitSelected path="Assets/Audio/Music/noSound.ogg"/>
+	  
+	  <defaultSettingsMenu path="Assets/Audio/Music/noSound.ogg"/>
+	  <xCircle path="Assets/Audio/Music/noSound.ogg"/>
+	  <xCircleSelected path="Assets/Audio/Music/noSound.ogg"/>
+
+	  <audioSelected path="Assets/Audio/Music/noSound.ogg"/>
+	  <fxBar path="Assets/Audio/Music/noSound.ogg"/>
+	  <musicBar path="Assets/Audio/Music/noSound.ogg"/>
+	  <fxCircle path="Assets/Audio/Music/noSound.ogg"/>
+	  <musicCircle path="Assets/Audio/Music/noSound.ogg"/>
+
+	  <screenSelected path="Assets/Audio/Music/noSound.ogg"/>
+	  <fullScreenTrue path="Assets/Audio/Music/noSound.ogg"/>
+	  <vSyncTrue path="Assets/Audio/Music/noSound.ogg"/>
+
+	  <creditsSelected path="Assets/Audio/Music/noSound.ogg"/>
+	  
   </sceneTitle>
 
   <sceneEnding>

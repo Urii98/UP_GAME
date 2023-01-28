@@ -36,6 +36,34 @@ public:
 	SDL_Texture* lvlTwoTexture;
 	int frame;
 
+	//Menu
+
+	SDL_Texture* mainMenuScreen = nullptr;
+	SDL_Texture* playSelected = nullptr;
+	SDL_Texture* newGameSelected = nullptr;
+	SDL_Texture* settingsSelected = nullptr;
+	SDL_Texture* exitSelected = nullptr;
+
+	SDL_Texture* defaultSettingsMenu = nullptr;
+	SDL_Texture* xCircle = nullptr;
+	SDL_Texture* xCircleSelected = nullptr;
+
+
+	//Audio Menu
+	SDL_Texture* audioSelected = nullptr;
+	SDL_Texture* fxBar = nullptr;
+	SDL_Texture* musicBar = nullptr;
+	SDL_Texture* fxCircle = nullptr;
+	SDL_Texture* musicCircle = nullptr;
+
+	//Screen Menu
+	SDL_Texture* screenSelected = nullptr;
+	SDL_Texture* fullScreenTrue = nullptr;
+	SDL_Texture* vSyncTrue = nullptr;
+
+	//Credits Menu
+	SDL_Texture* creditsSelected = nullptr;
+
 	SDL_Timer chrono;
 	SDL_Timer chronoFade;
 
@@ -52,6 +80,11 @@ public:
 	bool fromFade;
 	bool levelSelected;
 	bool mapSelect;
+	bool menuSettings;
+	int opcion;
+	int opcionSettings;
+	int opcionVolumen;
+	int opcionScreen;
 
 };
 
