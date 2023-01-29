@@ -59,19 +59,19 @@ bool ModuleFonts::Start()
 	uint w, h;
 	app->win->GetWindowSize(w, h);
 
-	resumeButton = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 1, " Resume ", { 50,(int)h / 2 + 100,
+	resumeButton = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 1, " FResume ", { 50,(int)h / 2 + 100,
 	app->win->buttonW,app->win->buttonH }, this);
 	resumeButton->state = GuiControlState::NONE;
 
-	titleButton = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 3, " TitleScreen ", { 50,(int)h / 2 + 200,
+	titleButton = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 3, " FTitleScreen ", { 50,(int)h / 2 + 200,
 		app->win->buttonW,app->win->buttonH }, this);
 	titleButton->state = GuiControlState::NONE;
 
-	exitButton = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 4, " Exit ", { 50,(int)h / 2 + 250,
+	exitButton = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 4, " FExit ", { 50,(int)h / 2 + 250,
 		app->win->buttonW,app->win->buttonH }, this);
 	exitButton->state = GuiControlState::NONE;
 
-	settingsButton = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 5, " Settings ", { 50,(int)h / 2 + 300,
+	settingsButton = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 5, " FSettings ", { 50,(int)h / 2 + 300,
 		app->win->buttonW,app->win->buttonH }, this);
 	settingsButton->state = GuiControlState::NONE;
 
