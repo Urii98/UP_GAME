@@ -2,7 +2,7 @@
 <save_state>
 	<input />
 	<window>
-		<window prevgame="0" />
+		<window prevgame="1" />
 	</window>
 	<textures />
 	<audio />
@@ -14,10 +14,10 @@
 	<scene />
 	<sceneEnding />
 	<entitymanager>
-		<playerScene1 x="930" y="745" money="0" hp="3" highscore="0" prevgame="1" />
-		<SmallEnemy11 x="1549" y="757" state="1" />
-		<SmallEnemyFly1 x="3212" y="733" state="1" />
-		<SmallEnemy21 x="7235" y="752" />
+		<playerScene1 x="930" y="745" money="0" hp="1" highscore="0" prevgame="1" />
+		<SmallEnemy11 x="1350" y="757" state="1" />
+		<SmallEnemyFly1 x="3212" y="840" state="1" />
+		<SmallEnemy21 x="7051" y="752" />
 	</entitymanager>
 	<map />
 	<fade />

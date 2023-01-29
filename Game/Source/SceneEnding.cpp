@@ -15,6 +15,7 @@
 #include "GuiButton.h"
 #include "Window.h"
 #include "GuiManager.h"
+#include "ModuleFonts.h"
 
 SceneEnding::SceneEnding(bool isActive) : Module(isActive) {
 	name.Create("sceneEnding");
@@ -72,7 +73,7 @@ bool SceneEnding::Update(float dt)
 		app->scene->player->lifePoints = 3;
 		ending = false;
 		app->scene->timer.Start(); 
-		
+		app->fonts->sceneReady = true;
 	}
 
 	return true;
@@ -85,7 +86,11 @@ bool SceneEnding::PostUpdate()
 	if(ending)
 	app->render->DrawTexture(textureSceneEnding, 15, 13, &rect, 1.0f, 0.0, 2147483647, 2147483647, false);
 
-	//app->guiManager->Draw();
+
+	if (ending)
+	{
+		app->fonts->sceneReady = false;
+	}
 
 	return true;
 }
