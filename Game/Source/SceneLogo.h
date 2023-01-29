@@ -55,6 +55,7 @@ public:
 	
 	GuiButton* button1;
 	GuiButton* button2;
+	SDL_Texture* btnTextureAtlas;
 
 };
 

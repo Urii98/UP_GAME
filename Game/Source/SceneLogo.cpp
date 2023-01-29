@@ -33,6 +33,7 @@ bool SceneLogo::Awake(pugi::xml_node& config) {
 	bool ret = true;
 
 	textureLogoPath = config.child("textureLogoPath").attribute("path").as_string();
+	btnTextureAtlas = app->tex->Load("Assets/Textures/atlasbutton.png");
 	alpha = 0.0f;
 	toFade = false;
 	prueba = false;
@@ -54,8 +55,8 @@ bool SceneLogo::Start() {
 	uint w, h;
 	
 	app->win->GetWindowSize(w, h);
-	button1 = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 1, "Button 1", { (int)w / 2 - 50,(int)h / 2 - 30,100,20 }, this);
-	button2 = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 2, "Button 2", { (int)w / 2 - 50,(int)h / 2,100,20 }, this);
+	button1 = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 1, "Button 1", { (int)w / 2 - 50,(int)h / 2 - 80,app->win->buttonW,app->win->buttonH }, this);
+	button2 = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 2, "Button 2", { (int)w / 2 - 50,(int)h / 2,app->win->buttonW,app->win->buttonH }, this);
 
 	return true;
 }

@@ -64,6 +64,10 @@ bool Window::Awake(pugi::xml_node& config)
 		}
 	}
 
+
+	buttonW = 103;
+	buttonH = 46;
+
 	return ret;
 }
 

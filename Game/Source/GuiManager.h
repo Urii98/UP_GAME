@@ -39,6 +39,8 @@ public:
 
 	SDL_Texture* texture;
 
+	
+
 };
 
 #endif // __GUIMANAGER_H__

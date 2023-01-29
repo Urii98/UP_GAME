@@ -22,7 +22,16 @@ public:
 	bool canClick = true;
 	bool drawBasic = false;
 
-	uint audioFxId;
+	uint buttonSelected;
+	uint buttonPressed;
+	uint buttonDisabled;
+	bool mouseIn = false;
+
+	SDL_Texture* buttonTexture;
+
+	
+
+	
 };
 
 #endif // __GUIBUTTON_H__

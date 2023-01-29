@@ -14,6 +14,7 @@ GuiManager::~GuiManager() {}
 
 bool GuiManager::Start()
 {
+
 	return true;
 }
 
