@@ -66,6 +66,7 @@ bool Render::Awake(pugi::xml_node& config)
 	//load a font into memory
 	//font = TTF_OpenFont("Assets/Fonts/rainbow/Rainbow.ttf", 25);
 	font = TTF_OpenFont("Assets/Fonts/arial/arial.ttf", 25);
+	//font = TTF_OpenFont("Assets/Fonts/kenvector/kenvector.ttf", 15);
 
 	return ret;
 }

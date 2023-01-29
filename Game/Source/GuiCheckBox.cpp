@@ -23,15 +23,11 @@ bool GuiCheckBox::Update(float dt)
 	if (state != GuiControlState::DISABLED)
 	{
 		app->input->GetMousePosition(mouseX, mouseY);
-		//LOG("Mouse x: %d Mouse y: %d", mouseX, mouseY);
-		//LOG("bounds.x: %d bounds.h: %d", bounds.x, bounds.y);
 
 		GuiControlState previousState = state;
 
 		if (mouseX >= bounds.x && mouseX <= bounds.x + bounds.w &&
 			mouseY >= bounds.y && mouseY <= bounds.y + bounds.h) {
-
-			//state = GuiControlState::FOCUSED;
 
 			if (previousState != state)
 			{
@@ -43,7 +39,7 @@ bool GuiCheckBox::Update(float dt)
 				(state == GuiControlState::NORMAL) ? state = GuiControlState::SELECTED : state = GuiControlState::NORMAL;
 			}
 
-			// If mouse button pressed -> Generate event!
+			
 			if (app->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KeyState::KEY_UP)
 			{
 				NotifyObserver();
@@ -57,42 +53,23 @@ bool GuiCheckBox::Update(float dt)
 
 bool GuiCheckBox::Draw(Render* render)
 {
-	SDL_Rect rect = { 0, 0, 0, 0 };
+	SDL_Rect rect;
 	
-	// Draw the right CheckBox depending on state
+	
 	switch (state)
 	{
-
-	case GuiControlState::DISABLED:
-	{
-
-	} break;
-
 	case GuiControlState::NORMAL:
 	{
 		rect = { 0, 0, 28, 27 };
 		render->DrawTexture(checkBoxTex, bounds.x, bounds.y, &rect);
 		
 	} break;
-
-
-	case GuiControlState::FOCUSED:
-	{
-	
-	} break;
-	case GuiControlState::PRESSED:
-	{
-
-	} break;
-
 	case GuiControlState::SELECTED:
 	{
 		rect = { 28, 0, 28, 27 };
 		render->DrawTexture(checkBoxTex, bounds.x, bounds.y, &rect);
 	} break;
 
-	default:
-		break;
 	}
 
 	return false;

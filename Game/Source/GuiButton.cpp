@@ -35,8 +35,8 @@ bool GuiButton::Update(float dt)
 
 	int mouseX, mouseY;
 	app->input->GetMousePosition(mouseX, mouseY);
-		mouseX *= app->win->GetScale();
-		mouseY *= app->win->GetScale();
+	mouseX *= app->win->GetScale();
+	mouseY *= app->win->GetScale();
 
 	// Check collision between mouse and button bounds
 	if ((mouseX > bounds.x) && (mouseX < (bounds.x + bounds.w)) &&

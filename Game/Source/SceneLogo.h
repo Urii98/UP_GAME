@@ -7,6 +7,7 @@
 #include "SDL_Timer.h"
 #include "SceneTitle.h"
 #include "GuiCheckBox.h"
+#include "GuiSliderBar.h"
 
 
 #include <iostream>
@@ -60,6 +61,8 @@ public:
 	SDL_Texture* btnTextureAtlas;
 
 	GuiCheckBox* checkbox1;
+
+	GuiSliderBar* sliderbar1;
 	
 	
 
