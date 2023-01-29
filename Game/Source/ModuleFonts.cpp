@@ -163,10 +163,6 @@ bool ModuleFonts::Update(float dt) //para que aparezca durante el juego
 {
 	bool ret = true;
 
-
-
-
-
 	return ret;
 }
 
@@ -193,8 +189,8 @@ bool ModuleFonts::PostUpdate() //para que aparezca en screenlogo y screentitle
 	std::string timeToString = std::to_string(app->scene->timer.ReadSec());
 	const char* timeChar = timeToString.c_str();
 	SDL_Rect rect = currentAnimation->GetCurrentFrame();
-	app->render->DrawTexture(hourglassTexture, 60, 0, &rect, 0.0f, 0.0f, 2147483647, 2147483647, false);
-	BlitText(85, 9, textFont, timeChar);
+	app->render->DrawTexture(hourglassTexture, 70, 0, &rect, 0.0f, 0.0f, 2147483647, 2147483647, false);
+	BlitText(110, 9, textFont, timeChar);
 
 	return ret;
 }
