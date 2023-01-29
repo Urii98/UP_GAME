@@ -185,6 +185,9 @@ bool SceneTitle::Update(float dt)
 		app->render->isVsync = false;
 		SDL_CreateRenderer(app->win->window, -1, SDL_RENDERER_ACCELERATED);
 	}
+
+	//app->audio->volumenMusic = (sliderbarMusic->sliderBounds.x/470) - 1.7446808851) * 128;
+
 	return true;
 }
 
@@ -303,6 +306,11 @@ bool SceneTitle::PostUpdate()
 		std::cout << "entrando en frame <=108" << std::endl;
 	}
 	// ---------- 
+	if (!boolSettingsButton)
+	{
+		app->render->DrawTexture(windowSettingsText, 115, 75);
+
+	}
 
 	app->guiManager->Draw();
 
@@ -315,11 +323,7 @@ bool SceneTitle::PostUpdate()
 	{
 		app->render->DrawTexture(windowCreditText, 115, 75);
 	}
-	if (boolSettingsButton)
-	{
-		//app->render->DrawTexture(windowSettingsText, 115, 75);
-		
-	}
+	
 
 	return true;
 }
