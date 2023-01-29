@@ -60,11 +60,7 @@ bool SceneLogo::Start() {
 	//button2 = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 2, "Button 2", { (int)w / 2 - 50,(int)h / 2,
 	//	app->win->buttonW,app->win->buttonH }, this);
 
-	checkbox1 = (GuiCheckBox*)app->guiManager->CreateGuiControl(GuiControlType::CHECKBOX, 3, "", { 330, 240, 30, 30 }, this);
-	checkbox1->state = GuiControlState::NORMAL;
-
-	sliderbar1 = (GuiSliderBar*)app->guiManager->CreateGuiControl(GuiControlType::SLIDERBAR, 4, "", { 300, 170, 90, 45 }, this,{ 300, 169, 20, 45 });
-	sliderbar1->state = GuiControlState::NONE;
+	
 
 
 	return true;

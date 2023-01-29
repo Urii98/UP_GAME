@@ -16,6 +16,7 @@
 #include "GuiManager.h"
 #include "SceneLogo.h"
 #include "Scene.h"
+#include "Render.h"
 
 SceneTitle::SceneTitle(bool isActive) : Module(isActive) {
 	name.Create("sceneTitle");
@@ -31,6 +32,7 @@ bool SceneTitle::Awake(pugi::xml_node& config) {
 	musicTitlePath = config.child("musicTitlePath").attribute("path").as_string();
 	musicStopPath = config.child("musicStopPath").attribute("path").as_string();
 	windowCreditPath = "Assets/Textures/Window.png";
+	windowSettingsPath = "Assets/Textures/Window3.png";
 
 	
 
@@ -87,7 +89,20 @@ bool SceneTitle::Start() {
 		app->win->buttonW,app->win->buttonH }, this);
 	settingsButton->state = GuiControlState::NORMAL;
 
+	checkboxFullScreen = (GuiCheckBox*)app->guiManager->CreateGuiControl(GuiControlType::CHECKBOX, 6, "", { 200, 240, 30, 30 }, this);
+	checkboxFullScreen->state = GuiControlState::DISABLED;
+
+	checkboxVSync = (GuiCheckBox*)app->guiManager->CreateGuiControl(GuiControlType::CHECKBOX, 7, "", { 330, 240, 30, 30 }, this);
+	checkboxVSync->state = GuiControlState::DISABLED;
+
+	sliderbarMusic = (GuiSliderBar*)app->guiManager->CreateGuiControl(GuiControlType::SLIDERBAR, 8, "", { 300, 200, 90, 45 }, this, { 300, 199, 20, 45 });
+	sliderbarMusic->state = GuiControlState::DISABLED;
+
+	sliderbarFx = (GuiSliderBar*)app->guiManager->CreateGuiControl(GuiControlType::SLIDERBAR, 9, "", { 300, 170, 90, 45 }, this, { 300, 169, 20, 45 });
+	sliderbarFx->state = GuiControlState::DISABLED;
+
 	windowCreditText = app->tex->Load(windowCreditPath);
+	windowSettingsText = app->tex->Load(windowSettingsPath);
 	
 	app->LoadFromFileCheckPastGame();
 	if (app->win->previousGame == 0)
@@ -112,6 +127,7 @@ bool SceneTitle::Start() {
 	toFadeButton = false;
 	boolExitButton = false;
 	boolCreditButton = false;
+	boolSettingsButton = true;
 
 	return true;
 }
@@ -150,9 +166,25 @@ bool SceneTitle::Update(float dt)
 		app->fade->Fade(this, app->scene, 60);
 	}
 
+	//Activar/desactivar fullscreen
+	if (checkboxFullScreen->state == GuiControlState::SELECTED) {
+		app->win->fullscreen = true;
+		SDL_SetWindowFullscreen(app->win->window, SDL_WINDOW_FULLSCREEN);
+	}
+	if (checkboxFullScreen->state == GuiControlState::NORMAL) {
+		app->win->fullscreen = false;
+		SDL_SetWindowFullscreen(app->win->window, 0);
+	}
 
-
-	
+	//Activar/desactivar VSync
+	if (checkboxVSync->state == GuiControlState::SELECTED) {
+		app->render->isVsync = true;
+		SDL_CreateRenderer(app->win->window, -1, SDL_RENDERER_PRESENTVSYNC);
+	}
+	if (checkboxVSync->state == GuiControlState::NORMAL) {
+		app->render->isVsync = false;
+		SDL_CreateRenderer(app->win->window, -1, SDL_RENDERER_ACCELERATED);
+	}
 	return true;
 }
 
@@ -283,6 +315,11 @@ bool SceneTitle::PostUpdate()
 	{
 		app->render->DrawTexture(windowCreditText, 115, 75);
 	}
+	if (boolSettingsButton)
+	{
+		//app->render->DrawTexture(windowSettingsText, 115, 75);
+		
+	}
 
 	return true;
 }
@@ -297,7 +334,8 @@ bool SceneTitle::CleanUp()
 	app->tex->UnLoad(lvlOneTexture);
 	app->tex->UnLoad(lvlTwoTexture);
 	app->tex->UnLoad(windowCreditText);
-	
+	app->tex->UnLoad(windowSettingsText);
+
 	return true;
 }
 
@@ -327,10 +365,29 @@ bool SceneTitle::OnGuiMouseClickEvent(GuiControl* control)
 		{
 			boolCreditButton = true;
 		}
-		
 		break;
 	case 4:
-		LOG("Button 2 click");
+		LOG("Button 1 click");
+		if (boolSettingsButton)
+		{
+			if(app->win->fullscreen == true) checkboxFullScreen->state = GuiControlState::SELECTED;
+			else checkboxFullScreen->state = GuiControlState::NORMAL;
+			
+			if(app->render->isVsync ==true) checkboxVSync->state = GuiControlState::SELECTED;
+			else checkboxVSync->state = GuiControlState::NORMAL;
+
+			sliderbarMusic->state = GuiControlState::NORMAL;
+			sliderbarFx->state = GuiControlState::NORMAL;
+			boolSettingsButton = false;
+		}
+		else
+		{
+			boolSettingsButton = true;
+			checkboxFullScreen->state = GuiControlState::DISABLED;
+			checkboxVSync->state = GuiControlState::DISABLED;
+			sliderbarMusic->state = GuiControlState::DISABLED;
+			sliderbarFx->state = GuiControlState::DISABLED;
+		}
 		break;
 	case 5:
 		LOG("Button 2 click");

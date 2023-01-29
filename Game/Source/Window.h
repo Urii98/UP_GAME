@@ -44,6 +44,7 @@ public:
 	int buttonW, buttonH;
 
 	int previousGame; //1-si  , 0-no
+	bool fullscreen;
 
 private:
 	SString title;
