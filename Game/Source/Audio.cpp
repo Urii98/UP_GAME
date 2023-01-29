@@ -85,6 +85,18 @@ bool Audio::CleanUp()
 	return true;
 }
 
+void Audio::SetVolumeMusic(int volume)
+{
+	volumenMusic = volume;
+	Mix_VolumeMusic(volumenMusic);
+}
+
+void Audio::SetVolumeFX(int volume)
+{
+	volumenFx = volume;
+	Mix_Volume(-1, volumenFx);
+}
+
 // Play a music file
 bool Audio::PlayMusic(const char* path, float fadeTime)
 {

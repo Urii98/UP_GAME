@@ -207,6 +207,8 @@ bool SceneTitle::Update(float dt)
 		app->audio->volumenFx = 0;
 	}
 
+	app->audio->SetVolumeMusic(app->audio->volumenMusic);
+	app->audio->SetVolumeFX(app->audio->volumenFx);
 	
 	return true;
 }

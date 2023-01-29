@@ -35,6 +35,9 @@ public:
 	float volumenFx;
 	float volumenMusic;
 
+	void SetVolumeMusic(int volume);
+	void SetVolumeFX(int volume);
+
 private:
 
 	_Mix_Music* music;

@@ -257,6 +257,8 @@ bool ModuleFonts::Update(float dt) //para que aparezca durante el juego
 		if (app->audio->volumenFx < 0) {
 			app->audio->volumenFx = 0;
 		}
+
+		app->audio->SetVolumeMusic(app->audio->volumenMusic);
 	}
 
 
