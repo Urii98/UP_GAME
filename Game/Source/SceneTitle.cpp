@@ -129,6 +129,9 @@ bool SceneTitle::Start() {
 	boolCreditButton = false;
 	boolSettingsButton = true;
 
+	sliderbarMusic->sliderBounds.x = sliderbarMusic->bounds.x + sliderbarMusic->bounds.w;
+	sliderbarFx->sliderBounds.x = sliderbarFx->bounds.x + sliderbarFx->bounds.w;
+
 	return true;
 }
 
@@ -186,12 +189,12 @@ bool SceneTitle::Update(float dt)
 		SDL_CreateRenderer(app->win->window, -1, SDL_RENDERER_ACCELERATED);
 	}
 
-	app->audio->volumenMusic = sliderbarMusic->sliderBounds.x - 201;
+	app->audio->volumenMusic = sliderbarMusic->sliderBounds.x - sliderbarMusic->bounds.x;
 	if (app->audio->volumenMusic < 0) {
 		app->audio->volumenMusic = 0;
 	}
 
-	app->audio->volumenFx = sliderbarFx->sliderBounds.x - 172;
+	app->audio->volumenFx = sliderbarFx->sliderBounds.x - sliderbarFx->bounds.x;
 	if (app->audio->volumenFx < 0) {
 		app->audio->volumenFx = 0;
 	}
