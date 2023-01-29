@@ -270,6 +270,12 @@ bool SceneTitle::PostUpdate()
 		}
 		std::cout << "entrando en frame <=108" << std::endl;
 	}
+	else
+	{
+		SDL_Rect rect = { 1024 * 2, 0, 1024, 768 };
+		app->render->DrawTexture(bgTexture[7], 0, 0, &rect, 1.0f, 0.0, 2147483647, 2147483647, false);
+	}
+
 	// ---------- 
 
 	app->guiManager->Draw();
