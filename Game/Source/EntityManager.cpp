@@ -43,6 +43,7 @@ bool EntityManager::Awake(pugi::xml_node& config)
 		if (pEntity->active == false) continue;
 		ret = item->data->Awake();
 	}
+	
 
 	return ret;
 
@@ -67,6 +68,7 @@ bool EntityManager::Start() {
 	numSmallEnemy1 = 0;
 	numSmallEnemy2 = 0;
 	numSmallEnemyFly = 0;
+
 
 
 	return ret;
@@ -189,6 +191,7 @@ bool EntityManager::LoadState(pugi::xml_node& data)
 	int podium = data.child("playerScene1").attribute("highscore").as_int();
 
 
+	
 	app->scene->player->moneyPoints = money;
 	app->scene->player->lifePoints = hp;
 	app->scene->player->ChangePosition(posX, posY);
@@ -241,10 +244,18 @@ void EntityManager::LoadEntities(pugi::xml_node& data, ListItem<Entity*>* entity
 		int posX = data.child(nameToPrint).attribute("x").as_int();
 		int posY = data.child(nameToPrint).attribute("y").as_int();
 
-		iPoint entityPos = { posX, posY };
-		int entityState = data.child(nameToPrint).attribute("state").as_int();
+		if (posX == 0)
+		{
+			
+		}
+		else
+		{
+			iPoint entityPos = { posX, posY };
+			int entityState = data.child(nameToPrint).attribute("state").as_int();
 
-		entity->data->LoadInfo(entityPos, entityState);
+			entity->data->LoadInfo(entityPos, entityState);
+		}
+	
 
 
 	}
@@ -259,9 +270,17 @@ void EntityManager::LoadEntities(pugi::xml_node& data, ListItem<Entity*>* entity
 		int posX = data.child(nameToPrint).attribute("x").as_int();
 		int posY = data.child(nameToPrint).attribute("y").as_int();
 
-		iPoint entityPos = { posX, posY };
+		if (posX == 0)
+		{
 
-		entity->data->LoadInfo(entityPos,0);
+		}
+		else
+		{
+			iPoint entityPos = { posX, posY };
+
+			entity->data->LoadInfo(entityPos, 0);
+		}
+
 
 
 	}
@@ -276,10 +295,19 @@ void EntityManager::LoadEntities(pugi::xml_node& data, ListItem<Entity*>* entity
 		int posX = data.child(nameToPrint).attribute("x").as_int();
 		int posY = data.child(nameToPrint).attribute("y").as_int();
 
-		iPoint entityPos = { posX, posY };
-		int entityState = data.child(nameToPrint).attribute("state").as_int();
+		if (posX == 0)
+		{
 
-		entity->data->LoadInfo(entityPos, entityState);
+		}
+		else
+		{
+			iPoint entityPos = { posX, posY };
+			int entityState = data.child(nameToPrint).attribute("state").as_int();
+
+			entity->data->LoadInfo(entityPos, entityState);
+		}
+
+	
 
 	}
 }
@@ -323,6 +351,7 @@ bool EntityManager::SaveState(pugi::xml_node& data)
 		playerScene1.append_attribute("hp") = app->scene->player->lifePoints;
 		playerScene1.append_attribute("highscore") = app->scene->player->highestScore;
 	}
+	playerScene1.append_attribute("prevgame") = 1;
 
 	ListItem<Entity*>* dataEntities;
 	dataEntities = entities.start;

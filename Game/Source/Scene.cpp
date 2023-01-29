@@ -109,6 +109,8 @@ bool Scene::Awake(pugi::xml_node& config)
 	//vect->push_back(player);
 	entities.Add(player);
 
+	continueFromGame = false;
+
 	return ret;
 }
 
@@ -170,6 +172,12 @@ bool Scene::PreUpdate()
 bool Scene::Update(float dt)
 {
 	OPTICK_EVENT();
+
+	if (continueFromGame)
+	{
+		continueFromGame = false;
+		app->LoadGameRequest();
+	}
 
 	// L03: DONE 3: Request App to Load / Save when pressing the keys F5 (save) / F6 (load)
 	if (app->input->GetKey(SDL_SCANCODE_F5) == KEY_DOWN)

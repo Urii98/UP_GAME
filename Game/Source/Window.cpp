@@ -104,3 +104,19 @@ uint Window::GetScale() const
 {
 	return scale;
 }
+
+bool Window::LoadState(pugi::xml_node& data)
+{
+	int prevGame = data.child("window").attribute("prevgame").as_int();
+
+	previousGame = prevGame;
+	return true;
+}
+
+bool Window::SaveState(pugi::xml_node& data)
+{
+	pugi::xml_node window = data.append_child("window");
+	window.append_attribute("prevgame") = 1;
+	return true;
+
+}

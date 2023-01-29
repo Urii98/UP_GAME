@@ -433,6 +433,40 @@ bool App::LoadFromFile()
 	return ret;
 }
 
+bool App::LoadFromFileCheckPastGame()
+{
+	bool ret = true;
+
+	pugi::xml_document gameStateFile;
+	pugi::xml_parse_result result = gameStateFile.load_file("save_game.xml");
+
+	if (result == NULL)
+	{
+		LOG("Could not load xml file savegame.xml. pugi error: %s", result.description());
+		ret = false;
+	}
+	else
+	{
+		ListItem<Module*>* item;
+		item = modules.start;
+
+		while (item != NULL)
+		{
+			if (item->data->name != "window")
+			{
+				item = item->next;
+				continue;
+			}
+			ret = item->data->LoadState(gameStateFile.child("save_state").child(item->data->name.GetString()));
+			break;
+		}
+	}
+
+	loadGameRequested = false;
+
+	return ret;
+}
+
 // L02: DONE 7: Implement the xml save method SaveToFile() for current state
 // check https://pugixml.org/docs/quickstart.html#modify
 bool App::SaveToFile() 

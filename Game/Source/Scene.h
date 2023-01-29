@@ -71,6 +71,7 @@ public:
 
 	//std::vector<Entity*>* vect = new std::vector<Entity*>;
 
+	bool continueFromGame;
 
 private:
 	SDL_Texture* img;

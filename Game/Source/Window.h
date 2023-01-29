@@ -30,6 +30,10 @@ public:
 	// Retrieve window scale
 	uint GetScale() const;
 
+	bool LoadState(pugi::xml_node&);
+
+	bool SaveState(pugi::xml_node&);
+
 public:
 	// The window we'll be rendering to
 	SDL_Window* window;
@@ -39,11 +43,14 @@ public:
 
 	int buttonW, buttonH;
 
+	int previousGame; //1-si  , 0-no
+
 private:
 	SString title;
 	uint width;
 	uint height;
 	uint scale;
+
 
 	
 };

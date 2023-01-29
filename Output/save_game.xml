@@ -1,7 +1,9 @@
 <?xml version="1.0"?>
 <save_state>
 	<input />
-	<window />
+	<window>
+		<window prevgame="1" />
+	</window>
 	<textures />
 	<audio />
 	<:anonymous />
@@ -12,16 +14,16 @@
 	<scene />
 	<sceneEnding />
 	<entitymanager>
-		<playerScene1 x="1280" y="745" money="0" hp="3" highscore="0" />
-		<SmallEnemy11 x="1594" y="757" state="2" />
-		<SmallEnemy12 x="9014" y="1717" state="1" />
-		<SmallEnemyFly1 x="3212" y="723" state="1" />
-		<SmallEnemyFly2 x="3852" y="703" state="1" />
-		<SmallEnemy21 x="7045" y="752" />
-		<SmallEnemy22 x="5915" y="1712" />
+		<playerScene1 x="930" y="745" money="13" hp="3" highscore="0" prevgame="1" />
+		<SmallEnemy11 x="8856" y="1717" state="1" />
+		<SmallEnemyFly1 x="3212" y="749" state="1" />
+		<SmallEnemyFly2 x="3852" y="729" state="1" />
+		<SmallEnemy21 x="7049" y="752" />
+		<SmallEnemy22 x="5956" y="1712" />
 	</entitymanager>
 	<map />
 	<fade />
 	<fonts />
+	<guiManager />
 	<renderer />
 </save_state>

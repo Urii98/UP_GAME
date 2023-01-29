@@ -69,6 +69,8 @@ public:
 	bool LoadFromFile();
 	bool SaveToFile() ;
 
+	bool LoadFromFileCheckPastGame();
+
 private:
 
 	// Load config file

@@ -15,6 +15,7 @@
 #include "Window.h"
 #include "GuiManager.h"
 #include "SceneLogo.h"
+#include "Scene.h"
 
 SceneTitle::SceneTitle(bool isActive) : Module(isActive) {
 	name.Create("sceneTitle");
@@ -88,6 +89,11 @@ bool SceneTitle::Start() {
 
 	windowCreditText = app->tex->Load(windowCreditPath);
 	
+	app->LoadFromFileCheckPastGame();
+	if (app->win->previousGame == 0)
+	{
+		continueButton->state = GuiControlState::DISABLED;
+	}
 
 	// ---------- 
 
@@ -131,9 +137,16 @@ bool SceneTitle::Update(float dt)
 		app->audio->PlayMusic(musicTitlePath,0);
 	}
 
-	if (app->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN || toFadeButton)
+	if (app->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN || toFadeButton || boolContinueButton)
 	{
+		if (boolContinueButton)
+		{
+			app->scene->continueFromGame = true;
+
+
+		}
 		toFadeButton = false;
+		boolContinueButton = false;
 		app->fade->Fade(this, app->scene, 60);
 	}
 
@@ -302,6 +315,7 @@ bool SceneTitle::OnGuiMouseClickEvent(GuiControl* control)
 		break;
 	case 2:
 		LOG("Button 2 click");
+		boolContinueButton = true;
 		break;
 	case 3:
 		LOG("Button 1 click");

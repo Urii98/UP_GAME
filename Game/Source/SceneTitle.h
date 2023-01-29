@@ -56,6 +56,7 @@ public:
 	bool toFadeButton;
 	bool boolExitButton;
 	bool boolCreditButton;
+	bool boolContinueButton;
 
 	GuiButton* playButton;
 	GuiButton* continueButton;
