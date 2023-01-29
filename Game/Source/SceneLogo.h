@@ -7,6 +7,7 @@
 #include "SDL_Timer.h"
 #include "SceneTitle.h"
 
+
 #include <iostream>
 
 struct SDL_Texture;
@@ -56,6 +57,9 @@ public:
 	GuiButton* button1;
 	GuiButton* button2;
 	SDL_Texture* btnTextureAtlas;
+	SDL_Texture* sliderTextureAtlas;
+
+	
 
 };
 
