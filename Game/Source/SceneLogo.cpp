@@ -33,7 +33,6 @@ bool SceneLogo::Awake(pugi::xml_node& config) {
 	bool ret = true;
 
 	textureLogoPath = config.child("textureLogoPath").attribute("path").as_string();
-	btnTextureAtlas = app->tex->Load("Assets/Textures/atlasbutton.png");
 	alpha = 0.0f;
 	toFade = false;
 	prueba = false;
@@ -55,16 +54,16 @@ bool SceneLogo::Start() {
 	uint w, h;
 	
 	app->win->GetWindowSize(w, h);
-	button1 = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 1, "Button 1", { (int)w / 2 - 50,(int)h / 2 - 80,
+	button1 = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 1, "Next", { (int)w / 2 - 50,720 - 80,
 		app->win->buttonW,app->win->buttonH }, this);
-	button2 = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 2, "Button 2", { (int)w / 2 - 50,(int)h / 2,
-		app->win->buttonW,app->win->buttonH }, this);
+	//button2 = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 2, "Button 2", { (int)w / 2 - 50,(int)h / 2,
+	//	app->win->buttonW,app->win->buttonH }, this);
 
-	checkbox1 = (GuiCheckBox*)app->guiManager->CreateGuiControl(GuiControlType::CHECKBOX, 3, "", { 330, 240, 30, 30 }, this);
-	checkbox1->state = GuiControlState::NORMAL;
+	//checkbox1 = (GuiCheckBox*)app->guiManager->CreateGuiControl(GuiControlType::CHECKBOX, 3, "", { 330, 240, 30, 30 }, this);
+	//checkbox1->state = GuiControlState::NORMAL;
 
-	sliderbar1 = (GuiSliderBar*)app->guiManager->CreateGuiControl(GuiControlType::SLIDERBAR, 4, "", { 300, 170, 90, 45 }, this,{ 300, 169, 20, 45 });
-	sliderbar1->state = GuiControlState::NONE;
+	//sliderbar1 = (GuiSliderBar*)app->guiManager->CreateGuiControl(GuiControlType::SLIDERBAR, 4, "", { 300, 170, 90, 45 }, this,{ 300, 169, 20, 45 });
+	//sliderbar1->state = GuiControlState::NONE;
 
 
 	return true;
@@ -81,12 +80,15 @@ bool SceneLogo::Update(float dt)
 	}
 
 
-	if (app->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN)
+	if (app->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN || toFadeButton)
 	{
+		toFadeButton = false;
+
 		app->fade->Fade(this, app->sceneTitle, 100);
 
 	}
 
+	
 	
 
 	return true;
@@ -99,12 +101,16 @@ bool SceneLogo::PostUpdate()
 	{
 		SDL_Rect rect = { 0,0,1024,768 };
 
-		//app->render->DrawTexture(textureLogo, 0, 0, &rect, 1.0f, 0.0, 2147483647, 2147483647, false);
+		app->render->DrawTexture(textureLogo, 0, 0, &rect, 1.0f, 0.0, 2147483647, 2147483647, false);
 
-		//app->render->DrawRectangle(rect, 0, 0, 0, (unsigned char)(255.0f * alpha));
+		app->render->DrawRectangle(rect, 0, 0, 0, (unsigned char)(255.0f * alpha));
 	}
 
-	app->guiManager->Draw();
+	if (button1->state != GuiControlState::DISABLED)
+	{
+		app->guiManager->Draw();
+	}
+	
 
 	return true;
 }
@@ -127,10 +133,10 @@ bool SceneLogo::OnGuiMouseClickEvent(GuiControl* control)
 	{
 	case 1:
 		LOG("Button 1 click");
+		toFadeButton = true;
+		button1->state = GuiControlState::DISABLED;
 		break;
-	case 2:
-		LOG("Button 2 click");
-		break;
+
 	}
 
 	return true;

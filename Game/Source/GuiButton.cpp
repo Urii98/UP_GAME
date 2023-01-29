@@ -63,7 +63,7 @@ bool GuiButton::Update(float dt)
 		}
 		else if (app->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KeyState::KEY_DOWN)
 		{
-			app->audio->PlayFx(buttonDisabled);
+//			app->audio->PlayFx(buttonDisabled);
 		}
 			
 	}

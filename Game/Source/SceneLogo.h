@@ -45,6 +45,8 @@ public:
 
 	bool prueba;
 
+	bool toFadeButton;
+
 	//Animation* currentAnimationSceneLogo = nullptr;
 	
 	Animation sceneLogoKirby;
@@ -57,13 +59,13 @@ public:
 	SString textureLogoPath;
 	
 	GuiButton* button1;
-	GuiButton* button2;
-	SDL_Texture* btnTextureAtlas;
+	//GuiButton* button2;
+	//SDL_Texture* btnTextureAtlas;
 
-	GuiCheckBox* checkbox1;
+	//GuiCheckBox* checkbox1;
 
-	GuiSliderBar* sliderbar1;
-	
+	//GuiSliderBar* sliderbar1;
+	//
 	
 
 };
