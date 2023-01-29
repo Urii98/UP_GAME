@@ -454,6 +454,11 @@ bool App::LoadFromFileCheckPastGame()
 		{
 			if (item->data->name != "window")
 			{
+				if (item->data->name == "entitymanager")
+				{
+					ret = item->data->LoadState(gameStateFile.child("save_state").child(item->data->name.GetString()));
+				}
+
 				item = item->next;
 				continue;
 			}

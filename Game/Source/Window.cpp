@@ -5,6 +5,7 @@
 #include "Log.h"
 
 #include "SDL/include/SDL.h"
+#include "Scene.h"
 
 
 Window::Window(bool isActive) : Module(isActive)
@@ -108,8 +109,8 @@ uint Window::GetScale() const
 bool Window::LoadState(pugi::xml_node& data)
 {
 	int prevGame = data.child("window").attribute("prevgame").as_int();
-
 	previousGame = prevGame;
+
 	return true;
 }
 

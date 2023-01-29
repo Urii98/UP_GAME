@@ -44,6 +44,7 @@ bool EntityManager::Awake(pugi::xml_node& config)
 		ret = item->data->Awake();
 	}
 	
+	checkLoadFirstTime = false;
 
 	return ret;
 
@@ -184,49 +185,59 @@ bool EntityManager::Update(float dt)
 
 bool EntityManager::LoadState(pugi::xml_node& data)
 {
-	int posX = data.child("playerScene1").attribute("x").as_int();
-	int posY = data.child("playerScene1").attribute("y").as_int();
-	int money = data.child("playerScene1").attribute("money").as_int(); 
-	int hp = data.child("playerScene1").attribute("hp").as_int();
-	int podium = data.child("playerScene1").attribute("highscore").as_int();
-
-
-	
-	app->scene->player->moneyPoints = money;
-	app->scene->player->lifePoints = hp;
-	app->scene->player->ChangePosition(posX, posY);
-	app->scene->player->highestScore = podium;
-	//if (posCheckPointX != 0)
-	//{
-	//	app->scene->player->ChangePosition(posCheckPointX, posCheckPointY);
-	//}
-	//else
-	//{
-	//	app->scene->player->ChangePosition(posX, posY);
-	//}
-	
-
-	//Comprobar de alguna manera que no se han destruido los enemigos,
-	//de no haberse destruido, entonces cogemos sus datos y los mandamos a cada uno para su posición con un teleport
-
-	ListItem<Entity*>* dataEntities;
-	dataEntities = entities.start;
-
-	while (dataEntities != NULL)
+	if (!checkLoadFirstTime)
 	{
-		if (dataEntities->data->destroy != true)
+		checkLoadFirstTime = true;
+		int podium = data.child("playerScene1").attribute("highscore").as_int();
+		app->scene->player->highestScore = podium;
+	}
+	else
+	{
+		int posX = data.child("playerScene1").attribute("x").as_int();
+		int posY = data.child("playerScene1").attribute("y").as_int();
+		int money = data.child("playerScene1").attribute("money").as_int();
+		int hp = data.child("playerScene1").attribute("hp").as_int();
+
+
+		app->scene->player->moneyPoints = money;
+		app->scene->player->lifePoints = hp;
+		app->scene->player->ChangePosition(posX, posY);
+
+		//if (posCheckPointX != 0)
+		//{
+		//	app->scene->player->ChangePosition(posCheckPointX, posCheckPointY);
+		//}
+		//else
+		//{
+		//	app->scene->player->ChangePosition(posX, posY);
+		//}
+
+
+		//Comprobar de alguna manera que no se han destruido los enemigos,
+		//de no haberse destruido, entonces cogemos sus datos y los mandamos a cada uno para su posición con un teleport
+
+		ListItem<Entity*>* dataEntities;
+		dataEntities = entities.start;
+
+		while (dataEntities != NULL)
 		{
-			LoadEntities(data, dataEntities);
-			
+			if (dataEntities->data->destroy != true)
+			{
+				LoadEntities(data, dataEntities);
+
+			}
+			dataEntities = dataEntities->next;
+
 		}
-		dataEntities = dataEntities->next;
+
+		numSmallEnemy1 = 0;
+		numSmallEnemy2 = 0;
+		numSmallEnemyFly = 0;
 
 	}
 
-	numSmallEnemy1 = 0;
-	numSmallEnemy2 = 0;
-	numSmallEnemyFly = 0;
 
+	
 	return true;
 }
 

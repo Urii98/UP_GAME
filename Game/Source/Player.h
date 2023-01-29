@@ -131,6 +131,7 @@ public:
 	bool drawSwordUI;
 	bool timerDead;
 	bool sword;
+	bool saveScoreFromVictory;
 	int lifePoints;
 	int moneyPoints;
 

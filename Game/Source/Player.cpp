@@ -334,6 +334,7 @@ bool Player::Start() {
 	collidingWithCheckPoint = false;
 	timerDead = false;
 	highestScore = 0;
+	saveScoreFromVictory = false;
 	
 	return true;
 }
@@ -698,6 +699,11 @@ bool Player::Update(float dt)
 			b2Vec2 vel = b2Vec2(0, 0);
 			pbody->body->SetLinearVelocity(vel);
 			winFxbool = true;
+			if (saveScoreFromVictory)
+			{
+				app->SaveGameRequest();
+				saveScoreFromVictory = false;
+			}
 			highestScore = app->scene->timer.ReadSec();
 		}
 		break;
@@ -1069,6 +1075,7 @@ void Player::PlayerVictory() {
 		app->audio->PlayMusic(musicStopPath, 0);
 		estadoP = VICTORY;
 		victory = true;
+		saveScoreFromVictory = true;
 	}
 
 }

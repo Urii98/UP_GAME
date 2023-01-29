@@ -46,6 +46,8 @@ public:
 	int numSmallEnemy2;
 	int numSmallEnemyFly;
 	int posCheckPointX, posCheckPointY;
+
+	bool checkLoadFirstTime;
 	
 
 };
