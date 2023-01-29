@@ -62,9 +62,9 @@ public:
 	//GuiButton* button2;
 	//SDL_Texture* btnTextureAtlas;
 
-	//GuiCheckBox* checkbox1;
+	GuiCheckBox* checkbox1;
 
-	//GuiSliderBar* sliderbar1;
+	GuiSliderBar* sliderbar1;
 	//
 	
 
