@@ -97,6 +97,8 @@ bool ModuleFonts::Start()
 	sliderbarMusic->sliderBounds.x = sliderbarMusic->bounds.x + sliderbarMusic->bounds.w;
 	sliderbarFx->sliderBounds.x = sliderbarFx->bounds.x + sliderbarFx->bounds.w;
 
+	boolSettingsUI = false;
+
 	return true;
 }
 
@@ -223,8 +225,20 @@ bool ModuleFonts::Update(float dt) //para que aparezca durante el juego
 			exitButton->state = GuiControlState::NONE;
 			settingsButton->state = GuiControlState::NONE;
 		}
+		else
+		{
+			resumeButton->state = GuiControlState::NORMAL;
+			titleButton->state = GuiControlState::NORMAL;
+			exitButton->state = GuiControlState::NORMAL;
+			settingsButton->state = GuiControlState::NORMAL;
+
+		}
 
 	}
+
+
+
+	
 
 	//Activar/desactivar fullscreen
 	if (checkboxFullScreen->state == GuiControlState::SELECTED) {
@@ -314,17 +328,17 @@ bool ModuleFonts::PostUpdate() //para que aparezca en screenlogo y screentitle
 
 		if (!app->scene->activateUI)
 		{
-			resumeButton->state = GuiControlState::NONE;
-			titleButton->state = GuiControlState::NONE;
-			exitButton->state = GuiControlState::NONE;
-			settingsButton->state = GuiControlState::NONE;
+			//resumeButton->state = GuiControlState::NONE;
+			//titleButton->state = GuiControlState::NONE;
+			//exitButton->state = GuiControlState::NONE;
+			//settingsButton->state = GuiControlState::NONE;
 		}
 		else
 		{
-			resumeButton->state = GuiControlState::NORMAL;
+	/*		resumeButton->state = GuiControlState::NORMAL;
 			titleButton->state = GuiControlState::NORMAL;
 			exitButton->state = GuiControlState::NORMAL;
-			settingsButton->state = GuiControlState::NORMAL;
+			settingsButton->state = GuiControlState::NORMAL;*/
 			app->guiManager->Draw();
 		}
 
@@ -383,6 +397,7 @@ bool ModuleFonts::OnGuiMouseClickEvent(GuiControl* control)
 			sliderbarMusic->state = GuiControlState::NORMAL;
 			sliderbarFx->state = GuiControlState::NORMAL;
 			boolSettingsButton = false;
+		//	boolSettingsUI = true;
 		}
 		else
 		{
@@ -391,6 +406,7 @@ bool ModuleFonts::OnGuiMouseClickEvent(GuiControl* control)
 			checkboxVSync->state = GuiControlState::DISABLED;
 			sliderbarMusic->state = GuiControlState::DISABLED;
 			sliderbarFx->state = GuiControlState::DISABLED;
+		//	boolSettingsUI = false;
 		}
 		break;
 	case 5:

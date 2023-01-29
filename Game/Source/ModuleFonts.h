@@ -103,6 +103,9 @@ public:
 	bool sceneReady;
 	bool boolSettingsButton;
 
+	bool 			boolSettingsUI = true;
+	;
+
 
 
 };
