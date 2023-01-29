@@ -186,7 +186,15 @@ bool SceneTitle::Update(float dt)
 		SDL_CreateRenderer(app->win->window, -1, SDL_RENDERER_ACCELERATED);
 	}
 
-	//app->audio->volumenMusic = (sliderbarMusic->sliderBounds.x/470) - 1.7446808851) * 128;
+	app->audio->volumenMusic = sliderbarMusic->sliderBounds.x - 201;
+	if (app->audio->volumenMusic < 0) {
+		app->audio->volumenMusic = 0;
+	}
+
+	app->audio->volumenFx = sliderbarFx->sliderBounds.x - 172;
+	if (app->audio->volumenFx < 0) {
+		app->audio->volumenFx = 0;
+	}
 
 	return true;
 }

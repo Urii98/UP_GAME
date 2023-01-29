@@ -76,21 +76,21 @@ bool GuiSliderBar::Draw(Render* render)
 	case GuiControlState::NORMAL:
 	{
 		render->DrawTexture(sliderBar, bounds.x, bounds.y);
-		render->DrawTexture(slider, sliderBounds.x, sliderBounds.y);
+		render->DrawTexture(slider, sliderBounds.x+90, sliderBounds.y);
 
 	} break;
 
 	case GuiControlState::FOCUSED:
 	{
 		render->DrawTexture(sliderBar, bounds.x, bounds.y);
-		render->DrawTexture(slider, sliderBounds.x, sliderBounds.y);
+		render->DrawTexture(slider, sliderBounds.x + 90, sliderBounds.y);
 
 	} break;
 
 	case GuiControlState::PRESSED:
 	{
 		render->DrawTexture(sliderBar, bounds.x, bounds.y);
-		render->DrawTexture(slider, sliderBounds.x, sliderBounds.y);
+		render->DrawTexture(slider, sliderBounds.x + 90, sliderBounds.y);
 
 	} break;
 
