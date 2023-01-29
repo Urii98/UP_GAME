@@ -59,8 +59,6 @@ public:
 	SString textureLogoPath;
 	
 	GuiButton* button1;
-	//GuiButton* button2;
-	//SDL_Texture* btnTextureAtlas;
 
 	GuiCheckBox* checkbox1;
 

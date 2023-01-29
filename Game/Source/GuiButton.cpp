@@ -46,22 +46,25 @@ bool GuiButton::Update(float dt)
 		if (state != GuiControlState::DISABLED)
 		{
 			if (state != GuiControlState::NONE)
-			state = GuiControlState::FOCUSED;
-			if (!mouseIn) {
-				app->audio->PlayFx(buttonSelected); mouseIn = true;
-			}
-			if (app->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KeyState::KEY_REPEAT)
 			{
-				state = GuiControlState::PRESSED;
+				state = GuiControlState::FOCUSED;
+				if (!mouseIn) {
+					app->audio->PlayFx(buttonSelected); mouseIn = true;
+				}
+				if (app->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KeyState::KEY_REPEAT)
+				{
+					state = GuiControlState::PRESSED;
 
-			}
+				}
 
-			// If mouse button pressed -> Generate event!
-			if (app->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KeyState::KEY_UP)
-			{
-				app->audio->PlayFx(buttonPressed);
-				NotifyObserver();
+				// If mouse button pressed -> Generate event!
+				if (app->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KeyState::KEY_UP)
+				{
+					app->audio->PlayFx(buttonPressed);
+					NotifyObserver();
+				}
 			}
+	
 		}
 		else if (app->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KeyState::KEY_DOWN)
 		{
@@ -97,7 +100,7 @@ bool GuiButton::Draw(Render* render)
 		else
 		{
 			rect = { 192,55,55,23 };
-			render->DrawTexture(buttonTexture, bounds.x / 2, bounds.y / 2, &rect);
+			render->DrawTexture(buttonTexture, bounds.x / 2, bounds.y / 2, &rect, 0.0f, 0.0f, 2147483647, 2147483647);
 		}
 		break;
 	case GuiControlState::NORMAL:
@@ -108,7 +111,7 @@ bool GuiButton::Draw(Render* render)
 		else
 		{
 			rect = { 21,55,55,23 };
-			render->DrawTexture(buttonTexture, bounds.x/2, bounds.y/2, &rect);
+			render->DrawTexture(buttonTexture, bounds.x/2, bounds.y/2, &rect, 0.0f, 0.0f, 2147483647, 2147483647);
 		}
 		
 		break;
@@ -120,7 +123,7 @@ bool GuiButton::Draw(Render* render)
 		else
 		{
 			rect = { 78,55,55,23 };
-			render->DrawTexture(buttonTexture, bounds.x / 2, bounds.y / 2, &rect);
+			render->DrawTexture(buttonTexture, bounds.x / 2, bounds.y / 2, &rect, 0.0f, 0.0f, 2147483647, 2147483647);
 		}
 		
 		break;
@@ -132,7 +135,7 @@ bool GuiButton::Draw(Render* render)
 		else
 		{
 			rect = { 135,55,55,23 };
-			render->DrawTexture(buttonTexture, bounds.x / 2, bounds.y / 2, &rect);
+			render->DrawTexture(buttonTexture, bounds.x / 2, bounds.y / 2, &rect, 0.0f, 0.0f, 2147483647, 2147483647);
 		}
 		
 		break;

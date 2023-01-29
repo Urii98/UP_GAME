@@ -4,6 +4,8 @@
 #include "Scene.h"
 #include "ModuleFonts.h"
 #include "PlayerSensors.h"
+#include "GuiManager.h"
+#include "Window.h"
 
 #include "Defs.h"
 #include "Log.h"
@@ -53,6 +55,26 @@ bool ModuleFonts::Start()
 
 	canTestSkill = false;
 	sceneReady = false;
+
+	uint w, h;
+	app->win->GetWindowSize(w, h);
+
+	resumeButton = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 1, " Resume ", { 50,(int)h / 2 + 100,
+	app->win->buttonW,app->win->buttonH }, this);
+	resumeButton->state = GuiControlState::NONE;
+
+	titleButton = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 3, " TitleScreen ", { 50,(int)h / 2 + 200,
+		app->win->buttonW,app->win->buttonH }, this);
+	titleButton->state = GuiControlState::NONE;
+
+	exitButton = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 4, " Exit ", { 50,(int)h / 2 + 250,
+		app->win->buttonW,app->win->buttonH }, this);
+	exitButton->state = GuiControlState::NONE;
+
+	settingsButton = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 5, " Settings ", { 50,(int)h / 2 + 300,
+		app->win->buttonW,app->win->buttonH }, this);
+	settingsButton->state = GuiControlState::NONE;
+
 
 	return true;
 }
@@ -171,6 +193,18 @@ void ModuleFonts::BlitText(int x, int y, int font_id, const char* text) const
 bool ModuleFonts::Update(float dt) //para que aparezca durante el juego
 {
 	bool ret = true;
+	if (sceneReady)
+	{
+		if (!app->scene->activateUI)
+		{
+			resumeButton->state = GuiControlState::NONE;
+			titleButton->state = GuiControlState::NONE;
+			exitButton->state = GuiControlState::NONE;
+			settingsButton->state = GuiControlState::NONE;
+		}
+
+	}
+
 
 	return ret;
 }
@@ -214,6 +248,22 @@ bool ModuleFonts::PostUpdate() //para que aparezca en screenlogo y screentitle
 			app->render->DrawTexture(skillOff, 20, 30, 0, 0.0f, 0.0f, 2147483647, 2147483647, true);
 		}
 
+
+		if (!app->scene->activateUI)
+		{
+			resumeButton->state = GuiControlState::NONE;
+			titleButton->state = GuiControlState::NONE;
+			exitButton->state = GuiControlState::NONE;
+			settingsButton->state = GuiControlState::NONE;
+		}
+		else
+		{
+			resumeButton->state = GuiControlState::NORMAL;
+			titleButton->state = GuiControlState::NORMAL;
+			exitButton->state = GuiControlState::NORMAL;
+			settingsButton->state = GuiControlState::NORMAL;
+			app->guiManager->Draw();
+		}
 	}
 
 
@@ -230,4 +280,34 @@ bool ModuleFonts::CleanUp()
 	
 
 	return ret;
+}
+
+bool ModuleFonts::OnGuiMouseClickEvent(GuiControl* control)
+{
+	// L15: DONE 5: Implement the OnGuiMouseClickEvent method
+	LOG("Event by %d ", control->id);
+
+	switch (control->id)
+	{
+	case 1:
+		LOG("Button 1 click");
+
+		break;
+	case 2:
+		LOG("Button 2 click");
+
+		break;
+	case 3:
+		LOG("Button 1 click");
+		break;
+	case 4:
+		LOG("Button 2 click");
+		break;
+	case 5:
+		LOG("Button 2 click");
+	
+		break;
+	}
+
+	return true;
 }

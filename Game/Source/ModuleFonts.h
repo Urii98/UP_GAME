@@ -53,6 +53,8 @@ public:
 	// Create a surface from text
 	void BlitText(int x, int y, int fontIndex, const char* text) const;
 
+	bool OnGuiMouseClickEvent(GuiControl* control);
+
 
 private:
 	// An array to keep track and store all loaded fonts
@@ -75,8 +77,10 @@ private:
 	const char* skillOffPath;
 	const char* skillOnPath;
 
-	
-
+	GuiButton* resumeButton;
+	GuiButton* titleButton;
+	GuiButton* exitButton;
+	GuiButton* settingsButton;
 	
 
 public:

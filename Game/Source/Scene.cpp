@@ -157,6 +157,9 @@ bool Scene::Start()
 	//button1 = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 1, "Button 1", { (int)w / 2 - 50,(int)h / 2 - 30,100,20 }, this);
 	//button2 = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 2, "Button 2", { (int)w / 2 - 50,(int)h / 2,100,20 }, this);
 
+
+	activateUI = false;
+
 	timer.Start();
 
 	return true;
@@ -199,9 +202,11 @@ bool Scene::Update(float dt)
 
 	if (app->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT)
 		app->render->camera.x -= 1;
-
+	
 	// Draw map
 	app->map->Draw();
+
+	
 
 	return true;
 }
@@ -213,10 +218,22 @@ bool Scene::PostUpdate()
 {
 	bool ret = true;
 
-	if(app->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN)
-		ret = false;
+	if (app->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN)
+	{
+		if (activateUI)
+		{
+			activateUI = false;
+		}
+		else
+		{
 
-	//app->guiManager->Draw();
+		activateUI = true;
+		}
+		//ret = false;
+	}
+
+	
+	
 
 	return ret;
 }
@@ -287,20 +304,3 @@ void Scene::checkPointIterator(CheckPoint& dir)
 
 }
 
-bool Scene::OnGuiMouseClickEvent(GuiControl* control)
-{
-	// L15: DONE 5: Implement the OnGuiMouseClickEvent method
-	LOG("Event by %d ", control->id);
-
-	switch (control->id)
-	{
-	case 1:
-		LOG("Button 1 click");
-		break;
-	case 2:
-		LOG("Button 2 click");
-		break;
-	}
-
-	return true;
-}

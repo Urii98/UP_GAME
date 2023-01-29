@@ -19,6 +19,7 @@
 #include "GuiManager.h"
 
 
+
 SceneLogo::SceneLogo(bool isActive) : Module(isActive) {
 	name.Create("sceneLogo");
 }
@@ -65,6 +66,7 @@ bool SceneLogo::Start() {
 
 	sliderbar1 = (GuiSliderBar*)app->guiManager->CreateGuiControl(GuiControlType::SLIDERBAR, 4, "", { 300, 170, 90, 45 }, this,{ 300, 169, 20, 45 });
 	sliderbar1->state = GuiControlState::NONE;
+
 
 
 	return true;
@@ -140,6 +142,7 @@ bool SceneLogo::OnGuiMouseClickEvent(GuiControl* control)
 		LOG("Button 1 click");
 		toFadeButton = true;
 		button1->state = GuiControlState::NONE;
+		
 		break;
 
 	}

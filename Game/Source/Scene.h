@@ -53,7 +53,6 @@ public:
 	void checkPointIterator(CheckPoint& dir);
 	bool pruebas = false;
 
-	bool OnGuiMouseClickEvent(GuiControl* control);
 
 public:
 
@@ -69,15 +68,16 @@ public:
 	SDL_Texture* originTex = nullptr;
 	Timer timer;
 
-	//std::vector<Entity*>* vect = new std::vector<Entity*>;
-
 	bool continueFromGame;
+
+	bool activateUI;
+
+
 
 private:
 	SDL_Texture* img;
 
-	GuiButton* button1;
-	GuiButton* button2;
+
 
 	// L12: Debug pathfing
 	iPoint origin;

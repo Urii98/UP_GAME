@@ -82,7 +82,11 @@ bool GuiManager::Update(float dt)
 
 		while (control != nullptr)
 		{
-			control->data->Update(dt);
+			if (control->data->state != GuiControlState::NONE)
+			{
+				control->data->Update(dt);
+			}
+			
 			control = control->next;
 		}
 
