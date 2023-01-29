@@ -782,7 +782,14 @@ bool Player::Update(float dt)
 		}
 	}
 
+	
+	if (app->scene->continueFromGame)
+	{
+		app->scene->continueFromGame = false;
+		app->LoadGameRequest();
+	}
 
+	
 	currentAnimation->Update();
 	PostUpdate();
 

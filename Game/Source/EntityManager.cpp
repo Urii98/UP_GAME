@@ -189,10 +189,17 @@ bool EntityManager::LoadState(pugi::xml_node& data)
 	{
 		checkLoadFirstTime = true;
 		int podium = data.child("playerScene1").attribute("highscore").as_int();
-		app->scene->player->highestScore = podium;
+		if (app->scene->player->highestScore == 0)
+		{
+			app->scene->player->highestScore = podium;
+		}
+		else if (podium < app->scene->player->highestScore)
+		{
+			app->scene->player->highestScore = podium;
+		}
+		
 	}
-	else
-	{
+	
 		int posX = data.child("playerScene1").attribute("x").as_int();
 		int posY = data.child("playerScene1").attribute("y").as_int();
 		int money = data.child("playerScene1").attribute("money").as_int();
@@ -234,7 +241,7 @@ bool EntityManager::LoadState(pugi::xml_node& data)
 		numSmallEnemy2 = 0;
 		numSmallEnemyFly = 0;
 
-	}
+	
 
 
 	
