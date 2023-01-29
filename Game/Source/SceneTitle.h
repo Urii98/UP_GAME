@@ -7,6 +7,8 @@
 #include "SDL_Timer.h"
 #include "Scene.h"
 #include "EntityManager.h"
+#include "GuiCheckBox.h"
+#include "GuiSliderBar.h"
 
 struct SDL_Texture;
 
@@ -57,14 +59,27 @@ public:
 	bool boolExitButton;
 	bool boolCreditButton;
 	bool boolContinueButton;
+	bool boolSettingsButton;
+	
+	bool deteleUI;
 
 	GuiButton* playButton;
 	GuiButton* continueButton;
 	GuiButton* creditButton;
 	GuiButton* exitButton;
 	GuiButton* settingsButton;
+
+	GuiCheckBox* checkboxFullScreen;
+	GuiCheckBox* checkboxVSync;
+
+	GuiSliderBar* sliderbarMusic;
+	GuiSliderBar* sliderbarFx;
+
 	SDL_Texture* windowCreditText;
+	SDL_Texture* windowSettingsText;
 	const char* windowCreditPath;
+	const char* windowSettingsPath;
+
 
 
 };

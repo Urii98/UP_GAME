@@ -42,7 +42,7 @@ public:
 	SDL_Surface* screenSurface;
 
 	int buttonW, buttonH;
-
+	bool fullscreen;
 	int previousGame; //1-si  , 0-no
 
 private:

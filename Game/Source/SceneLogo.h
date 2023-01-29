@@ -60,9 +60,6 @@ public:
 	
 	GuiButton* button1;
 
-	GuiCheckBox* checkbox1;
-
-	GuiSliderBar* sliderbar1;
 	//
 	
 

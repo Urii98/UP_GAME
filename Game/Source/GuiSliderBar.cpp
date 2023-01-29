@@ -67,7 +67,7 @@ bool GuiSliderBar::Draw(Render* render)
 {
 	SDL_Rect rect;
 
-	render->DrawTexture(sliderBar, bounds.x, bounds.y);
+	
 
 	// Draw the right SliderBar depending on state
 	switch (state)
@@ -75,22 +75,22 @@ bool GuiSliderBar::Draw(Render* render)
 
 	case GuiControlState::NORMAL:
 	{
-
-		render->DrawTexture(slider, sliderBounds.x, sliderBounds.y);
+		render->DrawTexture(sliderBar, bounds.x, bounds.y, 0, 0.0f, 0.0f, 2147483647, 2147483647);
+		render->DrawTexture(slider, sliderBounds.x, sliderBounds.y, 0, 0.0f, 0.0f, 2147483647, 2147483647);
 
 	} break;
 
 	case GuiControlState::FOCUSED:
 	{
-
-		render->DrawTexture(slider, sliderBounds.x, sliderBounds.y);
+		render->DrawTexture(sliderBar, bounds.x, bounds.y, 0, 0.0f, 0.0f, 2147483647, 2147483647);
+		render->DrawTexture(slider, sliderBounds.x, sliderBounds.y, 0, 0.0f, 0.0f, 2147483647, 2147483647);
 
 	} break;
 
 	case GuiControlState::PRESSED:
 	{
-
-		render->DrawTexture(slider, sliderBounds.x, sliderBounds.y);
+		render->DrawTexture(sliderBar, bounds.x, bounds.y, 0, 0.0f, 0.0f, 2147483647, 2147483647);
+		render->DrawTexture(slider, sliderBounds.x, sliderBounds.y, 0, 0.0f, 0.0f, 2147483647, 2147483647);
 
 	} break;
 

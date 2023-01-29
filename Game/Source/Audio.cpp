@@ -101,6 +101,7 @@ bool Audio::PlayMusic(const char* path, float fadeTime)
 		else
 		{
 			Mix_HaltMusic();
+			Mix_VolumeMusic(volumenMusic);
 		}
 
 		// this call blocks until fade out is done
@@ -172,6 +173,7 @@ bool Audio::PlayFx(unsigned int id, int repeat)
 	if(id > 0 && id <= fx.Count())
 	{
 		Mix_PlayChannel(-1, fx[id - 1], repeat);
+		Mix_Volume(-1, volumenFx);
 	}
 
 	return ret;

@@ -15,9 +15,9 @@
 	<sceneEnding />
 	<entitymanager>
 		<playerScene1 x="930" y="745" money="0" hp="3" highscore="0" prevgame="1" />
-		<SmallEnemy11 x="1352" y="757" state="1" />
-		<SmallEnemyFly1 x="3212" y="702" state="1" />
-		<SmallEnemy21 x="7216" y="752" />
+		<SmallEnemy11 x="1520" y="757" state="1" />
+		<SmallEnemyFly1 x="3212" y="777" state="1" />
+		<SmallEnemy21 x="8062" y="1170" />
 	</entitymanager>
 	<map />
 	<fade />

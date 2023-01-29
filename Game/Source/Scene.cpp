@@ -222,12 +222,17 @@ bool Scene::PostUpdate()
 	{
 		if (activateUI)
 		{
+			if (!app->fonts->boolSettingsButton)
+			{
+
+				app->fonts->boolSettingsButton = true;
+			}
 			activateUI = false;
 		}
 		else
 		{
-
-		activateUI = true;
+		
+			activateUI = true;
 		}
 		//ret = false;
 	}

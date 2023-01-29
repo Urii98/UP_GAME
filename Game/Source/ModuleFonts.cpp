@@ -6,6 +6,7 @@
 #include "PlayerSensors.h"
 #include "GuiManager.h"
 #include "Window.h"
+#include "Audio.h"
 
 #include "Defs.h"
 #include "Log.h"
@@ -53,28 +54,45 @@ bool ModuleFonts::Start()
 	skillOnPath = "Assets/Textures/swordUI.png";
 	skillOn = app->tex->Load(skillOnPath);
 
+	windowSettingsPath = "Assets/Textures/Window3.png";
+
 	canTestSkill = false;
 	sceneReady = false;
+	boolSettingsButton = true;
 
 	uint w, h;
 	app->win->GetWindowSize(w, h);
 
-	resumeButton = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 1, " FResume ", { 50,(int)h / 2 + 100,
+	resumeButton = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 1, " Resume ", { 50,(int)h / 2 + 150,
 	app->win->buttonW,app->win->buttonH }, this);
 	resumeButton->state = GuiControlState::NONE;
 
-	titleButton = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 3, " FTitleScreen ", { 50,(int)h / 2 + 200,
+	titleButton = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 3, " TitleScreen ", { 50,(int)h / 2 + 200,
 		app->win->buttonW,app->win->buttonH }, this);
 	titleButton->state = GuiControlState::NONE;
 
-	exitButton = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 4, " FExit ", { 50,(int)h / 2 + 250,
+	exitButton = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 5, " Exit ", { 50,(int)h / 2 + 250,
 		app->win->buttonW,app->win->buttonH }, this);
 	exitButton->state = GuiControlState::NONE;
 
-	settingsButton = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 5, " FSettings ", { 50,(int)h / 2 + 300,
+	settingsButton = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 4, " Settings ", { 50,(int)h / 2 + 300,
 		app->win->buttonW,app->win->buttonH }, this);
 	settingsButton->state = GuiControlState::NONE;
 
+	checkboxFullScreen = (GuiCheckBox*)app->guiManager->CreateGuiControl(GuiControlType::CHECKBOX, 6, "", { 248, 208, 30, 30 }, this);
+	checkboxFullScreen->state = GuiControlState::DISABLED;
+
+	checkboxVSync = (GuiCheckBox*)app->guiManager->CreateGuiControl(GuiControlType::CHECKBOX, 7, "", { 200, 245, 30, 30 }, this);
+	checkboxVSync->state = GuiControlState::DISABLED;
+
+	sliderbarMusic = (GuiSliderBar*)app->guiManager->CreateGuiControl(GuiControlType::SLIDERBAR, 8, "", { 201, 187, 90, 15 }, this, { 201, 186, 20, 15 });
+	sliderbarMusic->state = GuiControlState::DISABLED;
+
+	sliderbarFx = (GuiSliderBar*)app->guiManager->CreateGuiControl(GuiControlType::SLIDERBAR, 9, "", { 172, 148, 90, 15 }, this, { 172, 147, 20, 15 });
+	sliderbarFx->state = GuiControlState::DISABLED;
+
+
+	windowSettingsText = app->tex->Load(windowSettingsPath);
 
 	return true;
 }
@@ -205,6 +223,36 @@ bool ModuleFonts::Update(float dt) //para que aparezca durante el juego
 
 	}
 
+	//Activar/desactivar fullscreen
+	if (checkboxFullScreen->state == GuiControlState::SELECTED) {
+		app->win->fullscreen = true;
+		SDL_SetWindowFullscreen(app->win->window, SDL_WINDOW_FULLSCREEN);
+	}
+	if (checkboxFullScreen->state == GuiControlState::NORMAL) {
+		app->win->fullscreen = false;
+		SDL_SetWindowFullscreen(app->win->window, 0);
+	}
+
+	//Activar/desactivar VSync
+	if (checkboxVSync->state == GuiControlState::SELECTED) {
+		app->render->isVsync = true;
+		SDL_CreateRenderer(app->win->window, -1, SDL_RENDERER_PRESENTVSYNC);
+	}
+	if (checkboxVSync->state == GuiControlState::NORMAL) {
+		app->render->isVsync = false;
+		SDL_CreateRenderer(app->win->window, -1, SDL_RENDERER_ACCELERATED);
+	}
+
+	app->audio->volumenMusic = sliderbarMusic->sliderBounds.x - sliderbarMusic->bounds.x;
+	if (app->audio->volumenMusic < 0) {
+		app->audio->volumenMusic = 0;
+	}
+
+	app->audio->volumenFx = sliderbarFx->sliderBounds.x - sliderbarFx->bounds.x;
+	if (app->audio->volumenFx < 0) {
+		app->audio->volumenFx = 0;
+	}
+
 
 	return ret;
 }
@@ -248,6 +296,12 @@ bool ModuleFonts::PostUpdate() //para que aparezca en screenlogo y screentitle
 			app->render->DrawTexture(skillOff, 20, 30, 0, 0.0f, 0.0f, 2147483647, 2147483647, true);
 		}
 
+		if (!boolSettingsButton)
+		{
+			app->render->DrawTexture(windowSettingsText, 115, 75,0, 0.0f, 0.0f, 2147483647, 2147483647, true);
+
+		}
+
 
 		if (!app->scene->activateUI)
 		{
@@ -264,6 +318,11 @@ bool ModuleFonts::PostUpdate() //para que aparezca en screenlogo y screentitle
 			settingsButton->state = GuiControlState::NORMAL;
 			app->guiManager->Draw();
 		}
+
+		if (boolExitButton)
+		{
+			return false;
+		}
 	}
 
 
@@ -277,6 +336,7 @@ bool ModuleFonts::CleanUp()
 	app->tex->UnLoad(starCoinUITexture);
 	app->tex->UnLoad(hourglassTexture);
 	app->tex->UnLoad(podiumTexture);
+	app->tex->UnLoad(windowSettingsText);
 	
 
 	return ret;
@@ -291,21 +351,42 @@ bool ModuleFonts::OnGuiMouseClickEvent(GuiControl* control)
 	{
 	case 1:
 		LOG("Button 1 click");
-
+		
 		break;
 	case 2:
 		LOG("Button 2 click");
-
+		
 		break;
 	case 3:
 		LOG("Button 1 click");
+	
 		break;
 	case 4:
-		LOG("Button 2 click");
+		LOG("Button 1 click");
+		if (boolSettingsButton)
+		{
+			if (app->win->fullscreen == true) checkboxFullScreen->state = GuiControlState::SELECTED;
+			else checkboxFullScreen->state = GuiControlState::NORMAL;
+
+			if (app->render->isVsync == true) checkboxVSync->state = GuiControlState::SELECTED;
+			else checkboxVSync->state = GuiControlState::NORMAL;
+
+			sliderbarMusic->state = GuiControlState::NORMAL;
+			sliderbarFx->state = GuiControlState::NORMAL;
+			boolSettingsButton = false;
+		}
+		else
+		{
+			boolSettingsButton = true;
+			checkboxFullScreen->state = GuiControlState::DISABLED;
+			checkboxVSync->state = GuiControlState::DISABLED;
+			sliderbarMusic->state = GuiControlState::DISABLED;
+			sliderbarFx->state = GuiControlState::DISABLED;
+		}
 		break;
 	case 5:
 		LOG("Button 2 click");
-	
+		boolExitButton = true;
 		break;
 	}
 

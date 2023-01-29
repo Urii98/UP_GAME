@@ -61,13 +61,13 @@ bool GuiCheckBox::Draw(Render* render)
 	case GuiControlState::NORMAL:
 	{
 		rect = { 0, 0, 28, 27 };
-		render->DrawTexture(checkBoxTex, bounds.x, bounds.y, &rect);
+		render->DrawTexture(checkBoxTex, bounds.x, bounds.y, &rect, 0.0f, 0.0f, 2147483647, 2147483647);
 		
 	} break;
 	case GuiControlState::SELECTED:
 	{
 		rect = { 28, 0, 28, 27 };
-		render->DrawTexture(checkBoxTex, bounds.x, bounds.y, &rect);
+		render->DrawTexture(checkBoxTex, bounds.x, bounds.y, &rect, 0.0f, 0.0f, 2147483647, 2147483647);
 	} break;
 
 	}

@@ -1,6 +1,8 @@
 #pragma once
 
 #include "Module.h"
+#include "GuiCheckBox.h"
+#include "GuiSliderBar.h"
 #include <iostream>
 #include<string>
 
@@ -81,13 +83,25 @@ private:
 	GuiButton* titleButton;
 	GuiButton* exitButton;
 	GuiButton* settingsButton;
+
+	GuiCheckBox* checkboxFullScreen;
+	GuiCheckBox* checkboxVSync;
+
+	GuiSliderBar* sliderbarMusic;
+	GuiSliderBar* sliderbarFx;
+
+	SDL_Texture* windowSettingsText;
+	const char* windowSettingsPath;
+
 	
+	bool boolExitButton;
 
 public:
 	
 	int textFont = -1;
 	bool canTestSkill;
 	bool sceneReady;
+	bool boolSettingsButton;
 
 
 
