@@ -94,6 +94,9 @@ bool ModuleFonts::Start()
 
 	windowSettingsText = app->tex->Load(windowSettingsPath);
 
+	sliderbarMusic->sliderBounds.x = sliderbarMusic->bounds.x + sliderbarMusic->bounds.w;
+	sliderbarFx->sliderBounds.x = sliderbarFx->bounds.x + sliderbarFx->bounds.w;
+
 	return true;
 }
 
@@ -243,15 +246,19 @@ bool ModuleFonts::Update(float dt) //para que aparezca durante el juego
 		SDL_CreateRenderer(app->win->window, -1, SDL_RENDERER_ACCELERATED);
 	}
 
-	app->audio->volumenMusic = sliderbarMusic->sliderBounds.x - sliderbarMusic->bounds.x;
-	if (app->audio->volumenMusic < 0) {
-		app->audio->volumenMusic = 0;
+	if (sceneReady)
+	{
+		app->audio->volumenMusic = sliderbarMusic->sliderBounds.x - sliderbarMusic->bounds.x;
+		if (app->audio->volumenMusic < 0) {
+			app->audio->volumenMusic = 0;
+		}
+
+		app->audio->volumenFx = sliderbarFx->sliderBounds.x - sliderbarFx->bounds.x;
+		if (app->audio->volumenFx < 0) {
+			app->audio->volumenFx = 0;
+		}
 	}
 
-	app->audio->volumenFx = sliderbarFx->sliderBounds.x - sliderbarFx->bounds.x;
-	if (app->audio->volumenFx < 0) {
-		app->audio->volumenFx = 0;
-	}
 
 
 	return ret;
