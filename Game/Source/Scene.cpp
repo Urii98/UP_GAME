@@ -12,6 +12,7 @@
 #include "Log.h"
 #include "GuiManager.h"
 #include "GuiButton.h"
+#include "ModuleFonts.h"
 
 #include "SceneTitle.h"
 
@@ -172,6 +173,7 @@ bool Scene::PreUpdate()
 bool Scene::Update(float dt)
 {
 	OPTICK_EVENT();
+	app->fonts->sceneReady = true;
 
 	if (continueFromGame)
 	{

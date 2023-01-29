@@ -52,6 +52,7 @@ bool ModuleFonts::Start()
 	skillOn = app->tex->Load(skillOnPath);
 
 	canTestSkill = false;
+	sceneReady = false;
 
 	return true;
 }
@@ -179,36 +180,40 @@ bool ModuleFonts::PostUpdate() //para que aparezca en screenlogo y screentitle
 {
 	bool ret = true;
 
-	//StarCoinUI
-	std::string moneyToString = std::to_string(app->scene->player->moneyPoints);
-	const char* moneyChar = moneyToString.c_str();
-	BlitText(45, 9, textFont, moneyChar);
-	app->render->DrawTexture(starCoinUITexture, 15, -5, 0, 0.0f, 0.0f, 2147483647, 2147483647, false);
-
-	//podiumUI
-	std::string podiumToString = std::to_string(app->scene->player->highestScore);
-	const char* podiumChar = podiumToString.c_str();
-	BlitText(450, 11, textFont, podiumChar);
-	app->render->DrawTexture(podiumTexture, 425, 0, 0, 0.0f, 0.0f, 2147483647, 2147483647, false);
-
-
-	//hourglassUI
-	currentAnimation->Update();
-	std::string timeToString = std::to_string(app->scene->timer.ReadSec());
-	const char* timeChar = timeToString.c_str();
-	SDL_Rect rect = currentAnimation->GetCurrentFrame();
-	app->render->DrawTexture(hourglassTexture, 70, 0, &rect, 0.0f, 0.0f, 2147483647, 2147483647, false);
-	BlitText(110, 9, textFont, timeChar);
-
-	//skillUI
-	if (canTestSkill)
+	if (sceneReady)
 	{
-		app->render->DrawTexture(skillOn, 20, 30, 0, 0.0f, 0.0f, 2147483647, 2147483647, true);
+		//StarCoinUI
+		std::string moneyToString = std::to_string(app->scene->player->moneyPoints);
+		const char* moneyChar = moneyToString.c_str();
+		BlitText(45, 9, textFont, moneyChar);
+		app->render->DrawTexture(starCoinUITexture, 15, -5, 0, 0.0f, 0.0f, 2147483647, 2147483647, false);
 
-	}
-	else
-	{
-		app->render->DrawTexture(skillOff, 20, 30, 0, 0.0f, 0.0f, 2147483647, 2147483647, true);
+		//podiumUI
+		std::string podiumToString = std::to_string(app->scene->player->highestScore);
+		const char* podiumChar = podiumToString.c_str();
+		BlitText(450, 11, textFont, podiumChar);
+		app->render->DrawTexture(podiumTexture, 425, 0, 0, 0.0f, 0.0f, 2147483647, 2147483647, false);
+
+
+		//hourglassUI
+		currentAnimation->Update();
+		std::string timeToString = std::to_string(app->scene->timer.ReadSec());
+		const char* timeChar = timeToString.c_str();
+		SDL_Rect rect = currentAnimation->GetCurrentFrame();
+		app->render->DrawTexture(hourglassTexture, 70, 0, &rect, 0.0f, 0.0f, 2147483647, 2147483647, false);
+		BlitText(110, 9, textFont, timeChar);
+
+		//skillUI
+		if (canTestSkill)
+		{
+			app->render->DrawTexture(skillOn, 20, 30, 0, 0.0f, 0.0f, 2147483647, 2147483647, true);
+
+		}
+		else
+		{
+			app->render->DrawTexture(skillOff, 20, 30, 0, 0.0f, 0.0f, 2147483647, 2147483647, true);
+		}
+
 	}
 
 

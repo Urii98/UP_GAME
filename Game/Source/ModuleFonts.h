@@ -77,10 +77,13 @@ private:
 
 	
 
+	
+
 public:
 	
 	int textFont = -1;
 	bool canTestSkill;
+	bool sceneReady;
 
 
 
