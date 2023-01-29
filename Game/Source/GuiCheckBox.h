@@ -19,6 +19,9 @@ public:
 	int mouseX, mouseY;
 
 	SDL_Texture* checkBoxTex;
+
+
+	uint cbeckBoxPressed;
 };
 
 #endif // __GUICheckBox_H__

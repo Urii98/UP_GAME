@@ -10,6 +10,7 @@ GuiCheckBox::GuiCheckBox(uint32 id, SDL_Rect bounds) : GuiControl(GuiControlType
 	this->bounds = bounds;
 
 	checkBoxTex = app->tex->Load("Assets/Textures/checkbox.png");
+	cbeckBoxPressed = app->audio->LoadFx("Assets/Audio/Fx/button_pressed.wav");
 }
 
 GuiCheckBox::~GuiCheckBox()
@@ -46,6 +47,7 @@ bool GuiCheckBox::Update(float dt)
 			if (app->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KeyState::KEY_UP)
 			{
 				NotifyObserver();
+				app->audio->PlayFx(cbeckBoxPressed);
 			}
 		}
 	}
