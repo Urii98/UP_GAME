@@ -869,7 +869,11 @@ bool Player::CleanUp()
 	app->tex->UnLoad(swordUITexture);
 	app->tex->UnLoad(swordUIOffTexture);
 	app->tex->UnLoad(lifePointsTexture);
-	pbody->body->GetWorld()->DestroyBody(pbody->body);
+	if(pbody != NULL)
+	{
+		pbody->body->GetWorld()->DestroyBody(pbody->body);
+	}
+	
 
 	return true;
 }

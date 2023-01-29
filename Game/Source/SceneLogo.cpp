@@ -36,6 +36,7 @@ bool SceneLogo::Awake(pugi::xml_node& config) {
 	alpha = 0.0f;
 	toFade = false;
 	prueba = false;
+	toFadeButton = false;
 
 	return ret;
 }
@@ -54,7 +55,7 @@ bool SceneLogo::Start() {
 	uint w, h;
 	
 	app->win->GetWindowSize(w, h);
-	button1 = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 1, "Next", { (int)w / 2 - 50,720 - 80,
+	button1 = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 1, " Next ", { (int)w / 2 - 50,640,
 		app->win->buttonW,app->win->buttonH }, this);
 	//button2 = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 2, "Button 2", { (int)w / 2 - 50,(int)h / 2,
 	//	app->win->buttonW,app->win->buttonH }, this);
@@ -88,6 +89,10 @@ bool SceneLogo::Update(float dt)
 
 	}
 
+	//if (button1->state == GuiControlState::NONE)
+	//{
+	//	std::cout << "NONE" << std::endl;
+	//}
 	
 	
 
@@ -106,11 +111,11 @@ bool SceneLogo::PostUpdate()
 		app->render->DrawRectangle(rect, 0, 0, 0, (unsigned char)(255.0f * alpha));
 	}
 
-	if (button1->state != GuiControlState::DISABLED)
-	{
-		app->guiManager->Draw();
-	}
+
+	app->guiManager->Draw();
 	
+
+
 
 	return true;
 }
@@ -134,7 +139,7 @@ bool SceneLogo::OnGuiMouseClickEvent(GuiControl* control)
 	case 1:
 		LOG("Button 1 click");
 		toFadeButton = true;
-		button1->state = GuiControlState::DISABLED;
+		button1->state = GuiControlState::NONE;
 		break;
 
 	}

@@ -53,9 +53,17 @@ public:
 	bool fromFade;
 	bool levelSelected;
 	bool mapSelect;
+	bool toFadeButton;
+	bool boolExitButton;
+	bool boolCreditButton;
 
-	GuiButton* button1;
-	GuiButton* button2;
+	GuiButton* playButton;
+	GuiButton* continueButton;
+	GuiButton* creditButton;
+	GuiButton* exitButton;
+	GuiButton* settingsButton;
+	SDL_Texture* windowCreditText;
+	const char* windowCreditPath;
 
 
 };

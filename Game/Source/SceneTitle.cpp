@@ -14,6 +14,7 @@
 #include "GuiButton.h"
 #include "Window.h"
 #include "GuiManager.h"
+#include "SceneLogo.h"
 
 SceneTitle::SceneTitle(bool isActive) : Module(isActive) {
 	name.Create("sceneTitle");
@@ -28,6 +29,9 @@ bool SceneTitle::Awake(pugi::xml_node& config) {
 
 	musicTitlePath = config.child("musicTitlePath").attribute("path").as_string();
 	musicStopPath = config.child("musicStopPath").attribute("path").as_string();
+	windowCreditPath = "Assets/Textures/Window.png";
+
+	
 
 	return true;
 }
@@ -60,8 +64,30 @@ bool SceneTitle::Start() {
 	uint w, h;
 
 	app->win->GetWindowSize(w, h);
-	//button1 = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 1, "Button 1", { (int)w / 2 - 50,(int)h / 2 - 30,100,20 }, this);
-	//button2 = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 2, "Button 2", { (int)w / 2 - 50,(int)h / 2,100,20 }, this);
+	
+
+	playButton = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 1, " Play ", { 50,(int)h/2 + 100,
+		app->win->buttonW,app->win->buttonH }, this);
+	playButton->state = GuiControlState::NORMAL;
+
+	continueButton = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 2, " Continue ", { 50,(int)h / 2 +150,
+		app->win->buttonW,app->win->buttonH }, this);
+	continueButton->state = GuiControlState::NORMAL;
+
+	creditButton = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 3, " Credit ", { 50,(int)h / 2 + 200,
+		app->win->buttonW,app->win->buttonH }, this);
+	creditButton->state = GuiControlState::NORMAL;
+
+	exitButton = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 4, " Settings ", { 50,(int)h / 2 + 250,
+		app->win->buttonW,app->win->buttonH }, this);
+	exitButton->state = GuiControlState::NORMAL;
+
+	settingsButton = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 5, " Exit ", { 50,(int)h / 2 + 300,
+		app->win->buttonW,app->win->buttonH }, this);
+	settingsButton->state = GuiControlState::NORMAL;
+
+	windowCreditText = app->tex->Load(windowCreditPath);
+	
 
 	// ---------- 
 
@@ -77,6 +103,9 @@ bool SceneTitle::Start() {
 	fromFade = true;
 	mapSelect = true; //no eliminar esta variable ni comentarla
 	rowFrameBool = false;
+	toFadeButton = false;
+	boolExitButton = false;
+	boolCreditButton = false;
 
 	return true;
 }
@@ -102,11 +131,13 @@ bool SceneTitle::Update(float dt)
 		app->audio->PlayMusic(musicTitlePath,0);
 	}
 
-	if (app->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN)
+	if (app->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN || toFadeButton)
 	{
-		app->audio->PlayMusic(musicStopPath, 2.0);
+		toFadeButton = false;
 		app->fade->Fade(this, app->scene, 60);
 	}
+
+
 
 	
 	return true;
@@ -228,7 +259,17 @@ bool SceneTitle::PostUpdate()
 	}
 	// ---------- 
 
-	//app->guiManager->Draw();
+	app->guiManager->Draw();
+
+	if (boolExitButton)
+	{
+		return false;
+	}
+
+	if (boolCreditButton)
+	{
+		app->render->DrawTexture(windowCreditText, 115, 75);
+	}
 
 	return true;
 }
@@ -241,7 +282,8 @@ bool SceneTitle::CleanUp()
 
 	app->tex->UnLoad(lvlSelectorTexture);
 	app->tex->UnLoad(lvlOneTexture);
-	app->tex->UnLoad(lvlTwoTexture);	
+	app->tex->UnLoad(lvlTwoTexture);
+	app->tex->UnLoad(windowCreditText);
 	
 	return true;
 }
@@ -256,9 +298,29 @@ bool SceneTitle::OnGuiMouseClickEvent(GuiControl* control)
 	{
 	case 1:
 		LOG("Button 1 click");
+		toFadeButton = true;
 		break;
 	case 2:
 		LOG("Button 2 click");
+		break;
+	case 3:
+		LOG("Button 1 click");
+		if (boolCreditButton)
+		{
+			boolCreditButton = false;
+		}
+		else
+		{
+			boolCreditButton = true;
+		}
+		
+		break;
+	case 4:
+		LOG("Button 2 click");
+		break;
+	case 5:
+		LOG("Button 2 click");
+		boolExitButton = true;
 		break;
 	}
 

@@ -12,6 +12,7 @@ GuiButton::GuiButton(uint32 id, SDL_Rect bounds, const char* text) : GuiControl(
 {
 	this->bounds = bounds;
 	this->text = text;
+	this->state = GuiControlState::NORMAL;
 
 	canClick = true;
 	drawBasic = false;
@@ -44,6 +45,7 @@ bool GuiButton::Update(float dt)
 	{
 		if (state != GuiControlState::DISABLED)
 		{
+			if (state != GuiControlState::NONE)
 			state = GuiControlState::FOCUSED;
 			if (!mouseIn) {
 				app->audio->PlayFx(buttonSelected); mouseIn = true;
@@ -69,6 +71,7 @@ bool GuiButton::Update(float dt)
 	}
 	else if (state != GuiControlState::DISABLED)
 	{
+		if(state != GuiControlState::NONE)
 		state = GuiControlState::NORMAL, mouseIn = false;
 	}
 	
