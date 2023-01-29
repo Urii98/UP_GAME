@@ -3,7 +3,7 @@
 #include "Textures.h"
 
 #include "GuiButton.h"
-
+#include "GuiCheckBox.h"
 #include "Audio.h"
 
 GuiManager::GuiManager(bool isActive) :Module(isActive)
@@ -30,6 +30,9 @@ GuiControl* GuiManager::CreateGuiControl(GuiControlType type, int id, const char
 	{
 	case GuiControlType::BUTTON:
 		guiControl = new GuiButton(id, bounds, text);
+		break;
+	case GuiControlType::CHECKBOX:
+		guiControl = new GuiCheckBox(id, bounds);
 		break;
 
 	/*

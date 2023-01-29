@@ -6,6 +6,7 @@
 #include "Animation.h"
 #include "SDL_Timer.h"
 #include "SceneTitle.h"
+#include "GuiCheckBox.h"
 
 
 #include <iostream>
@@ -57,8 +58,9 @@ public:
 	GuiButton* button1;
 	GuiButton* button2;
 	SDL_Texture* btnTextureAtlas;
-	SDL_Texture* sliderTextureAtlas;
 
+	GuiCheckBox* checkbox1;
+	
 	
 
 };

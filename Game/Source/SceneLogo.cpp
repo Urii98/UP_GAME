@@ -34,7 +34,6 @@ bool SceneLogo::Awake(pugi::xml_node& config) {
 
 	textureLogoPath = config.child("textureLogoPath").attribute("path").as_string();
 	btnTextureAtlas = app->tex->Load("Assets/Textures/atlasbutton.png");
-	sliderTextureAtlas = app->tex->Load("Assets/Textures/button_atlas.png");
 	alpha = 0.0f;
 	toFade = false;
 	prueba = false;
@@ -56,12 +55,13 @@ bool SceneLogo::Start() {
 	uint w, h;
 	
 	app->win->GetWindowSize(w, h);
-	button1 = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 1, "Button 1", { (int)w / 2 - 50,(int)h / 2 - 80,
-		app->win->buttonW,app->win->buttonH }, this);
-	button2 = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 2, "Button 2", { (int)w / 2 - 50,(int)h / 2,
-		app->win->buttonW,app->win->buttonH }, this);
+	//button1 = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 1, "Button 1", { (int)w / 2 - 50,(int)h / 2 - 80,
+	//	app->win->buttonW,app->win->buttonH }, this);
+	//button2 = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 2, "Button 2", { (int)w / 2 - 50,(int)h / 2,
+	//	app->win->buttonW,app->win->buttonH }, this);
 
-
+	checkbox1 = (GuiCheckBox*)app->guiManager->CreateGuiControl(GuiControlType::CHECKBOX, 3, "", { 330, 240, 30, 30 }, this);
+	checkbox1->state = GuiControlState::NORMAL;
 
 	return true;
 }
