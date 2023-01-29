@@ -3,6 +3,7 @@
 #include "Render.h"
 #include "Scene.h"
 #include "ModuleFonts.h"
+#include "PlayerSensors.h"
 
 #include "Defs.h"
 #include "Log.h"
@@ -44,6 +45,13 @@ bool ModuleFonts::Start()
 
 	podiumPath = "Assets/Textures/podium.png";
 	podiumTexture = app->tex->Load(podiumPath);
+
+	skillOffPath = "Assets/Textures/swordUIOff.png";
+	skillOff = app->tex->Load(skillOffPath);
+	skillOnPath = "Assets/Textures/swordUI.png";
+	skillOn = app->tex->Load(skillOnPath);
+
+	canTestSkill = false;
 
 	return true;
 }
@@ -191,6 +199,18 @@ bool ModuleFonts::PostUpdate() //para que aparezca en screenlogo y screentitle
 	SDL_Rect rect = currentAnimation->GetCurrentFrame();
 	app->render->DrawTexture(hourglassTexture, 70, 0, &rect, 0.0f, 0.0f, 2147483647, 2147483647, false);
 	BlitText(110, 9, textFont, timeChar);
+
+	//skillUI
+	if (canTestSkill)
+	{
+		app->render->DrawTexture(skillOn, 20, 30, 0, 0.0f, 0.0f, 2147483647, 2147483647, true);
+
+	}
+	else
+	{
+		app->render->DrawTexture(skillOff, 20, 30, 0, 0.0f, 0.0f, 2147483647, 2147483647, true);
+	}
+
 
 	return ret;
 }

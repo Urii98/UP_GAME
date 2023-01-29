@@ -3,6 +3,7 @@
 #include "Scene.h"
 #include "Window.h"
 #include "Audio.h"
+#include "ModuleFonts.h"
 #include <iostream>
 
 #include "Optick/include/optick.h"
@@ -36,6 +37,7 @@ bool PlayerSensors::Start()
 	playerSkill.y = 0;
 	skillReset.Start(0.2f);
 	skillDraw.Start(0.2f);
+	app->fonts->canTestSkill = true;
 
 	return true;
 }
@@ -55,20 +57,21 @@ bool PlayerSensors::Update(float dt)
 	if (skillDraw.Test() == EJECUTANDO)
 	{
 		app->scene->player->drawSwordUI = false;
+
 	}
 
-	if (app->scene->player->sword == true)
+	if (skillUIDraw.Test() == FIN)
 	{
-		skillReset.Start(1.0f);
-		app->scene->player->sword = false;
+		app->fonts->canTestSkill = true;
 	}
-
 
 	if (app->input->GetKey(SDL_SCANCODE_G) == KEY_DOWN && skillReset.Test() == FIN && (app->scene->player->estadoP == app->scene->player->MOVIMIENTO || app->scene->player->estadoP == app->scene->player->STOP))
 	{
 		skillTimer.Start(1.0f);
 		skillReset.Start(3.0f);
 		skillDraw.Start(3.0f);
+		skillUIDraw.Start(3.0f);
+		app->fonts->canTestSkill = false;
 		
 		
 
@@ -128,6 +131,7 @@ bool PlayerSensors::Update(float dt)
 		
 		app->scene->player->currentAnimation = &aux;
 		app->scene->player->estadoP = app->scene->player->MOVIMIENTO;
+		
 	}
 
 	return true;

@@ -70,9 +70,17 @@ private:
 	Animation* currentAnimation = nullptr;
 	Animation hourglassAnim;
 
+	SDL_Texture* skillOff;
+	SDL_Texture* skillOn;
+	const char* skillOffPath;
+	const char* skillOnPath;
+
+	
+
 public:
 	
 	int textFont = -1;
+	bool canTestSkill;
 
 
 

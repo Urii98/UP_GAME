@@ -32,6 +32,7 @@ public:
 	SDL_Timer skillTimer;
 	SDL_Timer skillReset;
 	SDL_Timer skillDraw;
+	SDL_Timer skillUIDraw;
 
 	bool resetjumps;
 	int frames;
