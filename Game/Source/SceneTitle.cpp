@@ -89,16 +89,16 @@ bool SceneTitle::Start() {
 		app->win->buttonW,app->win->buttonH }, this);
 	settingsButton->state = GuiControlState::NORMAL;
 
-	checkboxFullScreen = (GuiCheckBox*)app->guiManager->CreateGuiControl(GuiControlType::CHECKBOX, 6, "", { 200, 240, 30, 30 }, this);
+	checkboxFullScreen = (GuiCheckBox*)app->guiManager->CreateGuiControl(GuiControlType::CHECKBOX, 6, "", { 248, 208, 30, 30 }, this);
 	checkboxFullScreen->state = GuiControlState::DISABLED;
 
-	checkboxVSync = (GuiCheckBox*)app->guiManager->CreateGuiControl(GuiControlType::CHECKBOX, 7, "", { 330, 240, 30, 30 }, this);
+	checkboxVSync = (GuiCheckBox*)app->guiManager->CreateGuiControl(GuiControlType::CHECKBOX, 7, "", { 200, 245, 30, 30 }, this);
 	checkboxVSync->state = GuiControlState::DISABLED;
 
-	sliderbarMusic = (GuiSliderBar*)app->guiManager->CreateGuiControl(GuiControlType::SLIDERBAR, 8, "", { 300, 200, 90, 45 }, this, { 300, 199, 20, 45 });
+	sliderbarMusic = (GuiSliderBar*)app->guiManager->CreateGuiControl(GuiControlType::SLIDERBAR, 8, "", { 201, 187, 90, 15 }, this, { 201, 186, 20, 15 });
 	sliderbarMusic->state = GuiControlState::DISABLED;
 
-	sliderbarFx = (GuiSliderBar*)app->guiManager->CreateGuiControl(GuiControlType::SLIDERBAR, 9, "", { 300, 170, 90, 45 }, this, { 300, 169, 20, 45 });
+	sliderbarFx = (GuiSliderBar*)app->guiManager->CreateGuiControl(GuiControlType::SLIDERBAR, 9, "", { 172, 148, 90, 15 }, this, { 172, 147, 20, 15 });
 	sliderbarFx->state = GuiControlState::DISABLED;
 
 	windowCreditText = app->tex->Load(windowCreditPath);
