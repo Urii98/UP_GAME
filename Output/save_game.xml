@@ -14,12 +14,13 @@
 	<scene />
 	<sceneEnding />
 	<entitymanager>
-		<playerScene1 x="930" y="745" money="13" hp="3" highscore="0" prevgame="1" />
-		<SmallEnemy11 x="8856" y="1717" state="1" />
-		<SmallEnemyFly1 x="3212" y="749" state="1" />
-		<SmallEnemyFly2 x="3852" y="729" state="1" />
-		<SmallEnemy21 x="7049" y="752" />
-		<SmallEnemy22 x="5956" y="1712" />
+		<playerScene1 x="2560" y="361" money="2" hp="3" highscore="0" prevgame="1" />
+		<SmallEnemy11 x="2101" y="629" state="2" />
+		<SmallEnemy12 x="8967" y="1717" state="1" />
+		<SmallEnemyFly1 x="3212" y="709" state="1" />
+		<SmallEnemyFly2 x="3852" y="689" state="1" />
+		<SmallEnemy21 x="7396" y="752" />
+		<SmallEnemy22 x="6353" y="1712" />
 	</entitymanager>
 	<map />
 	<fade />
